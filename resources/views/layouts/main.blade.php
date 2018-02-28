@@ -11,7 +11,8 @@
     <link href="{{ asset('public/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{ asset('public/css/datepicker3.css')}}" rel="stylesheet">
     <link href="{{ asset('public/css/styles.css')}}" rel="stylesheet">
-    
+    <link href="{{ asset('public/css/custom.css')}}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/css/jquery.dataTables.css')}}">
     <!--Custom Font-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
     <!--[if lt IE 9]>
@@ -27,7 +28,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span></button>
-                <a class="navbar-brand" href="#"><span><img src="{{ asset('public/img/elink-logo-site.png')}}" style="width: 40px; margin-top: -10px">&nbsp;Employee</span>Directory</a>
+                <a class="navbar-brand" href="{{url('/home')}}"><span><img src="{{ asset('public/img/elink-logo-site.png')}}" style="width: 40px; margin-top: -10px">&nbsp;Employee</span>Directory</a>
                 <ul class="nav navbar-top-links navbar-right">
                     <li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                         <em class="fa fa-envelope"></em><span class="label label-danger">15</span>
@@ -90,8 +91,9 @@
                 <img src="http://placehold.it/50/30a5ff/fff" class="img-responsive" alt="">
             </div>
             <div class="profile-usertitle">
-                <div class="profile-usertitle-name">{{ Auth::user()->alias }}</div>
-                <div class="profile-usertitle-status"></span>{{ Auth::user()->position_name}}</div>
+                <h4 class="card-title m-t-10" style="font-size: 15px !important;">{{ Auth::user()->alias }}</h4>
+                <h6 class="card-subtitle">{{ Auth::user()->position_name }}</h6>
+                <h6 class="card-subtitle">{{ Auth::user()->team_name }}</h6>
             </div>
             <div class="clear"></div>
         </div>
@@ -102,7 +104,7 @@
             </div> -->
         </form>
         <ul class="nav menu">
-            <li class="active"><a href="index.html"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+            <li class="active"><a href="{{url('home')}}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
             <li><a href="{{ route('logout')}}"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
         </ul>
     </div><!--/.sidebar-->
@@ -119,47 +121,10 @@
         
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Dashboard</h1>
+                <h1 class="page-header">@yield('pagetitle')</h1>
             </div>
         </div><!--/.row-->
-       
-      <!--   <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Site Traffic Overview
-                        <ul class="pull-right panel-settings panel-button-tab-right">
-                            <li class="dropdown"><a class="pull-right dropdown-toggle" data-toggle="dropdown" href="#">
-                                <em class="fa fa-cogs"></em>
-                            </a>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li>
-                                        <ul class="dropdown-settings">
-                                            <li><a href="#">
-                                                <em class="fa fa-cog"></em> Settings 1
-                                            </a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="#">
-                                                <em class="fa fa-cog"></em> Settings 2
-                                            </a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="#">
-                                                <em class="fa fa-cog"></em> Settings 3
-                                            </a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
-                    <div class="panel-body">
-                        <div class="canvas-wrapper">
-                           
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!/.row--> 
+
         @yield('content')
     </div>  <!--/.main-->
     
@@ -171,17 +136,7 @@
     <script src="{{ asset('public/js/easypiechart-data.js')}}"></script>
     <script src="{{ asset('public/js/bootstrap-datepicker.js')}}"></script>
     <script src="{{ asset('public/js/custom.js')}}"></script>
-    <script>
-        window.onload = function () {
-    var chart1 = document.getElementById("line-chart").getContext("2d");
-    window.myLine = new Chart(chart1).Line(lineChartData, {
-    responsive: true,
-    scaleLineColor: "rgba(0,0,0,.2)",
-    scaleGridLineColor: "rgba(0,0,0,.05)",
-    scaleFontColor: "#c5c7cc"
-    });
-};
-    </script>
-        
+    <script src="{{ asset('public/js/jquery.dataTables.js')}}"></script>
+    <script src="{{ asset('public/js/global.js')}}"></script>
 </body>
 </html>

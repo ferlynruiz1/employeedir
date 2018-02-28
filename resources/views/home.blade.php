@@ -1,15 +1,18 @@
-@extends('main')
+@extends('layouts.main')
 
 @section('title')
 Home
 @endsection
 
+@section('pagetitle')
+Dashboard
+@endsection
 @section('content')
     <style type="text/css">
-        body{
-        background-image: url({{asset('public/img/002-subtle-light-pattern-background-texture.jpg')}});
+    
+    h1.page-header {
+        margin-bottom: -40px;
     }
-
     div.circle{
         border-radius: 100px;
         border: 1px solid #eaeaea;
@@ -37,9 +40,23 @@ Home
         vertical-align: middle !important;
         margin: auto;
     }
+    .dataTables_length{
+        display: none;
+    }
+    #employees_table_wrapper{
+        margin-top: -50px;
+    }
+    #employees_table_wrapper input[type="search"] {
+        background-color: white;
+        border: 1px solid #ededed;
+        font-size: 14px;
+        padding: 10px 10px 10px 10px;
+        font-weight: 500 !important;
+    }
+
     </style>
 
-    <table class="table table-striped">
+    <table id="employees_table" class="table table-striped display">
     <thead>
         <tr>
             <td></td>
@@ -48,6 +65,7 @@ Home
             <td>Team</td>
             <td>Supervisor</td>
             <td>Hired Date</td>
+            <td>Action</td>
         </tr>        
     </thead>
     <tbody>
@@ -62,6 +80,7 @@ Home
                 <td>{{ $employee->team_name }}</td>
                 <td>{{ $employee->supervisor_id }}</td>
                 <td>{{ $employee->hired_date }}</td>
+                <td><a href="{{ url('/employee_info/'. $employee->id)}}" title="View"><i class="fa fa-eye"></i></a></td>
             </tr>
 
         @endforeach

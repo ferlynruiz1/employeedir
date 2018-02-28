@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Carbon\Carbon; 
 
 class User extends Authenticatable
 {
@@ -26,4 +27,18 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function scopeFullname($query){
+        return $this->first_name . ' ' . $this->middle_name . ' ' . $this->last_name;
+    }
+    public function scopePrettydatestarted($query){
+        $dt = Carbon::parse($this->started_date);
+
+        return $dt->toFormattedDateString();
+    }
+    public function scopePrettydatehired($query){
+        $dt = Carbon::parse($this->hired_date);
+
+        return $dt->toFormattedDateString();
+    }
 }

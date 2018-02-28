@@ -1,4 +1,4 @@
-@extends('main')
+@extends('layouts.main')
 
 @section('title')
 Dashboard
@@ -48,6 +48,7 @@ Dashboard
             <td>Team</td>
             <td>Supervisor</td>
             <td>Hired Date</td>
+            <td>Action</td>
         </tr>        
     </thead>
     <tbody>
@@ -62,6 +63,10 @@ Dashboard
                 <td>{{ $employee->team_name }}</td>
                 <td>{{ $employee->supervisor_id }}</td>
                 <td>{{ $employee->hired_date }}</td>
+                <td>
+                    <a href="{{ url('/employee_info/'. $employee->id)}}" title="View"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
+                    <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" title="Edit"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
+                    <a href="{{ url('/employee_info/'. $employee->id . '/delete')}}" title="Edit"><i class="fa fa-trash" style="color: red;"></i></a</td>
             </tr>
 
         @endforeach

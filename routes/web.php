@@ -20,6 +20,8 @@ Route::get('/', function () {
     return View::make('auth.login');
 });
 
+Route::resource('employee_info', 'EmployeeInfoController');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

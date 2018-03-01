@@ -25,3 +25,8 @@ Route::resource('employee_info', 'EmployeeInfoController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('employee/{id}/changepassword', 'EmployeeInfoController@changepassword');
+Route::post('employee/{id}/savepassword', 'EmployeeInfoController@savepassword');
+
+Route::post('employee_info/changeinfo', 'EmployeeInfoController@changeinfo');

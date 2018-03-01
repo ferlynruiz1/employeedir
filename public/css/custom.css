@@ -14,3 +14,86 @@ body{
 .panel{
 	border-radius: 0px !important;
 }
+
+table.dataTable thead th, table.dataTable thead td {
+    border-bottom: 1px solid transparent !important;
+}
+table.dataTable.no-footer {
+    border-bottom: 1px solid transparent !important;
+}
+table.dataTable.display tbody tr.odd > .sorting_1, table.dataTable.order-column.stripe tbody tr.odd > .sorting_1 {
+    background-color: transparent !important;
+}
+table.dataTable.display tbody tr.even > .sorting_1, table.dataTable.order-column.stripe tbody tr.even > .sorting_1 {
+    background-color: transparent !important;
+}
+.dataTables_length{
+    display: none;
+}
+#employees_table_wrapper{
+    margin-top: -50px;
+    padding-top: 20px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-bottom: 30px;
+    margin: 10px;
+}
+#employees_table_wrapper input[type="search"] {
+    background-color: white;
+    border: 1px solid #ededed;
+    font-size: 14px;
+    padding: 10px 10px 10px 10px;
+    font-weight: 500 !important;
+}
+
+.message-success{
+    color: green;
+}
+.message-error{
+    color: red;
+}
+
+input[type=text], input[type=password],input.form-control{
+    border-radius: 0px !important;
+    height: 40px !important;
+}
+
+h1.page-header{
+    margin-left: 20px;
+}
+.modal-content{
+    border-radius: 0px !important;
+}
+
+/* CUSTOM DATATABLES*/
+
+a.paginate_button.current {
+    border-radius: 0px !important;
+    border: 1px solid #d2d2d2 !important;
+    background: white !important;
+    font-size: 12px !important;
+}
+a.paginate_button:hover {
+    background: #a5a5a5 !important;
+    color: #ada0a0 !important;
+    border: 1px solid #f5f3f3 !important;
+    font-size: 12px !important;
+}
+div#employees_table_info {
+    font-size: 12px !important;
+}
+a#employees_table_previous {
+    font-size: 12px !important;
+}
+a#employees_table_next {
+    font-size: 12px !important;
+}
+div#employees_table_filter label {
+    font-weight: 400 !important;
+}
+a.paginate_button {
+    font-size: 12px !important;
+}
+#employees_table tbody td {
+    font-size: 13px;
+}

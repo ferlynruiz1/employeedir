@@ -19,6 +19,8 @@
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
     <![endif]-->
+    <?php use Illuminate\Support\Facades\Route; ?>
+    <script src="{{ asset('public/js/jquery-1.11.1.min.js')}}"></script>
 </head>
 <body>
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation" style="background-color: #32373A !important;">
@@ -104,7 +106,8 @@
             </div> -->
         </form>
         <ul class="nav menu">
-            <li class="active"><a href="{{url('home')}}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+            <li <?php echo \Request::url() == url('home') ? 'class="active"' : ''; ?>  ><a href="{{url('home')}}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+            <li <?php echo \Request::url() == url('employee_info/'. Auth::user()->id . '/') ? 'class="active"' : ''; ?> ><a href="{{url('employee_info/'. Auth::user()->id . '/')}}"><em class="fa fa-user">&nbsp;</em> Profile</a></li>
             <li><a href="{{ route('logout')}}"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
         </ul>
     </div><!--/.sidebar-->
@@ -115,20 +118,15 @@
                 <li><a href="#">
                     <em class="fa fa-home"></em>
                 </a></li>
-                <li class="active">Dashboard</li>
+                <li class="active">Dashboard / @yield('pagetitle')</li>
             </ol>
         </div><!--/.row-->
         
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">@yield('pagetitle')</h1>
-            </div>
-        </div><!--/.row-->
-
-        @yield('content')
+        <div>
+            @yield('content')
+        </div>
     </div>  <!--/.main-->
     
-    <script src="{{ asset('public/js/jquery-1.11.1.min.js')}}"></script>
     <script src="{{ asset('public/js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('public/js/chart.min.js')}}"></script>
     <script src="{{ asset('public/js/chart-data.js')}}"></script>
@@ -138,5 +136,28 @@
     <script src="{{ asset('public/js/custom.js')}}"></script>
     <script src="{{ asset('public/js/jquery.dataTables.js')}}"></script>
     <script src="{{ asset('public/js/global.js')}}"></script>
+
+    <!-- Modal -->
+    <div id="messageModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Modal Header</h4>
+          </div>
+          <div class="modal-body">
+            <p id="message">Some text in the modal.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
 </body>
+
 </html>

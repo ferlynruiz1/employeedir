@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Route;
 use App\User;
 
 class HomeController extends Controller
@@ -26,10 +28,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->usertype == 1){
-            return view('dashboard')->with('employees', User::all());
-        }else{
-            return view('home')->with('employees', User::all());
-        }
+        return view('dashboard')->with('employees', User::all());
     }
 }

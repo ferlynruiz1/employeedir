@@ -9,7 +9,7 @@ Employee Information
 @section('content')
 
 <style type="text/css">
-    .card-title{
+    .card-title {
         font-size: 16px;
         line-height: 21px;
         margin-top: 15px;
@@ -37,7 +37,8 @@ Employee Information
         margin: 0px;
     }
 </style>
-<div >
+<br>    
+<div class="col-md-12">
   <div class="col-md-3" style="padding-left: 0px !important; padding-right: 0px;">
       <div class="panel panel-container">
             <div class="row no-padding">
@@ -133,11 +134,16 @@ Employee Information
                         </div>
                     </div>
                 </div>
+                <br>
                 <hr>
+                <br>
+            </div>
                 <br>
                 <label>Login Credentials</label>
                 <br>
                 <br>
+
+                       <div class="col-md-12">
                  <div class="row">
                      <div class="col-md-4">
                         <div class="form-group">
@@ -148,11 +154,9 @@ Employee Information
                     </div>
                 </div>
                 <br>
+                  @if(Auth::user()->id == $employee->id)
                 <br>
-                <br>
-                <br>
-                <hr>
-                <br>
+               
                 <div class="row">
                      <div class="col-md-4">
                         <div class="form-group">
@@ -160,6 +164,7 @@ Employee Information
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
       </div>

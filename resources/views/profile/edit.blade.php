@@ -4,7 +4,7 @@
 View Profile
 @endsection
 @section('pagetitle')
-Employee Information
+Employee Information / Edit
 @endsection
 @section('content')
 
@@ -20,13 +20,25 @@ Employee Information
         font-size: 12px;
         color: #878;
     }
-    .label-profile{
-        padding-left: 15px; padding-right: 15px;
+    .employee-details-value{
+        font-size: 16px;
+        line-height: 21px;
+        padding-bottom: 10px;
+        color: black;
     }
-
+    .label-profile{
+        padding-left: 15px; 
+        padding-right: 15px;
+    }
+    .col-md-9 hr{
+        margin: 0px;
+    }
 </style>
-<div >
-  <div class="col-md-3" style="padding-left: 0px !important; padding-right: 0px;">
+<br>
+<form role="form" method="POST" action="{{ url('employee_info/change')}}">
+<div col-md-12>
+
+  <div class="col-md-3" style="padding-left: 10px !important; padding-right: 10px;">
       <div class="panel panel-container">
             <div class="row no-padding">
                 <center>
@@ -46,14 +58,17 @@ Employee Information
             </div><!--/.row-->
         </div>
   </div>
+
   <div class="col-md-9">
       <div class="panel panel-container">
         <div class="panel-body">
+
         <label>Employee Information</label>
         <br>
         <br>
+
+            
             <div class="col-md-12">
-                <form role="form">
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -123,8 +138,8 @@ Employee Information
                             </div>
                         </div>
                     </div>
-                    </form>
             </div>
+
             <label>Login Credentials</label>
             <br>
             <br>
@@ -136,24 +151,25 @@ Employee Information
                                 <input class="form-control" placeholder="Email" name="email" value="{{$employee->email}}">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 hidden password">
                             <div class="form-group">
                                 <label>Password</label>
                                 <input type="password" class="form-control" placeholder="Password" name="password" >
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 hidden password">
                             <div class="form-group">
                                 <label>Confirm Password</label>
                                 <input class="form-control" placeholder="Confirm Password">
                             </div>
                         </div>
+                        <a type="button" class="btn btn-default" style="margin-top: 26px;" href="{{url('employee/'. $employee->id .'/changepassword')}}">Change Password</a>
                     </div>
             </div>
+
             <div class="col-md-12">
             <br>
             <br>
-            <hr>
                  <div class="row">
                      <div class="col-md-4">
                         <div class="form-group">
@@ -166,4 +182,8 @@ Employee Information
       </div>
     </div>
   </div>
+
+            </form>
+  <script type="text/javascript">
+ 
 @endsection

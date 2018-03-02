@@ -1,5 +1,4 @@
-$('#calendar').datepicker({
-		});
+$('#calendar').datepicker({});
 
 !function ($) {
     $(document).on("click","ul.nav li.parent > a ", function(){          

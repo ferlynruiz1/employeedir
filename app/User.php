@@ -30,20 +30,22 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function scopeFullname($query){
+    public function scopeFullname($query)
+    {
         return $this->first_name . ' ' . $this->middle_name . ' ' . $this->last_name;
     }
-    public function scopePrettydatestarted($query){
+    public function scopePrettydatestarted($query)
+    {
         $dt = Carbon::parse($this->started_date);
-
         return $dt->toFormattedDateString();
     }
-    public function scopePrettydatehired($query){
+    public function scopePrettydatehired($query)
+    {
         $dt = Carbon::parse($this->hired_date);
-
         return $dt->toFormattedDateString();
     }
-    public function supervisor(){
+    public function supervisor()
+    {
         return $this->belongsTo('App\User', 'supervisor_id');
     }
 }

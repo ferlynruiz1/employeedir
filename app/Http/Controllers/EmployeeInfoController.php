@@ -40,9 +40,6 @@ class EmployeeInfoController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // return $request->all();
-
         $employee = new User();
         $employee->eid = $request->eid;
         $employee->first_name = $request->first_name;
@@ -62,6 +59,7 @@ class EmployeeInfoController extends Controller
         $employee->email = $request->email;
         $employee->password = Hash::make(env('USER_DEFAULT_PASSWORD', '123qwe!@#$'));
         $employee->save();
+
         return redirect('home');
     }
 
@@ -73,7 +71,6 @@ class EmployeeInfoController extends Controller
      */
     public function show($id)
     {
-        //
         return view('employee.view')->with('employee',User::find($id));
     }
 
@@ -85,9 +82,7 @@ class EmployeeInfoController extends Controller
      */
     public function edit($id)
     {
-        //
         return view('employee.edit')->with('employee',User::find($id));
-
     }
 
     /**
@@ -99,9 +94,6 @@ class EmployeeInfoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        // return $request->all();
-
         $employee = User::find($id);
         $employee->eid = $request->eid;
         $employee->first_name = $request->first_name;
@@ -115,34 +107,9 @@ class EmployeeInfoController extends Controller
         // $employee->start_date = $request->started_date;
         // $employee->hired_date = $request->hired_date;
         $employee->username = $request->username;
-
-
         $employee->update();
+
         return redirect()->back();
-
-
-
-
-
-        $employee->eid = $request->eid;
-        $employee->first_name = $request->first_name;
-        $employee->middle_name = $request->middle_name;
-        $employee->last_name = $request->last_name;
-        $employee->alias = $request->alias;
-        $employee->position_name = $request->position_name;
-        $employee->supervisor_id = $request->supervisor_id;
-        $employee->team_name = $request->team_name;
-
-        $datetime = new DateTime();
-
-        // $hired_date = $datetime->createFromFormat('m/d/Y',$request->hired_date)->format("Y-m-d H:i:s");
-        // $started_date = $datetime->createFromFormat('m/d/Y',$request->started_date)->format("Y-m-d H:i:s");
-
-        // $employee->hired_date = $hired_date;
-        // $employee->start_date = $started_date;
-        $employee->email = $request->email;
-        return $employee;
-        return "update";
     }
 
     /**
@@ -153,7 +120,6 @@ class EmployeeInfoController extends Controller
      */
     public function destroy($id)
     {
-        //
         $employee = User::find($id);
         $employee->delete();
 
@@ -162,13 +128,13 @@ class EmployeeInfoController extends Controller
     public function changepassword(Request $request, $id){
         return view('employee.changepassword')->with('id', $id);
     }
-    public function savepassword(Request $request, $id){
-
+    public function savepassword(Request $request, $id)
+    {
         $user = User::find($id);
         if($request->new_password == "" && $request->old_password == "" && $request->confirm_password == ""){
             return redirect()->back()->withErrors(array('message' => 'all field are required!', 'status' => 'error'));
         }
-
+        
         if (Hash::check($request->old_password, $user->password)) {
             if($request->new_password == $request->confirm_password){
                 $user->password = Hash::make($request->new_password);
@@ -183,10 +149,5 @@ class EmployeeInfoController extends Controller
         }else{
             return redirect()->back()->withErrors(array('message' => 'incorrect old password', 'status' => 'error'));
         }
-    }
-
-
-    public function changeinfo(Request $request){
-        return "aw";
     }
 }

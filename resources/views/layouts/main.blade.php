@@ -150,11 +150,6 @@
             <p id="message">Some text in the modal.</p>
           </div>
           <div class="modal-footer">
-           <!--  <form id="delete_form" style="display: inline-block;" method="DELETE">
-                <input type="hidden" name="_method" value="DELETE">
-                {{ csrf_field() }}
-            <button type="submit" form="delete_form" id="yes" class="btn btn-default" data-dismiss="modal">Yes</button>
-             </form> -->
              {{ Form::open(array('url' => 'employee_info/', 'class' => ' delete_form' )) }}
                     {{ Form::hidden('_method', 'DELETE') }}
                     {{ Form::submit('Yes', array('class' => 'btn btn-danger')) }}

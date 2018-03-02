@@ -14,7 +14,7 @@ body{
 .panel{
 	border-radius: 0px !important;
 }
-
+/* DATATABLE CSS */
 table.dataTable thead th, table.dataTable thead td {
     border-bottom: 1px solid transparent !important;
 }
@@ -45,27 +45,6 @@ table.dataTable.display tbody tr.even > .sorting_1, table.dataTable.order-column
     padding: 10px 10px 10px 10px;
     font-weight: 500 !important;
 }
-
-.message-success{
-    color: green;
-}
-.message-error{
-    color: red;
-}
-
-input[type=text], input[type=password],input.form-control{
-    border-radius: 0px !important;
-    height: 40px !important;
-}
-
-h1.page-header{
-    margin-left: 20px;
-}
-.modal-content{
-    border-radius: 0px !important;
-}
-
-/* CUSTOM DATATABLES*/
 
 a.paginate_button.current {
     border-radius: 0px !important;
@@ -100,3 +79,25 @@ a.paginate_button {
 .label-profile i{
     font-size: 14px;
 }
+
+/* END DATATABLE CSS */
+
+.message-success{
+    color: green;
+}
+.message-error{
+    color: red;
+}
+
+input[type=text], input[type=password],input.form-control{
+    border-radius: 0px !important;
+    height: 40px !important;
+}
+
+h1.page-header{
+    margin-left: 20px;
+}
+.modal-content{
+    border-radius: 0px !important;
+}
+

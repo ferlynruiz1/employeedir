@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon; 
 
 class User extends Authenticatable
 {
+    use SoftDeletes;
     use Notifiable;
     protected $table = "employee_info";
     /**
@@ -40,5 +42,8 @@ class User extends Authenticatable
         $dt = Carbon::parse($this->hired_date);
 
         return $dt->toFormattedDateString();
+    }
+    public function supervisor(){
+        return $this->belongsTo('App\User', 'supervisor_id');
     }
 }

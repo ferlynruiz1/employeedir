@@ -35,15 +35,16 @@ Employee Information / Edit
     }
 </style>
 <br>
-<form role="form" method="POST" action="{{ url('employee_info/change')}}">
+{{ Form::open(array('url' => 'employee_info/' . $employee->id, )) }}
+    {{ Form::hidden('_method', 'PUT') }}
+    {{ csrf_field() }}
 <div col-md-12>
-
   <div class="col-md-3" style="padding-left: 10px !important; padding-right: 10px;">
       <div class="panel panel-container">
             <div class="row no-padding">
                 <center>
                 <img alt="image" class="img-circle" style="width: 150px; margin-top: 30px;" src="{{ $employee->profile_img }}">
-                <br>
+                <br> 
                 <br>
                 <button class="btn btn-small">change profile picture</button>
                 <h4 class="card-title m-t-10">{{ $employee->fullname() }}</h4>

@@ -5,7 +5,7 @@ Dashboard
 @endsection
 
 @section('pagetitle')
-Change Password
+Employee Information / Change Password
 @endsection
 @section('content')
 	<style type="text/css">
@@ -43,7 +43,7 @@ Change Password
     table >tbody> tr > td {
         vertical-align: middle !important;
         margin: auto;
-    }
+    } 
     .sorting_1{
         padding-left: 20px !important;
     }

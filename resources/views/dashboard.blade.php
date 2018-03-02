@@ -49,7 +49,13 @@ Dashboard
     .sorting_1{
         padding-left: 20px !important;
     }
+    a.btn.btn-primary {
+        float: right;
+        margin: 10px;
+    }
+
 	</style>
+    <a href="{{url('employee_info/create')}}" class="btn btn-primary" ><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Employee</a>
 	<table id="employees_table" class="table">
     <thead>
         <tr>
@@ -61,11 +67,11 @@ Dashboard
             <td>Hired Date</td>
             <td align="center">Action</td>
         </tr>        
-    </thead>
+    </thead> 
     <tbody>
          <?php $counter = 0; ?>
         @foreach($employees as $employee)
-            <tr>
+            <tr> 
                 <td>{{ ++$counter }}</td>
                 <td style="max-width: 250px;">
                     <div class="circle pull-left" style="float: left !important">J</div>
@@ -74,123 +80,28 @@ Dashboard
                 </td>
                 <td >{{ $employee->eid }}</td>
                 <td align="center">{{ $employee->team_name }}</td>
-                <td align="center">{{ $employee->supervisor_id }}</td>
+                <td align="center">{{ $employee->supervisor->alias }}</td>
                 <td>{{ $employee->prettydatehired() }}</td>
                 <td align="center">
                     <a href="{{ url('/employee_info/'. $employee->id)}}" title="View"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
                     @if(Auth::user()->usertype == 1)
                         <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" title="Edit"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
-                        <a href="#" data-toggle="modal" data-target="#messageModal" title="Edit"><i class="fa fa-trash" style="color: red;"></i></a</td>
+                        <a href="#" class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Edit" data-id="{{$employee->id}}"><i class="fa fa-trash" style="color: red;" ></i></a</td>
                     @endif
             </tr>
-
-        @endforeach
-        @foreach($employees as $employee)
-            <tr>
-                <td>{{ ++$counter }}</td>
-                <td style="max-width: 250px;">
-                    <div class="circle pull-left" style="float: left !important">J</div>
-                    <h5 style="text-align: left !important;">{{ $employee->first_name . ' ' . $employee->middle_name . " " .  $employee->last_name  }}</h5>
-                    <small style="text-align: left !important;">{{ $employee->position_name }}</small>
-                </td>
-                <td >{{ $employee->eid }}</td>
-                <td align="center">{{ $employee->team_name }}</td>
-                <td align="center">{{ $employee->supervisor_id }}</td>
-                <td>{{ $employee->hired_date }}</td>
-                <td align="center">
-                    <a href="{{ url('/employee_info/'. $employee->id)}}" title="View"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
-                    @if(Auth::user()->usertype == 1)
-                        <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" title="Edit"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
-                        <a href="#" data-toggle="modal" data-target="#messageModal" title="Edit"><i class="fa fa-trash" style="color: red;"></i></a</td>
-                    @endif
-            </tr>
-
-        @endforeach
-        @foreach($employees as $employee)
-            <tr>
-                <td>{{ ++$counter }}</td>
-                <td style="max-width: 250px;">
-                    <div class="circle pull-left" style="float: left !important">J</div>
-                    <h5 style="text-align: left !important;">{{ $employee->first_name . ' ' . $employee->middle_name . " " .  $employee->last_name  }}</h5>
-                    <small style="text-align: left !important;">{{ $employee->position_name }}</small>
-                </td>
-                <td >{{ $employee->eid }}</td>
-                <td align="center">{{ $employee->team_name }}</td>
-                <td align="center">{{ $employee->supervisor_id }}</td>
-                <td>{{ $employee->hired_date }}</td>
-                <td align="center">
-                    <a href="{{ url('/employee_info/'. $employee->id)}}" title="View"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
-                    @if(Auth::user()->usertype == 1)
-                        <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" title="Edit"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
-                        <a href="#" data-toggle="modal" data-target="#messageModal" title="Edit"><i class="fa fa-trash" style="color: red;"></i></a</td>
-                    @endif
-            </tr>
-
-        @endforeach
-        @foreach($employees as $employee)
-            <tr>
-                <td>{{ ++$counter }}</td>
-                <td style="max-width: 250px;">
-                    <div class="circle pull-left" style="float: left !important">J</div>
-                    <h5 style="text-align: left !important;">{{ $employee->first_name . ' ' . $employee->middle_name . " " .  $employee->last_name  }}</h5>
-                    <small style="text-align: left !important;">{{ $employee->position_name }}</small>
-                </td>
-                <td >{{ $employee->eid }}</td>
-                <td align="center">{{ $employee->team_name }}</td>
-                <td align="center">{{ $employee->supervisor_id }}</td>
-                <td>{{ $employee->hired_date }}</td>
-                <td align="center">
-                    <a href="{{ url('/employee_info/'. $employee->id)}}" title="View"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
-                    @if(Auth::user()->usertype == 1)
-                        <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" title="Edit"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
-                        <a href="#" data-toggle="modal" data-target="#messageModal" title="Edit"><i class="fa fa-trash" style="color: red;"></i></a</td>
-                    @endif
-            </tr>
-
-        @endforeach
-        @foreach($employees as $employee)
-            <tr>
-                <td>{{ ++$counter }}</td>
-                <td style="max-width: 250px;">
-                    <div class="circle pull-left" style="float: left !important">J</div>
-                    <h5 style="text-align: left !important;">{{ $employee->first_name . ' ' . $employee->middle_name . " " .  $employee->last_name  }}</h5>
-                    <small style="text-align: left !important;">{{ $employee->position_name }}</small>
-                </td>
-                <td >{{ $employee->eid }}</td>
-                <td align="center">{{ $employee->team_name }}</td>
-                <td align="center">{{ $employee->supervisor_id }}</td>
-                <td>{{ $employee->hired_date }}</td>
-                <td align="center">
-                    <a href="{{ url('/employee_info/'. $employee->id)}}" title="View"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
-                    @if(Auth::user()->usertype == 1)
-                        <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" title="Edit"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
-                        <a href="#" data-toggle="modal" data-target="#messageModal" title="Edit"><i class="fa fa-trash" style="color: red;"></i></a</td>
-                    @endif
-            </tr>
-
-        @endforeach
-
-        @foreach($employees as $employee)
-            <tr>
-                <td>{{ ++$counter }}</td>
-                <td style="max-width: 250px;">
-                    <div class="circle pull-left" style="float: left !important">J</div>
-                    <h5 style="text-align: left !important;">{{ $employee->first_name . ' ' . $employee->middle_name . " " .  $employee->last_name  }}</h5>
-                    <small style="text-align: left !important;">{{ $employee->position_name }}</small>
-                </td>
-                <td >{{ $employee->eid }}</td>
-                <td align="center">{{ $employee->team_name }}</td>
-                <td align="center">{{ $employee->supervisor_id }}</td>
-                <td>{{ $employee->hired_date }}</td>
-                <td align="center">
-                    <a href="{{ url('/employee_info/'. $employee->id)}}" title="View"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
-                    @if(Auth::user()->usertype == 1)
-                        <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" title="Edit"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
-                        <a href="#" data-toggle="modal" data-target="#messageModal" title="Edit"><i class="fa fa-trash" style="color: red;"></i></a</td>
-                    @endif
-            </tr>
-
         @endforeach
     </tbody>
 </table>
+
+<script type="text/javascript">
+    $('.delete_btn').click(function(){
+        $('#messageModal .modal-title').html('Delete Employee');
+        $('#messageModal #message').html('Are you sure you want to delete the employee ?');
+
+        $('#messageModal .delete_form').attr('action', "{{ url('employee_info') }}/" + $(this).attr("data-id"));
+    });
+    $('#messageModal #yes').click(function(){
+        $('#messageModal .delete_form').submit();
+    });
+</script>
 @endsection

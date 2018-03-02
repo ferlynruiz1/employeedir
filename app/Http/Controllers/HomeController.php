@@ -28,6 +28,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard')->with('employees', User::all());
+        $user = User::with('supervisor')->get();
+        return view('dashboard')->with('employees', $user);
     }
 }

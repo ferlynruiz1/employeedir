@@ -41,6 +41,7 @@
                 border: 1px solid #eaeaea;
                 padding: 50px 50px 50px 30px;
                 background-color: #F5F5F5;
+                box-shadow: 1px 1px 2px 0px #a9a9a970;
             }
 
             .title {

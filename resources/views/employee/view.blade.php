@@ -154,15 +154,16 @@ Employee Information
                     </div>
                 </div>
                 <br>
-                  @if(Auth::user()->id == $employee->id)
+                  @if(Auth::user()->id == $employee->id || Auth::user()->usertype == 1)
                 <br>
                
                 <div class="row">
-                     <div class="col-md-4">
-                        <div class="form-group">
-                            <a class="btn btn-primary" href="{{url('employee_info/' . $employee->id . '/edit')}}">Update Profile</a>
-                        </div>
-                    </div>
+                     <div class="col-md-3" style="display: flex;">
+                         <a type="button" class="btn btn-default" href="{{url('employee/'. $employee->id .'/changepassword')}}">Change Password</a>
+                         &nbsp;
+                        <a class="btn btn-primary" href="{{url('employee_info/' . $employee->id . '/edit')}}">Update Profile</a>
+                      </div>
+
                 </div>
                 @endif
             </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use App\User;
 use Carbon\Carbon;
 use DateTime;
@@ -29,7 +30,7 @@ class EmployeeInfoController extends Controller
     public function create()
     {
         //
-        return view('employee.create');
+        return view('employee.create')->with('supervisors', User::all());
     }
 
     /**
@@ -40,6 +41,8 @@ class EmployeeInfoController extends Controller
      */
     public function store(Request $request)
     {
+        $path = $request->profile_image->store('images');
+        
         $employee = new User();
         $employee->eid = $request->eid;
         $employee->first_name = $request->first_name;
@@ -49,6 +52,7 @@ class EmployeeInfoController extends Controller
         $employee->position_name = $request->position_name;
         $employee->supervisor_id = $request->supervisor_id;
         $employee->team_name = $request->team_name;
+        $employee->gender = $request->gender_id;
 
         $datetime = new DateTime();
         $hired_date = $datetime->createFromFormat('m/d/Y',$request->hired_date)->format("Y-m-d H:i:s");
@@ -60,7 +64,12 @@ class EmployeeInfoController extends Controller
         $employee->password = Hash::make(env('USER_DEFAULT_PASSWORD', '123qwe!@#$'));
         $employee->save();
 
-        return redirect('home');
+        /* saving photo */
+        $path = $request->profile_image->store('images/'.$employee->id);
+        $employee->profile_img = asset('storage/app/'.$path);
+        $employee->save();
+
+        return redirect('home')->with('success', "Successfully created Employee");
     }
 
     /**
@@ -104,6 +113,7 @@ class EmployeeInfoController extends Controller
         $employee->team_name = $request->team_name;
         $employee->position_name = $request->position_name;
         $employee->supervisor_id = $request->supervisor_id;
+        $employee->gender_id = $request->gender_id;
         // $employee->start_date = $request->started_date;
         // $employee->hired_date = $request->hired_date;
         $employee->username = $request->username;
@@ -123,7 +133,7 @@ class EmployeeInfoController extends Controller
         $employee = User::find($id);
         $employee->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('success', "Successfully deleted employee record");;
     }
     public function changepassword(Request $request, $id){
         return view('employee.changepassword')->with('id', $id);

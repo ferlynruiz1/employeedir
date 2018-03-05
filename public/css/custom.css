@@ -101,3 +101,49 @@ h1.page-header{
     border-radius: 0px !important;
 }
 
+input[type=radio]{
+    cursor: pointer;
+}
+
+
+/*********** SELECT 2 **************/
+.select2-container--default .select2-selection--single {
+    background-color: #fff !important;
+    border: 1px solid #ddd !important;
+     border-radius: 0px !important; 
+    height: 40px !important;
+    padding: 5px; 
+}   
+.select2-container--default .select2-selection--single .select2-selection__arrow b{
+    margin-top: 5px !important;
+}
+
+
+/* Form Validation */
+label.error {
+    color: red;
+    font-weight: 500 !important;
+    font-size: 13px;
+    margin-left: 6px;
+    margin-top: 5px;
+}
+#supervisor_id-error{
+    margin-top: 70px;
+    position: absolute;
+    margin-left: -77px;
+}
+#team_name-error {
+     margin-top: 70px;
+    position: absolute;
+    margin-left: -132px;
+}
+.radio-label{
+    font-weight: 500 !important;
+    color: #222;
+    cursor: pointer;
+}
+.asterisk-required:after{
+    content: " *";
+    color: red;
+    font-weight: 700 !important;
+}

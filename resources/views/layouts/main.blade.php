@@ -13,6 +13,7 @@
     <link href="{{ asset('public/css/styles.css')}}" rel="stylesheet">
     <link href="{{ asset('public/css/custom.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/css/jquery.dataTables.css')}}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <!--Custom Font-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
     <!--[if lt IE 9]>
@@ -127,15 +128,17 @@
     </div>  <!--/.main-->
     
     <script src="{{ asset('public/js/bootstrap.min.js')}}"></script>
+
     <script src="{{ asset('public/js/chart.min.js')}}"></script>
     <script src="{{ asset('public/js/chart-data.js')}}"></script>
     <script src="{{ asset('public/js/easypiechart.js')}}"></script>
     <script src="{{ asset('public/js/easypiechart-data.js')}}"></script>
     <script src="{{ asset('public/js/bootstrap-datepicker.js')}}"></script>
-    <script src="{{ asset('public/js/custom.js')}}"></script>
     <script src="{{ asset('public/js/jquery.dataTables.js')}}"></script>
+    <script src="{{ asset('public/js/jquery.validate.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.full.js"></script>
     <script src="{{ asset('public/js/global.js')}}"></script>
-
+    <script src="{{ asset('public/js/custom.js')}}"></script>
     <!-- Modal -->
     <div id="messageModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
@@ -159,12 +162,18 @@
           </div>
         </div>
 
-      </div>
+      </div> 
     </div>
 </body>
+@if (session('success'))
+    <script type="text/javascript">
+
+    </script>
+@endif
 <style type="text/css">
     .delete_form{
         display: inline-block;
     }
 </style>
+@yield('scripts')
 </html>

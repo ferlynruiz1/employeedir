@@ -1,7 +1,7 @@
-@extends('layouts.main')
+    @extends('layouts.main')
 
 @section('title')
-View Profile
+Edit Profile
 @endsection
 @section('pagetitle')
 Employee Information / Edit
@@ -35,7 +35,7 @@ Employee Information / Edit
     }
 </style>
 <br>
-{{ Form::open(array('url' => 'employee_info/' . $employee->id, )) }}
+{{ Form::open(array('url' => 'employee_info/' . $employee->id,'files' => true ,'id' => 'edit_employee_form')) }}
     {{ Form::hidden('_method', 'PUT') }}
     {{ csrf_field() }}
 <div col-md-12>
@@ -43,10 +43,12 @@ Employee Information / Edit
       <div class="panel panel-container">
             <div class="row no-padding">
                 <center>
-                <img alt="image" class="img-circle" style="width: 150px; margin-top: 30px;" src="{{ $employee->profile_img }}">
+                <img alt="image" id="profile_image" class="img-circle" style="width: 150px; margin-top: 30px;" src="{{ $employee->profile_img }}">
                 <br> 
                 <br>
-                <button class="btn btn-small">change profile picture</button>
+               <label id="bb" class="btn btn-default"> Upload Photo
+                    <input id="image_uploader" type="file" class="btn btn-small" value="" onchange="previewFile()"  name="profile_image"/>
+                </label>    
                 <h4 class="card-title m-t-10">{{ $employee->fullname() }}</h4>
                 <h6 class="card-subtitle">{{ $employee->position_name }}</h6>
                 <h6 class="card-subtitle">{{ $employee->team_name }}</h6>
@@ -63,84 +65,118 @@ Employee Information / Edit
   <div class="col-md-9">
       <div class="panel panel-container">
         <div class="panel-body">
-
         <label>Employee Information</label>
+        <br> 
+        <small class="asterisk-required" style="margin-left: 20px;font-size: 13px;">required fields</small>
         <br>
         <br>
-
-            
             <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <label>First Name</label>
+                                <label class="asterisk-required">First Name</label>
                                 <input  class="form-control" placeholder="First Name" name="first_name" value="{{$employee->first_name}}">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Middle Name</label>
                                 <input class="form-control" placeholder="Middle Name" name="middle_name" value="{{$employee->middle_name}}">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <label>Last Name</label>
+                                <label class="asterisk-required">Last Name</label>
                                 <input class="form-control" placeholder="Last Name" name="last_name" value="{{$employee->last_name}}">
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <div class="form-group">
-                                <label>Employee ID</label>
+                                <label class="asterisk-required">Employee ID</label>
                                 <input class="form-control" placeholder="Employee ID" name="eid" value="{{$employee->eid}}">
                             </div>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label>Alias</label>
+                                <label class="asterisk-required">Alias</label>
                                 <input class="form-control" placeholder="Alias" name="alias" value="{{$employee->alias}}">
                             </div>
                         </div>
-                       
-                    </div>
-                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <label>Position</label>
+                                <br>
+                                <label>Gender</label>
+                                <br>
+                                <input type="radio" id="male" name="gender_id" value="1" placeholder="test" <?php echo $employee->gender == 1 ? "checked" : "" ; ?>>
+                                <label class="radio-label" for="male">Male</label>
+                                &nbsp;
+                                &nbsp;
+                                <input type="radio" id="female" name="gender_id" value="2" placeholder="test" <?php echo $employee->gender == 2 ? "checked" : "" ; ?>>
+                                <label class="radio-label" for="female" >Female</label>
+                                &nbsp;
+                                &nbsp;
+                                <input type="radio" id="other" name="gender_id" value="3" placeholder="test" <?php echo $employee->gender == 3 ? "checked" : "" ; ?>>
+                                <label class="radio-label" for="other" >Other</label>
+                                &nbsp;
+                                &nbsp;
+                                <input type="radio" id="prefernotsay" name="gender_id" value="4" placeholder="tes" <?php echo $employee->gender == 4 ? "checked" : "" ; ?>>
+                                <label class="radio-label" for="prefernotsay" >Prefer not to say</label>
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="row">
+                        <br>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="asterisk-required">Position</label>
                                 <input class="form-control" placeholder="Position" name="position_name" value="{{$employee->position_name}}">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Supervisor</label>
-                                <input class="form-control" placeholder="Supervisor" name="supervisor_id" value="{{$employee->supervisor_id}}">
+                                <label class="asterisk-required">Supervisor</label>
+                                <select class="select2 form-control"  name="supervisor_id" required>
+                                    <option selected="" disabled="">Select</option>
+                                    @foreach($supervisors as $supervisor)
+                                    <option value="{{ $supervisor->id }}" <?php echo $supervisor->id == $employee->supervisor_id ? "selected" : "" ; ?>> {{$supervisor->fullname()}}</option>
+                                    @endforeach
+                                </select>
+
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <div class="form-group">
-                                <label>Team/Department</label>
-                                <input class="form-control" placeholder="Team/Department" name="team_name" value="{{$employee->team_name}}">
+                                <label class="asterisk-required">Team/Department</label>
+                                <select class="select2 form-control" name="team_name" required>
+                                    <option selected="" disabled="">Select</option>
+                                    @foreach($departments as $department)
+                                        <option <?php echo $department->department_name == $employee->team_name ? "selected" : "";?> value="{{ $department->department_name }}"> {{$department->department_name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <label>Hire Date</label>
-                                <input class="form-control" placeholder="Hire Date" name="hired_date" value="{{$employee->prettydatehired()}}">
+                                <label class="asterisk-required">Hire Date</label>
+                                <input class="form-control datepicker" placeholder="Hire Date" name="hired_date" value="{{$employee->datehired()}}">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <label>Start Date</label>
-                                <input class="form-control" placeholder="Start Date" name="started_date" value="{{$employee->prettydatestarted()}}">
+                                <label class="asterisk-required">Start Date</label>
+                                <input class="form-control datepicker" placeholder="Start Date" name="started_date" value="{{$employee->datestarted()}}">
                             </div>
                         </div>
                     </div>
             </div>
-
+            <div class="col-md-12">
+                <br>
+            </div>
             <label>Login Credentials</label>
             <br>
             <br>
@@ -183,8 +219,31 @@ Employee Information / Edit
       </div>
     </div>
   </div>
-
-            </form>
-  <script type="text/javascript">
+</form>
  
+@endsection
+@section('scripts')
+ <script type="text/javascript">
+     $('#edit_employee_form').validate({
+        ignore: [], 
+        rules : {
+            first_name: {
+                maxlength: 50
+            },
+            middle_name: {
+                maxlength: 50
+            },
+            last_name: {
+                maxlength: 50
+            },
+            alias:{
+                maxlength: 100
+            },
+            position_name: {
+                maxlength: 50
+            }
+
+        }
+     });
+ </script>
 @endsection

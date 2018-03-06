@@ -36,7 +36,7 @@ class User extends Authenticatable
     }
     public function scopePrettydatestarted($query)
     {
-        $dt = Carbon::parse($this->started_date);
+        $dt = Carbon::parse($this->start_date);
         return $dt->toFormattedDateString();
     }
     public function scopePrettydatehired($query)
@@ -44,8 +44,34 @@ class User extends Authenticatable
         $dt = Carbon::parse($this->hired_date);
         return $dt->toFormattedDateString();
     }
+     public function scopeDateStarted($query)
+    {
+        $dt = Carbon::parse($this->start_date);
+        return $dt->format('m/d/Y');
+    }
+    public function scopeDateHired($query)
+    {
+        $dt = Carbon::parse($this->hired_date);
+        return $dt->format('m/d/Y');
+    }
     public function supervisor()
     {
         return $this->belongsTo('App\User', 'supervisor_id');
+    }
+    public function scopeGender($query){
+        switch ($this->gender) {
+            case 1:
+                return "Male"; 
+            case 2:
+                return "Female"; 
+            case 3:
+                return "Other"; 
+            case 4:
+                return "Prefer not to say"; 
+
+            default:
+                # code...
+                break;
+        }
     }
 }

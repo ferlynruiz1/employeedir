@@ -35,7 +35,7 @@
                 <a class="navbar-brand" href="{{url('/home')}}"><span><img src="{{ asset('public/img/elink-logo-site.png')}}" style="width: 40px; margin-top: -10px">&nbsp;Employee</span>Directory</a>
                 <ul class="nav navbar-top-links navbar-right">
                     <li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                        <em class="fa fa-envelope"></em><span class="label label-danger">15</span>
+                        <em class="fa fa-envelope"></em><!--     -->
                     </a>
                         <ul class="dropdown-menu dropdown-messages">
                             <li>
@@ -65,7 +65,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                   <!--  <li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                         <em class="fa fa-bell"></em><span class="label label-info">5</span>
                     </a>
                         <ul class="dropdown-menu dropdown-alerts">
@@ -84,39 +84,41 @@
                                     <span class="pull-right text-muted small">4 mins ago</span></div>
                             </a></li>
                         </ul>
+                    </li> -->
+                    <li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                        <img alt="image" class="img-circle" style="width: 20px;" src="{{ Auth::user()->profile_img }}"><!-- <span class="label label-info">5</span> -->
+                    </a>
+                        <ul class="dropdown-menu dropdown-alerts">
+                            <li><a href="#">
+                                <div><em class="fa fa-user"></em> Profile
+                                    <span class="pull-right text-muted small">3 mins ago</span></div>
+                            </a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">
+                                <div><em class="fa fa-sign-out"></em>Logout
+                                    <span class="pull-right text-muted small">4 mins ago</span></div>
+                            </a></li>
+                        </ul>
                     </li>
                 </ul>
+
+                    
             </div>
+
         </div><!-- /.container-fluid -->
-    </nav>
-    <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-        <div class="profile-sidebar">
-            <div class="profile-userpic">
-                <img src="http://placehold.it/50/30a5ff/fff" class="img-responsive" alt="">
-            </div>
-            <div class="profile-usertitle">
-                <h4 class="card-title m-t-10" style="font-size: 15px !important;">{{ Auth::user()->alias }}</h4>
-                <h6 class="card-subtitle">{{ Auth::user()->position_name }}</h6>
-                <h6 class="card-subtitle">{{ Auth::user()->team_name }}</h6>
-            </div>
-            <div class="clear"></div>
+        <div class="navbar-header">
+            <ul class="header-list">
+                <li <?php echo \Request::url() == url('employees') ? 'class="active"' : ''; ?> ><a  href="{{ url('employees')}}">Home</a></li>
+                <li <?php echo \Request::url() == url('employee_info/'. Auth::user()->id . '/') ? 'class="active"' : ''; ?>><a  href="{{ url('employees')}}">Profile</a></li>
+                <li ><a  href="{{ url('employees')}}">Employees</a></li>
+            </ul>
         </div>
-        <div class="divider"></div>
-        <!-- <form role="search">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search">
-            </div> -->
-        </form>
-        <ul class="nav menu">
-            <li <?php echo \Request::url() == url('home') ? 'class="active"' : ''; ?>  ><a href="{{url('home')}}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-            <li <?php echo \Request::url() == url('employee_info/'. Auth::user()->id . '/') ? 'class="active"' : ''; ?> ><a href="{{url('employee_info/'. Auth::user()->id . '/')}}"><em class="fa fa-user">&nbsp;</em> Profile</a></li>
-            <li><a href="{{ route('logout')}}"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
-        </ul>
-    </div><!--/.sidebar-->
-        
-    <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+    </nav>
+    <p style="height: 40px;">&nbsp;
+    </p>
+    <div class="col-sm-12 main">
         <div class="row">
-            <ol class="breadcrumb">
+            <ol class="breadcrumb" style="background-color: #dcdcdc !important;">
                 <li><a href="#">
                     <em class="fa fa-home"></em>
                 </a></li>

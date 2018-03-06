@@ -105,6 +105,15 @@ input[type=radio]{
     cursor: pointer;
 }
 
+label#bb{ 
+    padding: 10px;
+    display: table;
+    background-color: buttonface;
+    color: #2a2a2a;
+    }
+input[type="file"]#image_uploader {
+    display: none;
+}
 
 /*********** SELECT 2 **************/
 .select2-container--default .select2-selection--single {
@@ -146,4 +155,31 @@ label.error {
     content: " *";
     color: red;
     font-weight: 700 !important;
+}
+.header-list{
+    list-style: none;
+    display: inline-flex;
+    background-color: #30a5ff;
+    width: 100%;
+    margin-bottom: 0px;
+}
+.header-list li, .header-list li a{
+    padding: 15px;
+    margin-left: 10px;
+    color: white;
+
+}
+.header-list li a:hover{
+    text-decoration: none;
+    background-color: #70bbf5;
+}
+.header-list li.active a{
+    text-decoration: none;
+    background-color: #70bbf5;
+}
+.header-list li:first-child{
+    margin-left:50px;
+}
+.dropdown{
+    border-radius: 0px !important;
 }

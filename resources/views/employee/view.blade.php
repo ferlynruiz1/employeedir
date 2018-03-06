@@ -97,6 +97,12 @@ Employee Information
                             <p class="employee-details-value">{{ $employee->alias}}</p>
                         </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <p class="employee-details-value">{{ $employee->gender()}}</p>
+                        </div>
+                    </div>
                 </div>
                 <hr>
                 <br>
@@ -110,7 +116,7 @@ Employee Information
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Supervisor</label>
-                            <p class="employee-details-value">{{ $employee->supervisor_id}}</p>
+                            <p class="employee-details-value">{{ $employee->supervisor->fullname()}}</p>
                         </div>
                     </div>
                     <div class="col-md-3">

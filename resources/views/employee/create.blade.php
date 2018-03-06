@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-View Profile
+Add Employee
 @endsection
 @section('pagetitle')
 Employee / Add
@@ -33,18 +33,9 @@ Employee / Add
     .col-md-9 hr{
         margin: 0px;
     }
-    label#bb{
-    padding: 10px;
-    display: table;
-    background-color: buttonface;
-    color: #2a2a2a;
-     }
-    input[type="file"] {
-        display: none;
-    }
+    
 </style>
 <br>
-
 <form id="create_employee_form" role="form" method="POST" action="{{ route('employee_info.store')}}" enctype="multipart/form-data">
     {{ csrf_field() }}
 <div> 
@@ -116,15 +107,15 @@ Employee / Add
                                 <br>
                                 <label>Gender</label>
                                 <br>
-                                <input type="radio" id="male" name="gender_id" value="1" placeholder="tes">
+                                <input type="radio" id="male" name="gender_id" value="1" placeholder="test">
                                 <label class="radio-label" for="male">Male</label>
                                 &nbsp;
                                 &nbsp;
-                                <input type="radio" id="female" name="gender_id" value="2" placeholder="tes">
+                                <input type="radio" id="female" name="gender_id" value="2" placeholder="test">
                                 <label class="radio-label" for="female" >Female</label>
                                 &nbsp;
                                 &nbsp;
-                                <input type="radio" id="other" name="gender_id" value="3" placeholder="tes">
+                                <input type="radio" id="other" name="gender_id" value="3" placeholder="test">
                                 <label class="radio-label" for="other" >Other</label>
                                 &nbsp;
                                 &nbsp;
@@ -142,26 +133,25 @@ Employee / Add
                                 <input class="form-control" placeholder="Position" name="position_name" value="" required>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label class="asterisk-required">Supervisor</label>
                                 <select class="select2 form-control"  name="supervisor_id" required>
                                     <option selected="" disabled="">Select</option>
                                     @foreach($supervisors as $supervisor)
-                                        <option value="{{ $supervisor->id }}"> {{$supervisor->alias}}</option>
+                                        <option value="{{ $supervisor->id }}"> {{$supervisor->fullname()}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label class="asterisk-required">Team/Department</label>
                                  <select class="select2 form-control" name="team_name" required>
                                     <option selected="" disabled="">Select</option>
-                                    <option>IT Department</option>
-                                    <option>HR</option>
-                                    <option>Accounting</option>
-                                    <option>DAS</option>
+                                    @foreach($departments as $department)
+                                        <option value="{{ $department->department_name }}"> {{$department->department_name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -211,7 +201,6 @@ Employee / Add
                         </div>
                     </div>
             </div>
-
             <div class="col-md-12">
             <br>
             <br>
@@ -252,23 +241,5 @@ Employee / Add
 
         }
      });
-
-     function readURL(input) {
-
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function(e) {
-          $('#profile_image').attr('src', e.target.result);
-        }
-
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
-
-    $("#image_uploader").change(function() {
-      readURL(this);
-    });
-
  </script>
 @endsection

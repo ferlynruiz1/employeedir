@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\User;
+use App\EmployeeDepartment;
 use Carbon\Carbon;
 use DateTime;
 
@@ -30,7 +31,7 @@ class EmployeeInfoController extends Controller
     public function create()
     {
         //
-        return view('employee.create')->with('supervisors', User::all());
+        return view('employee.create')->with('supervisors', User::all())->with('departments', EmployeeDepartment::all());
     }
 
     /**
@@ -41,7 +42,6 @@ class EmployeeInfoController extends Controller
      */
     public function store(Request $request)
     {
-        $path = $request->profile_image->store('images');
         
         $employee = new User();
         $employee->eid = $request->eid;
@@ -91,7 +91,7 @@ class EmployeeInfoController extends Controller
      */
     public function edit($id)
     {
-        return view('employee.edit')->with('employee',User::find($id));
+        return view('employee.edit')->with('employee',User::find($id))->with('supervisors', User::all())->with('departments', EmployeeDepartment::all());
     }
 
     /**
@@ -113,13 +113,27 @@ class EmployeeInfoController extends Controller
         $employee->team_name = $request->team_name;
         $employee->position_name = $request->position_name;
         $employee->supervisor_id = $request->supervisor_id;
-        $employee->gender_id = $request->gender_id;
-        // $employee->start_date = $request->started_date;
-        // $employee->hired_date = $request->hired_date;
-        $employee->username = $request->username;
-        $employee->update();
 
-        return redirect()->back();
+        if($request->has('gender_id')){
+            $employee->gender = $request->gender_id;
+        }
+
+        $datetime = new DateTime();
+        $hired_date = $datetime->createFromFormat('m/d/Y',$request->hired_date)->format("Y-m-d H:i:s");
+        $started_date = $datetime->createFromFormat('m/d/Y',$request->started_date)->format("Y-m-d H:i:s");
+
+        $employee->hired_date = $hired_date;
+        $employee->start_date = $started_date;
+
+        if($request->hasFile("profile_image"))
+        {
+            $path = $request->profile_image->store('images/'.$employee->id);
+            $employee->profile_img = asset('storage/app/'.$path);
+        }
+
+        $employee->save();
+
+        return redirect()->back()->with('success', "Successfully updated employee information");
     }
 
     /**
@@ -159,5 +173,14 @@ class EmployeeInfoController extends Controller
         }else{
             return redirect()->back()->withErrors(array('message' => 'incorrect old password', 'status' => 'error'));
         }
+    }
+    public function employees(Request $request){
+
+        if($request->has('last_name')){
+            $employees = User::where('last_name', 'LIKE', $request->get('last_name').'%')->orWhere('first_name','LIKE', $request->get('last_name').'%')->get();
+        }else{
+            $employees = User::all();
+        }
+        return view('guest.employees')->with('employees', $employees )->with('request', $request);
     }
 }

@@ -56,10 +56,10 @@ class EmployeeInfoController extends Controller
 
         $datetime = new DateTime();
         $hired_date = $datetime->createFromFormat('m/d/Y',$request->hired_date)->format("Y-m-d H:i:s");
-        $started_date = $datetime->createFromFormat('m/d/Y',$request->started_date)->format("Y-m-d H:i:s");
+        $birth_date = $datetime->createFromFormat('m/d/Y',$request->birth_date)->format("Y-m-d H:i:s");
 
         $employee->hired_date = $hired_date;
-        $employee->start_date = $started_date;
+        $employee->birth_date = $birth_date;
         $employee->email = $request->email;
         $employee->password = Hash::make(env('USER_DEFAULT_PASSWORD', '123qwe!@#$'));
         $employee->save();
@@ -120,10 +120,10 @@ class EmployeeInfoController extends Controller
 
         $datetime = new DateTime();
         $hired_date = $datetime->createFromFormat('m/d/Y',$request->hired_date)->format("Y-m-d H:i:s");
-        $started_date = $datetime->createFromFormat('m/d/Y',$request->started_date)->format("Y-m-d H:i:s");
+        $birth_date = $datetime->createFromFormat('m/d/Y',$request->birth_date)->format("Y-m-d H:i:s");
 
         $employee->hired_date = $hired_date;
-        $employee->start_date = $started_date;
+        $employee->birth_date = $birth_date;
 
         if($request->hasFile("profile_image"))
         {
@@ -184,3 +184,4 @@ class EmployeeInfoController extends Controller
         return view('guest.employees')->with('employees', $employees )->with('request', $request);
     }
 }
+

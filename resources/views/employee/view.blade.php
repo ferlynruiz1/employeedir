@@ -40,7 +40,7 @@ Employee Information
 <br>    
 <div class="col-md-12">
   <div class="col-md-3" style="padding-left: 0px !important; padding-right: 0px;">
-      <div class="panel panel-container">
+        <div class="panel panel-container">
             <div class="row no-padding">
                 <center>
                 <img alt="image" class="img-circle" style="width: 150px; margin-top: 30px;" src="{{ $employee->profile_img }}">
@@ -51,7 +51,6 @@ Employee Information
                 <hr>
                 </center>
                 <span class="pull-left label-profile">date hired: <i>{{ $employee->prettydatehired() }}</i></span>
-                <span class="pull-right label-profile">date started: <i>{{ $employee->prettydatestarted() }}</i></span>
                 <br>
                 <br>
             </div><!--/.row-->
@@ -103,6 +102,12 @@ Employee Information
                             <p class="employee-details-value">{{ $employee->gender()}}</p>
                         </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Birthdate</label>
+                            <p class="employee-details-value">{{ $employee->prettybirthdate()}}</p>
+                        </div>
+                    </div>
                 </div>
                 <hr>
                 <br>
@@ -131,12 +136,6 @@ Employee Information
                         <div class="form-group">
                             <label>Hire Date</label>
                            <p class="employee-details-value">{{ $employee->prettydatehired()}}</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Start Date</label>
-                            <p class="employee-details-value">{{ $employee->prettydatestarted()}}</p>
                         </div>
                     </div>
                 </div>

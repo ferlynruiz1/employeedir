@@ -81,13 +81,6 @@ Employees
                 <span class="fa fa-facebook-square"></span>
                 <span class="fa fa-twitter-square"></span>
             </div>
-           <!--  <div class="col-md-3" style="border-right: 1px solid #ddd">
-                <h5>Alias: &nbsp;<b>{{ $employee->alias}}</b></h5>
-                <h5>EMP #: &nbsp;<b>{{ $employee->eid}}</b></h5>
-                <h5>Supervisor: &nbsp;<b>{{ $employee->supervisor->fullname()}}</b></h5>
-                <h5>Hired Date: &nbsp;<b>{{ $employee->prettydatehired()}}</b></h5>
-                <h5>Start Date: &nbsp;<b>{{ $employee->prettydatestarted()}}   </b></h5>
-            </div> -->
             <div class="col-md-5" style="margin-left: 10px">
 
                 <h5><span class="fa fa-id-card"></span>&nbsp;&nbsp;{{$employee->eid}}</h5>

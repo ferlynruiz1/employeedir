@@ -183,3 +183,15 @@ label.error {
 .dropdown{
     border-radius: 0px !important;
 }
+.section-header{
+    background-color: #30a5ff !important;
+    width: 100%;
+    color: white;
+    padding: 10px 10px 10px 15px;
+    font-weight: 500;
+}
+.section-header h4{
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+}

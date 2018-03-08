@@ -34,9 +34,9 @@ class User extends Authenticatable
     {
         return $this->first_name . ' ' . $this->middle_name . ' ' . $this->last_name;
     }
-    public function scopePrettydatestarted($query)
+    public function scopePrettyBirthDate($query)
     {
-        $dt = Carbon::parse($this->start_date);
+        $dt = Carbon::parse($this->birth_date);
         return $dt->toFormattedDateString();
     }
     public function scopePrettydatehired($query)
@@ -44,9 +44,9 @@ class User extends Authenticatable
         $dt = Carbon::parse($this->hired_date);
         return $dt->toFormattedDateString();
     }
-     public function scopeDateStarted($query)
+     public function scopeBirthDate($query)
     {
-        $dt = Carbon::parse($this->start_date);
+        $dt = Carbon::parse($this->birth_date);
         return $dt->format('m/d/Y');
     }
     public function scopeDateHired($query)

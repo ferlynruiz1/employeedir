@@ -40,6 +40,9 @@ Employee Information / Edit
     {{ csrf_field() }}
 <div col-md-12>
   <div class="col-md-3" style="padding-left: 10px !important; padding-right: 10px;">
+     <div class="section-header">
+        <h4>Profile Picture</h4>
+     </div>
       <div class="panel panel-container">
             <div class="row no-padding">
                 <center>
@@ -55,7 +58,6 @@ Employee Information / Edit
                 <hr>
                 </center>
                 <span class="pull-left label-profile">date hired: <i>{{ $employee->prettydatehired() }}</i></span>
-                <span class="pull-right label-profile" style="margin-top: -20px;">date started: <i>{{ $employee->prettydatestarted() }}</i></span>
                 <br>
                 <br>
             </div><!--/.row-->
@@ -63,13 +65,19 @@ Employee Information / Edit
   </div>
 
   <div class="col-md-9">
+    <div class="section-header">
+        <h4>Employee Information</h4>
+     </div>
       <div class="panel panel-container">
-        <div class="panel-body">
-        <label>Employee Information</label>
+        <div class="panel-body"> 
+        <label>Personal</label>
         <br> 
-        <small class="asterisk-required" style="margin-left: 20px;font-size: 13px;">required fields</small>
-        <br>
-        <br>
+        <hr>
+        <br> 
+        <small class="asterisk-required" style="margin-left: 15px;font-size: 13px;">required fields</small>
+        <br> 
+        <br> 
+        <br> 
             <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-3">
@@ -104,6 +112,13 @@ Employee Information / Edit
                                 <input class="form-control" placeholder="Alias" name="alias" value="{{$employee->alias}}">
                             </div>
                         </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="asterisk-required">Birthdate</label>
+                                <input class="form-control datepicker" placeholder="Birthdate" name="birth_date" value="{{ $employee->birthdate() }}" required>
+                            </div>
+                        </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <br>
@@ -115,18 +130,23 @@ Employee Information / Edit
                                 &nbsp;
                                 <input type="radio" id="female" name="gender_id" value="2" placeholder="test" <?php echo $employee->gender == 2 ? "checked" : "" ; ?>>
                                 <label class="radio-label" for="female" >Female</label>
-                                &nbsp;
-                                &nbsp;
-                                <input type="radio" id="other" name="gender_id" value="3" placeholder="test" <?php echo $employee->gender == 3 ? "checked" : "" ; ?>>
-                                <label class="radio-label" for="other" >Other</label>
-                                &nbsp;
-                                &nbsp;
-                                <input type="radio" id="prefernotsay" name="gender_id" value="4" placeholder="tes" <?php echo $employee->gender == 4 ? "checked" : "" ; ?>>
-                                <label class="radio-label" for="prefernotsay" >Prefer not to say</label>
+                              
                             </div>
                         </div>
                     </div>
-
+                </div>
+                <div class="col-md-12">
+        <br>
+        <br>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <label>Job Related</label>
+        <hr>
+        <br>
+                <div class="col-md-12">
                      <div class="row">
                         <br>
                         <div class="col-md-3">
@@ -145,6 +165,17 @@ Employee Information / Edit
                                     @endforeach
                                 </select>
 
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="asterisk-required">Manager</label>
+                               <select class="select2 form-control" name="team_name" required>
+                                    <option selected="" disabled="">Select</option>
+                                   @foreach($supervisors as $supervisor)
+                                        <option value="{{ $supervisor->id }}"> {{$supervisor->fullname()}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -168,8 +199,31 @@ Employee Information / Edit
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label class="asterisk-required">Start Date</label>
-                                <input class="form-control datepicker" placeholder="Start Date" name="started_date" value="{{$employee->datestarted()}}">
+                                <label class="asterisk-required">Account</label>
+                                 <select class="select2 form-control" name="team_name" required>
+                                    <option selected="" disabled="">Select</option>
+                                    <option>Reader's Magnet</option>
+                                    <option>cVen</option>
+                                    <option>Enterprise</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="asterisk-required">Employee Status</label>
+                                 <select class="select2 form-control" name="team_name" required>
+                                    <option selected="" disabled="">Select</option>
+                                    <option>Active</option>
+                                    <option>Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <br>
+                                <p class="asterisk-required">can view information from other accounts ?</p>
+                                <input type="checkbox" name="">
                             </div>
                         </div>
                     </div>

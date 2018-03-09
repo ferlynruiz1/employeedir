@@ -110,6 +110,7 @@
         <ul class="nav menu">
             <li <?php echo \Request::url() == url('home') ? 'class="active"' : ''; ?>  ><a href="{{url('home')}}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
             <li <?php echo \Request::url() == url('employee_info/'. Auth::user()->id . '/') ? 'class="active"' : ''; ?> ><a href="{{url('employee_info/'. Auth::user()->id . '/')}}"><em class="fa fa-user">&nbsp;</em> Profile</a></li>
+            <li <?php echo \Request::url() == url('department') ? 'class="active"' : ''; ?> ><a href="{{url('department')}}"><em class="fa fa-users">&nbsp;</em> Department</a></li>
             <li><a href="{{ route('logout')}}"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
         </ul>
     </div><!--/.sidebar-->

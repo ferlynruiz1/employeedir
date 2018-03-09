@@ -121,7 +121,13 @@ Employee Information
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Supervisor</label>
-                            <p class="employee-details-value">{{ $employee->supervisor->fullname()}}</p>
+                            <p class="employee-details-value">{{ isset($employee->supervisor) ? $employee->supervisor->fullname() : '' }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Manager</label>
+                           <p class="employee-details-value">{{ isset($employee->manager) ? $employee->manager->fullname() : '' }}</p>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -136,6 +142,12 @@ Employee Information
                         <div class="form-group">
                             <label>Hire Date</label>
                            <p class="employee-details-value">{{ $employee->prettydatehired()}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Status</label>
+                           <p class="employee-details-value">{{ $employee->status()}}</p>
                         </div>
                     </div>
                 </div>

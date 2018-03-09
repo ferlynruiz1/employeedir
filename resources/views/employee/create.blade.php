@@ -155,9 +155,9 @@ Employee / Add
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label class="asterisk-required">Supervisor</label>
-                        <select class="select2 form-control"  name="supervisor_id" required>
-                            <option selected="" disabled="" >Select</option>
+                        <label >Supervisor</label>
+                        <select class="select2 form-control"  name="supervisor_id">
+                            <option selected="" disabled="">Select</option>
                             @foreach($supervisors as $supervisor)
                                 <option value="{{ $supervisor->id }}"> {{$supervisor->fullname()}}</option>
                             @endforeach
@@ -167,8 +167,8 @@ Employee / Add
 
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label class="asterisk-required">Manager</label>
-                       <select class="select2 form-control" name="team_name" required>
+                        <label >Manager</label>
+                       <select class="select2 form-control" name="manager_id">
                             <option selected="" disabled="">Select</option>
                            @foreach($supervisors as $supervisor)
                                 <option value="{{ $supervisor->id }}"> {{$supervisor->fullname()}}</option>
@@ -178,8 +178,8 @@ Employee / Add
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label class="asterisk-required">Team/Department</label>
-                         <select class="select2 form-control" name="team_name" required>
+                        <label >Team/Department</label>
+                         <select class="select2 form-control" name="team_name">
                             <option selected="" disabled="">Select</option>
                             @foreach($departments as $department)
                                 <option value="{{ $department->department_name }}"> {{$department->department_name}}</option>
@@ -199,11 +199,11 @@ Employee / Add
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="asterisk-required">Account</label>
-                         <select class="select2 form-control" name="team_name" required>
+                         <select class="select2 form-control" name="account_id" required>
                             <option selected="" disabled="">Select</option>
-                            <option>Reader's Magnet</option>
-                            <option>cVen</option>
-                            <option>Enterprise</option>
+                            <option value="1">Reader's Magnet</option>
+                            <option value="2">cVen</option>
+                            <option value="3">Enterprise</option>
                         </select>
                     </div>
                 </div>
@@ -211,10 +211,10 @@ Employee / Add
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="asterisk-required">Employee Status</label>
-                         <select class="select2 form-control" name="team_name" required>
+                         <select class="select2 form-control" name="status_id" required>
                             <option selected="" disabled="">Select</option>
-                            <option>Active</option>
-                            <option>Inactive</option>
+                            <option value="1">Active</option>
+                            <option value="2">Inactive</option>
                         </select>
                     </div>
                 </div>
@@ -222,7 +222,7 @@ Employee / Add
                     <div class="form-group">
                         <br>
                         <p class="asterisk-required">can view information from other accounts ?</p>
-                        <input type="checkbox" name="">
+                        <input type="checkbox" name="all_access">
                     </div>
                 </div>
             </div>

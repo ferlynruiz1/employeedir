@@ -146,6 +146,17 @@ label.error {
     position: absolute;
     margin-left: -132px;
 }
+#account_id-error{
+    margin-top: 70px;
+    position: absolute;
+    margin-left: -77px;
+}
+label#gender_id-error {
+    position: absolute;
+    margin-left: -9px;
+    margin-top: 30px;
+}
+
 .radio-label{
     font-weight: 500 !important;
     color: #222;

@@ -58,6 +58,17 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\User', 'supervisor_id');
     }
+    public function manager(){
+        return $this->belongsTo('App\User', 'manager_id');
+    }
+    public function scopeStatus($query){
+        switch ($this->status) {
+            case 1:
+                return "Active"; 
+            case 2:
+                return "Inactive";
+        }
+    }
     public function scopeGender($query){
         switch ($this->gender) {
             case 1:

@@ -43,6 +43,7 @@ class EmployeeInfoController extends Controller
     public function store(Request $request)
     {
         
+
         $employee = new User();
         $employee->eid = $request->eid;
         $employee->first_name = $request->first_name;
@@ -53,6 +54,15 @@ class EmployeeInfoController extends Controller
         $employee->supervisor_id = $request->supervisor_id;
         $employee->team_name = $request->team_name;
         $employee->gender = $request->gender_id;
+
+        $employee->manager_id = $request->manager_id;
+        $employee->account_id = $request->account_id;
+        $employee->status = $request->status_id;
+        if($request->has('all_access')){
+            $employee->all_access = 1;
+        }else{
+            $employee->all_access = 0;
+        }
 
         $datetime = new DateTime();
         $hired_date = $datetime->createFromFormat('m/d/Y',$request->hired_date)->format("Y-m-d H:i:s");
@@ -65,10 +75,12 @@ class EmployeeInfoController extends Controller
         $employee->save();
 
         /* saving photo */
-        $path = $request->profile_image->store('images/'.$employee->id);
-        $employee->profile_img = asset('storage/app/'.$path);
-        $employee->save();
-
+        if($request->hasFile("profile_image"))
+        {
+            $path = $request->profile_image->store('images/'.$employee->id);
+            $employee->profile_img = asset('storage/app/'.$path);
+            $employee->save();
+        }
         return redirect('home')->with('success', "Successfully created Employee");
     }
 
@@ -116,6 +128,15 @@ class EmployeeInfoController extends Controller
 
         if($request->has('gender_id')){
             $employee->gender = $request->gender_id;
+        }
+
+        $employee->manager_id = $request->manager_id;
+        $employee->account_id = $request->account_id;
+        $employee->status = $request->status_id;
+        if($request->has('all_access')){
+            $employee->all_access = 1;
+        }else{
+            $employee->all_access = 0;
         }
 
         $datetime = new DateTime();

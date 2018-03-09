@@ -170,10 +170,10 @@ Employee Information / Edit
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="asterisk-required">Manager</label>
-                               <select class="select2 form-control" name="team_name" required>
+                               <select class="select2 form-control" name="manager_id" required>
                                     <option selected="" disabled="">Select</option>
                                    @foreach($supervisors as $supervisor)
-                                        <option value="{{ $supervisor->id }}"> {{$supervisor->fullname()}}</option>
+                                        <option value="{{ $supervisor->id }}" <?php echo $supervisor->id == $employee->manager_id ? "selected" : "" ; ?>> {{$supervisor->fullname()}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -200,11 +200,11 @@ Employee Information / Edit
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="asterisk-required">Account</label>
-                                 <select class="select2 form-control" name="team_name" required>
+                                 <select class="select2 form-control" name="account_id" required>
                                     <option selected="" disabled="">Select</option>
-                                    <option>Reader's Magnet</option>
-                                    <option>cVen</option>
-                                    <option>Enterprise</option>
+                                    <option <?php echo $employee->account_id == 1 ? "selected" : "" ; ?> value="1">Reader's Magnet</option>
+                                    <option <?php echo $employee->account_id == 2 ? "selected" : "" ; ?> value="2">cVen</option>
+                                    <option <?php echo $employee->account_id == 3 ? "selected" : "" ; ?> value="3">Enterprise</option>
                                 </select>
                             </div>
                         </div>
@@ -212,10 +212,10 @@ Employee Information / Edit
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label class="asterisk-required">Employee Status</label>
-                                 <select class="select2 form-control" name="team_name" required>
+                                 <select class="select2 form-control" name="status_id" required>
                                     <option selected="" disabled="">Select</option>
-                                    <option>Active</option>
-                                    <option>Inactive</option>
+                                    <option <?php echo $employee->status == 1 ? "selected" : "" ; ?> value="1">Active</option>
+                                    <option <?php echo $employee->status == 2 ? "selected" : "" ; ?> value="2">Inactive</option>
                                 </select>
                             </div>
                         </div>
@@ -223,7 +223,7 @@ Employee Information / Edit
                             <div class="form-group">
                                 <br>
                                 <p class="asterisk-required">can view information from other accounts ?</p>
-                                <input type="checkbox" name="">
+                                <input type="checkbox" name="all_access" <?php echo $employee->all_access == 1 ? "checked" : "" ; ?>>
                             </div>
                         </div>
                     </div>

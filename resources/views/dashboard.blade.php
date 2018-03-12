@@ -56,6 +56,9 @@ Dashboard
 
 	</style>
     <a href="{{url('employee_info/create')}}" class="btn btn-primary" ><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Employee</a>
+    <div class="section-header">
+        <h4>List of Employees</h4>
+    </div>
 	<table id="employees_table" class="table">
     <thead>
         <tr>
@@ -86,7 +89,7 @@ Dashboard
                     <a href="{{ url('/employee_info/'. $employee->id)}}" title="View"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
                     @if(Auth::user()->usertype == 1)
                         <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" title="Edit"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
-                        <a href="#" class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Edit" data-id="{{$employee->id}}"><i class="fa fa-trash" style="color: red;" ></i></a><td>
+                        <a href="#" class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Edit" data-id="{{$employee->id}}"><i class="fa fa-trash" style="color: red;" ></i></a></td>
                     @endif
             </tr>
         @endforeach

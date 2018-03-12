@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\EmployeeDepartment;
+use App\ElinkAccount;
 use Carbon\Carbon;
 use DateTime;
 
@@ -31,7 +32,7 @@ class EmployeeInfoController extends Controller
     public function create()
     {
         //
-        return view('employee.create')->with('supervisors', User::all())->with('departments', EmployeeDepartment::all());
+        return view('employee.create')->with('supervisors', User::all())->with('departments', EmployeeDepartment::all())->with('accounts', ElinkAccount::all());
     }
 
     /**

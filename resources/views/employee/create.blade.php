@@ -153,7 +153,45 @@ Employee / Add
                         <input class="form-control" placeholder="Position" name="position_name" value="" required>
                     </div>
                 </div>
-                <div class="col-md-4">
+                 <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="asterisk-required">Account</label>
+                        <select class="select2 form-control"  name="account_id">
+                            <option selected="" disabled="">Select</option>
+                            @foreach($accounts as $account)
+                                <option value="{{ $account->id }}"> {{$account->account_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Team/Department</label>
+                         <select class="select2 form-control" name="team_name">
+                            <option selected="" disabled="">Select</option>
+                            @foreach($departments as $department)
+                                <option value="{{ $department->department_name }}"> {{$department->department_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Manager</label>
+                       <select class="select2 form-control" name="manager_id">
+                            <option selected="" disabled="">Select</option>
+                           @foreach($supervisors as $supervisor)
+                                <option value="{{ $supervisor->id }}"> {{$supervisor->fullname()}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
                     <div class="form-group">
                         <label >Supervisor</label>
                         <select class="select2 form-control"  name="supervisor_id">
@@ -167,46 +205,11 @@ Employee / Add
 
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label >Manager</label>
-                       <select class="select2 form-control" name="manager_id">
-                            <option selected="" disabled="">Select</option>
-                           @foreach($supervisors as $supervisor)
-                                <option value="{{ $supervisor->id }}"> {{$supervisor->fullname()}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label >Team/Department</label>
-                         <select class="select2 form-control" name="team_name">
-                            <option selected="" disabled="">Select</option>
-                            @foreach($departments as $department)
-                                <option value="{{ $department->department_name }}"> {{$department->department_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-
-                <div class="col-md-3">
-                    <div class="form-group">
                         <label class="asterisk-required">Hire Date</label>
                         <input class="form-control datepicker" placeholder="Hire Date" name="hired_date" value="" required>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="asterisk-required">Account</label>
-                         <select class="select2 form-control" name="account_id" required>
-                            <option selected="" disabled="">Select</option>
-                            <option value="1">Reader's Magnet</option>
-                            <option value="2">cVen</option>
-                            <option value="3">Enterprise</option>
-                        </select>
-                    </div>
-                </div>
+               
 
                 <div class="col-md-2">
                     <div class="form-group">
@@ -218,11 +221,11 @@ Employee / Add
                         </select>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="form-group">
-                        <br>
-                        <p class="asterisk-required">can view information from other accounts ?</p>
-                        <input type="checkbox" name="all_access">
+                        
+                        <input type="checkbox" name="all_access"> &nbsp;
+                        <span class="asterisk-required" for="all_access">can view information from other account ?</span>
                     </div>
                 </div>
             </div>

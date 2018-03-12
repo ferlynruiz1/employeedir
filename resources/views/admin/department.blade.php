@@ -60,9 +60,9 @@ Departments
 
 	</style>
     <a href="{{url('department/create')}}" class="btn btn-primary" ><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Department</a>
-     <div class="section-header">
-      <h4>Lists of Department</h4>
-  </div>
+    <div class="section-header">
+        <h4>List of Departments</h4>
+    </div>
     <table id="employees_table" class="table">
     <thead>
         <tr>
@@ -80,12 +80,11 @@ Departments
             <tr> 
                 <td>  {{ ++$counter }}</td>
                 <td style="max-width: 250px;">
-                   
                     <h5 style="text-align: left !important;">{{$department->department_name}}</h5>
                 </td>
-            <td>{{ $department->manager->fullname() }}</td>
-            <td>{{ $department->division->division_name }}</td>
-            <td>{{ $department->account->account_name }}</td>
+            <td>{{ isset($department->manager) == true ? $department->manager->fullname() : 'N/A' }} </td>
+            <td>{{ isset($department->division) == true ? $department->division->division_name : 'N/A'}}</td>
+            <td>{{ isset($department->account) == true ? $department->account->account_name : 'N/A'}}</td>
                 <td align="center">
                     
                    <a href="{{ url('/department/'. $department->id . '/edit')}}" title="Edit"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
@@ -107,4 +106,4 @@ Departments
         $('#messageModal .delete_form').submit();
     });
 </script>
-@endsection
+@endsection 

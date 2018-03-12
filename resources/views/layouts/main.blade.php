@@ -14,7 +14,7 @@
     <link href="{{ asset('public/css/custom.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/css/jquery.dataTables.css')}}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-    <script type="text/javascript" src="{{ asset('public/js/jquery.bootstrap-growl.min.js') }}"></script>
+   
 
     <!--Custom Font-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -23,6 +23,7 @@
     <script src="js/respond.min.js"></script>
     <![endif]-->
     <script src="{{ asset('public/js/jquery-1.11.1.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/jquery.bootstrap-growl.min.js') }}"></script>
 </head>
 <body>
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation" style="background-color: #32373A !important;">

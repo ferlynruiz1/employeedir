@@ -17,9 +17,9 @@ Department / Add New
     <form role="form" method="POST" action="{{ route('department.store')}}" >
         {{ csrf_field() }}
    <div class="col-md-3" style="">
-    <div class="section-header">
-      <h4>New Department</h4>
-  </div>
+      <div class="section-header">
+         <h4>New Department</h4>
+      </div>
       <div class="panel panel-container">
             <div class="row margin-container">
                 <div class="form-group">
@@ -31,7 +31,7 @@ Department / Add New
                     <select class="select2 form-control"  name="division_id">
                         <option selected="" disabled="">Select</option>
                         @foreach($divisions as $division)
-                            <option value="{{ $division->id }}"> {{$division->division_name}}</option>
+                        <option value="{{ $division->id }}"> {{$division->division_name}}</option>
                         @endforeach
                     </select>
                 </div>

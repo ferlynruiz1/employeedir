@@ -58,6 +58,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\User', 'supervisor_id');
     }
+    public function account(){
+        return $this->belongsTo('App\ElinkAccount', 'account_id');
+    }
     public function manager(){
         return $this->belongsTo('App\User', 'manager_id');
     }

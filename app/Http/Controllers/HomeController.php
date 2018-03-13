@@ -26,9 +26,15 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $user = User::with('supervisor')->get();
-        return view('dashboard')->with('employees', $user);
+        
+        if(Auth::user()->usertype == 1){
+            $user = User::with('supervisor')->get();
+            return view('dashboard')->with('employees', $user);
+        }else{
+            $user = User::with('supervisor')->paginate(10);
+             return view('guest.employees')->with('employees', $user)->with('request', $request);
+        }
     }
 }

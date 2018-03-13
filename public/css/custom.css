@@ -90,7 +90,8 @@ a.paginate_button {
 
 input[type=text], input[type=password],input.form-control{
     border-radius: 0px !important;
-    height: 40px !important;
+    height: 35px !important;
+    font-size: 12px !important;
 }
 
 h1.page-header{
@@ -119,8 +120,9 @@ input[type="file"]#image_uploader {
     background-color: #fff !important;
     border: 1px solid #ddd !important;
      border-radius: 0px !important; 
-    height: 40px !important;
-    padding: 5px; 
+    height: 35px !important;
+    padding: 2px !important;
+    font-size: 12px !important;
 }   
 .select2-container--default .select2-selection--single .select2-selection__arrow b{
     margin-top: 5px !important;
@@ -204,4 +206,15 @@ label#gender_id-error {
     color: white;
     font-weight: 500;
     font-size: 16px;
+}
+
+/*EMPLOYEES PAGE */
+
+.pagination>li:first-child>a, .pagination>li:first-child>span{
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+}
+.pagination>li:last-child>a, .pagination>li:last-child>span {
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
 }

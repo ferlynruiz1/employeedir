@@ -109,9 +109,9 @@
         </div><!-- /.container-fluid -->
         <div class="navbar-header">
             <ul class="header-list">
-                <li <?php echo \Request::url() == url('employees') ? 'class="active"' : ''; ?> ><a  href="{{ url('employees')}}">Home</a></li>
-                <li <?php echo \Request::url() == url('employee_info/'. Auth::user()->id . '/') ? 'class="active"' : ''; ?>><a  href="{{ url('employees')}}">Profile</a></li>
-                <li ><a  href="{{ url('employees')}}">Employees</a></li>
+                <li <?php echo \Request::url() == url('home') ? 'class="active"' : ''; ?> ><a  href="{{ url('home')}}">Home</a></li>
+                <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>><a  href="{{ url('myprofile')}}">My Profile</a></li>
+                <li <?php echo \Request::url() == url('employees') ? 'class="active"' : ''; ?>><a  href="{{ url('employees')}}">Employees</a></li>
             </ul>
         </div>
     </nav>

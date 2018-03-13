@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use App\EmployeeDepartment;
 use App\ElinkAccount;
 use Carbon\Carbon;
@@ -197,13 +198,23 @@ class EmployeeInfoController extends Controller
         }
     }
     public function employees(Request $request){
-
-        if($request->has('last_name')){
-            $employees = User::where('last_name', 'LIKE', $request->get('last_name').'%')->orWhere('first_name','LIKE', $request->get('last_name').'%')->get();
-        }else{
-            $employees = User::all();
+        $employees = new User;
+         if($request->has('keyword')){
+            $employees = $employees->where('first_name', 'LIKE', '%'.$request->get('keyword').'%')->orWhere('last_name', 'LIKE', '%'.$request->get('keyword').'%');
+        }else if($request->has('alphabet')){
+            $employees = $employees->where('last_name', 'LIKE', $request->get('alphabet').'%')->orWhere('first_name', 'LIKE', $request->get('alphabet').'%');
         }
+       
+
+        $employees = $employees->orderBy('last_name', 'ASC')->paginate(10);
+
         return view('guest.employees')->with('employees', $employees )->with('request', $request);
+    }
+    public function profile (Request $request, $id){
+        return view('auth.profile.view')->with('employee', User::find($id));
+    }
+    public function myprofile(Request $request){
+        return view('auth.profile.view')->with('employee', Auth::user());
     }
 }
 

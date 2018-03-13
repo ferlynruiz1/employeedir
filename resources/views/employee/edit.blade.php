@@ -46,7 +46,7 @@ Employee Information / Edit
       <div class="panel panel-container">
             <div class="row no-padding">
                 <center>
-                <img alt="image" id="profile_image" class="img-circle" style="width: 150px; margin-top: 30px;" src="{{ $employee->profile_img }}">
+                <img alt="image" id="profile_image" class="img-circle" style="width: 100px; height: 100px; margin-top: 30px;" src="{{ $employee->profile_img }}">
                 <br> 
                 <br>
                <label id="bb" class="btn btn-default"> Upload Photo
@@ -83,7 +83,7 @@ Employee Information / Edit
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="asterisk-required">First Name</label>
-                                <input  class="form-control" placeholder="First Name" name="first_name" value="{{$employee->first_name}}">
+                                <input  class="form-control" placeholder="First Name" name="first_name" value="{{$employee->first_name}}" required>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -155,10 +155,49 @@ Employee Information / Edit
                                 <input class="form-control" placeholder="Position" name="position_name" value="{{$employee->position_name}}">
                             </div>
                         </div>
-                        <div class="col-md-4">
+
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <label class="asterisk-required">Supervisor</label>
-                                <select class="select2 form-control"  name="supervisor_id" required>
+                                <label class="asterisk-required">Account</label>
+                                 <select class="select2 form-control" name="account_id" required>
+                                    <option selected="" disabled="">Select</option>
+                                    <option <?php echo $employee->account_id == 1 ? "selected" : "" ; ?> value="1">Reader's Magnet</option>
+                                    <option <?php echo $employee->account_id == 2 ? "selected" : "" ; ?> value="2">cVen</option>
+                                    <option <?php echo $employee->account_id == 3 ? "selected" : "" ; ?> value="3">Enterprise</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Team/Department</label>
+                                <select class="select2 form-control" name="team_name">
+                                    <option selected="" disabled="">Select</option>
+                                    @foreach($departments as $department)
+                                        <option <?php echo $department->department_name == $employee->team_name ? "selected" : "";?> value="{{ $department->department_name }}"> {{$department->department_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Manager</label>
+                               <select class="select2 form-control" name="manager_id">
+                                    <option selected="" disabled="">Select</option>
+                                   @foreach($supervisors as $supervisor)
+                                        <option value="{{ $supervisor->id }}" <?php echo $supervisor->id == $employee->manager_id ? "selected" : "" ; ?>> {{$supervisor->fullname()}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Supervisor</label>
+                                <select class="select2 form-control"  name="supervisor_id" >
                                     <option selected="" disabled="">Select</option>
                                     @foreach($supervisors as $supervisor)
                                     <option value="{{ $supervisor->id }}" <?php echo $supervisor->id == $employee->supervisor_id ? "selected" : "" ; ?>> {{$supervisor->fullname()}}</option>
@@ -169,43 +208,8 @@ Employee Information / Edit
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label class="asterisk-required">Manager</label>
-                               <select class="select2 form-control" name="manager_id" required>
-                                    <option selected="" disabled="">Select</option>
-                                   @foreach($supervisors as $supervisor)
-                                        <option value="{{ $supervisor->id }}" <?php echo $supervisor->id == $employee->manager_id ? "selected" : "" ; ?>> {{$supervisor->fullname()}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label class="asterisk-required">Team/Department</label>
-                                <select class="select2 form-control" name="team_name" required>
-                                    <option selected="" disabled="">Select</option>
-                                    @foreach($departments as $department)
-                                        <option <?php echo $department->department_name == $employee->team_name ? "selected" : "";?> value="{{ $department->department_name }}"> {{$department->department_name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
                                 <label class="asterisk-required">Hire Date</label>
                                 <input class="form-control datepicker" placeholder="Hire Date" name="hired_date" value="{{$employee->datehired()}}">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label class="asterisk-required">Account</label>
-                                 <select class="select2 form-control" name="account_id" required>
-                                    <option selected="" disabled="">Select</option>
-                                    <option <?php echo $employee->account_id == 1 ? "selected" : "" ; ?> value="1">Reader's Magnet</option>
-                                    <option <?php echo $employee->account_id == 2 ? "selected" : "" ; ?> value="2">cVen</option>
-                                    <option <?php echo $employee->account_id == 3 ? "selected" : "" ; ?> value="3">Enterprise</option>
-                                </select>
                             </div>
                         </div>
 
@@ -221,17 +225,18 @@ Employee Information / Edit
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <br>
-                                <p class="asterisk-required">can view information from other accounts ?</p>
-                                <input type="checkbox" name="all_access" <?php echo $employee->all_access == 1 ? "checked" : "" ; ?>>
+                                <input type="checkbox" name="all_access" <?php echo $employee->all_access == 1 ? "checked" : "" ; ?>> &nbsp;
+                                <span class="asterisk-required" for="all_access">can view information from other account ?</span>
                             </div>
                         </div>
                     </div>
             </div>
             <div class="col-md-12">
+            <br>
                 <br>
             </div>
             <label>Login Credentials</label>
+            <hr>
             <br>
             <br>
             <div class="col-md-12">

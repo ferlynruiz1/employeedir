@@ -38,7 +38,10 @@ Employee Information
 </style>
 <br>    
 <div class="col-md-12">
-  <div class="col-md-3" style="padding-left: 0px !important; padding-right: 0px;">
+  <div class="col-md-3" style="height: 90vh !important; padding-left: 0px !important; padding-right: 0px;">
+    <div class="section-header">
+        <h4>Profile Picture</h4>
+    </div>
         <div class="panel panel-container">
             <div class="row no-padding">
                 <center>
@@ -56,9 +59,13 @@ Employee Information
         </div>
   </div>
   <div class="col-md-9">
+    <div class="section-header">
+        <h4>Employee Information</h4>
+    </div>
       <div class="panel panel-container">
+        
         <div class="panel-body">
-        <label>Employee Information</label>
+        <label>Personal Information</label>
         <br>
         <br>
             <div class="col-md-12">

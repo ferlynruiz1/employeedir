@@ -49,9 +49,11 @@ Employees
      <li><a href="?alphabet={{ $letter . "\n" }}" >{{ $letter . "\n" }}</a></li>
     @endforeach
 </ul>
+<div class="pull-right">
+    {{ $employees->appends(Illuminate\Support\Facades\Input::except('page'))->links() }}
+</div>
 </div>
     <br>
-
  @if(count($employees) == 0)
     <br>
     <br>
@@ -71,18 +73,17 @@ Employees
                 <div class="col-md-1">
                     <img alt="image" id="profile_image" class="img-circle" style="width: 80px; height: 80px;margin: 15px;" src="{{ $employee->profile_img }}">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <a href="{{url('profile/'. $employee->id)}}"><h3>{{$employee->fullname()}}</h3></a>
                     <h4>{{ $employee->position_name}}</h4>
                     <h5>{{$employee->team_name}} - {{$employee->account->account_name}}</h5>
-<!--                <span class="fa fa-envelope"></span>
+                    <span class="fa fa-envelope"></span>
                     <span class="fa fa-linkedin-square"></span>
                     <span class="fa fa-facebook-square"></span>
-                    <span class="fa fa-twitter-square"></span> -->
+                    <span class="fa fa-twitter-square"></span>
                 </div>
 
-                <div class="col-md-3">
-                    <br>
+                <div class="col-md-5">
                     <br>
                     <h5><span class="fa fa-id-card" title="Employee ID"></span>&nbsp;&nbsp;{{$employee->eid}}</h5>
                     <h5><span class="fa fa-envelope" title="Email Address"></span>&nbsp;&nbsp;{{$employee->email}}</h5>
@@ -93,12 +94,12 @@ Employees
                         <span class="fa fa-user" title="Supervisor"></span> <span style="color: gray;">Supervisor:</span>
                     <br>
                     <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;{{$employee->supervisor->fullname()}}</h5>
+                        {{$employee->supervisor->fullname()}}</h5>
                     <h5>
                         <span class="fa fa-user" title="Manager"></span> <span style="color: gray;">Manager: </span>
                         <br>
                         <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;{{ isset($employee->manager) ? $employee->manager->fullname() : 'N/A'}}</h5>
+                        {{ isset($employee->manager) ? $employee->manager->fullname() : 'N/A'}}</h5>
                 </div>
             </div>
         </div>

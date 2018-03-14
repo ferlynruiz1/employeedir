@@ -10,7 +10,7 @@ Dashboard
         background-image: url({{asset('public/img/002-subtle-light-pattern-background-texture.jpg')}});
     }
     #employees_table_wrapper{
-        background-color: white;
+        background-color: #fff;
         padding: 10px;
     }
     h1.page-header{
@@ -28,8 +28,8 @@ Dashboard
         color: white;
         margin-right: 10px;
     }
-    table tr{
-        background-color: white;
+    table tr {
+        background-color: #fff;
     }
     table h5{
         font-weight: 500;

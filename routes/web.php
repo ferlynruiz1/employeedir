@@ -20,6 +20,12 @@ Route::get('logout', function(){
 	 return redirect('/login');
 });
 
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('admin/invalid', ['as' => 'admin-invalid', 'uses' => function(){
+	return view('error.notadmin');
+}]);
+
 Auth::routes();
 Route::middleware(['auth'])->group(function(){
 	Route::get('employees', 'EmployeeInfoController@employees');
@@ -28,7 +34,6 @@ Route::middleware(['auth'])->group(function(){
 });
 
 Route::middleware(['admin'])->group(function () {
-	Route::get('/home', 'HomeController@index')->name('home');
 	Route::resource('department', 'DepartmentController');
 	Route::resource('employee_info', 'EmployeeInfoController');
 	Route::get('employee/{id}/changepassword', 'EmployeeInfoController@changepassword');

@@ -90,14 +90,12 @@
                         <img alt="image" class="img-circle" style="width: 20px;" src="{{ Auth::user()->profile_img }}"><!-- <span class="label label-info">5</span> -->
                     </a>
                         <ul class="dropdown-menu dropdown-alerts">
-                            <li><a href="#">
-                                <div><em class="fa fa-user"></em> Profile
-                                    <span class="pull-right text-muted small">3 mins ago</span></div>
+                            <li><a  href="{{ url('myprofile')}}">
+                                <div><em class="fa fa-user"></em> My Profile
                             </a></li>
                             <li class="divider"></li>
-                            <li><a href="#">
+                            <li><a  href="{{ url('logout')}}">
                                 <div><em class="fa fa-sign-out"></em>Logout
-                                    <span class="pull-right text-muted small">4 mins ago</span></div>
                             </a></li>
                         </ul>
                     </li>

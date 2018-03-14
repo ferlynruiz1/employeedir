@@ -37,4 +37,4 @@ class HomeController extends Controller
              return view('guest.employees')->with('employees', $user)->with('request', $request);
         }
     }
-}
+} 

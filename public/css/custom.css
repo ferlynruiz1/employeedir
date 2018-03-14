@@ -196,7 +196,7 @@ label#gender_id-error {
     border-radius: 0px !important;
 }
 .section-header{
-    background-color: #30a5ff !important;
+    background-color: #32373A !important;
     width: 100%;
     color: white;
     padding: 10px 10px 10px 15px;
@@ -217,4 +217,7 @@ label#gender_id-error {
 .pagination>li:last-child>a, .pagination>li:last-child>span {
     border-top-right-radius: 0px !important;
     border-bottom-right-radius: 0px !important;
+}
+.emp-profile .fa{
+    color: #32373A !important;
 }

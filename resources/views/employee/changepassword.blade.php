@@ -1,14 +1,12 @@
 @extends('layouts.main')
-
 @section('title')
 Dashboard
 @endsection
-
 @section('pagetitle')
 Employee Information / Change Password
 @endsection
 @section('content')
-	<style type="text/css">
+<style type="text/css">
 	body{
         background-image: url({{asset('public/img/002-subtle-light-pattern-background-texture.jpg')}});
     }
@@ -47,52 +45,50 @@ Employee Information / Change Password
     .sorting_1{
         padding-left: 20px !important;
     }
-	</style>
-	<br>
-	<div >
-  <div class="col-md-4" >
-      <div class="panel panel-container">
+</style>
+<br>
+<div >
+    <div class="col-md-4" >
+        <div class="panel panel-container">
             <div class="row no-padding">
             	<br>
             	<form method="POST" action="{{ url('employee/'. $id . '/savepassword') }}">
             		{{ csrf_field() }}
-            	<!-- <center><h4>Change your password</h4></center> -->
-            	  <div class="col-md-12 password">
-	                <div class="form-group">
-	                    <label>Old Password</label>
-	                    <input type="password" class="form-control" placeholder="Password" name="old_password" >
+        	        <div class="col-md-12 password">
+	                   <div class="form-group">
+	                       <label>Old Password</label>
+	                       <input type="password" class="form-control" placeholder="Password" name="old_password" >
+	                   </div>
+                    </div>
+	                <div class="col-md-12 password">
+	                    <div class="form-group">
+    	                    <label>New Password</label>
+    	                    <input type="password" class="form-control" placeholder="Password" name="new_password" >
+	                    </div>
 	                </div>
-	            </div>
-	             <div class="col-md-12 password">
-	                <div class="form-group">
-	                    <label>New Password</label>
-	                    <input type="password" class="form-control" placeholder="Password" name="new_password" >
+	                <div class="col-md-12  password">
+	                   <div class="form-group">
+	                       <label>Confirm Password</label>
+	                       <input type="password"  class="form-control" placeholder="Confirm Password" name="confirm_password">
+	                   </div>
 	                </div>
-	            </div>
-	            <div class="col-md-12  password">
-	                <div class="form-group">
-	                    <label>Confirm Password</label>
-	                    <input type="password"  class="form-control" placeholder="Confirm Password" name="confirm_password">
-	                </div>
-	            </div>
-	            <div class="col-md-12">
-	            	@if($errors->any())
-						<span class="message-{{session('errors')->first('status') }}">{{session('errors')->first('message') }}</span>
-						<br>
-						<br>
-					@endif
-	            </div>
-	            <div class="col-md-12  password">
-	                <div class="form-group">
-	                    <button type="submit" class="btn btn-primary">Change</button>
-	                </div>
-	            </div>
+	                <div class="col-md-12">
+	            	    @if($errors->any())
+						    <span class="message-{{session('errors')->first('status') }}">{{session('errors')->first('message') }}</span>
+    					    <br>
+    						<br>
+    					@endif
+                    </div>
+    	            <div class="col-md-12  password">
+    	                <div class="form-group">
+    	                    <button type="submit" class="btn btn-primary">Change</button>
+    	                </div>
+    	            </div>
 	        	</form>
             	<br>
             	<br>
-
             </div>
         </div>
-  </div>
+    </div>
 </div>
 @endsection

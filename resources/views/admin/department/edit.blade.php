@@ -14,7 +14,7 @@ Department / Edit
             margin: 10px;
         }
 	</style>
-    {{ Form::open(array('url' => 'department/' . $department->id,'id' => 'edit_employee_form')) }}
+    {{ Form::open(array('url' => 'department/' . $department->id,'id' => 'edit_department_form')) }}
     {{ Form::hidden('_method', 'PUT') }}
     {{ csrf_field() }}
    <div class="col-md-3" style="">
@@ -25,11 +25,11 @@ Department / Edit
             <div class="row margin-container">
                 <div class="form-group">
                     <label>Department Name</label>
-                    <input type="text" name="department_name" class="form-control" value="{{ $department->department_name}}">
+                    <input type="text" name="department_name" class="form-control" value="{{ $department->department_name}}" required>
                 </div>
                 <div class="form-group">
                     <label>Division </label>
-                    <select class="select2 form-control"  name="division_id">
+                    <select class="select2 form-control"  name="division_id" required>
                         <option selected="" disabled="">Select</option>
                         @foreach($divisions as $division)
                             <option {{ $department->division_id == $division->id ? 'selected' : '' }} value="{{ $division->id }}"> {{$division->division_name}}</option>
@@ -39,19 +39,10 @@ Department / Edit
 
                 <div class="form-group">
                     <label>Account </label>
-                    <select class="select2 form-control"  name="account_id"  >
+                    <select class="select2 form-control"  name="account_id" required>
                         <option selected="" disabled="">Select</option>
                         @foreach($accounts as $account)
                             <option value="{{ $account->id }}" {{ $department->account_id == $account->id ? 'selected' : '' }}> {{$account->account_name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Manager</label>
-                    <select class="select2 form-control"  name="manager_id" >
-                        <option selected="" disabled="">Select</option>
-                        @foreach($managers as $manager)
-                            <option value="{{ $manager->id }}" {{ $department->manager_id == $manager->id ? 'selected' : '' }} > {{$manager->fullname()}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -62,4 +53,32 @@ Department / Edit
         </div>
   </div>
 </form>
+@endsection
+@section('scripts')
+ <script type="text/javascript">
+    var changed = false;
+    $('#edit_department_form').validate({
+        ignore: []
+     });
+
+     $('#image_uploader').change(function(){
+        changed = true;
+     });
+
+     $('input').change(function(){
+        changed = true;
+     });
+
+     $('select').change(function(){
+        changed = true;
+     });
+     $('#edit_department_form').submit(function(){
+        changed = false;
+     });
+     window.onbeforeunload = function(){
+        if(changed){
+            return '';
+        }
+     }
+</script>
 @endsection

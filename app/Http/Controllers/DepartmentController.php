@@ -44,7 +44,6 @@ class DepartmentController extends Controller
     {
         $employeeDepartment = new EmployeeDepartment();
         $employeeDepartment->department_name = $request->department_name;
-        $employeeDepartment ->manager_id = $request->manager_id;
         $employeeDepartment->division_id = $request->division_id;
         $employeeDepartment->account_id = $request->account_id;
         $employeeDepartment->save();
@@ -89,12 +88,12 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $employeeDepartment = EmployeeDepartment::find($id);
-        $employeeDepartment->department_name = $request->department_name;
-        $employeeDepartment ->manager_id = $request->manager_id;
+        $employeeDepartment ->department_name = $request->department_name;
         $employeeDepartment->division_id = $request->division_id;
         $employeeDepartment->account_id = $request->account_id;
-        $employeeDepartment->save();
+        $employeeDepartment->update();
 
         return redirect('department')->with('success', "Successfully edited department");
     }

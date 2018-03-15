@@ -31,11 +31,11 @@ Route::middleware(['auth'])->group(function(){
 	Route::get('employees', 'EmployeeInfoController@employees');
 	Route::get('profile/{id}', 'EmployeeInfoController@profile');
 	Route::get('myprofile', 'EmployeeInfoController@myprofile');
-});
 
 Route::middleware(['admin'])->group(function () {
 	Route::resource('department', 'DepartmentController');
 	Route::resource('employee_info', 'EmployeeInfoController');
 	Route::get('employee/{id}/changepassword', 'EmployeeInfoController@changepassword');
+});
 	Route::post('employee/{id}/savepassword', 'EmployeeInfoController@savepassword');
 });

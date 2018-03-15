@@ -1,7 +1,10 @@
 @extends('layouts.main')
 
 @section('title')
-Dashboard
+Employees
+@endsection
+@section('pagetitle')
+Employees
 @endsection
 
 @section('content')
@@ -55,47 +58,63 @@ Dashboard
     }
 
 	</style>
-    <a href="{{url('employee_info/create')}}" class="btn btn-primary" ><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Employee</a>
+
+    <a href="{{url('employee_info/create')}}" class="btn btn-primary">
+        <i class="fa fa-plus"></i>
+        &nbsp;&nbsp;Add Employee
+    </a>
     <div class="section-header">
         <h4>List of Employees</h4>
     </div>
 	<table id="employees_table" class="table">
     <thead>
         <tr>
-            <td align="left">#</td>
+            <td>#</td>
             <td>Employee</td>
             <td>EID</td>
-            <td align="center">Team</td>
-            <td align="center">Supervisor</td>
+            <td >Team</td>
+            <td >Supervisor</td>
             <td>Hired Date</td>
-            <td align="center">Action</td>
+            <td >Action</td>
         </tr>        
     </thead> 
     <tbody>
-         <?php $counter = 0; ?>
+        <?php $counter = 0; ?>
         @foreach($employees as $employee)
             <tr> 
                 <td>{{ ++$counter }}</td>
                 <td style="max-width: 250px;">
+                    @if(isset($employee->profile_img))
+                     <img alt="image" id="profile_image" class="img-circle pull-left" style="width: 40px; height: 40px; margin: 10px;" src="{{ $employee->profile_img }}" style="float: left !important">
+                     @else
                     <div class="circle pull-left" style="float: left !important">J</div>
-                    <h5 style="text-align: left !important;">{{ $employee->first_name . ' ' . $employee->middle_name . " " .  $employee->last_name  }}</h5>
-                    <small style="text-align: left !important;">{{ $employee->position_name }}</small>
-                </td>
-                <td >{{ $employee->eid }}</td>
-                <td align="center">{{ $employee->team_name }}</td>
-                <td align="center">{{ $employee->supervisor->alias }}</td>
-                <td>{{ $employee->prettydatehired() }}</td>
-                <td align="center">
-                    <a href="{{ url('/employee_info/'. $employee->id)}}" title="View"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
-                    @if(Auth::user()->usertype == 1)
-                        <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" title="Edit"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
-                        <a href="#" class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Edit" data-id="{{$employee->id}}"><i class="fa fa-trash" style="color: red;" ></i></a></td>
                     @endif
+                    <h5 style="text-align: left !important;">
+                        {{ $employee->first_name . ' ' . $employee->middle_name . " " .  $employee->last_name  }}
+                    </h5>
+                    <small style="text-align: left !important;">
+                        {{ $employee->position_name }}
+                    </small>
+                </td>
+                <td>{{ $employee->eid }}</td>
+                <td>{{ $employee->team_name }}</td>
+                <td>{{ $employee->supervisor->alias }}</td>
+                <td>{{ $employee->prettydatehired() }}</td>
+                <td>
+                    <a href="{{ url('/employee_info/'. $employee->id)}}" title="View">
+                        <i class="fa fa-eye"></i>
+                    </a>&nbsp;&nbsp;
+                    <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" title="Edit">
+                        <i class="fa fa-pencil"></i>
+                    </a>&nbsp;&nbsp;
+                    <a href="#" class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Edit" data-id="{{$employee->id}}">
+                        <i class="fa fa-trash" style="color: red;" ></i>
+                    </a>
+                </td>
             </tr>
         @endforeach
     </tbody>
 </table>
-
 <script type="text/javascript">
     $('.delete_btn').click(function(){
         $('#messageModal .modal-title').html('Delete Employee');

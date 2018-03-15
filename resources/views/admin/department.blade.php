@@ -68,7 +68,6 @@ Departments
         <tr>
             <td align="left">#</td>
             <td>Department Name</td>
-            <td>Manager</td>
             <td>Division</td>
             <td>Account</td>
             <td></td>
@@ -82,7 +81,6 @@ Departments
                 <td style="max-width: 250px;">
                     <h5 style="text-align: left !important;">{{$department->department_name}}</h5>
                 </td>
-            <td>{{ isset($department->manager) == true ? $department->manager->fullname() : 'N/A' }} </td>
             <td>{{ isset($department->division) == true ? $department->division->division_name : 'N/A'}}</td>
             <td>{{ isset($department->account) == true ? $department->account->account_name : 'N/A'}}</td>
                 <td align="center">

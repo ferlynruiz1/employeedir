@@ -29,12 +29,21 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         
-        if(Auth::user()->usertype == 1){
+        if(Auth::user()->isAdmin()){
             $user = User::with('supervisor')->get();
             return view('dashboard')->with('employees', $user);
         }else{
-            $user = User::with('supervisor')->paginate(10);
-             return view('guest.employees')->with('employees', $user)->with('request', $request);
+
+             $employees = new User;
+             
+             if($request->has('keyword')){
+                $employees = $employees->where('first_name', 'LIKE', '%'.$request->get('keyword').'%')->orWhere('last_name', 'LIKE', '%'.$request->get('keyword').'%');
+            }else if($request->has('alphabet')){
+                $employees = $employees->where('last_name', 'LIKE', $request->get('alphabet').'%')->orWhere('first_name', 'LIKE', $request->get('alphabet').'%');
+            }
+            $employees = $employees->orderBy('last_name', 'ASC')->paginate(10);
+
+             return view('guest.employees')->with('employees', $employees)->with('request', $request);
         }
     }
 } 

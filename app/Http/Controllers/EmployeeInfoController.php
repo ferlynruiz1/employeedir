@@ -172,7 +172,8 @@ class EmployeeInfoController extends Controller
 
         return redirect()->back()->with('success', "Successfully deleted employee record");;
     }
-    public function changepassword(Request $request, $id){
+    public function changepassword(Request $request, $id)
+    {
         return view('employee.changepassword')->with('id', $id);
     }
     public function savepassword(Request $request, $id)
@@ -204,7 +205,6 @@ class EmployeeInfoController extends Controller
         }else if($request->has('alphabet')){
             $employees = $employees->where('last_name', 'LIKE', $request->get('alphabet').'%')->orWhere('first_name', 'LIKE', $request->get('alphabet').'%');
         }
-       
 
         $employees = $employees->orderBy('last_name', 'ASC')->paginate(10);
 
@@ -214,6 +214,11 @@ class EmployeeInfoController extends Controller
         return view('auth.profile.view')->with('employee', User::find($id));
     }
     public function myprofile(Request $request){
+        
+        if(Auth::user()->isAdmin()){
+            return view('employee.view')->with('employee', Auth::user());
+        }
+
         return view('auth.profile.view')->with('employee', Auth::user());
     }
 }

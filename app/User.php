@@ -88,4 +88,7 @@ class User extends Authenticatable
                 break;
         }
     }
+    public function scopeIsAdmin($query){
+        return $this->usertype == 1;
+    }
 }

@@ -43,4 +43,9 @@ class HomeController extends Controller
             return view('guest.employees')->with('employees', $employees)->with('request', $request);
         }
     }
+    public function dashboard(Request $request)
+    {
+        return view('dashboard')->with('employees', User::all());
+    }
+
 } 

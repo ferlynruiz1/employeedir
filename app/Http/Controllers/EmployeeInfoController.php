@@ -194,6 +194,10 @@ class EmployeeInfoController extends Controller
     }
     public function employees(Request $request)
     {
+        if (Auth::user()->isAdmin()) {
+            return view('employee.employees')->with('employees', User::all());
+        }
+
         $employees = new User;
         if ($request->has('keyword')) {
             $employees = $employees->where('first_name', 'LIKE', '%'.$request->get('keyword').'%')->orWhere('last_name', 'LIKE', '%'.$request->get('keyword').'%');

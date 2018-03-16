@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function(){
 	Route::get('myprofile', 'EmployeeInfoController@myprofile');
 
 Route::middleware(['admin'])->group(function () {
+	Route::get('dashboard', 'HomeController@dashboard');
 	Route::resource('department', 'DepartmentController');
 	Route::resource('employee_info', 'EmployeeInfoController');
 	Route::get('employee/{id}/changepassword', 'EmployeeInfoController@changepassword');

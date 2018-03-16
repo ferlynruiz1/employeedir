@@ -58,10 +58,17 @@ body{
         </div>
         <div class="divider"></div>
         <ul class="nav menu">
-            <li <?php echo \Request::url() == url('home') ? 'class="active"' : ''; ?>>
-                <a href="{{url('home')}}">
+
+            <li <?php echo \Request::url() == url('dashboard') ? 'class="active"' : ''; ?>>
+                <a href="{{url('dashboard')}}">
+                    <em class="fa fa-dashboard">&nbsp;</em>
+                    Dashboard
+                 </a>
+             </li>
+            <li <?php echo \Request::url() == url('employees') ? 'class="active"' : ''; ?>>
+                <a href="{{url('employees')}}">
                     <em class="fa fa-home">&nbsp;</em>
-                    Home
+                    Employees
                  </a>
              </li>
             <li <?php echo \Request::url() == url('department') ? 'class="active"' : ''; ?>>

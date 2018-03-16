@@ -31,6 +31,7 @@ class DepartmentController extends Controller
         $divisions = ElinkDivision::all();
         $accounts = ElinkAccount::all();
         $managers = User::all();
+
         return view('admin.department.create')->with('divisions', $divisions)->with('accounts', $accounts)->with('managers', $managers);
     }
 
@@ -49,8 +50,6 @@ class DepartmentController extends Controller
         $employeeDepartment->save();
 
         return redirect('department')->with('success', "Successfully created department");
-
-
     }
 
     /**
@@ -76,6 +75,7 @@ class DepartmentController extends Controller
         $divisions = ElinkDivision::all();
         $accounts = ElinkAccount::all();
         $managers = User::all();
+
         return view('admin.department.edit')->with('divisions', $divisions)->with('accounts', $accounts)->with('managers', $managers)->with('department', $department);
     }
 
@@ -105,6 +105,9 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-        return $id;
+        $employeeDepartment = EmployeeDepartment::find($id);
+        $employeeDepartment->delete();
+        
+        return redirect('department')->with('success', "Successfully deleted department");
     }
 }

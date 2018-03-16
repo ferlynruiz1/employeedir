@@ -13,7 +13,7 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(!Auth::check() || Auth::user()->usertype == 2){
+        if (!Auth::check() || Auth::user()->usertype == 2) {
         	// route to not an admin page
             return redirect()->route('admin-invalid');
         }

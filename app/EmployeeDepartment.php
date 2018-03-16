@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmployeeDepartment extends Model
 {
+    use SoftDeletes;
     protected $table = "employee_department";
 
     public function manager(){

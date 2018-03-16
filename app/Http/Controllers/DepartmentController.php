@@ -88,7 +88,6 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $employeeDepartment = EmployeeDepartment::find($id);
         $employeeDepartment ->department_name = $request->department_name;
         $employeeDepartment->division_id = $request->division_id;

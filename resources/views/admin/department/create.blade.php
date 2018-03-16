@@ -1,13 +1,10 @@
 @extends('layouts.main')
-
 @section('title')
 Department / Add New
 @endsection
-
 @section('pagetitle')
 Department / Add New
 @endsection
-
 @section('content')
 	<style type="text/css">
         .row.margin-container{
@@ -27,49 +24,47 @@ Department / Add New
 	</style>
     <form id="create_department_form" role="form" method="POST" action="{{ route('department.store')}}" >
         {{ csrf_field() }}
-   <div class="col-md-3" style="">
-      <div class="section-header">
-         <h4>New Department</h4>
-      </div>
-      <div class="panel panel-container">
-            <div class="row margin-container">
-                <div class="form-group">
-                    <label>Department Name</label>
-                    <input type="text" name="department_name" class="form-control" required>
+        <div class="col-md-3" style="">
+            <div class="section-header">
+                <h4>New Department</h4>
+            </div>
+            <div class="panel panel-container">
+                <div class="row margin-container">
+                    <div class="form-group">
+                        <label>Department Name</label>
+                        <input type="text" name="department_name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Division </label>
+                        <select class="select2 form-control"  name="division_id" required>
+                            <option selected="" disabled="">Select</option>
+                            @foreach($divisions as $division)
+                            <option value="{{ $division->id }}"> {{$division->division_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Account </label>
+                        <select class="select2 form-control"  name="account_id" required>
+                            <option selected="" disabled="">Select</option>
+                            @foreach($accounts as $account)
+                                <option value="{{ $account->id }}"> {{$account->account_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <br>
+                        <button class="btn btn-primary">Save</button>               
+                    </div>      
                 </div>
-                <div class="form-group">
-                    <label>Division </label>
-                    <select class="select2 form-control"  name="division_id" required>
-                        <option selected="" disabled="">Select</option>
-                        @foreach($divisions as $division)
-                        <option value="{{ $division->id }}"> {{$division->division_name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Account </label>
-                    <select class="select2 form-control"  name="account_id" required>
-                        <option selected="" disabled="">Select</option>
-                        @foreach($accounts as $account)
-                            <option value="{{ $account->id }}"> {{$account->account_name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                 <div class="form-group">
-                    <br>
-                    <button class="btn btn-primary">Save</button>               
-                </div>      
-            </div><!--/.row-->
+            </div>
         </div>
-  </div>
-</form>
-
+    </form>
 @endsection
 @section('scripts')
- <script type="text/javascript">
-    $('#create_department_form').validate({
-        ignore: []
-     });
-</script>
+    <script type="text/javascript">
+        $('#create_department_form').validate({
+            ignore: []
+        });
+    </script>
 @endsection

@@ -1,15 +1,12 @@
 @extends('layouts.main')
-
 @section('title')
 Department
 @endsection
-
 @section('pagetitle')
 Departments
 @endsection
-
 @section('content')
-	<style type="text/css">
+<style type="text/css">
 	body{
         background-image: url({{asset('public/img/002-subtle-light-pattern-background-texture.jpg')}});
     }
@@ -58,12 +55,12 @@ Departments
         margin: 10px;
     }
 
-	</style>
-    <a href="{{url('department/create')}}" class="btn btn-primary" ><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Department</a>
-    <div class="section-header">
-        <h4>List of Departments</h4>
-    </div>
-    <table id="employees_table" class="table">
+</style>
+<a href="{{url('department/create')}}" class="btn btn-primary" ><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Department</a>
+<div class="section-header">
+    <h4>List of Departments</h4>
+</div>
+<table id="employees_table" class="table">
     <thead>
         <tr>
             <td align="left">#</td>
@@ -74,30 +71,31 @@ Departments
         </tr>        
     </thead> 
     <tbody>
-         <?php $counter = 0; ?>
+        <?php $counter = 0; ?>
         @foreach($departments as $department)
             <tr> 
                 <td>  {{ ++$counter }}</td>
                 <td style="max-width: 250px;">
                     <h5 style="text-align: left !important;">{{$department->department_name}}</h5>
                 </td>
-            <td>{{ isset($department->division) == true ? $department->division->division_name : 'N/A'}}</td>
-            <td>{{ isset($department->account) == true ? $department->account->account_name : 'N/A'}}</td>
+                <td>{{ isset($department->division) == true ? $department->division->division_name : 'N/A'}}</td>
+                <td>{{ isset($department->account) == true ? $department->account->account_name : 'N/A'}}</td>
                 <td align="center">
-                    
-                   <a href="{{ url('/department/'. $department->id . '/edit')}}" title="Edit"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
-                        <a href="#" class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Edit" data-id="{{$department->id}}"><i class="fa fa-trash" style="color: red;" ></i></a>
-                    </td>
+                    <a href="{{ url('/department/'. $department->id . '/edit')}}" title="Edit">
+                        <i class="fa fa-pencil"></i>
+                    </a>&nbsp;&nbsp;
+                    <a href="#" class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Edit" data-id="{{$department->id}}">
+                        <i class="fa fa-trash" style="color: red;" ></i>
+                    </a>
+                </td>
             </tr>
         @endforeach
     </tbody>
 </table>
-
 <script type="text/javascript">
     $('.delete_btn').click(function(){
         $('#messageModal .modal-title').html('Delete Department');
         $('#messageModal #message').html('Are you sure you want to delete the department ?');
-
         $('#messageModal .delete_form').attr('action', "{{ url('department') }}/" + $(this).attr("data-id"));
     });
     $('#messageModal #yes').click(function(){

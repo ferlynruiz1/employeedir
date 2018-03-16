@@ -6,11 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/png" href="http://www.elink.com.ph/wp-content/uploads/2016/01/elink-logo-site.png">
         <title>Elink Employee Directory | Login</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
+        <link href="{{ asset('public/css/css.css')}}" rel="stylesheet">
         <style>
             html, body {
                 background-color: #fff;
@@ -24,17 +20,14 @@
             .full-height {
                 height: 100vh;
             }
-
             .flex-center {
                 align-items: center;
                 display: flex;
                 justify-content: center;
             }
-
             .position-ref {
                 position: relative;
             }
-
             .content {
                 text-align: center;
                 width: 400px;
@@ -43,7 +36,6 @@
                 background-color: #F5F5F5;
                 box-shadow: 1px 1px 2px 0px #a9a9a970;
             }
-
             .title {
                 font-size: 50px;
             }
@@ -116,33 +108,33 @@
                     eLink's <br>
                     <span style="font-size: 40px">Employee Directory</span>
                 </div>
-
                 <div class="links">
-                     <form method="POST" action="{{ route('login') }}">
-                    @csrf
-                    <div class="form-group">
-                        <input class="form-input" type="text" name="email" placeholder="Username" value="{{ old('email') }}" required autofocus/>
-                       
-                    </div>
-                    <div class="form-group">
-                        <input  class="form-input" type="password" name="password" value="" placeholder="Password" required/>
-                         
-                       
-                    </div>
-                     @if ($errors->has('password'))
-                        <span class="invalid-feedback">
-                            {{ $errors->first('password') }}
-                        </span>
-                    @endif
-                     @if ($errors->has('email'))
-                        <span class="invalid-feedback">
-                            {{ $errors->first('email') }}
-                        </span>
-                    @endif
-                    <div class="form-group btn-holder">
-                        <button class="button flat" name="submit">
-                                <span class="icon"><img src="{{ asset('public/img/arrow-right.gif')}}" alt="→"></span> Login</button>
-                    </div>
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <div class="form-group">
+                            <input class="form-input" type="text" name="email" placeholder="Username" value="{{ old('email') }}" required autofocus/>
+                        </div>
+                        <div class="form-group">
+                            <input  class="form-input" type="password" name="password" value="" placeholder="Password" required/>
+                        </div>
+                         @if ($errors->has('password'))
+                            <span class="invalid-feedback">
+                                {{ $errors->first('password') }}
+                            </span>
+                        @endif
+                        @if ($errors->has('email'))
+                            <span class="invalid-feedback">
+                                {{ $errors->first('email') }}
+                            </span>
+                        @endif
+                        <div class="form-group btn-holder">
+                            <button class="button flat" name="submit">
+                                <span class="icon">
+                                    <img src="{{ asset('public/img/arrow-right.gif')}}" alt="→">
+                                </span> 
+                                Login
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>

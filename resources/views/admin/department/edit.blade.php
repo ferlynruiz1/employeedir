@@ -1,27 +1,24 @@
 @extends('layouts.main')
-
 @section('title')
 Department / Edit 
 @endsection
-
 @section('pagetitle')
 Department / Edit 
 @endsection
-
 @section('content')
-	<style type="text/css">
-        .row.margin-container{
-            margin: 10px;
-        }
-	</style>
-    {{ Form::open(array('url' => 'department/' . $department->id,'id' => 'edit_department_form')) }}
+<style type="text/css">
+    .row.margin-container{
+        margin: 10px;
+    }
+</style>
+{{ Form::open(array('url' => 'department/' . $department->id,'id' => 'edit_department_form')) }}
     {{ Form::hidden('_method', 'PUT') }}
     {{ csrf_field() }}
-   <div class="col-md-3" style="">
-    <div class="section-header">
-      <h4>Edit Department</h4>
-  </div>
-      <div class="panel panel-container">
+    <div class="col-md-3" style="">
+        <div class="section-header">
+            <h4>Edit Department</h4>
+        </div>
+        <div class="panel panel-container">
             <div class="row margin-container">
                 <div class="form-group">
                     <label>Department Name</label>
@@ -36,7 +33,6 @@ Department / Edit
                         @endforeach
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label>Account </label>
                     <select class="select2 form-control"  name="account_id" required>
@@ -46,12 +42,12 @@ Department / Edit
                         @endforeach
                     </select>
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
                     <button class="btn btn-primary">Save</button>               
                 </div>      
-            </div><!--/.row-->
+            </div>
         </div>
-  </div>
+    </div>
 </form>
 @endsection
 @section('scripts')
@@ -60,15 +56,12 @@ Department / Edit
     $('#edit_department_form').validate({
         ignore: []
      });
-
      $('#image_uploader').change(function(){
         changed = true;
      });
-
      $('input').change(function(){
         changed = true;
      });
-
      $('select').change(function(){
         changed = true;
      });

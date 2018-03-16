@@ -146,6 +146,26 @@ Employee Information / Edit
                     <br>
                     <div class="col-md-12">
                          <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <br>
+                                    <label></label>
+                                    <input type="radio" {{ $employee->usertype == 2 ? 'checked' : ''}} id="employee" name="employee_type" value="2" placeholder="test" required>
+                                    <label class="radio-label" for="employee">Employee</label>
+                                    &nbsp;
+                                    &nbsp;
+                                    <input type="radio" {{ $employee->usertype == 3 ? 'checked' : ''}} id="supervisor" name="employee_type" value="3" placeholder="test" required>
+                                    <label class="radio-label" for="supervisor">Supervisor</label>
+                                    &nbsp;
+                                    &nbsp;
+                                    <input type="radio" {{ $employee->usertype == 4 ? 'checked' : ''}} id="manager" name="employee_type" value="4" placeholder="test" required>
+                                    <label class="radio-label" for="manager">Manager</label>
+                                    &nbsp;
+                                    &nbsp;
+                                    <input type="radio" {{ $employee->usertype == 1 ? 'checked' : ''}} id="admin" name="employee_type" value="1" placeholder="test" required>
+                                    <label class="radio-label" for="admin">Admin</label>
+                                </div>
+                            </div>
                             <br>
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -215,7 +235,7 @@ Employee Information / Edit
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <input type="checkbox" name="all_access" <?php echo $employee->all_access == 1 ? "checked" : "" ; ?>> &nbsp;
                                     <span class="asterisk-required" for="all_access">can view information from other account ?</span>
@@ -314,5 +334,30 @@ Employee Information / Edit
             return '';
         }
      }
+     $('input[name=employee_type]').change(function(){
+        switch($(this).val()){
+            case '2':
+                 $('select[name=supervisor_id]').parent().parent().show();
+                 $('select[name=manager_id]').parent().parent().show();
+                 $('input[name=all_access]').parent().parent().show();
+            break;
+            case '3':
+                console.log('sulod');
+                $('select[name=supervisor_id]').parent().parent().hide();
+                 $('input[name=all_access]').parent().parent().show();
+            break;
+            case '4':
+                 $('select[name=supervisor_id]').parent().parent().hide();
+                 $('select[name=manager_id]').parent().parent().hide();
+                 $('input[name=all_access]').parent().parent().show();
+            break;
+            case '1':
+                 $('select[name=supervisor_id]').parent().parent().show();
+                 $('select[name=manager_id]').parent().parent().show();
+                 $('input[name=all_access]').parent().parent().hide();
+            break;
+        }
+    });
+    $('input[name=employee_type]').trigger('change');
  </script>
 @endsection

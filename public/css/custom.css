@@ -221,3 +221,11 @@ label#gender_id-error {
 .emp-profile .fa{
     color: #32373A !important;
 }
+
+.panel-body input[type=checkbox]:checked + label{
+    text-decoration: none !important;
+    color: inherit !important;
+}
+.panel-body input[type=checkbox] + label {
+    font-weight: normal !important;
+}

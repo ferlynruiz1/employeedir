@@ -56,6 +56,10 @@ class EmployeeInfoController extends Controller
         $employee->account_id = $request->account_id;
         $employee->status = $request->status_id;
 
+        if ($request->has('employee_type')) {
+            $employee->usertype = $request->employee_type;
+        }
+
         /* all access field */
         if ($request->has('all_access')) {
             $employee->all_access = 1;
@@ -126,6 +130,14 @@ class EmployeeInfoController extends Controller
 
         if ($request->has('gender_id')) {
             $employee->gender = $request->gender_id;
+        }
+
+        if ($request->has('employee_type')) {
+            if ($request->employee_type == 4) {
+                $employee->is_admin = 1;
+            } else {
+                $employee->is_admin = 0;
+            }
         }
 
         $employee->manager_id = $request->manager_id;

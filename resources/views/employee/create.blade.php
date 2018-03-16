@@ -143,16 +143,20 @@ Employee / Add
                                 <div class="form-group">
                                     <br>
                                     <label></label>
-                                    <input type="radio" checked id="employee" name="employee_type" value="1" placeholder="test" required>
+                                    <input type="radio" checked id="employee" name="employee_type" value="2" placeholder="test" required>
                                     <label class="radio-label" for="employee">Employee</label>
                                     &nbsp;
                                     &nbsp;
-                                    <input type="radio" id="supervisor" name="employee_type" value="2" placeholder="test" required>
+                                    <input type="radio" id="supervisor" name="employee_type" value="3" placeholder="test" required>
                                     <label class="radio-label" for="supervisor">Supervisor</label>
                                     &nbsp;
                                     &nbsp;
-                                    <input type="radio" id="manager" name="employee_type" value="3" placeholder="test" required>
+                                    <input type="radio" id="manager" name="employee_type" value="4" placeholder="test" required>
                                     <label class="radio-label" for="manager">Manager</label>
+                                    &nbsp;
+                                    &nbsp;
+                                    <input type="radio" id="admin" name="employee_type" value="1" placeholder="test" required>
+                                    <label class="radio-label" for="admin">Admin</label>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -226,7 +230,7 @@ Employee / Add
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <input type="checkbox" name="all_access"> &nbsp;
-                                    <span class="asterisk-required" for="all_access">can view information from other account ?</span>
+                                    <span for="all_access">can view information from other account ?</span>
                                 </div>
                             </div>
                         </div>
@@ -304,19 +308,28 @@ Employee / Add
     });
     $('input[name=employee_type]').change(function(){
         switch($(this).val()){
+            case '2':
+                 $('select[name=supervisor_id]').parent().parent().show();
+                 $('select[name=manager_id]').parent().parent().show();
+                 $('input[name=all_access]').parent().parent().show();
+            break;
+            case '3':
+                console.log('sulod');
+                $('select[name=supervisor_id]').parent().parent().hide();
+                 $('input[name=all_access]').parent().parent().show();
+            break;
+            case '4':
+                 $('select[name=supervisor_id]').parent().parent().hide();
+                 $('select[name=manager_id]').parent().parent().hide();
+                 $('input[name=all_access]').parent().parent().show();
+            break;
             case '1':
                  $('select[name=supervisor_id]').parent().parent().show();
                  $('select[name=manager_id]').parent().parent().show();
-            break;
-            case '2':
-                console.log('sulod');
-                $('select[name=supervisor_id]').parent().parent().hide();
-            break;
-            case '3':
-                 $('select[name=supervisor_id]').parent().parent().hide();
-                 $('select[name=manager_id]').parent().parent().hide();
+                 $('input[name=all_access]').parent().parent().hide();
             break;
         }
     });
+    $('input[name=employee_type]').trigger('change');
 </script>
 @endsection

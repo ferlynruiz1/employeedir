@@ -29,7 +29,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         if (Auth::user()->isAdmin()) {
-            $user = User::with('supervisor')->get();
+            $user = User::with('supervisor')->orderBy('hired_date', 'DESC')->get();
             return view('dashboard')->with('employees', $user);
         } else {
             $employees = new User;
@@ -45,7 +45,7 @@ class HomeController extends Controller
     }
     public function dashboard(Request $request)
     {
-        return view('dashboard')->with('employees', User::all());
+        return view('dashboard')->with('employees', User::orderBy('hired_date', 'DESC')->paginate(10));
     }
 
 } 

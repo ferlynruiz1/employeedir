@@ -25,6 +25,10 @@ Department / Edit
                     <input type="text" name="department_name" class="form-control" value="{{ $department->department_name}}" required>
                 </div>
                 <div class="form-group">
+                    <label>Department Code</label>
+                    <input type="text" name="department_code" value="{{ $department->department_code}}" class="form-control" required>
+                </div>
+                <div class="form-group">
                     <label>Division </label>
                     <select class="select2 form-control"  name="division_id" required>
                         <option selected="" disabled="">Select</option>

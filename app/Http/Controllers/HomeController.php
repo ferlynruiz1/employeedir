@@ -47,5 +47,4 @@ class HomeController extends Controller
     {
         return view('dashboard')->with('employees', User::orderBy('hired_date', 'DESC')->paginate(10));
     }
-
 } 

@@ -40,6 +40,8 @@ Route::middleware(['admin'])->group(function () {
 	Route::get('employee/{id}/changepassword', 'EmployeeInfoController@changepassword');
 });
 	Route::post('employee/{id}/savepassword', 'EmployeeInfoController@savepassword');
+	Route::get('employees/import', 'EmployeeInfoController@import');
+	Route::post('employees/import', 'EmployeeInfoController@importsave');
 });
 
 // /routes/web.php

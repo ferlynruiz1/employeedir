@@ -64,6 +64,7 @@ Departments
     <thead>
         <tr>
             <td align="left">#</td>
+            <td>Department Code</td>
             <td>Department Name</td>
             <td>Division</td>
             <td>Account</td>
@@ -75,6 +76,7 @@ Departments
         @foreach($departments as $department)
             <tr> 
                 <td>  {{ ++$counter }}</td>
+                <td>  {{ $department->department_code }}</td>
                 <td style="max-width: 250px;">
                     <h5 style="text-align: left !important;">{{$department->department_name}}</h5>
                 </td>

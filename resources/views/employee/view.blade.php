@@ -107,7 +107,11 @@ Employee Information
                             </div>
                         </div>
                     </div>
-                    <hr>
+                    <br>
+                    <br>
+                </div>
+                <label>Job Information</label>
+                <div class="col-md-12">
                     <br>
                     <div class="row">
                         <div class="col-md-3">
@@ -156,7 +160,6 @@ Employee Information
                         </div>
                     </div>
                     <br>
-                    <hr>
                     <br>
                 </div>
                 <br>

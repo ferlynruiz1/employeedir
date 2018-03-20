@@ -45,6 +45,7 @@ class DepartmentController extends Controller
     {
         $employeeDepartment = new EmployeeDepartment();
         $employeeDepartment->department_name = $request->department_name;
+        $employeeDepartment->department_code = $request->department_code;
         $employeeDepartment->division_id = $request->division_id;
         $employeeDepartment->account_id = $request->account_id;
         $employeeDepartment->save();
@@ -90,6 +91,7 @@ class DepartmentController extends Controller
     {
         $employeeDepartment = EmployeeDepartment::find($id);
         $employeeDepartment ->department_name = $request->department_name;
+        $employeeDepartment->department_code = $request->department_code;
         $employeeDepartment->division_id = $request->division_id;
         $employeeDepartment->account_id = $request->account_id;
         $employeeDepartment->update();

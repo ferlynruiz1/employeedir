@@ -45,6 +45,6 @@ class HomeController extends Controller
     }
     public function dashboard(Request $request)
     {
-        return view('dashboard')->with('employees', User::orderBy('hired_date', 'DESC')->paginate(10));
+        return view('dashboard')->with('new_hires', User::orderBy('hired_date', 'DESC')->paginate(5))->with('employees', User::all());
     }
 } 

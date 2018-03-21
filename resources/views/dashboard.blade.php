@@ -8,7 +8,7 @@ Dashboard
 @section('content')
 <br>
    <div class="col-md-12">
-   <div class="panel panel-container">
+        <div class="panel panel-container">
             <div class="row">
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-teal panel-widget border-right">
@@ -37,7 +37,7 @@ Dashboard
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding pull-right">
                     <div class="panel panel-teal panel-widget">
                         <div class="row no-padding"><em class="fa fa-xl fa-users color-black"></em>
-                            <div class="large"><a class="btn btn-success" href="{{url('excel-download')}}">Generate</a></div>
+                            <div class="large"><a class="btn btn-success" href="{{url('export')}}">Generate</a></div>
                             <div class="text-muted">Generate Report</div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@ Dashboard
                     <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
                 <div class="panel-body timeline-container">
                     <ul class="timeline">
-                        @foreach($employees as $employee)
+                        @foreach($new_hires as $employee)
                         <li>
                             <div class="timeline-badge"><img src="{{ $employee->profile_img }}" class="img-circle" alt="" style="width: 50px; height: 50px; margin-top: -10px; box-shadow: 1px 1px 10px 7px #fff;"></div>
                             <div class="timeline-panel">
@@ -69,6 +69,44 @@ Dashboard
                         </li>
                         @endforeach
                     </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="panel panel-default ">
+                <div class="panel-heading">
+                    Company Hierarchy
+                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
+                <div class="panel-body timeline-container">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <center>
+                        <h2>Company Hierarchy</h2>
+                        <h3 style="color: #aaa;">(Coming soon)</h3>
+                    </center>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
                 </div>
             </div>
         </div>

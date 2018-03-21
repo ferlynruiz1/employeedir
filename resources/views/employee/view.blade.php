@@ -123,13 +123,13 @@ Employee Information
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Supervisor</label>
-                                <p class="employee-details-value">{{ isset($employee->supervisor) ? $employee->supervisor->fullname() : '' }}</p>
+                                <p class="employee-details-value">{{ isset($employee->supervisor) ? $employee->supervisor->fullname() : $employee->supervisor_name }}</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Manager</label>
-                               <p class="employee-details-value">{{ isset($employee->manager) ? $employee->manager->fullname() : '' }}</p>
+                                <label>Manager/Head</label>
+                               <p class="employee-details-value">{{ isset($employee->manager) ? $employee->manager->fullname() : $employee->manager_name }}</p>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -152,12 +152,38 @@ Employee Information
                                <p class="employee-details-value">{{ $employee->status()}}</p>
                             </div>
                         </div>
+
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Account</label>
-                               <p class="employee-details-value">{{ $employee->account->account_name}}</p>
+                               <p class="employee-details-value">{{ @$employee->account->account_name}}</p>
                             </div>
                         </div>
+
+                        @if(isset($employee->ext))
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Phone Extension</label>
+                               <p class="employee-details-value">{{ @$employee->ext}}</p>
+                            </div>
+                        </div>
+                        @endif
+                        @if(isset($employee->prod_date))
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Production date</label>
+                               <p class="employee-details-value">{{ @$employee->prettyproddate()}}</p>
+                            </div>
+                        </div>
+                        @endif
+                        @if(isset($employee->wave))
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Wave Number</label>
+                               <p class="employee-details-value">{{ @$employee->wave}}</p>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                     <br>
                     <br>

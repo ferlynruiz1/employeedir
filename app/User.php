@@ -32,7 +32,7 @@ class User extends Authenticatable
 
     public function scopeFullname($query)
     {
-        return $this->first_name . ' ' . $this->middle_name . ' ' . $this->last_name;
+        return $this->last_name .', '. $this->first_name;
     }
     public function scopePrettyBirthDate($query)
     {
@@ -40,6 +40,11 @@ class User extends Authenticatable
         return $dt->toFormattedDateString();
     }
     public function scopePrettydatehired($query)
+    {
+        $dt = Carbon::parse($this->hired_date);
+        return $dt->toFormattedDateString();
+    }
+    public function scopePrettyproddate($query)
     {
         $dt = Carbon::parse($this->hired_date);
         return $dt->toFormattedDateString();
@@ -70,6 +75,8 @@ class User extends Authenticatable
                 return "Active"; 
             case 2:
                 return "Inactive";
+            default:
+                return "";
         }
     }
     public function scopeGender($query){
@@ -84,11 +91,10 @@ class User extends Authenticatable
                 return "Prefer not to say"; 
 
             default:
-                # code...
-                break;
+                return "--";
         }
     }
     public function scopeIsAdmin($query){
-        return $this->usertype == 1;
+        return $this->usertype == 4;
     }
 }

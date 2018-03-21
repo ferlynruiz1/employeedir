@@ -50,14 +50,19 @@ Employees
         .sorting_1{
             padding-left: 20px !important;
         }
-        a.btn.btn-primary {
+        a.btn.btn-primary, a.btn.btn-warning {
             float: right;
             margin: 10px;
         }
     </style>
+
     <a href="{{url('employee_info/create')}}" class="btn btn-primary">
         <i class="fa fa-plus"></i>
         &nbsp;&nbsp;Add Employee
+    </a>
+    <a href="{{url('export')}}" class="btn btn-warning">
+        <i class="fa fa-download"></i>
+        &nbsp;&nbsp;Generate Report
     </a>
     <div class="section-header">
         <h4>List of Employees</h4>
@@ -67,9 +72,13 @@ Employees
             <tr>
                 <td>#</td>
                 <td>Employee</td>
-                <td>EID</td>
-                <td >Team</td>
+                <!-- <td>EID</td> -->
+                <td>Email</td>
+                <td >Team/Department</td>
                 <td >Supervisor</td>
+                <td >Manager</td>
+                <td >Division</td>
+                <td >Account</td>
                 <td>Hired Date</td>
                 <td >Action</td>
             </tr>        
@@ -79,7 +88,7 @@ Employees
             @foreach($employees as $employee)
                 <tr> 
                     <td>{{ ++$counter }}</td>
-                    <td style="max-width: 250px;">
+                    <td style="width: 250px;">
                         @if(isset($employee->profile_img))
                          <img alt="image" id="profile_image" class="img-circle pull-left" style="width: 40px; height: 40px; margin: 10px;" src="{{ $employee->profile_img }}" style="float: left !important">
                          @else
@@ -92,18 +101,22 @@ Employees
                             {{ $employee->position_name }}
                         </small>
                     </td>
-                    <td>{{ $employee->eid }}</td>
+                    <!-- <td>{{ $employee->eid }}</td> -->
+                    <td style="color: #00B0FF;"><a href="mailto:{{$employee->email}}"> {{ $employee->email }}</a></td>
                     <td>{{ $employee->team_name }}</td>
-                    <td>{{ $employee->supervisor->alias }}</td>
+                    <td>{{ @$employee->supervisor_name }}</td>
+                    <td>{{ @$employee->manager_name }}</td>
+                    <td>{{ @$employee->division_name }}</td>
+                    <td>{{ @$employee->account->account_name }}</td>
                     <td>{{ $employee->prettydatehired() }}</td>
                     <td>
-                        <a href="{{ url('/employee_info/'. $employee->id)}}" title="View">
+                        <a href="{{ url('/employee_info/'. $employee->id)}}" target="_blank" title="View">
                             <i class="fa fa-eye"></i>
                         </a>&nbsp;&nbsp;
-                        <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" title="Edit">
+                        <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" target="_blank" title="Edit">
                             <i class="fa fa-pencil"></i>
                         </a>&nbsp;&nbsp;
-                        <a href="#" class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Edit" data-id="{{$employee->id}}">
+                        <a href="#"  class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Delete" data-id="{{$employee->id}}">
                             <i class="fa fa-trash" style="color: red;" ></i>
                         </a>
                     </td>

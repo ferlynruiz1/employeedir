@@ -180,7 +180,7 @@ Employee Information
                         </div>
                     </div>
                     <br>
-                    @if(Auth::user()->id == $employee->id || Auth::user()->usertype == 1)
+                    @if(Auth::user()->id == $employee->id)
                         <br>
                         <div class="row">
                             <div class="col-md-3" style="display: flex;">

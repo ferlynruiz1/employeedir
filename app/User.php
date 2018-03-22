@@ -41,23 +41,48 @@ class User extends Authenticatable
     }
     public function scopePrettydatehired($query)
     {
-        $dt = Carbon::parse($this->hired_date);
-        return $dt->toFormattedDateString();
+        if(isset($this->hired_date)){
+            $dt = Carbon::parse($this->hired_date);
+            return $dt->toFormattedDateString();
+        } else {
+            return "--";
+        }
     }
     public function scopePrettyproddate($query)
     {
-        $dt = Carbon::parse($this->hired_date);
-        return $dt->toFormattedDateString();
+        if(isset($this->prod_date)){
+            $dt = Carbon::parse($this->prod_date);
+            return $dt->toFormattedDateString();
+        } else {
+            return "--";
+        }
     }
-     public function scopeBirthDate($query)
+    public function scopeProdDate($query)
     {
-        $dt = Carbon::parse($this->birth_date);
-        return $dt->format('m/d/Y');
+        if (isset($this->prod_date)) {
+            $dt = Carbon::parse($this->hired_date);
+            return $dt->format('m/d/Y');
+        } else {
+            return "";
+        } 
+    }
+    public function scopeBirthDate($query)
+    {
+        if (isset($this->birth_date)) {
+            $dt = Carbon::parse($this->birth_date);
+            return $dt->format('m/d/Y');
+        }else{
+            return "";
+        }
     }
     public function scopeDateHired($query)
     {
-        $dt = Carbon::parse($this->hired_date);
-        return $dt->format('m/d/Y');
+        if (isset($this->hired_date)) {
+            $dt = Carbon::parse($this->hired_date);
+            return $dt->format('m/d/Y');
+        } else {
+            return "";
+        }
     }
     public function supervisor()
     {

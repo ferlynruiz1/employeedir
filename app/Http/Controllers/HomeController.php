@@ -29,8 +29,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         if (Auth::user()->isAdmin()) {
-            $user = User::with('supervisor')->orderBy('hired_date', 'DESC')->get();
-            return view('dashboard')->with('employees', $user);
+            return redirect('dashboard');
         } else {
             $employees = new User;
             if ($request->has('keyword')) {
@@ -45,6 +44,6 @@ class HomeController extends Controller
     }
     public function dashboard(Request $request)
     {
-        return view('dashboard')->with('new_hires', User::orderBy('hired_date', 'DESC')->paginate(5))->with('employees', User::all());
+        return view('dashboard')->with('new_hires', User::orderBy('prod_date', 'DESC')->paginate(5))->with('employees', User::all());
     }
 } 

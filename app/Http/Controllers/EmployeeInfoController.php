@@ -50,13 +50,13 @@ class EmployeeInfoController extends Controller
         $employee->last_name = $request->last_name;
         $employee->alias = $request->alias;
         $employee->position_name = $request->position_name;
-        $employee->supervisor_id = $request->supervisor_id;
+        $employee->supervisor_name = $request->supervisor_name;
         $employee->team_name = $request->team_name;
         $employee->gender = $request->gender_id;
-        $employee->manager_id = $request->manager_id;
+        $employee->mananger_name = $request->manager_name;
         $employee->account_id = $request->account_id;
         $employee->status = $request->status_id;
-
+        
         if ($request->has('employee_type')) {
             $employee->usertype = $request->employee_type;
         }
@@ -71,9 +71,15 @@ class EmployeeInfoController extends Controller
         $datetime = new DateTime();
         $hired_date = $datetime->createFromFormat('m/d/Y', $request->hired_date)->format("Y-m-d H:i:s");
         $birth_date = $datetime->createFromFormat('m/d/Y', $request->birth_date)->format("Y-m-d H:i:s");
+        $prod_date = $datetime->createFromFormat('m/d/Y', $request->prod_date)->format("Y-m-d H:i:s");
         $employee->hired_date = $hired_date;
         $employee->birth_date = $birth_date;
+        $employee->prod_date = $prod_date;
         $employee->email = $request->email;
+        $employee->ext = $request->ext;
+        $employee->wave = $request->wave;
+
+
         $employee->password = Hash::make(env('USER_DEFAULT_PASSWORD', 'qwe123!@#$'));
         $employee->save();
 
@@ -84,7 +90,7 @@ class EmployeeInfoController extends Controller
             $employee->save();
         }
 
-        return redirect('home')->with('success', "Successfully created Employee");
+        return redirect('dashboard')->with('success', "Successfully created Employee");
     }
 
     /**
@@ -105,8 +111,8 @@ class EmployeeInfoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        return view('employee.edit')->with('employee', User::find($id))->with('supervisors', User::all())->with('departments', EmployeeDepartment::all());
+    {   
+        return view('employee.edit')->with('employee', User::find($id))->with('supervisors', User::all())->with('departments', EmployeeDepartment::all())->with('accounts', ElinkAccount::all());
     }
 
     /**
@@ -118,6 +124,7 @@ class EmployeeInfoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        return $request;
         $employee = User::find($id);
         $employee->eid = $request->eid;
         $employee->first_name = $request->first_name;
@@ -127,12 +134,10 @@ class EmployeeInfoController extends Controller
         $employee->alias = $request->alias;
         $employee->team_name = $request->team_name;
         $employee->position_name = $request->position_name;
-        $employee->supervisor_id = $request->supervisor_id;
-
+        $employee->supervisor_name = $request->supervisor_name;
         if ($request->has('gender_id')) {
             $employee->gender = $request->gender_id;
         }
-
         if ($request->has('employee_type')) {
             if ($request->employee_type == 4) {
                 $employee->usertype = 1;
@@ -140,8 +145,7 @@ class EmployeeInfoController extends Controller
                 $employee->usertype = 2;
             }
         }
-
-        $employee->manager_id = $request->manager_id;
+        $employee->manager_name = $request->manager_name;
         $employee->account_id = $request->account_id;
         $employee->status = $request->status_id;
 
@@ -213,9 +217,14 @@ class EmployeeInfoController extends Controller
 
         $employees = new User;
         if ($request->has('keyword')) {
-            $employees = $employees->where('first_name', 'LIKE', '%'.$request->get('keyword').'%')->orWhere('last_name', 'LIKE', '%'.$request->get('keyword').'%');
+            $employees = $employees
+                        ->where('first_name', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('last_name', 'LIKE', '%'.$request->get('keyword').'%');
+
         } else if($request->has('alphabet')) {
-            $employees = $employees->where('last_name', 'LIKE', $request->get('alphabet').'%')->orWhere('first_name', 'LIKE', $request->get('alphabet').'%');
+            $employees = $employees
+                        ->where('last_name', 'LIKE', $request->get('alphabet').'%')
+                        ->orWhere('first_name', 'LIKE', $request->get('alphabet').'%');
         }
         $employees = $employees->orderBy('last_name', 'ASC')->paginate(10);
 
@@ -242,6 +251,8 @@ class EmployeeInfoController extends Controller
         $updates = array();
         $inserts = array();
         $employees = array();
+        $invalid_emails = array();
+
         $COUNT = 0;
         $EID = 1;
         $EXT = 2;
@@ -277,12 +288,11 @@ class EmployeeInfoController extends Controller
 
     foreach ($worksheet->getRowIterator() AS $row) {
         $cellIterator = $row->getCellIterator();
-        $cellIterator->setIterateOnlyExistingCells(FALSE); // This loops through all cells,
+        $cellIterator->setIterateOnlyExistingCells(FALSE); 
         $cells = [];
         foreach ($cellIterator as $cell) {
             $cells[] = $cell->getValue();
         }
-
         $rows[] = $cells;
         // Check if document is valid 
         if(count($rows) == 1){
@@ -348,21 +358,23 @@ class EmployeeInfoController extends Controller
             if(strtolower($cells[$BDAY]) != strtolower("bday")){
                 echo('Wave wrong');
             }
-        }else{
-            // UPDATE
-            $emp = User::whereEmail($cells[$EMAIL]);
+        } else {
             $cells[$EMAIL] = trim($cells[$EMAIL]);
-            if(!$cells[$EMAIL] || !filter_var($cells[$EMAIL], FILTER_VALIDATE_EMAIL)){
+            $emp = User::whereEmail($cells[$EMAIL]);
+
+            if ( !$cells[$EMAIL] || !filter_var($cells[$EMAIL], FILTER_VALIDATE_EMAIL)) {
+                // list invalid email
+
+                array_push($invalid_emails, $cells[$FULLNAME]);
+                
                 continue;
             }
             $e = User::whereRaw('CONCAT(last_name, ", ", first_name) LIKE "%'. trim($cells[$SUPERVISOR]) . '%"')->get();
-            if(count($e) > 0){
-                array_push($inserts, $e->first()->email);
-            }
+            
 
             $account = ElinkAccount::where('account_name','LIKE' , '%'.trim($cells[$ACCOUNT]).'%')->get();
-
             if($emp->count() >= 1){
+                // Update 
                 $employee = array(
                     'eid' => trim($cells[$EID]),
                     'alias' => trim($cells[$ALIAS]),
@@ -371,120 +383,126 @@ class EmployeeInfoController extends Controller
                     'supervisor_name' =>  trim($cells[$SUPERVISOR]),
                     'manager_name' => trim($cells[$MANAGER]),
                     'team_name' => trim($cells[$DEPT]),
+                    'dept_code' => trim($cells[$DEPT_CODE]),
                     'position_name' => trim($cells[$ROLE]),
-                    'prod_date' => gmdate("Y-m-d H:i:s", (int)(($cells[$PROD_DATE] - 25569) * 86400)),
-                    'status' => strtolower(trim($cells[$STATUS])) == strtolower('Active') ? 1 : 0 ,
-                    'hired_date' => gmdate("Y-m-d H:i:s", (int)(($cells[$HIRED_DATE] - 25569) * 86400)),
-                    'wave' => trim($cells[$WAVE]),
-                    'email' => trim($cells[$EMAIL]),
-                    'gender' => $cells[$GENDER],
-                    'division_name' => $cells[$DIVISION],
+                    'gender' => genderValue(trim($cells[$GENDER])),
+                    'division_name' => trim($cells[$DIVISION]),
                     'birth_date' => $cells[$BDAY],
-                     );
+                    'ext' => trim($cells[$EXT]),
+                    'wave' => trim($cells[$WAVE]),
+                    );
 
-                if(count($account) > 0){
+                if (count($account) > 0) {
                     $employee['account_id'] = $account->first()->id;
-                }else{
+                } else {
                     $employee['account_id'] = 0;
                 }
+                if (strtolower($cells[$STATUS]) == strtolower('Active')) {
+                    $employee['status'] = 1;
+                } else {
+                    $employee['status'] = 2;
+                }
+                if ($cells[$HIRED_DATE]) {
+                    if (is_numeric($cells[$HIRED_DATE])) {
+                        $UNIX_DATE = ($cells[$HIRED_DATE] - 25569) * 86400;
+                        $employee['hired_date'] = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
+                    }
+                }
+                if ($cells[$BDAY]) {
+                    if (is_numeric($cells[$BDAY])) {
+                        $UNIX_DATE = ($cells[$BDAY] - 25569) * 86400;
+                        $employee['birth_date'] = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
+                    }
+                }
+                if ($cells[$PROD_DATE]) {
+                    if (is_numeric($cells[$PROD_DATE])) {
+                        $UNIX_DATE = ($cells[$PROD_DATE] - 25569) * 86400;
+                        $employee['prod_date'] = gmdate("Y-m-d H:i:s", (int)$UNIX_DATE);
+                    }
+                }
+                if ($employee['gender'] == 1) {
+                    $employee['profile_img'] = asset('public/img/nobody_m.original.jpg');
+                } else {
+                    $employee['profile_img'] = asset('public/img/nobody_f.original.jpg');
+                }
 
-                $emp->update($employee);
-                array_push($employees, $employee);
-                $num_updates ++;
-                array_push($updates, $cells[$EMAIL]);
+                if ($emp->update($employee)) {
+                    array_push($updates, $cells[$EMAIL]);
+                    $num_updates ++;
+                }
+            } else {
+                // SQL saving of data
+                $employee = new User; // USER : EMPLOYEE
+                $employee->eid = trim($cells[$EID]);
+                $employee->first_name = trim($cells[$FIRST_NAME]);
+                $employee->middle_name = '';
+                $employee->last_name = trim($cells[$LAST_NAME]);
+                $employee->email = trim($cells[$EMAIL]);
+                $employee->alias = trim($cells[$ALIAS]);
+                $employee->team_name = trim($cells[$DEPT]);
+                $employee->dept_code = trim($cells[$DEPT_CODE]);
+                $employee->position_name = trim($cells[$ROLE]);
+                $employee->supervisor_name = trim($cells[$SUPERVISOR]);
+                $employee->gender = genderValue(trim($cells[$GENDER]));
+                $employee->usertype = 1;
+                $employee->manager_name = trim($cells[$MANAGER]);
+                $employee->division_name = trim($cells[$DIVISION]);
+                $employee->all_access = 1;
+                $employee->ext = trim($cells[$EXT]);
+                $employee->wave = trim($cells[$WAVE]);
+                $employee->password = Hash::make(env('USER_DEFAULT_PASSWORD', 'qwe123!@#$'));
+                
+                $account = ElinkAccount::where('account_name','LIKE' , '%'.$cells[$ACCOUNT].'%')->get();
+                if (count($account) > 0) {
+                    $employee->account_id = $account->first()->id;
+                } else {
+                    $employee->account_id = 0;
+                }
+                if (strtolower($cells[$STATUS]) == strtolower('Active')) {
+                    $employee->status = 1;
+                } else {
+                    $employee->status = 2;
+                }
+                if ($cells[$HIRED_DATE]) {
+                    if (is_numeric($cells[$HIRED_DATE])) {
+                        $UNIX_DATE = ($cells[$HIRED_DATE] - 25569) * 86400;
+                        $employee->hired_date = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
+                    }
+                }
+                if ($cells[$BDAY]) {
+                    if (is_numeric($cells[$BDAY])) {
+                        $UNIX_DATE = ($cells[$BDAY] - 25569) * 86400;
+                        $employee->birth_date = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
+                    }
+                }
+                if ($cells[$PROD_DATE]) {
+                    if (is_numeric($cells[$PROD_DATE])) {
+                        $UNIX_DATE = ($cells[$PROD_DATE] - 25569) * 86400;
+                        $employee->prod_date = gmdate("Y-m-d H:i:s", (int)$UNIX_DATE);
+                    }
+                }
+                if ($employee->gender == 1) {
+                    $employee->profile_img = asset('public/img/nobody_m.original.jpg');
+                } else {
+                    $employee->profile_img = asset('public/img/nobody_f.original.jpg');
+                }
+                $employee->save();
+                $num_inserts ++;
 
-            }else{
-
-            // SQL saving of data
-            $employee = new User; // USER : EMPLOYEE
-
-            $employee->eid = trim($cells[$EID]);
-
-            $employee->first_name = trim($cells[$FIRST_NAME]);
-
-            $employee->middle_name = '';
-            $employee->last_name = trim($cells[$LAST_NAME]);
-            $employee->email = trim($cells[$EMAIL]);
-            $employee->alias = trim($cells[$ALIAS]);
-            $employee->team_name = trim($cells[$DEPT]);
-            // TODO DEPARTCODE
-
-            $employee->position_name = trim($cells[$ROLE]);
-           
-            $employee->supervisor_name = trim($cells[$SUPERVISOR]);
-
-            $employee->gender = $cells[$GENDER];
-
-            $employee->usertype = 1;
-
-            $employee->manager_name = trim($cells[$MANAGER]);
-
-            $account = ElinkAccount::where('account_name','LIKE' , '%'.$cells[$ACCOUNT].'%')->get();
-            if(count($account) > 0){
-                $employee->account_id = $account->first()->id;
-            }else{
-                $employee->account_id = 0;
-            }
-            $employee->division_name = trim($cells[$DIVISION]);
-            if(strtolower($cells[$STATUS]) == strtolower('Active')){
-                 $employee->status = 1;
-            }else{
-                 $employee->status = 2;
-            }
-
-            $employee->all_access = 1;
-            $employee->ext = trim($cells[$EXT]);
-            $employee->wave = trim($cells[$WAVE]);
-            // ALL ACCESS
-            // if ($request->has('all_access')) {
-            //     $employee->all_access = 1;
-            // } else {
-            //     $employee->all_access = 0;
-            // }
-
-            $datetime = new DateTime();
-            if($cells[$HIRED_DATE]){
-                $UNIX_DATE = ($cells[$HIRED_DATE] - 25569) * 86400;
-                $employee->hired_date = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
-
-            }
-            if($cells[$BDAY]){
-                $UNIX_DATE = ($cells[$BDAY] - 25569) * 86400;
-                 $employee->birth_date = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
-            }
-            if($cells[$PROD_DATE]){
-                $UNIX_DATE = ($cells[$PROD_DATE] - 25569) * 86400;
-                $employee->prod_date = gmdate("Y-m-d H:i:s", (int)$UNIX_DATE);
-            }
-            // no image
-            // if ($request->hasFile("profile_image")) {
-            //     $path = $request->profile_image->store('images/'.$employee->id);
-            //     $employee->profile_img = asset('storage/app/'.$path);
-            // }
-
-            $employee->password = Hash::make(env('USER_DEFAULT_PASSWORD', 'qwe123!@#$'));
-        
-            array_push($employees, $employee);
-            array_push($inserts, $cells[$EMAIL]);
-            $employee->save();
-            $num_inserts ++;
+                array_push($inserts, $employee);
             }
         }
     }
-        return view('employee.import')->with('num_inserts', $num_inserts)->with('num_updates', $num_updates)
-        ->with('updates', $updates)->with('inserts', $inserts);
-        // return json_encode(array($employees, 'num_inserts' => $num_inserts, 'num_updates' => $num_updates, 'updates' => $updates, 'inserts' => $inserts));
 
-    }
-
-
-
+    return view('employee.import')
+            ->with('num_inserts', $num_inserts)
+            ->with('num_updates', $num_updates)
+            ->with('updates', $updates)
+            ->with('inserts', $inserts)
+            ->with('invalid_emails', $invalid_emails);
+}
     /* EXPORT */
-
-
     public function exportdownload(){
-      
-
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $worksheet = $spreadsheet->getActiveSheet();
         $employees = User::where('id','<>',1)->get();
@@ -532,7 +550,6 @@ class EmployeeInfoController extends Controller
         $worksheet->getCell(getNameFromNumber($GENDER + 1 ) . 1 )->setValue('Gender');
         $worksheet->getCell(getNameFromNumber($BDAY + 1) . 1 )->setValue('Bday');
 
-
         $worksheet->getColumnDimension(getNameFromNumber($COUNT + 1))->setWidth(7);
         $worksheet->getColumnDimension(getNameFromNumber($EID + 1))->setWidth(20);
         $worksheet->getColumnDimension(getNameFromNumber($EXT + 1))->setWidth(5);
@@ -568,16 +585,19 @@ class EmployeeInfoController extends Controller
         $worksheet->getCell(getNameFromNumber($SUPERVISOR + 1) . $row )->setValue($value->supervisor_name);
         $worksheet->getCell(getNameFromNumber($MANAGER + 1) . $row )->setValue($value->manager_name);
         $worksheet->getCell(getNameFromNumber($DEPT + 1) . $row )->setValue($value->team_name);
-        $worksheet->getCell(getNameFromNumber($DEPT_CODE + 1) . $row )->setValue('');
-        $worksheet->getCell(getNameFromNumber($DIVISION + 1) . $row )->setValue('');
+        $worksheet->getCell(getNameFromNumber($DEPT_CODE + 1) . $row )->setValue($value->dept_code);
+        $worksheet->getCell(getNameFromNumber($DIVISION + 1) . $row )->setValue($value->division_name);
         $worksheet->getCell(getNameFromNumber($ROLE + 1) . $row )->setValue($value->position_name);
-        $worksheet->getCell(getNameFromNumber($ACCOUNT + 1) . $row )->setValue($value->account_name);
-        $worksheet->getCell(getNameFromNumber($PROD_DATE + 1) . $row )->setValue($value->prod_date);
+
+        $account = ElinkAccount::find($value->account_id);
+        $worksheet->getCell(getNameFromNumber($ACCOUNT + 1) . $row )->setValue($account->account_name);
+        
+        $worksheet->getCell(getNameFromNumber($PROD_DATE + 1) . $row )->setValue($value->prodDate());
         $worksheet->getCell(getNameFromNumber($STATUS + 1) . $row )->setValue($value->status == 1 ? 'Active' : 'Inactive');
-        $worksheet->getCell(getNameFromNumber($HIRED_DATE + 1) . $row )->setValue($value->hired_date);
+        $worksheet->getCell(getNameFromNumber($HIRED_DATE + 1) . $row )->setValue($value->dateHired());
         $worksheet->getCell(getNameFromNumber($WAVE + 1) . $row )->setValue($value->wave);
         $worksheet->getCell(getNameFromNumber($EMAIL + 1) . $row )->setValue($value->email);
-        $worksheet->getCell(getNameFromNumber($GENDER + 1) . $row )->setValue($value->gender);
+        // $worksheet->getCell(getNameFromNumber($GENDER + 1) . $row )->setValue($value->gender);
         $worksheet->getCell(getNameFromNumber($BDAY + 1) . $row )->setValue($value->bday);
 
         $row++;

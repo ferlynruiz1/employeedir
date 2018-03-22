@@ -180,7 +180,7 @@ Employee Information
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Wave Number</label>
-                               <p class="employee-details-value">{{ @$employee->wave}}</p>
+                               <p class="employee-details-value">{{ $employee->wave == "" ? "--" : $employee->wave }}</p>
                             </div>
                         </div>
                         @endif
@@ -205,7 +205,7 @@ Employee Information
                         </div>
                     </div>
                     <br>
-                    @if(Auth::user()->id == $employee->id || Auth::user()->usertype == 1)
+                    @if(Auth::user()->id == $employee->id || Auth::user()->isAdmin())
                         <br>
                         <div class="row">
                              <div class="col-md-3" style="display: flex;">

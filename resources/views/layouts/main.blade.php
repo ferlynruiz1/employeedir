@@ -58,13 +58,12 @@ body{
         </div>
         <div class="divider"></div>
         <ul class="nav menu">
-
             <li <?php echo \Request::url() == url('dashboard') ? 'class="active"' : ''; ?>>
                 <a href="{{url('dashboard')}}">
                     <em class="fa fa-dashboard">&nbsp;</em>
                     Dashboard
-                 </a>
-             </li>
+                </a>
+            </li>
             <li <?php echo \Request::url() == url('employees') ? 'class="active"' : ''; ?>>
                 <a href="{{url('employees')}}">
                     <em class="fa fa-home">&nbsp;</em>
@@ -81,6 +80,18 @@ body{
                 <a href="{{url('myprofile')}}">
                     <em class="fa fa-user">&nbsp;</em>
                     My Profile
+                </a>
+            </li>
+            <li <?php echo \Request::url() == url('employees/import') ? 'class="active"' : ''; ?>>
+                <a href="{{url('employees/import')}}">
+                    <em class="fa fa-upload">&nbsp;</em> 
+                    Import
+                </a>
+            </li>
+            <li <?php echo \Request::url() == url('export') ? 'class="active"' : ''; ?>>
+                <a href="{{url('export')}}">
+                    <em class="fa fa-download">&nbsp;</em> 
+                    Export
                 </a>
             </li>
             <li>

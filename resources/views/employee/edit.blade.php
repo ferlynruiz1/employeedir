@@ -150,19 +150,19 @@ Employee Information / Edit
                                 <div class="form-group">
                                     <br>
                                     <label></label>
-                                    <input type="radio" {{ $employee->usertype == 2 ? 'checked' : ''}} id="employee" name="employee_type" value="2" placeholder="test" required>
+                                    <input type="radio" {{ $employee->usertype == 1 ? 'checked' : ''}} id="employee" name="employee_type" value="1" placeholder="test" required>
                                     <label class="radio-label" for="employee">Employee</label>
                                     &nbsp;
                                     &nbsp;
-                                    <input type="radio" {{ $employee->usertype == 3 ? 'checked' : ''}} id="supervisor" name="employee_type" value="3" placeholder="test" required>
+                                    <input type="radio" {{ $employee->usertype == 2 ? 'checked' : ''}} id="supervisor" name="employee_type" value="2" placeholder="test" required>
                                     <label class="radio-label" for="supervisor">Supervisor</label>
                                     &nbsp;
                                     &nbsp;
-                                    <input type="radio" {{ $employee->usertype == 4 ? 'checked' : ''}} id="manager" name="employee_type" value="4" placeholder="test" required>
+                                    <input type="radio" {{ $employee->usertype == 3 ? 'checked' : ''}} id="manager" name="employee_type" value="3" placeholder="test" required>
                                     <label class="radio-label" for="manager">Manager</label>
                                     &nbsp;
                                     &nbsp;
-                                    <input type="radio" {{ $employee->usertype == 1 ? 'checked' : ''}} id="admin" name="employee_type" value="1" placeholder="test" required>
+                                    <input type="radio" {{ $employee->usertype == 4 ? 'checked' : ''}} id="admin" name="employee_type" value="4" placeholder="test" required>
                                     <label class="radio-label" for="admin">Admin</label>
                                 </div>
                             </div>
@@ -178,9 +178,9 @@ Employee Information / Edit
                                     <label class="asterisk-required">Account</label>
                                      <select class="select2 form-control" name="account_id" required>
                                         <option selected="" disabled="">Select</option>
-                                        <option <?php echo $employee->account_id == 1 ? "selected" : "" ; ?> value="1">Reader's Magnet</option>
-                                        <option <?php echo $employee->account_id == 2 ? "selected" : "" ; ?> value="2">cVen</option>
-                                        <option <?php echo $employee->account_id == 3 ? "selected" : "" ; ?> value="3">Enterprise</option>
+                                        @foreach($accounts as $account)
+                                            <option <?php echo $employee->account_id == $account->id ? "selected" : "" ; ?> value="{{$account->id}}">{{$account->account_name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -200,10 +200,10 @@ Employee Information / Edit
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Manager</label>
-                                   <select class="select2 form-control" name="manager_id">
+                                   <select class="select2 form-control" name="manager_name">
                                         <option selected="" disabled="">Select</option>
                                        @foreach($supervisors as $supervisor)
-                                            <option value="{{ $supervisor->id }}" <?php echo $supervisor->id == $employee->manager_id ? "selected" : "" ; ?>> {{$supervisor->fullname()}}</option>
+                                            <option value="{{ $supervisor->fullname() }}" <?php echo $supervisor->fullname() == $employee->manager_name ? "selected" : "" ; ?>> {{$supervisor->fullname()}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -211,18 +211,24 @@ Employee Information / Edit
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Supervisor</label>
-                                    <select class="select2 form-control"  name="supervisor_id" >
+                                    <select class="select2 form-control"  name="supervisor_name" >
                                         <option selected="" disabled="">Select</option>
                                         @foreach($supervisors as $supervisor)
-                                        <option value="{{ $supervisor->id }}" <?php echo $supervisor->id == $employee->supervisor_id ? "selected" : "" ; ?>> {{$supervisor->fullname()}}</option>
+                                        <option value="{{ $supervisor->fullname() }}" <?php echo $supervisor->fullname() == $employee->supervisor_name ? "selected" : "" ; ?>> {{$supervisor->fullname()}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="asterisk-required">Hire Date</label>
+                                    <label>Hire Date</label>
                                     <input class="form-control datepicker" placeholder="Hire Date" name="hired_date" value="{{$employee->datehired()}}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Production Date</label>
+                                    <input class="form-control datepicker" placeholder="Hire Date" name="prod_date" value="{{$employee->prodDate()}}">
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -235,10 +241,22 @@ Employee Information / Edit
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label >EXT</label>
+                                    <input class="form-control" placeholder="Ext" name="ext" value="{{$employee->ext}}" >
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label >Wave </label>
+                                    <input class="form-control" placeholder="Wave" name="wave" value="{{$employee->wave}}" >
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <input type="checkbox" name="all_access" <?php echo $employee->all_access == 1 ? "checked" : "" ; ?>> &nbsp;
-                                    <span class="asterisk-required" for="all_access">can view information from other account ?</span>
+                                    <span for="all_access">can view information from other account ?</span>
                                 </div>
                             </div>
                         </div>
@@ -334,30 +352,30 @@ Employee Information / Edit
             return '';
         }
      }
-     $('input[name=employee_type]').change(function(){
-        switch($(this).val()){
-            case '2':
-                 $('select[name=supervisor_id]').parent().parent().show();
-                 $('select[name=manager_id]').parent().parent().show();
-                 $('input[name=all_access]').parent().parent().show();
-            break;
-            case '3':
-                console.log('sulod');
-                $('select[name=supervisor_id]').parent().parent().hide();
-                 $('input[name=all_access]').parent().parent().show();
-            break;
-            case '4':
-                 $('select[name=supervisor_id]').parent().parent().hide();
-                 $('select[name=manager_id]').parent().parent().hide();
-                 $('input[name=all_access]').parent().parent().show();
-            break;
-            case '1':
-                 $('select[name=supervisor_id]').parent().parent().show();
-                 $('select[name=manager_id]').parent().parent().show();
-                 $('input[name=all_access]').parent().parent().hide();
-            break;
-        }
-    });
-    $('input[name=employee_type]').trigger('change');
+    //  $('input[name=employee_type]').change(function(){
+    //     switch($(this).val()){
+    //         case '2':
+    //              $('select[name=supervisor_id]').parent().parent().show();
+    //              $('select[name=manager_id]').parent().parent().show();
+    //              $('input[name=all_access]').parent().parent().show();
+    //         break;
+    //         case '3':
+    //             console.log('sulod');
+    //             $('select[name=supervisor_id]').parent().parent().hide();
+    //              $('input[name=all_access]').parent().parent().show();
+    //         break;
+    //         case '4':
+    //              $('select[name=supervisor_id]').parent().parent().hide();
+    //              $('select[name=manager_id]').parent().parent().hide();
+    //              $('input[name=all_access]').parent().parent().show();
+    //         break;
+    //         case '1':
+    //              $('select[name=supervisor_id]').parent().parent().show();
+    //              $('select[name=manager_id]').parent().parent().show();
+    //              $('input[name=all_access]').parent().parent().hide();
+    //         break;
+    //     }
+    // });
+    // $('input[name=employee_type]').trigger('change');
  </script>
 @endsection

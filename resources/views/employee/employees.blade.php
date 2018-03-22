@@ -79,7 +79,7 @@ Employees
                 <td >Manager</td>
                 <td >Division</td>
                 <td >Account</td>
-                <td>Hired Date</td>
+                <td>Production Date</td>
                 <td >Action</td>
             </tr>        
         </thead> 
@@ -108,7 +108,7 @@ Employees
                     <td>{{ @$employee->manager_name }}</td>
                     <td>{{ @$employee->division_name }}</td>
                     <td>{{ @$employee->account->account_name }}</td>
-                    <td>{{ $employee->prettydatehired() }}</td>
+                    <td>{{ $employee->prettyproddate() }}</td>
                     <td>
                         <a href="{{ url('/employee_info/'. $employee->id)}}" target="_blank" title="View">
                             <i class="fa fa-eye"></i>

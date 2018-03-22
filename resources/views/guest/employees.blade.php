@@ -106,7 +106,7 @@ Employees
                         <span style="color: gray;">Supervisor:</span>
                     <br>
                     <br>
-                        {{$employee->supervisor->fullname()}}
+                        {{$employee->supervisor_name}}
                     </h5>
                     <h5>
                         <span class="fa fa-user" title="Manager"></span>

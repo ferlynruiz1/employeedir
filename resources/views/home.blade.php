@@ -1,54 +1,16 @@
 @extends('layouts.main')
 @section('title')
-Dashboard
+Home
 @endsection
 @section('pagetitle')
-Dashboard
+Home
 @endsection
 @section('content')
 <br>
-   <div class="col-md-12">
-        <div class="panel panel-container">
-            <div class="row">
-                <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
-                    <div class="panel panel-teal panel-widget border-right">
-                        <div class="row no-padding"><em class="fa fa-xl fa-users color-blue"></em>
-                            <div class="large">{{ count($employees) }}</div>
-                            <div class="text-muted">Head Count</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
-                    <div class="panel panel-blue panel-widget border-right">
-                        <div class="row no-padding"><em class="fa fa-xl fa-users color-gray"></em>
-                            <div class="large">8</div>
-                            <div class="text-muted">Departments</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
-                    <div class="panel panel-orange panel-widget border-right">
-                        <div class="row no-padding"><em class="fa fa-xl fa-upload" style="color: #388E3C;"></em>
-                            <div class="large"><a href="{{ url('employees/import')}}" class="btn btn-success" style="background-color: #388E3C;">Import</a></div>
-                            <div class="text-muted">Import Employees </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-md-3 col-lg-3 no-padding pull-right">
-                    <div class="panel panel-teal panel-widget">
-                        <div class="row no-padding"><em class="fa fa-xl fa-users color-black" style="color: #F57C00;"></em>
-                            <div class="large"><a class="btn btn-warning" href="{{url('employees/export')}}" style="background-color: #F57C00;">Export</a></div>
-                            <div class="text-muted">Generate Report</div>
-                        </div>
-                    </div>
-                </div>
-            </div><!--/.row-->
-        </div>
-    </div>
     <div class="col-md-4">
             <div class="panel panel-default ">
                 <div class="panel-heading">
-                    Newest Hired
+                    New Hires
                     <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
                 <div class="panel-body timeline-container">
                     <ul class="timeline">
@@ -68,18 +30,6 @@ Dashboard
                             </div>
                         </li>
                         @endforeach
-                        @if(count($new_hires) == 0)
-                            <style type="text/css">
-                                .timeline:before{
-                                    display: none;
-                                }
-                            </style>
-                            <center>
-                                <h4>
-                                    No employees so far..
-                                </h4>
-                            </center>
-                        @endif
                     </ul>
                 </div>
             </div>

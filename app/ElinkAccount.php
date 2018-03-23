@@ -8,5 +8,6 @@ class ElinkAccount extends Model
 {
     //
     protected $table = "elink_account";
+    public $timestamps = false;
 
 }

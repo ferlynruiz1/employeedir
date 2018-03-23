@@ -17,24 +17,23 @@ Employee / Import
         display: none;
     }
 </style>
-    <br>
-    <br>
-    <br>
     <div class="col-md-3">
         <div class="section-header">
-            <h4>Upload Employee</h4>
+            <h4>Import Employees</h4>
         </div>
         <div class="panel panel-container">
             <div class="panel-body">
                 <form enctype="multipart/form-data" action="{{ url('employees/import')}}" method="POST">
                     <center>
                     <h2 id="filename"></h2>
-                    <label id="bb" class="btn btn-primary">Click to upload Excel File
+                    <label id="bb" class="btn btn-primary" >Click here to attach Excel File
                         <input type="file" name="dump_file"  class="btn btn-small" id="fileexcel">
                     </label> 
                     {{ csrf_field() }}
                     <br>
-                    <input type="submit" name="submit" value="Upload Now" class="btn btn-success">
+                    <button type="submit" name="submit" class="btn btn-success" style="background-color: #388E3C">
+                        Upload Now
+                    </button>
                     </center>
                 </form>
             </div>
@@ -43,7 +42,7 @@ Employee / Import
     @if(isset($num_inserts))
     <div class="col-md-9">
         <div class="section-header">
-            <h4>Upload Employee</h4>
+            <h4>Upload Employees</h4>
         </div>
         <div class="panel panel-container">
             <div class="panel-body">

@@ -8,4 +8,5 @@ class ElinkDivision extends Model
 {
     //
     protected $table = "elink_division";
+    public $timestamps = false;
 }

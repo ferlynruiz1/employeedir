@@ -50,19 +50,23 @@ Employees
         .sorting_1{
             padding-left: 20px !important;
         }
-        a.btn.btn-primary, a.btn.btn-warning {
+        a.btn.btn-primary, a.btn.btn-warning, a.btn.btn-success{
             float: right;
             margin: 10px;
         }
     </style>
 
-    <a href="{{url('employee_info/create')}}" class="btn btn-primary">
+    <a href="{{url('employee_info/create')}}" class="btn btn-primary" >
         <i class="fa fa-plus"></i>
         &nbsp;&nbsp;Add Employee
     </a>
-    <a href="{{url('export')}}" class="btn btn-warning">
+    <a href="{{url('employees/export')}}" class="btn btn-warning" style="background-color: #F57C00">
         <i class="fa fa-download"></i>
-        &nbsp;&nbsp;Generate Report
+        &nbsp;&nbsp;Export Employees
+    </a>
+    <a href="{{url('employees/import')}}" class="btn btn-success" style="background-color: #388E3C">
+        <i class="fa fa-upload"></i>
+        &nbsp;&nbsp;Import Employees
     </a>
     <div class="section-header">
         <h4>List of Employees</h4>

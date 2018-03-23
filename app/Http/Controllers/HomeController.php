@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use App\User;
+use App\EmployeeDepartment;
 
 class HomeController extends Controller
 {
@@ -30,20 +31,12 @@ class HomeController extends Controller
     {
         if (Auth::user()->isAdmin()) {
             return redirect('dashboard');
-        } else {
-            $employees = new User;
-            if ($request->has('keyword')) {
-                $employees = $employees->where('first_name', 'LIKE', '%'.$request->get('keyword').'%')->orWhere('last_name', 'LIKE', '%'.$request->get('keyword').'%');
-            } else if ($request->has('alphabet')) {
-                $employees = $employees->where('last_name', 'LIKE', $request->get('alphabet').'%')->orWhere('first_name', 'LIKE', $request->get('alphabet').'%');
-            }
-            $employees = $employees->orderBy('last_name', 'ASC')->paginate(10);
-
-            return view('guest.employees')->with('employees', $employees)->with('request', $request);
+        } else {    
+            return view('home')->with('new_hires', User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5))->with('employees', User::allExceptSuperAdmin()->get());
         }
     }
     public function dashboard(Request $request)
     {
-        return view('dashboard')->with('new_hires', User::orderBy('prod_date', 'DESC')->paginate(5))->with('employees', User::all());
+        return view('dashboard')->with('new_hires', User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5))->with('employees', User::allExceptSuperAdmin()->get());
     }
 } 

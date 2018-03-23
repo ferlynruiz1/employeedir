@@ -33,7 +33,7 @@
                     </span>
                     Directory
                 </a>
-                <ul class="nav navbar-top-links navbar-right">
+               <!--  <ul class="nav navbar-top-links navbar-right">
                     <li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                         <img alt="image" class="img-circle" style="width: 20px;" src="{{ Auth::user()->profile_img }}">
                     </a>
@@ -51,24 +51,70 @@
                             </li>
                         </ul>
                     </li>
-                </ul>
+                </ul> -->
             </div>
         </div>
-        <div class="navbar-header">
-            <ul class="header-list">
-                <li <?php echo \Request::url() == url('home') ? 'class="active"' : ''; ?>>
-                    <a  href="{{ url('home')}}">Home</a>
-                </li>
-                <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
-                    <a  href="{{ url('myprofile')}}">My Profile</a>
-                </li>
-                <li <?php echo \Request::url() == url('employees') ? 'class="active"' : ''; ?>>
-                    <a  href="{{ url('employees')}}">Employees</a>
-                </li>
-            </ul>
-        </div>
     </nav>
-    <p style="height: 40px;">&nbsp;
+    
+     <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+        <div class="profile-sidebar">
+            <div class="profile-userpic">
+                <img src="{{ Auth::user()->profile_img }}" class="img-responsive" alt="" style="width: 120px; height: 120px;">
+            </div>
+            <div class="profile-usertitle">
+                <br>
+                <h4 class="card-title m-t-10" style="font-size: 15px !important;">{{ Auth::user()->alias }}</h4>
+                <h6 class="card-subtitle">{{ Auth::user()->position_name }}</h6>
+                <h6 class="card-subtitle">{{ Auth::user()->team_name }}</h6>
+            <br>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="divider"></div>
+        <ul class="nav menu">
+            <li <?php echo \Request::url() == url('home') ? 'class="active"' : ''; ?>>
+                <a href="{{url('home')}}">
+                    <em class="fa fa-home">&nbsp;</em>
+                    Home
+                </a>
+            </li>
+            <li <?php echo \Request::url() == url('employees') ? 'class="active"' : ''; ?>>
+                <a href="{{url('employees')}}">
+                    <em class="fa fa-users">&nbsp;</em>
+                    Employees
+                 </a>
+             </li>
+            <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
+                <a href="{{url('myprofile')}}">
+                    <em class="fa fa-user">&nbsp;</em>
+                    My Profile
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('logout')}}">
+                    <em class="fa fa-power-off">&nbsp;</em>
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+
+     <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="#">
+                    <em class="fa fa-home"></em>
+                </a></li>
+                <li class="active">@yield('pagetitle')</li>
+            </ol>
+        </div>
+        <div>
+            @yield('content')
+        </div>
+    </div> 
+
+
+   <!--  <p style="height: 40px;">&nbsp;
     </p>
     <div class="col-sm-12 main">
         <div class="row">
@@ -84,7 +130,8 @@
         <div>
             @yield('content')
         </div>
-    </div> 
+    </div>  -->
+
     <script src="{{ asset('public/js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('public/js/chart.min.js')}}"></script>
     <script src="{{ asset('public/js/chart-data.js')}}"></script>

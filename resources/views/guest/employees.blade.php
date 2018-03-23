@@ -1,4 +1,4 @@
-@extends('layouts.secondary')
+@extends('layouts.main')
 @section('title')
 Employees
 @endsection
@@ -14,13 +14,10 @@ Employees
         margin-bottom: 1px !important;
         }
     .emp-profile{
-        width: 90%;
         margin: auto;
     }
     .header-container{
         margin-top: 20px;
-        margin-left: 6% !important;
-        margin-right: 6% !important;
     }
     #search_employee{
         padding-left: 5px;
@@ -35,11 +32,19 @@ Employees
     .header-list{
 
     }
+    .employee-description{
+        color: #444;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        color: #777;
+    }
 </style>
-<div class="header-container">
+
+<div class="col-md-12">
+<div class="header-container" style="margin-bottom: 5px;">
     <form style="display: unset;">
         <input type="hidden" name="alphabet" value="{{ $request->alphabet }}">
-        <input type="text" placeholder="Search" id="search_employee" name="keyword" value="{{ $request->keyword }}">
+        <input type="text" placeholder="Search by name" id="search_employee" name="keyword" value="{{ $request->keyword }}">
         <button class="btn btn-primary" style="height:  35px; margin-top: -3px;">
             <span class="fa fa-search"></span>
         </button>
@@ -50,15 +55,19 @@ Employees
         </li>   
         @foreach (range('A', 'Z') as $letter)
             <li>
-                <a href="?alphabet={{ $letter . "\n" }}" >{{ $letter . "\n" }}</a>
+                <a style="font-weight: 500;" href="?alphabet={{ $letter . "\n" }}" >{{ $letter . "\n" }}</a>
             </li>
         @endforeach
     </ul>
     <div class="pull-right">
-        {{ $employees->appends(Illuminate\Support\Facades\Input::except('page'))->links() }}
+        <span style="position: absolute; top: 26px; margin-left: -170px;">Search by department:</span>
+       <select class="form-control" style="border-radius: 0px !important" id="departments_list">
+            @foreach( $departments as $department)
+           <option>{{ $department->department_name}}</option>
+           @endforeach
+       </select>
     </div>
 </div>
-<br>
 @if(count($employees) == 0)
     <br>
     <br>
@@ -72,61 +81,71 @@ Employees
     </center>
 @endif
 @foreach($employees as $employee)
-    <div class="col-md-12">
-        <div class="emp-profile" style="padding: 15px;">
+    <div class="col-md-12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="emp-profile" style="padding: 10px;">
             <div class="row">
-                <div class="col-md-1">
-                    <img alt="image" id="profile_image" class="img-circle" style="width: 80px; height: 80px;margin: 15px;" src="{{ $employee->profile_img }}">
+                <div class="col-md-1" style="float: left; width: 100px;">
+                    <img alt="image" id="profile_image" class="img-circle" style="width: 60px; height: 60px;margin: 15px;" src="{{ $employee->profile_img }}">
                 </div>
                 <div class="col-md-4">
                     <a href="{{url('profile/'. $employee->id)}}">
-                        <h3>{{$employee->fullname()}}</h3>
+                        <h3 style="color: #444;font-weight: 500; font-size: 17px; margin-top: 10px;">{{$employee->fullname()}}</h3>
                     </a>
-                    <h4>{{ $employee->position_name}}</h4>
-                    <h5>{{$employee->team_name}} - {{$employee->account->account_name}}</h5>
-                    <span class="fa fa-envelope"></span>
-                    <span class="fa fa-linkedin-square"></span>
-                    <span class="fa fa-facebook-square"></span>
-                    <span class="fa fa-twitter-square"></span>
+                    <h5 style="color: #455;">{{ $employee->position_name}}</h5>
+                    <h6>{{$employee->team_name}} - {{$employee->account->account_name}}</h6>
                 </div>
-                <div class="col-md-5">
-                    <br>
+                <div class="col-md-4">
                     <h5>
                         <span class="fa fa-id-card" title="Employee ID"></span>
-                        &nbsp;&nbsp;{{$employee->eid}}
+                        <span class="employee-description">&nbsp;&nbsp;{{$employee->eid}}</span>
                     </h5>
                     <h5>
                         <span class="fa fa-envelope" title="Email Address"></span>
-                        &nbsp;&nbsp;{{$employee->email}}
+                        <span class="employee-description" style="color: #0c59a2;;">&nbsp;&nbsp;{{$employee->email}}</span>
                     </h5>
+                    @if(isset($employee->ext) && $employee->ext != '--')
+                    <h5>
+                         <span class="fa fa-phone" title="Extension Number"></span>
+                        <span class="employee-description" >&nbsp;&nbsp;{{$employee->ext}}</span>
+                    </h5>
+                    @endif
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
+                    @if(isset($employee->supervisor_name))
                     <h5>
                         <span class="fa fa-user" title="Supervisor"></span>
                         <span style="color: gray;">Supervisor:</span>
-                    <br>
-                    <br>
                         {{$employee->supervisor_name}}
                     </h5>
-                    <h5>
-                        <span class="fa fa-user" title="Manager"></span>
-                        <span style="color: gray;">Manager: </span>
-                        <br>
-                        <br>
-                        {{ isset($employee->manager) ? $employee->manager->fullname() : 'N/A'}}
-                    </h5>
+                    @endif
+                    @if(isset($employee->manager_name))
+                        <h5>
+                            <span class="fa fa-user" title="Manager"></span>
+                            <span style="color: gray;">Manager: </span>
+                            <span>{{ $employee->manager_name }}</span>
+                        </h5>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
     @endforeach
-    <div class="header-container">
-    <div class="pull-right">
-    {{ $employees->appends(Illuminate\Support\Facades\Input::except('page'))->links() }}
 </div>
-</div>
+    <div class="col-md-12 header-container" style="margin-top: 0px;">
+        <div class="pull-right">
+            {{ $employees->appends(Illuminate\Support\Facades\Input::except('page'))->links() }}
+        </div>
+    </div>
 @endsection
 @section('scripts')
 <script type="text/javascript">
+    $('#departments_list').change(function(){
+        var url = location.protocol + '//' + location.host + location.pathname;
+        var keyword = "keyword=" + $("#search_employee").val();
+        var alphabet = "alphabet=" + $('input[name=alphabet]').val();
+        var department = "department=" + $(this).val();
+        url += "?" + keyword + "&" + alphabet + "&" + department;
+        window.location.replace(url);
+    });
 </script>
 @endsection 

@@ -34,7 +34,7 @@ Route::get('logout', function(){
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('admin/invalid', ['as' => 'admin-invalid', 'uses' => function(){
-	return view('error.notadmin');
+	return view('errors.notadmin');
 }]);
 
 Auth::routes();
@@ -52,7 +52,7 @@ Route::middleware(['admin'])->group(function () {
 	Route::post('employee/{id}/savepassword', 'EmployeeInfoController@savepassword');
 	Route::get('employees/import', 'EmployeeInfoController@import');
 	Route::post('employees/import', 'EmployeeInfoController@importsave');
-	Route::get('export', function(){
+	Route::get('employees/export', function(){
 		$files = File::allFiles('./public/excel/report');
 		return view('employee.export')->with('files', $files);
 	});

@@ -1,4 +1,4 @@
-@extends('layouts.secondary')
+@extends('layouts.main')
 @section('title')
 View Profile
 @endsection
@@ -37,27 +37,8 @@ Employee Information
 </style>
 <br>    
 <div class="col-md-12">
-    <div class="col-md-3" style="height: 90vh !important; padding-left: 0px !important; padding-right: 0px;">
-        <div class="section-header">
-            <h4>Profile Picture</h4>
-        </div>
-        <div class="panel panel-container">
-            <div class="row no-padding">
-                <center>
-                    <img alt="image" class="img-circle" style="width: 150px; height: 150px; margin-top: 30px;" src="{{ $employee->profile_img }}">
-                    <br>
-                    <h4 class="card-title m-t-10">{{ $employee->fullname() }}</h4>
-                    <h6 class="card-subtitle">{{ $employee->position_name }}</h6>
-                    <h6 class="card-subtitle">{{ $employee->team_name }}</h6>
-                    <hr>
-                </center>
-                <span class="pull-left label-profile">date hired: <i>{{ $employee->prettydatehired() }}</i></span>
-                <br>
-                <br>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-9">
+    
+    <div class="col-md-12">
         <div class="section-header">
             <h4>Employee Information</h4>
         </div>
@@ -113,8 +94,13 @@ Employee Information
                             </div>
                         </div>
                     </div>
-                    <hr>
                     <br>
+                    <br>
+                </div>
+                    <label>Job Information</label>
+                    <br>
+                    <br>
+                    <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
@@ -125,13 +111,13 @@ Employee Information
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Supervisor</label>
-                                <p class="employee-details-value">{{ isset($employee->supervisor) ? $employee->supervisor->fullname() : '' }}</p>
+                                <p class="employee-details-value">{{ $employee->supervisor_name }}</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Manager</label>
-                               <p class="employee-details-value">{{ isset($employee->manager) ? $employee->manager->fullname() : '' }}</p>
+                               <p class="employee-details-value">{{  $employee->manager_name }}</p>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -160,9 +146,32 @@ Employee Information
                                <p class="employee-details-value">{{ $employee->account->account_name}}</p>
                             </div>
                         </div>
+                          @if(isset($employee->ext))
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Phone Extension</label>
+                               <p class="employee-details-value">{{ @$employee->ext}}</p>
+                            </div>
+                        </div>
+                        @endif
+                        @if(isset($employee->prod_date))
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Production date</label>
+                               <p class="employee-details-value">{{ @$employee->prettyproddate()}}</p>
+                            </div>
+                        </div>
+                        @endif
+                        @if(isset($employee->wave))
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Wave Number</label>
+                               <p class="employee-details-value">{{ $employee->wave == "" ? "--" : $employee->wave }}</p>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                     <br>
-                    <hr>
                     <br>
                 </div>
                 <br>
@@ -185,8 +194,8 @@ Employee Information
                         <div class="row">
                             <div class="col-md-3" style="display: flex;">
                                 <a type="button" class="btn btn-default" href="{{url('employee/'. $employee->id .'/changepassword')}}">Change Password</a>
-                                 &nbsp;
-                                <a class="btn btn-primary" href="{{url('employee_info/' . $employee->id . '/edit')}}">Update Profile</a>
+                                <!--  &nbsp;
+                                <a class="btn btn-primary" href="{{url('employee_info/' . $employee->id . '/edit')}}">Update Profile</a> -->
                             </div>
                         </div>
                     @endif

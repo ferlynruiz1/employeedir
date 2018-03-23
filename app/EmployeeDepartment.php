@@ -9,6 +9,7 @@ class EmployeeDepartment extends Model
 {
     use SoftDeletes;
     protected $table = "employee_department";
+    public $timestamps = false;
 
     public function manager(){
     	return $this->belongsTo('App\User', 'manager_id');

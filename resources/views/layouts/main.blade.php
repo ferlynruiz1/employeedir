@@ -18,7 +18,7 @@
 </head>
 <style type="text/css">
 body{
-   zoom: 95%;
+   
 }
 </style>
 <body>
@@ -45,11 +45,11 @@ body{
     <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
         <div class="profile-sidebar">
             <div class="profile-userpic">
-                <img src="{{ Auth::user()->profile_img }}" class="img-responsive" alt="" style="width: 120px; height: 120px;">
+                <img src="{{ Auth::user()->profile_img }}" class="img-responsive" alt="" style="width: 100px; height: 100px;">
             </div>
             <div class="profile-usertitle">
                 <br>
-                <h4 class="card-title m-t-10" style="font-size: 15px !important;">{{ Auth::user()->alias }}</h4>
+                <h4 class="card-title m-t-10" style="font-size: 15px !important;">{{ Auth::user()->fullname() }}</h4>
                 <h6 class="card-subtitle">{{ Auth::user()->position_name }}</h6>
                 <h6 class="card-subtitle">{{ Auth::user()->team_name }}</h6>
             <br>
@@ -58,6 +58,7 @@ body{
         </div>
         <div class="divider"></div>
         <ul class="nav menu">
+            @if(Auth::user()->isAdmin())
             <li <?php echo \Request::url() == url('dashboard') ? 'class="active"' : ''; ?>>
                 <a href="{{url('dashboard')}}">
                     <em class="fa fa-dashboard">&nbsp;</em>
@@ -88,8 +89,8 @@ body{
                     Import
                 </a>
             </li>
-            <li <?php echo \Request::url() == url('export') ? 'class="active"' : ''; ?>>
-                <a href="{{url('export')}}">
+            <li <?php echo \Request::url() == url('employees/export') ? 'class="active"' : ''; ?>>
+                <a href="{{url('employees/export')}}">
                     <em class="fa fa-download">&nbsp;</em> 
                     Export
                 </a>
@@ -100,6 +101,32 @@ body{
                     Logout
                 </a>
             </li>
+            @else 
+            <li <?php echo \Request::url() == url('home') ? 'class="active"' : ''; ?>>
+                <a href="{{url('home')}}">
+                    <em class="fa fa-home">&nbsp;</em>
+                    Home
+                </a>
+            </li>
+            <li <?php echo \Request::url() == url('employees') ? 'class="active"' : ''; ?>>
+                <a href="{{url('employees')}}">
+                    <em class="fa fa-users">&nbsp;</em>
+                    Employees
+                 </a>
+             </li>
+            <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
+                <a href="{{url('myprofile')}}">
+                    <em class="fa fa-user">&nbsp;</em>
+                    My Profile
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('logout')}}">
+                    <em class="fa fa-power-off">&nbsp;</em>
+                    Logout
+                </a>
+            </li>
+            @endif
         </ul>
     </div>
     <!-- Content -->

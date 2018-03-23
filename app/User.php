@@ -29,7 +29,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
+    public function scopeAllExceptSuperAdmin($query){
+        return $this->where('id', '<>', '1');
+    }
     public function scopeFullname($query)
     {
         return $this->last_name .', '. $this->first_name;

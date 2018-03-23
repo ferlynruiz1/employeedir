@@ -219,7 +219,7 @@ label#gender_id-error {
     border-bottom-right-radius: 0px !important;
 }
 .emp-profile .fa{
-    color: #32373A !important;
+    color: #555 !important;
 }
 
 .panel-body input[type=checkbox]:checked + label{

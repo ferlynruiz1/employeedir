@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use DateTime;
 use App\EmployeeDepartment;
 use App\ElinkAccount;
+use App\ElinkDivision;
 use App\User;
 use Response;
 
@@ -53,7 +54,7 @@ class EmployeeInfoController extends Controller
         $employee->supervisor_name = $request->supervisor_name;
         $employee->team_name = $request->team_name;
         $employee->gender = $request->gender_id;
-        $employee->mananger_name = $request->manager_name;
+        $employee->manager_name = $request->manager_name;
         $employee->account_id = $request->account_id;
         $employee->status = $request->status_id;
         
@@ -101,7 +102,12 @@ class EmployeeInfoController extends Controller
      */
     public function show($id)
     {
-        return view('employee.view')->with('employee', User::find($id));
+        $employee = User::find($id);
+        if (isset($employee)) {
+            return view('employee.view')->with('employee', $employee);
+        }else{
+            return abort(404);
+        }
     }
 
     /**
@@ -112,7 +118,12 @@ class EmployeeInfoController extends Controller
      */
     public function edit($id)
     {   
-        return view('employee.edit')->with('employee', User::find($id))->with('supervisors', User::all())->with('departments', EmployeeDepartment::all())->with('accounts', ElinkAccount::all());
+        $employee = User::find($id);
+        if (isset($employee)) {
+            return view('employee.edit')->with('employee', $employee)->with('supervisors', User::all())->with('departments', EmployeeDepartment::all())->with('accounts', ElinkAccount::all());
+        } else {
+            return abort(404);
+        }
     }
 
     /**
@@ -124,7 +135,6 @@ class EmployeeInfoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $request;
         $employee = User::find($id);
         $employee->eid = $request->eid;
         $employee->first_name = $request->first_name;
@@ -212,9 +222,8 @@ class EmployeeInfoController extends Controller
     public function employees(Request $request)
     {
         if (Auth::user()->isAdmin()) {
-            return view('employee.employees')->with('employees', User::all());
+            return view('employee.employees')->with('employees', User::allExceptSuperAdmin()->get());
         }
-
         $employees = new User;
         if ($request->has('keyword')) {
             $employees = $employees
@@ -226,9 +235,9 @@ class EmployeeInfoController extends Controller
                         ->where('last_name', 'LIKE', $request->get('alphabet').'%')
                         ->orWhere('first_name', 'LIKE', $request->get('alphabet').'%');
         }
-        $employees = $employees->orderBy('last_name', 'ASC')->paginate(10);
-
-        return view('guest.employees')->with('employees', $employees )->with('request', $request);
+        $employees = $employees->allExceptSuperAdmin()->orderBy('last_name', 'ASC')->paginate(10);
+        $departments = EmployeeDepartment::all();
+        return view('guest.employees')->with('employees', $employees )->with('request', $request)->with('departments', $departments);
     }
     public function profile (Request $request, $id)
     {
@@ -290,6 +299,7 @@ class EmployeeInfoController extends Controller
         $cellIterator = $row->getCellIterator();
         $cellIterator->setIterateOnlyExistingCells(FALSE); 
         $cells = [];
+
         foreach ($cellIterator as $cell) {
             $cells[] = $cell->getValue();
         }
@@ -369,6 +379,54 @@ class EmployeeInfoController extends Controller
                 
                 continue;
             }
+
+            if ($cells[$ACCOUNT]) {
+                $account = ElinkAccount::where('account_name', 'LIKE', '%'.$cells[$ACCOUNT].'%');
+                if ($account->count() == 0)
+                {
+                    ElinkAccount::insert([
+                        'account_name' => $cells[$ACCOUNT]
+                    ]);
+                }
+            }
+
+            if ($cells[$DIVISION]) {
+                $division = ElinkDivision::where('division_name','LIKE', '%'.$cells[$DIVISION].'%');
+                if ($division->count() == 0)
+                {
+                    ElinkDivision::insert([
+                        'division_name' => $cells[$DIVISION]
+                    ]);
+                }
+            }
+
+            if($cells[$DEPT]){
+                $department = EmployeeDepartment::where('department_name', 'LIKE', '%'.$cells[$DEPT].'%');
+                if ($department->count() == 0) 
+                {  
+                    if($cells[$ACCOUNT]){
+                        $account = ElinkAccount::where('account_name', 'LIKE', '%'.$cells[$ACCOUNT].'%');
+                        if ($account->count() > 0)
+                        {
+                            if ($cells[$DIVISION]) 
+                            {
+                                $division = ElinkDivision::where('division_name','LIKE', '%'.$cells[$DIVISION].'%');
+                                if ($division->count() > 0)
+                                {
+                                    EmployeeDepartment::insert([
+                                        'department_name' => $cells[$DEPT],
+                                        'department_code' => $cells[$DEPT_CODE],
+                                        'division_id' => $division->first()->id,
+                                        'account_id' => $account->first()->id
+                                    ]);
+                                }
+                            }  
+                        }
+                    }
+                }
+            }
+
+
             $e = User::whereRaw('CONCAT(last_name, ", ", first_name) LIKE "%'. trim($cells[$SUPERVISOR]) . '%"')->get();
             
 
@@ -505,7 +563,7 @@ class EmployeeInfoController extends Controller
     public function exportdownload(){
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $worksheet = $spreadsheet->getActiveSheet();
-        $employees = User::where('id','<>',1)->get();
+        $employees = User::allExceptSuperAdmin()->get();
         $COUNT = 0;
         $EID = 1;
         $EXT = 2;

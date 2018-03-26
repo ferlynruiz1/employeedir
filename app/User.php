@@ -38,8 +38,13 @@ class User extends Authenticatable
     }
     public function scopePrettyBirthDate($query)
     {
-        $dt = Carbon::parse($this->birth_date);
-        return $dt->toFormattedDateString();
+        if(isset($this->birth_date)){
+            $dt = Carbon::parse($this->birth_date);
+            return $dt->toFormattedDateString();
+        }else{
+            return "--";
+        }
+        
     }
     public function scopePrettydatehired($query)
     {

@@ -25,7 +25,7 @@ Employee / Export
             <div class="panel-body">
                 <a class="btn btn-primary" href="{{url('exportdownload')}}">Generate and Download latest report</a>
                 <br><br>
-                <p>Recent Report<span>(click to download)</span></p>
+                <p>Recent Reports <span>(click to download)</span></p>
                 @foreach($files as $file)
                     <a href="{{ asset($file) }}">{{ $file }}</p>
                 @endforeach

@@ -12,7 +12,7 @@ Employees
     }
     .col-md-12{
         margin-bottom: 1px !important;
-        }
+    }
     .emp-profile{
         margin: auto;
     }
@@ -33,10 +33,14 @@ Employees
 
     }
     .employee-description{
-        color: #444;
+        color: #777;
+        font-size: 13px;
     }
     h1, h2, h3, h4, h5, h6 {
         color: #777;
+    }
+    li a.selected{
+        font-weight: 900!important;
     }
 </style>
 
@@ -44,6 +48,7 @@ Employees
 <div class="header-container" style="margin-bottom: 5px;">
     <form style="display: unset;">
         <input type="hidden" name="alphabet" value="{{ $request->alphabet }}">
+        <input type="hidden" name="department" value="{{ $request->department }}">
         <input type="text" placeholder="Search by name" id="search_employee" name="keyword" value="{{ $request->keyword }}">
         <button class="btn btn-primary" style="height:  35px; margin-top: -3px;">
             <span class="fa fa-search"></span>
@@ -55,15 +60,16 @@ Employees
         </li>   
         @foreach (range('A', 'Z') as $letter)
             <li>
-                <a style="font-weight: 500;" href="?alphabet={{ $letter . "\n" }}" >{{ $letter . "\n" }}</a>
+                <a <?php echo $request->alphabet == $letter ? "class='selected'" : '' ?> style="font-weight: 500;" href="?alphabet={{ $letter . "\n" . "&keyword=" . $request->keyword . "&department=" . $request->department }}" >{{ $letter . "\n" }}</a>
             </li>
         @endforeach
     </ul>
     <div class="pull-right">
         <span style="position: absolute; top: 26px; margin-left: -170px;">Search by department:</span>
        <select class="form-control" style="border-radius: 0px !important" id="departments_list">
+            <option>Select Department</option>
             @foreach( $departments as $department)
-           <option>{{ $department->department_name}}</option>
+           <option <?php echo $request->department == $department->department_name ? "selected" : "";?> >{{ $department->department_name}}</option>
            @endforeach
        </select>
     </div>
@@ -81,8 +87,8 @@ Employees
     </center>
 @endif
 @foreach($employees as $employee)
-    <div class="col-md-12" style="padding-left: 0px; padding-right: 0px;">
-        <div class="emp-profile" style="padding: 10px;">
+    <div class="col-md-12" style="padding-left: 0px; padding-right: 0px; ">
+        <div class="emp-profile" style="padding: 10px; margin-bottom: 0px;">
             <div class="row">
                 <div class="col-md-1" style="float: left; width: 100px;">
                     <img alt="image" id="profile_image" class="img-circle" style="width: 60px; height: 60px;margin: 15px;" src="{{ $employee->profile_img }}">
@@ -92,7 +98,7 @@ Employees
                         <h3 style="color: #444;font-weight: 500; font-size: 17px; margin-top: 10px;">{{$employee->fullname()}}</h3>
                     </a>
                     <h5 style="color: #455;">{{ $employee->position_name}}</h5>
-                    <h6>{{$employee->team_name}} - {{$employee->account->account_name}}</h6>
+                    <h6>{{$employee->team_name}} <?php echo isset($employee->account) ? "- ". $employee->account->account_name : "" ; ?></h6>
                 </div>
                 <div class="col-md-4">
                     <h5>
@@ -112,14 +118,14 @@ Employees
                 </div>
                 <div class="col-md-3">
                     @if(isset($employee->supervisor_name))
-                    <h5>
+                    <h5 style="font-size: 13px;">
                         <span class="fa fa-user" title="Supervisor"></span>
                         <span style="color: gray;">Supervisor:</span>
                         {{$employee->supervisor_name}}
                     </h5>
                     @endif
                     @if(isset($employee->manager_name))
-                        <h5>
+                        <h5 style="font-size: 13px;">
                             <span class="fa fa-user" title="Manager"></span>
                             <span style="color: gray;">Manager: </span>
                             <span>{{ $employee->manager_name }}</span>

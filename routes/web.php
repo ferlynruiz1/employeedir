@@ -54,6 +54,9 @@ Route::middleware(['admin'])->group(function () {
 	Route::post('employees/import', 'EmployeeInfoController@importsave');
 	Route::get('employees/export', function(){
 		$files = File::allFiles('./public/excel/report');
+
+		$files = array_slice($files, 0, 5);
+
 		return view('employee.export')->with('files', $files);
 	});
 	Route::get('exportdownload', 'EmployeeInfoController@exportdownload');
@@ -71,9 +74,23 @@ function getNameFromNumber($num) {
     }
 }
 function genderValue($gender){
-	if($gender == 'Female' || $gender == 'F'){
+	if($gender == 'Female' || $gender == 'F' || $gender == 'FEMALE'){
 		return 2;
 	}else{
 		return 1;
+	}
+}
+function genderStringValue($gender){
+	switch ($gender) {
+		case '1':
+			return "MALE";
+		case 1:
+			return "MALE";
+		case '2';
+			return "FEMALE";
+		case 2:
+			return "FEMALE";
+		default:
+			return "";
 	}
 }

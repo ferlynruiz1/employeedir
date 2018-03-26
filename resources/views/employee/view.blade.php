@@ -45,7 +45,7 @@ Employee Information
                 <h6 class="card-subtitle">{{ $employee->team_name }}</h6>
                 <hr>
                 </center>
-                <span class="pull-left label-profile">date hired: <i>{{ $employee->prettydatehired() }}</i></span>
+                <span class="pull-left label-profile">Production Date: <i>{{ $employee->prettyproddate() }}</i></span>
                 <br>
                 <br>
             </div>

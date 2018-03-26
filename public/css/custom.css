@@ -229,3 +229,40 @@ label#gender_id-error {
 .panel-body input[type=checkbox] + label {
     font-weight: normal !important;
 }
+h4.timeline-title {
+    color: #444;
+    font-weight: 500;
+    font-size: 17px;
+    margin-top: 10px;
+}
+h4.timeline-title a{
+    color: #444;
+}
+h4.timeline-title a:hover{
+    text-decoration: none;
+    color: #30A5FF;
+}
+.timeline > li > .timeline-badge{
+    background-color: transparent !important;
+}
+h4.card-title{
+    color: #444;
+    font-weight: 500 !important;
+}
+h5.card-subtitle{
+    color: #555;
+}
+h6.card-subtitle{
+    color: #777;
+}
+.panel-heading{
+    background-color: #32373a !important;
+}
+.panel-default .panel-heading {
+    background: #fff;
+    border-bottom: 1px solid #e9ecf2;
+    color: #444444;
+    font-weight: 500;
+    color: #e9ecf2;
+    border-radius: 0px;
+}

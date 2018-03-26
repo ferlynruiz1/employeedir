@@ -11,7 +11,7 @@ Home
             <div class="panel panel-default ">
                 <div class="panel-heading">
                     New Hires
-                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
+                    </div>
                 <div class="panel-body timeline-container">
                     <ul class="timeline">
                         @foreach($new_hires as $employee)
@@ -19,7 +19,7 @@ Home
                             <div class="timeline-badge"><img src="{{ $employee->profile_img }}" class="img-circle" alt="" style="width: 50px; height: 50px; margin-top: -10px; box-shadow: 1px 1px 10px 7px #fff;"></div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
-                                    <h4 class="timeline-title">{{ $employee->fullname() }}</h4>
+                                    <h4 class="timeline-title"> <a href="employee_info/{{$employee->id}}" target="_blank">{{ $employee->fullname() }}</a></h4>
                                 </div>
                                 <div class="timeline-body">
                                     <p>Joined the {{ $employee->team_name }} as {{ $employee->position_name }}</p>
@@ -38,7 +38,7 @@ Home
             <div class="panel panel-default ">
                 <div class="panel-heading">
                     Company Hierarchy
-                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
+                    </div>
                 <div class="panel-body timeline-container">
                     <br>
                     <br>

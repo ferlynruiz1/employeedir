@@ -94,7 +94,7 @@ Employee Information / Edit
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="asterisk-required">Last Name</label>
-                                    <input class="form-control" placeholder="Last Name" name="last_name" value="{{$employee->last_name}}">
+                                    <input class="form-control" placeholder="Last Name" name="last_name" value="{{$employee->last_name}}" required>
                                 </div>
                             </div>
                         </div>
@@ -102,19 +102,19 @@ Employee Information / Edit
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="asterisk-required">Employee ID</label>
-                                    <input class="form-control" placeholder="Employee ID" name="eid" value="{{$employee->eid}}">
+                                    <input class="form-control" placeholder="Employee ID" name="eid" value="{{$employee->eid}}" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class="asterisk-required">Alias</label>
+                                    <label >Alias</label>
                                     <input class="form-control" placeholder="Alias" name="alias" value="{{$employee->alias}}">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="asterisk-required">Birthdate</label>
-                                    <input class="form-control datepicker" placeholder="Birthdate" name="birth_date" value="{{ $employee->birthdate() }}" required>
+                                    <label>Birthdate</label>
+                                    <input class="form-control datepicker" placeholder="Birthdate" name="birth_date" value="{{ $employee->birthdate() }}" >
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -170,7 +170,7 @@ Employee Information / Edit
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="asterisk-required">Position</label>
-                                    <input class="form-control" placeholder="Position" name="position_name" value="{{$employee->position_name}}">
+                                    <input class="form-control" placeholder="Position" name="position_name" value="{{$employee->position_name}}" required>
                                 </div>
                             </div>
                             <div class="col-md-3">

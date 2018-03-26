@@ -50,8 +50,8 @@ body{
             <div class="profile-usertitle">
                 <br>
                 <h4 class="card-title m-t-10" style="font-size: 15px !important;">{{ Auth::user()->fullname() }}</h4>
-                <h6 class="card-subtitle">{{ Auth::user()->position_name }}</h6>
-                <h6 class="card-subtitle">{{ Auth::user()->team_name }}</h6>
+                <h5 class="card-subtitle" title="Job Title">{{ Auth::user()->position_name }}</h6>
+                <h6 class="card-subtitle" title="Department/Team">{{ Auth::user()->team_name }}</h6>
             <br>
             </div>
             <div class="clear"></div>

@@ -101,8 +101,8 @@ Employee / Add
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class="asterisk-required">Alias</label>
-                                    <input class="form-control" placeholder="Alias" name="alias" value="" required>
+                                    <label >Alias</label>
+                                    <input class="form-control" placeholder="Alias" name="alias" value="">
                                 </div>
                             </div>
                             <div class="col-md-3">

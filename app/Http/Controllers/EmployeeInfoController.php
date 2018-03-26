@@ -149,11 +149,7 @@ class EmployeeInfoController extends Controller
             $employee->gender = $request->gender_id;
         }
         if ($request->has('employee_type')) {
-            if ($request->employee_type == 4) {
-                $employee->usertype = 1;
-            } else {
-                $employee->usertype = 2;
-            }
+            $employee->usertype = $request->employee_type;
         }
         $employee->manager_name = $request->manager_name;
         $employee->account_id = $request->account_id;
@@ -166,10 +162,15 @@ class EmployeeInfoController extends Controller
         }
 
         $datetime = new DateTime();
-        $hired_date = $datetime->createFromFormat('m/d/Y', $request->hired_date)->format("Y-m-d H:i:s");
-        $birth_date = $datetime->createFromFormat('m/d/Y', $request->birth_date)->format("Y-m-d H:i:s");
-        $employee->hired_date = $hired_date;
-        $employee->birth_date = $birth_date;
+        if ($request->has('birth_date') && $request->birth_date) {
+            $birth_date = $datetime->createFromFormat('m/d/Y', $request->birth_date)->format("Y-m-d H:i:s");
+            $employee->birth_date = $birth_date;
+        }
+
+        if ($request->has('hired_date') && $request->hired_date){
+            $hired_date = $datetime->createFromFormat('m/d/Y', $request->hired_date)->format("Y-m-d H:i:s");
+            $employee->hired_date = $hired_date;
+        }
 
         if ($request->hasFile("profile_image")) {
             $path = $request->profile_image->store('images/'.$employee->id);
@@ -195,6 +196,13 @@ class EmployeeInfoController extends Controller
     }
     public function changepassword(Request $request, $id)
     {
+        if (!Auth::user()->isAdmin()) {
+            if (Auth::user()->id == $id){
+                return view('employee.changepassword')->with('id', $id);
+            } else {
+                return abort(404);
+            }
+        }
         return view('employee.changepassword')->with('id', $id);
     }
     public function savepassword(Request $request, $id)
@@ -224,19 +232,30 @@ class EmployeeInfoController extends Controller
         if (Auth::user()->isAdmin()) {
             return view('employee.employees')->with('employees', User::allExceptSuperAdmin()->get());
         }
-        $employees = new User;
-        if ($request->has('keyword')) {
-            $employees = $employees
-                        ->where('first_name', 'LIKE', '%'.$request->get('keyword').'%')
-                        ->orWhere('last_name', 'LIKE', '%'.$request->get('keyword').'%');
 
-        } else if($request->has('alphabet')) {
-            $employees = $employees
-                        ->where('last_name', 'LIKE', $request->get('alphabet').'%')
-                        ->orWhere('first_name', 'LIKE', $request->get('alphabet').'%');
+        $employees = new User;
+        // $query = "";
+        $query = array();
+        if ($request->has('keyword') && $request->get('keyword') != "") {
+            $employees = $employees->where(function($query) use($request){
+                $query->where('first_name', 'LIKE', '%'.$request->get('keyword').'%')
+                    ->orWhere('last_name', 'LIKE', '%'.$request->get('keyword').'%');
+            });
         }
-        $employees = $employees->allExceptSuperAdmin()->orderBy('last_name', 'ASC')->paginate(10);
+
+        if ($request->has('alphabet') && $request->get('alphabet') != "") {
+            $employees = $employees->where(function($query) use($request){
+                $query->where('first_name', 'LIKE', $request->get('alphabet').'%')
+                    ->orWhere('last_name', 'LIKE', $request->get('alphabet').'%');
+            });
+        }
+        if ($request->has('department') && $request->get('department') != "") {
+            $employees = $employees->where('team_name', 'LIKE', $request->get('department'));
+        }
+        $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->paginate(10);
+
         $departments = EmployeeDepartment::all();
+
         return view('guest.employees')->with('employees', $employees )->with('request', $request)->with('departments', $departments);
     }
     public function profile (Request $request, $id)
@@ -306,68 +325,68 @@ class EmployeeInfoController extends Controller
         $rows[] = $cells;
         // Check if document is valid 
         if(count($rows) == 1){
-            if(strtolower($cells[$EID]) != strtolower("EID")){
-                echo ('EID wrong');
-            }
-            if(strtolower($cells[$EXT]) != strtolower("EXT")){
-                echo('EXT wrong');
-            }
-            if(strtolower($cells[$ALIAS]) != strtolower("Phone/Pen Names")){
-                echo('Phone/Pen Names wrong');
-            }
-            if(strtolower($cells[$LAST_NAME]) != strtolower("Last Name")){
-                echo('Last Name wrong');
-            }
-            if(strtolower($cells[$FIRST_NAME]) != strtolower("First Name")){
-                echo('First Name wrong');
-            }
-            if(strtolower($cells[$FULLNAME]) != strtolower("Name")){
-                echo('Name wrong');
-            }
-            if(strtolower($cells[$SUPERVISOR]) != strtolower("Sup")){
-                echo('Sup wrong');
-            }
-            if(strtolower($cells[$MANAGER]) != strtolower("Mng")){
-                echo('Mng wrong');
-            }
-            if(strtolower($cells[$DEPT]) != strtolower("Dept")){
-                echo('Dept wrong');
-            }
+            // if(strtolower($cells[$EID]) != strtolower("EID")){
+            //     echo ('EID wrong');
+            // }
+            // if(strtolower($cells[$EXT]) != strtolower("EXT")){
+            //     echo('EXT wrong');
+            // }
+            // if(strtolower($cells[$ALIAS]) != strtolower("Phone/Pen Names")){
+            //     echo('Phone/Pen Names wrong');
+            // }
+            // if(strtolower($cells[$LAST_NAME]) != strtolower("Last Name")){
+            //     echo('Last Name wrong');
+            // }
+            // if(strtolower($cells[$FIRST_NAME]) != strtolower("First Name")){
+            //     echo('First Name wrong');
+            // }
+            // if(strtolower($cells[$FULLNAME]) != strtolower("Name")){
+            //     echo('Name wrong');
+            // }
+            // if(strtolower($cells[$SUPERVISOR]) != strtolower("Sup")){
+            //     echo('Sup wrong');
+            // }
+            // if(strtolower($cells[$MANAGER]) != strtolower("Mng")){
+            //     echo('Mng wrong');
+            // }
+            // if(strtolower($cells[$DEPT]) != strtolower("Dept")){
+            //     echo('Dept wrong');
+            // }
 
-            if(strtolower($cells[$DEPT_CODE]) != strtolower("Dept Code")){
-                echo('Dept Code wrong');
-            }
-            if(strtolower($cells[$DIVISION]) != strtolower("Division")){
-                echo('Division wrong');
-            }
-            if(strtolower($cells[$ROLE]) != strtolower("Role")){
-                echo('Role wrong');
-            }
-            if(strtolower($cells[$ACCOUNT]) != strtolower("Account")){
-                echo('Account wrong');
-            }
-            if(strtolower($cells[$PROD_DATE]) != strtolower("Prod Date")){
-                echo('Prod Date wrong');
-            }
-            if(strtolower($cells[$STATUS]) != strtolower("Status")){
-                echo('Status wrong');
-            }
-            if(strtolower($cells[$HIRED_DATE]) != strtolower("Hire Date")){
-                echo('Hire Date wrong');
-            }
-            if(strtolower($cells[$WAVE]) != strtolower("Wave")){
-                echo('Wave wrong');
-            }
+            // if(strtolower($cells[$DEPT_CODE]) != strtolower("Dept Code")){
+            //     echo('Dept Code wrong');
+            // }
+            // if(strtolower($cells[$DIVISION]) != strtolower("Division")){
+            //     echo('Division wrong');
+            // }
+            // if(strtolower($cells[$ROLE]) != strtolower("Role")){
+            //     echo('Role wrong');
+            // }
+            // if(strtolower($cells[$ACCOUNT]) != strtolower("Account")){
+            //     echo('Account wrong');
+            // }
+            // if(strtolower($cells[$PROD_DATE]) != strtolower("Prod Date")){
+            //     echo('Prod Date wrong');
+            // }
+            // if(strtolower($cells[$STATUS]) != strtolower("Status")){
+            //     echo('Status wrong');
+            // }
+            // if(strtolower($cells[$HIRED_DATE]) != strtolower("Hire Date")){
+            //     echo('Hire Date wrong');
+            // }
+            // if(strtolower($cells[$WAVE]) != strtolower("Wave")){
+            //     echo('Wave wrong');
+            // }
 
-            if(strtolower($cells[$EMAIL]) != strtolower("Email") && strtolower($cells[$EMAIL]) != strtolower("Email Address")){
-                echo('Email wrong');
-            }
-            if(strtolower($cells[$GENDER]) != strtolower("gender")){
-                echo('Wave wrong');
-            }
-            if(strtolower($cells[$BDAY]) != strtolower("bday")){
-                echo('Wave wrong');
-            }
+            // if(strtolower($cells[$EMAIL]) != strtolower("Email") && strtolower($cells[$EMAIL]) != strtolower("Email Address")){
+            //     echo('Email wrong');
+            // }
+            // if(strtolower($cells[$GENDER]) != strtolower("gender")){
+            //     echo('Wave wrong');
+            // }
+            // if(strtolower($cells[$BDAY]) != strtolower("bday")){
+            //     echo('Wave wrong');
+            // }
         } else {
             $cells[$EMAIL] = trim($cells[$EMAIL]);
             $emp = User::whereEmail($cells[$EMAIL]);
@@ -655,8 +674,8 @@ class EmployeeInfoController extends Controller
         $worksheet->getCell(getNameFromNumber($HIRED_DATE + 1) . $row )->setValue($value->dateHired());
         $worksheet->getCell(getNameFromNumber($WAVE + 1) . $row )->setValue($value->wave);
         $worksheet->getCell(getNameFromNumber($EMAIL + 1) . $row )->setValue($value->email);
-        // $worksheet->getCell(getNameFromNumber($GENDER + 1) . $row )->setValue($value->gender);
-        $worksheet->getCell(getNameFromNumber($BDAY + 1) . $row )->setValue($value->bday);
+        $worksheet->getCell(getNameFromNumber($GENDER + 1) . $row )->setValue(genderStringValue($value->gender));
+        $worksheet->getCell(getNameFromNumber($BDAY + 1) . $row )->setValue($value->birthDate());
 
         $row++;
     }

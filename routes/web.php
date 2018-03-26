@@ -13,7 +13,13 @@ use App\User;
 |
 */
 date_default_timezone_set('Asia/Manila');
+Route::get('test', function(){
+	if (Hash::check('123123','$2y$10$UPVY0aLAstifspnrOvEJpufSL.7GM/Di.9FbHt3PlKnzQ5PxPEa.u')) {
+    	return "true";
+	}
+	return "false";
 
+});
 Route::get('/', function () {
 	if(Auth::check()){
 		if(Auth::user()->isAdmin()){
@@ -79,8 +85,10 @@ function getNameFromNumber($num) {
 function genderValue($gender){
 	if($gender == 'Female' || $gender == 'F' || $gender == 'FEMALE'){
 		return 2;
-	}else{
+	}else if ($gender == 'Male' || $gender == 'M' || $gender == 'MALE') {
 		return 1;
+	}else{
+		return 0;
 	}
 }
 function genderStringValue($gender){

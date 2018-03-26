@@ -12,7 +12,7 @@ Dashboard
             <div class="row">
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-teal panel-widget border-right">
-                        <div class="row no-padding"><em class="fa fa-xl fa-users color-blue"></em>
+                        <div class="row no-padding"><em class="fa fa-xl fa-user color-blue"></em>
                             <div class="large">{{ count($employees) }}</div>
                             <div class="text-muted">Head Count</div>
                         </div>
@@ -36,7 +36,7 @@ Dashboard
                 </div>
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding pull-right">
                     <div class="panel panel-teal panel-widget">
-                        <div class="row no-padding"><em class="fa fa-xl fa-users color-black" style="color: #F57C00;"></em>
+                        <div class="row no-padding"><em class="fa fa-xl fa-download color-black" style="color: #F57C00;"></em>
                             <div class="large"><a class="btn btn-warning" href="{{url('employees/export')}}" style="background-color: #F57C00;">Export</a></div>
                             <div class="text-muted">Generate Report</div>
                         </div>

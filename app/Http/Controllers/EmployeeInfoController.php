@@ -666,8 +666,11 @@ class EmployeeInfoController extends Controller
         $worksheet->getCell(getNameFromNumber($DIVISION + 1) . $row )->setValue($value->division_name);
         $worksheet->getCell(getNameFromNumber($ROLE + 1) . $row )->setValue($value->position_name);
 
-        $account = ElinkAccount::find($value->account_id);
-        $worksheet->getCell(getNameFromNumber($ACCOUNT + 1) . $row )->setValue($account->account_name);
+        $account = ElinkAccount::find(0);
+        if ($account) 
+        {
+            $worksheet->getCell(getNameFromNumber($ACCOUNT + 1) . $row )->setValue($account->account_name);
+        }
         
         $worksheet->getCell(getNameFromNumber($PROD_DATE + 1) . $row )->setValue($value->prodDate());
         $worksheet->getCell(getNameFromNumber($STATUS + 1) . $row )->setValue($value->status == 1 ? 'Active' : 'Inactive');

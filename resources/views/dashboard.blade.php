@@ -57,7 +57,7 @@ Dashboard
                             <div class="timeline-badge"><img src="{{ $employee->profile_img }}" class="img-circle" alt="" style="width: 50px; height: 50px; margin-top: -10px; box-shadow: 1px 1px 10px 7px #fff;"></div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
-                                    <h4 class="timeline-title">{{ $employee->fullname() }}</h4>
+                                    <h4 class="timeline-title"><a href="employee_info/{{$employee->id}}" target=""> {{ $employee->fullname() }}</a></h4>
                                 </div>
                                 <div class="timeline-body">
                                     <p>{{ joinGrammar($employee->prod_date) }} the {{ $employee->team_name }} as {{ $employee->position_name }}</p>

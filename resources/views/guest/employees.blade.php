@@ -94,9 +94,9 @@ Employees
                     <img alt="image" id="profile_image" class="img-circle" style="width: 60px; height: 60px;margin: 15px;" src="{{ $employee->profile_img }}">
                 </div>
                 <div class="col-md-4">
-                    <a href="{{url('profile/'. $employee->id)}}">
-                        <h3 style="color: #444;font-weight: 500; font-size: 17px; margin-top: 10px;">{{$employee->fullname()}}</h3>
-                    </a>
+                        <h4 class="timeline-title" style="color: #444;font-weight: 500; font-size: 17px; margin-top: 10px;"><a href="{{url('profile/'. $employee->id)}}" target="_blank">{{$employee->fullname()}} </a>
+                        </h4>
+                   
                     <h5 style="color: #455;">{{ $employee->position_name}}</h5>
                     <h6>{{$employee->team_name}} <?php echo isset($employee->account) ? "- ". $employee->account->account_name : "" ; ?></h6>
                 </div>

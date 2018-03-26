@@ -53,10 +53,13 @@ Route::middleware(['admin'])->group(function () {
 	Route::get('employees/import', 'EmployeeInfoController@import');
 	Route::post('employees/import', 'EmployeeInfoController@importsave');
 	Route::get('employees/export', function(){
-		$files = File::allFiles('./public/excel/report');
-
-		$files = array_slice($files, 0, 5);
-
+		try {
+			$files = File::allFiles('./public/excel/report');
+			$files = array_slice($files, 0, 5);
+		} catch (Exception $e) {
+			$files = array();
+		}
+		
 		return view('employee.export')->with('files', $files);
 	});
 	Route::get('exportdownload', 'EmployeeInfoController@exportdownload');
@@ -94,3 +97,13 @@ function genderStringValue($gender){
 			return "";
 	}
 }
+
+function joinGrammar($prod_date){
+	$prod_date_timestamp = strtotime($prod_date);
+	$current_timestamp = time();
+
+	if($prod_date_timestamp > $current_timestamp){
+		return "Will join";
+	}
+	return "Joined";
+}	

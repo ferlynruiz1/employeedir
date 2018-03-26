@@ -60,7 +60,7 @@ Dashboard
                                     <h4 class="timeline-title">{{ $employee->fullname() }}</h4>
                                 </div>
                                 <div class="timeline-body">
-                                    <p>Joined the {{ $employee->team_name }} as {{ $employee->position_name }}</p>
+                                    <p>{{ joinGrammar($employee->prod_date) }} the {{ $employee->team_name }} as {{ $employee->position_name }}</p>
                                 </div>
                                 <div class="timeline-body">
                                     <small>{{ $employee->prettyprodDate() }}</small>

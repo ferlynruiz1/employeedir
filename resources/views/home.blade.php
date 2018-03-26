@@ -22,7 +22,7 @@ Home
                                     <h4 class="timeline-title"> <a href="employee_info/{{$employee->id}}" target="_blank">{{ $employee->fullname() }}</a></h4>
                                 </div>
                                 <div class="timeline-body">
-                                    <p>Joined the {{ $employee->team_name }} as {{ $employee->position_name }}</p>
+                                    <p>{{ joinGrammar($employee->prod_date) }} the {{ $employee->team_name }} as {{ $employee->position_name }}</p>
                                 </div>
                                 <div class="timeline-body">
                                     <small>{{ $employee->prettyprodDate() }}</small>

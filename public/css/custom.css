@@ -196,7 +196,7 @@ label#gender_id-error {
     border-radius: 0px !important;
 }
 .section-header{
-    background-color: #32373A !important;
+    background-color: #0086CD !important;
     width: 100%;
     color: white;
     padding: 10px 10px 10px 15px;
@@ -256,7 +256,7 @@ h6.card-subtitle{
     color: #777;
 }
 .panel-heading{
-    background-color: #32373a !important;
+    background-color: #0086CD !important;
 }
 .panel-default .panel-heading {
     background: #fff;
@@ -265,4 +265,7 @@ h6.card-subtitle{
     font-weight: 500;
     color: #e9ecf2;
     border-radius: 0px;
+}
+footer {
+    color: white !important;
 }

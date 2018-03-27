@@ -27,7 +27,7 @@ Employee / Export
                 <br><br>
                 <p>Recent Reports <span>(click to download)</span></p>
                 @foreach($files as $file)
-                    <a href="{{ asset($file) }}">{{ $file }}</p>
+                    <a href="{{ asset($file) }}"><p>{{ $file }}</p></a>
                 @endforeach
             </div>
         </div>

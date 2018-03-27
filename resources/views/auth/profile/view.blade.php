@@ -36,7 +36,7 @@ Employee Information
     }
 </style>
 <br>    
-<div class="col-md-12">
+<div>
     
     <div class="col-md-12">
         <div class="section-header">

@@ -141,6 +141,7 @@ body{
         </div>
         <div>
             @yield('content')
+
         </div>
     </div> 
     <script src="{{ asset('public/js/bootstrap.min.js')}}"></script>
@@ -175,6 +176,12 @@ body{
         </div>
       </div> 
     </div>
+    <div style="min-height: 88vh;"><br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;</div>
+    <center>
+        <small style="color: #999;font-weight: 500;">Copyright {{ date('Y')}} eLink Systems & Concepts Corp.</small>
+    </center>
+    <br>  
+        
 </body>
 <!-- Modal Success -->
 @if (session('success'))

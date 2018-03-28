@@ -95,7 +95,7 @@
                 background-color: #1da0c8;
              }
              .invalid-feedback{
-                color: #C9302C;
+                color: #ff8e8b;;
                 font-size: 14px !important;
                 line-height: 19px;
                 font-weight: 500;

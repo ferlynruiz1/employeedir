@@ -270,6 +270,18 @@ Employee / Add
                                         <input class="form-control" placeholder="Email" name="email" type="email" value="" required>
                                     </div>
                                 </div>
+                                 <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Email 2</label>
+                                        <input class="form-control" placeholder="Email 2" name="email2" type="email" value="">
+                                    </div>
+                                </div>
+                                 <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Email 3</label>
+                                        <input class="form-control" placeholder="Email 3" name="email3" type="email" value="">
+                                    </div>
+                                </div>
                                 <div class="col-md-5 ">
                                     <div class="form-group">
                                         <br>

@@ -16,6 +16,38 @@ use Response;
 
 class EmployeeInfoController extends Controller
 {
+    public function login(Request $request)
+    {   
+         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            $user = User::whereEmail($request->email);
+
+            if($user->count() > 0){
+                Auth::login($user->first());
+                return redirect('/');
+            }
+         }
+
+         if (Auth::attempt(['email2' => $request->email, 'password' => $request->password])) {
+           $user = User::where('email2' ,'=', $request->email);
+
+            if($user->count() > 0){
+                Auth::login($user->first());
+                return redirect('/');
+            } 
+         }
+
+         if (Auth::attempt(['email3' => $request->email, 'password' => $request->password])) {
+           $user = User::where('email3' ,'=', $request->email);
+
+            if($user->count() > 0){
+                Auth::login($user->first());
+                return redirect('/');
+            } 
+         }
+
+        return $request;
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -77,6 +109,8 @@ class EmployeeInfoController extends Controller
         $employee->birth_date = $birth_date;
         $employee->prod_date = $prod_date;
         $employee->email = $request->email;
+        $employee->email2 = $request->email2;
+        $employee->email3 = $request->email3;
         $employee->ext = $request->ext;
         $employee->wave = $request->wave;
 
@@ -141,6 +175,8 @@ class EmployeeInfoController extends Controller
         $employee->middle_name = $request->middle_name;
         $employee->last_name = $request->last_name;
         $employee->email = $request->email;
+        $employee->email2 = $request->email2;
+        $employee->email3 = $request->email3;
         $employee->alias = $request->alias;
         $employee->team_name = $request->team_name;
         $employee->position_name = $request->position_name;
@@ -424,19 +460,19 @@ class EmployeeInfoController extends Controller
                 if ($department->count() == 0) 
                 {  
                     if($cells[$ACCOUNT]){
-                        $account = ElinkAccount::where('account_name', 'LIKE', '%'.$cells[$ACCOUNT].'%');
-                        if ($account->count() > 0)
+                        $dept_account = ElinkAccount::where('account_name', 'LIKE', '%'.$cells[$ACCOUNT].'%');
+                        if ($dept_account->count() > 0)
                         {
                             if ($cells[$DIVISION]) 
                             {
-                                $division = ElinkDivision::where('division_name','LIKE', '%'.$cells[$DIVISION].'%');
-                                if ($division->count() > 0)
+                                $dept_division = ElinkDivision::where('division_name','LIKE', '%'.$cells[$DIVISION].'%');
+                                if ($dept_division->count() > 0)
                                 {
                                     EmployeeDepartment::insert([
                                         'department_name' => $cells[$DEPT],
                                         'department_code' => $cells[$DEPT_CODE],
-                                        'division_id' => $division->first()->id,
-                                        'account_id' => $account->first()->id
+                                        'division_id' => $dept_division->first()->id,
+                                        'account_id' => $dept_account->first()->id
                                     ]);
                                 }
                             }  

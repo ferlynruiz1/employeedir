@@ -45,7 +45,7 @@ class EmployeeInfoController extends Controller
             } 
          }
 
-        return $request;
+        return redirect('/login')->withErrors(['email' => "Incorrect email and password combination!"]);
 
     }
     /**

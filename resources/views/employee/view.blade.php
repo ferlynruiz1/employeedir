@@ -203,6 +203,28 @@ Employee Information
                                 </a>
                             </div>
                         </div>
+                        @if(isset($employee->email2) && $employee->email2 != "")
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Email 2</label>
+                                <br>
+                                <a href="mailto:{{ $employee->email2}}">
+                                    <span class="employee-details-value">{{ $employee->email2}}</span>
+                                </a>
+                            </div>
+                        </div>
+                        @endif
+                        @if(isset($employee->email3) && $employee->email3 != "")
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Email 3</label>
+                                <br>
+                                <a href="mailto:{{ $employee->email3}}">
+                                    <span class="employee-details-value">{{ $employee->email3}}</span>
+                                </a>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                     <br>
                     @if(Auth::user()->id == $employee->id || Auth::user()->isAdmin())

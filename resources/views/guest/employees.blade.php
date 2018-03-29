@@ -42,6 +42,17 @@ Employees
     li a.selected{
         font-weight: 900!important;
     }
+    .pagination>li:first-child>a, .pagination>li:first-child>span{
+        border-top-left-radius: 0px !important;
+        border-bottom-left-radius: 0px !important;
+    }
+    .pagination>li:last-child>a, .pagination>li:last-child>span {
+        border-top-right-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
+    }
+    .emp-profile .fa{
+        color: #555 !important;
+    }
 </style>
 
 <div class="col-md-12">

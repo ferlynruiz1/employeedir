@@ -1,10 +1,13 @@
+/* GLOBALS */
 body{
     background-image: url(http://localhost/elinkemployeedirectory/public/img/002-subtle-light-pattern-background-texture.jpg);
+}
+footer {
+    color: white !important;
 }
 .btn{
 	border-radius: 0px !important;
 }
-
 .btn .btn-primary{
 	background-color: #36bae2 !important;
 }
@@ -14,6 +17,62 @@ body{
 .panel{
 	border-radius: 0px !important;
 }
+.panel-body input[type=checkbox]:checked + label{
+    text-decoration: none !important;
+    color: inherit !important;
+}
+.panel-body input[type=checkbox] + label {
+    font-weight: normal !important;
+}
+.panel-heading{
+    background-color: #0086CD !important;
+}
+.panel-default .panel-heading {
+    background: #fff;
+    border-bottom: 1px solid #e9ecf2;
+    color: #444444;
+    font-weight: 500;
+    color: #e9ecf2;
+    border-radius: 0px;
+}
+.panel-heading span {
+    border-radius: 0px !important;
+}
+.panel-heading .fa-toggle-up, .panel-heading .fa-toggle-down {
+    color: #0086cd;
+}
+h4.timeline-title {
+    color: #444;
+    font-weight: 500;
+    font-size: 17px;
+    margin-top: 10px;
+}
+h4.timeline-title a{
+    color: #444;
+}
+h4.timeline-title a:hover{
+    text-decoration: none;
+    color: #30A5FF;
+}
+.timeline > li > .timeline-badge{
+    background-color: transparent !important;
+}
+h4.card-title{
+    color: #444;
+    font-weight: 500 !important;
+}
+h5.card-subtitle{
+    color: #555;
+}
+h6.card-subtitle{
+    color: #777;
+}
+
+
+/* END GLOBAL CSS */
+
+/*********************************************************************************************/
+
 /* DATATABLE CSS */
 table.dataTable thead th, table.dataTable thead td {
     border-bottom: 1px solid transparent !important;
@@ -44,7 +103,6 @@ table.dataTable.display tbody tr.even > .sorting_1, table.dataTable.order-column
     padding: 10px 10px 10px 10px;
     font-weight: 500 !important;
 }
-
 a.paginate_button.current {
     border-radius: 0px !important;
     border: 1px solid #d2d2d2 !important;
@@ -81,41 +139,15 @@ a.paginate_button {
 
 /* END DATATABLE CSS */
 
-.message-success{
-    color: green;
-}
-.message-error{
-    color: red;
-}
-
-input[type=text], input[type=password],input.form-control{
-    border-radius: 0px !important;
-    height: 35px !important;
-    font-size: 12px !important;
-}
-
-h1.page-header{
-    margin-left: 20px;
-}
+/* MODAL CSS*/
 .modal-content{
     border-radius: 0px !important;
 }
+/* END MODAL CSS*/
 
-input[type=radio]{
-    cursor: pointer;
-}
+/*********************************************************************************************/
 
-label#bb{ 
-    padding: 10px;
-    display: table;
-    background-color: buttonface;
-    color: #2a2a2a;
-    }
-input[type="file"]#image_uploader {
-    display: none;
-}
-
-/*********** SELECT 2 **************/
+/* SELECT CSS */
 .select2-container--default .select2-selection--single {
     background-color: #fff !important;
     border: 1px solid #ddd !important;
@@ -127,7 +159,7 @@ input[type="file"]#image_uploader {
 .select2-container--default .select2-selection--single .select2-selection__arrow b{
     margin-top: 5px !important;
 }
-
+/* END SELECT CSS */
 
 /* Form Validation */
 label.error {
@@ -157,7 +189,37 @@ label#gender_id-error {
     margin-left: -9px;
     margin-top: 30px;
 }
+/* END VALIDATION CSS */
 
+/*********************************************************************************************/
+
+/* FORM CSS */
+.message-success{
+    color: green;
+}
+.message-error{
+    color: red;
+}
+input[type=text], input[type=password],input.form-control{
+    border-radius: 0px !important;
+    height: 35px !important;
+    font-size: 12px !important;
+}
+h1.page-header{
+    margin-left: 20px;
+}
+input[type=radio]{
+    cursor: pointer;
+}
+label#bb{ 
+    padding: 10px;
+    display: table;
+    background-color: buttonface;
+    color: #2a2a2a;
+    }
+input[type="file"]#image_uploader {
+    display: none;
+}
 .radio-label{
     font-weight: 500 !important;
     color: #222;
@@ -207,65 +269,4 @@ label#gender_id-error {
     font-weight: 500;
     font-size: 16px;
 }
-
-/*EMPLOYEES PAGE */
-
-.pagination>li:first-child>a, .pagination>li:first-child>span{
-    border-top-left-radius: 0px !important;
-    border-bottom-left-radius: 0px !important;
-}
-.pagination>li:last-child>a, .pagination>li:last-child>span {
-    border-top-right-radius: 0px !important;
-    border-bottom-right-radius: 0px !important;
-}
-.emp-profile .fa{
-    color: #555 !important;
-}
-
-.panel-body input[type=checkbox]:checked + label{
-    text-decoration: none !important;
-    color: inherit !important;
-}
-.panel-body input[type=checkbox] + label {
-    font-weight: normal !important;
-}
-h4.timeline-title {
-    color: #444;
-    font-weight: 500;
-    font-size: 17px;
-    margin-top: 10px;
-}
-h4.timeline-title a{
-    color: #444;
-}
-h4.timeline-title a:hover{
-    text-decoration: none;
-    color: #30A5FF;
-}
-.timeline > li > .timeline-badge{
-    background-color: transparent !important;
-}
-h4.card-title{
-    color: #444;
-    font-weight: 500 !important;
-}
-h5.card-subtitle{
-    color: #555;
-}
-h6.card-subtitle{
-    color: #777;
-}
-.panel-heading{
-    background-color: #0086CD !important;
-}
-.panel-default .panel-heading {
-    background: #fff;
-    border-bottom: 1px solid #e9ecf2;
-    color: #444444;
-    font-weight: 500;
-    color: #e9ecf2;
-    border-radius: 0px;
-}
-footer {
-    color: white !important;
-}
+/* END FORM CSS */

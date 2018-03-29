@@ -273,7 +273,7 @@ Employee Information / Edit
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Email</label>
+                                    <label>Primary Email</label>
                                     <input class="form-control" placeholder="Email" name="email" value="{{$employee->email}}">
                                 </div>
                             </div>

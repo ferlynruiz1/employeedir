@@ -266,7 +266,7 @@ Employee / Add
                          <div class="row">
                                  <div class="col-md-4">
                                     <div class="form-group">
-                                        <label class="asterisk-required">Email</label>
+                                        <label class="asterisk-required">Primary Email</label>
                                         <input class="form-control" placeholder="Email" name="email" type="email" value="" required>
                                     </div>
                                 </div>

@@ -7,9 +7,6 @@ Employee Information / Change Password
 @endsection
 @section('content')
 <style type="text/css">
-	body{
-        background-image: url({{asset('public/img/002-subtle-light-pattern-background-texture.jpg')}});
-    }
     h1.page-header{
         margin-left: 20px;
     }

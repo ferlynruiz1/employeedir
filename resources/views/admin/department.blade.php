@@ -7,9 +7,6 @@ Departments
 @endsection
 @section('content')
 <style type="text/css">
-	body{
-        background-image: url({{asset('public/img/002-subtle-light-pattern-background-texture.jpg')}});
-    }
     #employees_table_wrapper{
         background-color: white;
         padding: 10px;

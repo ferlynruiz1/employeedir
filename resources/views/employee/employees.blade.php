@@ -7,9 +7,6 @@ Employees
 @endsection
 @section('content')
     <style type="text/css">
-    	body{
-            background-image: url({{asset('public/img/002-subtle-light-pattern-background-texture.jpg')}});
-        }
         #employees_table_wrapper{
             background-color: #fff;
             padding: 10px;
@@ -80,7 +77,7 @@ Employees
                 <td>Email</td>
                 <td >Team/Department</td>
                 <td >Supervisor</td>
-                <td >Manager</td>
+                <!-- <td >Manager</td> -->
                 <td >Division</td>
                 <td >Account</td>
                 <td>Production Date</td>
@@ -92,7 +89,7 @@ Employees
             @foreach($employees as $employee)
                 <tr> 
                     <td>{{ ++$counter }}</td>
-                    <td style="width: 250px;">
+                    <td style="min-width: 250px;">
                         @if(isset($employee->profile_img))
                          <img alt="image" id="profile_image" class="img-circle pull-left" style="width: 40px; height: 40px; margin: 10px;" src="{{ $employee->profile_img }}" style="float: left !important">
                          @else
@@ -109,10 +106,10 @@ Employees
                     <td style="color: #00B0FF;"><a href="mailto:{{$employee->email}}"> {{ $employee->email }}</a></td>
                     <td>{{ $employee->team_name }}</td>
                     <td>{{ @$employee->supervisor_name }}</td>
-                    <td>{{ @$employee->manager_name }}</td>
+                    <!-- <td>{{ @$employee->manager_name }}</td> -->
                     <td>{{ @$employee->division_name }}</td>
                     <td>{{ @$employee->account->account_name }}</td>
-                    <td>{{ $employee->prettyproddate() }}</td>
+                    <td>{{ $employee->prodDate() }}</td>
                     <td>
                         <a href="{{ url('/employee_info/'. $employee->id)}}" target="_blank" title="View">
                             <i class="fa fa-eye"></i>

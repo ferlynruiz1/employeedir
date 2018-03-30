@@ -1,9 +1,31 @@
 /* GLOBALS */
 body{
+    zoom: 0.99;
+    background-color: #546e7a;
+    background-image: url("http://localhost/elinkemployeedirectory/public/img/debut-light.png");
+     background-attachment: fixed;
+}
+.content-holder{
     background-image: url(http://localhost/elinkemployeedirectory/public/img/002-subtle-light-pattern-background-texture.jpg);
 }
 footer {
     color: white !important;
+}
+@media (min-width: 768px){
+    .sidebar {
+        left: 7.5%;
+        width: 14.5%;
+    }
+}
+nav.navbar, .content-holder{
+    width: 85%;
+    margin: 0 auto;
+}
+.sidebar ul.nav li a {
+    padding-left: 30px;
+}
+.profile-sidebar {
+    padding-left: 10px;
 }
 .btn{
 	border-radius: 0px !important;

@@ -24,7 +24,7 @@ Employee / Import
         <div class="panel panel-container">
             <div class="panel-body">
                 <form enctype="multipart/form-data" action="{{ url('employees/import')}}" method="POST">
-                    <center>
+                   
                     <h2 id="filename"></h2>
                     <label id="bb" class="btn btn-primary" >Click here to attach Excel File
                         <input type="file" name="dump_file"  class="btn btn-small" id="fileexcel">
@@ -34,7 +34,7 @@ Employee / Import
                     <button type="submit" name="submit" class="btn btn-success" style="background-color: #388E3C">
                         Upload Now
                     </button>
-                    </center>
+                   
                 </form>
             </div>
         </div>

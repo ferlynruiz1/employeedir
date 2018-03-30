@@ -41,147 +41,148 @@ body{
             </div>
         </div>
     </nav>
-    <!-- sidebar menu -->
-    <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-        <div class="profile-sidebar">
-            <div class="profile-userpic">
-                <img src="{{ Auth::user()->profile_img }}" class="img-responsive" alt="" style="width: 100px; height: 100px;">
-            </div>
-            <div class="profile-usertitle">
+    <div class="content-holder">
+        <!-- sidebar menu -->
+        <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+            <div class="profile-sidebar">
+                <div class="profile-userpic">
+                    <img src="{{ Auth::user()->profile_img }}" class="img-responsive" alt="" style="width: 100px; height: 100px;">
+                </div>
+                <div class="profile-usertitle">
+                    <br>
+                    <h4 class="card-title m-t-10" style="font-size: 15px !important;">{{ Auth::user()->fullname() }}</h4>
+                    <h5 class="card-subtitle" title="Job Title">{{ Auth::user()->position_name }}</h6>
+                    <h6 class="card-subtitle" title="Department/Team">{{ Auth::user()->team_name }}</h6>
                 <br>
-                <h4 class="card-title m-t-10" style="font-size: 15px !important;">{{ Auth::user()->fullname() }}</h4>
-                <h5 class="card-subtitle" title="Job Title">{{ Auth::user()->position_name }}</h6>
-                <h6 class="card-subtitle" title="Department/Team">{{ Auth::user()->team_name }}</h6>
-            <br>
+                </div>
+                <div class="clear"></div>
             </div>
-            <div class="clear"></div>
+            <div class="divider"></div>
+            <ul class="nav menu">
+                @if(Auth::user()->isAdmin())
+                <li <?php echo \Request::url() == url('dashboard') ? 'class="active"' : ''; ?>>
+                    <a href="{{url('dashboard')}}">
+                        <em class="fa fa-dashboard">&nbsp;</em>
+                        Dashboard
+                    </a>
+                </li>
+                <li <?php echo \Request::url() == url('employees') ? 'class="active"' : ''; ?>>
+                    <a href="{{url('employees')}}">
+                        <em class="fa fa-home">&nbsp;</em>
+                        Employees
+                     </a>
+                 </li>
+                <li <?php echo \Request::url() == url('department') ? 'class="active"' : ''; ?>>
+                    <a href="{{url('department')}}">
+                        <em class="fa fa-users">&nbsp;</em> 
+                        Department
+                    </a>
+                </li>
+                <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
+                    <a href="{{url('myprofile')}}">
+                        <em class="fa fa-user">&nbsp;</em>
+                        My Profile
+                    </a>
+                </li>
+                <li <?php echo \Request::url() == url('employees/import') ? 'class="active"' : ''; ?>>
+                    <a href="{{url('employees/import')}}">
+                        <em class="fa fa-upload">&nbsp;</em> 
+                        Import
+                    </a>
+                </li>
+                <li <?php echo \Request::url() == url('employees/export') ? 'class="active"' : ''; ?>>
+                    <a href="{{url('employees/export')}}">
+                        <em class="fa fa-download">&nbsp;</em> 
+                        Export
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('logout')}}">
+                        <em class="fa fa-power-off">&nbsp;</em>
+                        Logout
+                    </a>
+                </li>
+                @else 
+                <li <?php echo \Request::url() == url('home') ? 'class="active"' : ''; ?>>
+                    <a href="{{url('home')}}">
+                        <em class="fa fa-home">&nbsp;</em>
+                        Home
+                    </a>
+                </li>
+                <li <?php echo \Request::url() == url('employees') ? 'class="active"' : ''; ?>>
+                    <a href="{{url('employees')}}">
+                        <em class="fa fa-users">&nbsp;</em>
+                        Employees
+                     </a>
+                 </li>
+                <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
+                    <a href="{{url('myprofile')}}">
+                        <em class="fa fa-user">&nbsp;</em>
+                        My Profile
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('logout')}}">
+                        <em class="fa fa-power-off">&nbsp;</em>
+                        Logout
+                    </a>
+                </li>
+                @endif
+            </ul>
         </div>
-        <div class="divider"></div>
-        <ul class="nav menu">
-            @if(Auth::user()->isAdmin())
-            <li <?php echo \Request::url() == url('dashboard') ? 'class="active"' : ''; ?>>
-                <a href="{{url('dashboard')}}">
-                    <em class="fa fa-dashboard">&nbsp;</em>
-                    Dashboard
-                </a>
-            </li>
-            <li <?php echo \Request::url() == url('employees') ? 'class="active"' : ''; ?>>
-                <a href="{{url('employees')}}">
-                    <em class="fa fa-home">&nbsp;</em>
-                    Employees
-                 </a>
-             </li>
-            <li <?php echo \Request::url() == url('department') ? 'class="active"' : ''; ?>>
-                <a href="{{url('department')}}">
-                    <em class="fa fa-users">&nbsp;</em> 
-                    Department
-                </a>
-            </li>
-            <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
-                <a href="{{url('myprofile')}}">
-                    <em class="fa fa-user">&nbsp;</em>
-                    My Profile
-                </a>
-            </li>
-            <li <?php echo \Request::url() == url('employees/import') ? 'class="active"' : ''; ?>>
-                <a href="{{url('employees/import')}}">
-                    <em class="fa fa-upload">&nbsp;</em> 
-                    Import
-                </a>
-            </li>
-            <li <?php echo \Request::url() == url('employees/export') ? 'class="active"' : ''; ?>>
-                <a href="{{url('employees/export')}}">
-                    <em class="fa fa-download">&nbsp;</em> 
-                    Export
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('logout')}}">
-                    <em class="fa fa-power-off">&nbsp;</em>
-                    Logout
-                </a>
-            </li>
-            @else 
-            <li <?php echo \Request::url() == url('home') ? 'class="active"' : ''; ?>>
-                <a href="{{url('home')}}">
-                    <em class="fa fa-home">&nbsp;</em>
-                    Home
-                </a>
-            </li>
-            <li <?php echo \Request::url() == url('employees') ? 'class="active"' : ''; ?>>
-                <a href="{{url('employees')}}">
-                    <em class="fa fa-users">&nbsp;</em>
-                    Employees
-                 </a>
-             </li>
-            <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
-                <a href="{{url('myprofile')}}">
-                    <em class="fa fa-user">&nbsp;</em>
-                    My Profile
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('logout')}}">
-                    <em class="fa fa-power-off">&nbsp;</em>
-                    Logout
-                </a>
-            </li>
-            @endif
-        </ul>
-    </div>
-    <!-- Content -->
-    <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-        <div class="row">
-            <ol class="breadcrumb">
-                <li><a href="#">
-                    <em class="fa fa-home"></em>
-                </a></li>
-                <li class="active">@yield('pagetitle')</li>
-            </ol>
-        </div>
-        <div>
-            @yield('content')
+        <!-- Content -->
+        <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+            <div class="row">
+                <ol class="breadcrumb">
+                    <li><a href="#">
+                        <em class="fa fa-home"></em>
+                    </a></li>
+                    <li class="active">@yield('pagetitle')</li>
+                </ol>
+            </div>
+            <div style="padding: 10px">
+                @yield('content')
 
+            </div>
+        </div> 
+        <script src="{{ asset('public/js/bootstrap.min.js')}}"></script>
+        <script src="{{ asset('public/js/chart.min.js')}}"></script>
+        <script src="{{ asset('public/js/chart-data.js')}}"></script>
+        <script src="{{ asset('public/js/easypiechart.js')}}"></script>
+        <script src="{{ asset('public/js/easypiechart-data.js')}}"></script>
+        <script src="{{ asset('public/js/bootstrap-datepicker.js')}}"></script>
+        <script src="{{ asset('public/js/jquery.dataTables.js')}}"></script>
+        <script src="{{ asset('public/js/jquery.validate.min.js')}}"></script>
+        <script src="{{ asset('public/js/select2.full.js')}}"></script>
+        <script src="{{ asset('public/js/global.js')}}"></script>
+        <script src="{{ asset('public/js/custom.js')}}"></script>
+        <!-- Modal -->
+        <div id="messageModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+              </div>
+              <div class="modal-body">
+                <p id="message">Some text in the modal.</p>
+              </div>
+              <div class="modal-footer">
+                 {{ Form::open(array('url' => 'employee_info/', 'class' => ' delete_form' )) }}
+                        {{ Form::hidden('_method', 'DELETE') }}
+                        {{ Form::submit('Yes', array('class' => 'btn btn-danger')) }}
+                    {{ Form::close() }}
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </div> 
         </div>
-    </div> 
-    <script src="{{ asset('public/js/bootstrap.min.js')}}"></script>
-    <script src="{{ asset('public/js/chart.min.js')}}"></script>
-    <script src="{{ asset('public/js/chart-data.js')}}"></script>
-    <script src="{{ asset('public/js/easypiechart.js')}}"></script>
-    <script src="{{ asset('public/js/easypiechart-data.js')}}"></script>
-    <script src="{{ asset('public/js/bootstrap-datepicker.js')}}"></script>
-    <script src="{{ asset('public/js/jquery.dataTables.js')}}"></script>
-    <script src="{{ asset('public/js/jquery.validate.min.js')}}"></script>
-    <script src="{{ asset('public/js/select2.full.js')}}"></script>
-    <script src="{{ asset('public/js/global.js')}}"></script>
-    <script src="{{ asset('public/js/custom.js')}}"></script>
-    <!-- Modal -->
-    <div id="messageModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Modal Header</h4>
-          </div>
-          <div class="modal-body">
-            <p id="message">Some text in the modal.</p>
-          </div>
-          <div class="modal-footer">
-             {{ Form::open(array('url' => 'employee_info/', 'class' => ' delete_form' )) }}
-                    {{ Form::hidden('_method', 'DELETE') }}
-                    {{ Form::submit('Yes', array('class' => 'btn btn-danger')) }}
-                {{ Form::close() }}
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          </div>
-        </div>
-      </div> 
-    </div>
-    <div style="min-height: 88vh;"><br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;</div>
-    <center>
-        <small style="color: #999;font-weight: 500;">Copyright {{ date('Y')}} eLink Systems & Concepts Corp.</small>
-    </center>
-    <br>  
-        
+        <div style="min-height: 95vh;"><br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;</div>
+        <center>
+            <small style="color: #999;font-weight: 500;">Copyright {{ date('Y')}} eLink Systems & Concepts Corp.</small>
+        </center>
+        <br>  
+    </div>  
 </body>
 <!-- Modal Success -->
 @if (session('success'))
@@ -208,24 +209,24 @@ body{
 <!-- Modal Error -->
 @if (session('error'))
 <div id="alertmodal" class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header" style="background-color: #d32f2f;">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white !important;opacity: 1;">×</button>
-            <h4 class="modal-title"><b style="color: white">Error!</b></h4>
-          </div>
-          <div class="modal-body">
-            <p>{{ session('error') }}</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #d32f2f;">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white !important;opacity: 1;">×</button>
+        <h4 class="modal-title"><b style="color: white">Error!</b></h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ session('error') }}</p>
+      </div>
+      <div class="modal-footer"> 
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
-    <script type="text/javascript">
-        $('#alertmodal').modal('show');
-    </script>
+  </div>
+</div>
+<script type="text/javascript">
+    $('#alertmodal').modal('show');
+</script>
 @endif
 <style type="text/css">
     .delete_form{

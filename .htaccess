@@ -13,7 +13,6 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
-<<<<<<< Updated upstream
 
     # Hide a specific file
     <Files .env>
@@ -22,6 +21,3 @@
     </Files>
 
 </IfModule>
-=======
-</IfModule>
->>>>>>> Stashed changes

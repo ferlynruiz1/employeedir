@@ -4,7 +4,7 @@
     </IfModule>
 
     RewriteEngine On
-    RewriteBase /elinkemployeedirectory/
+    RewriteBase /
 
     # Redirect Trailing Slashes...
     RewriteRule ^(.*)/$ /$1 [L,R=301]
@@ -13,6 +13,7 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+<<<<<<< Updated upstream
 
     # Hide a specific file
     <Files .env>
@@ -21,3 +22,6 @@
     </Files>
 
 </IfModule>
+=======
+</IfModule>
+>>>>>>> Stashed changes

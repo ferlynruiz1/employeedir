@@ -78,7 +78,7 @@ Employees
                 <td >Team/Department</td>
                 <td >Supervisor</td>
                 <!-- <td >Manager</td> -->
-                <td >Division</td>
+                <!-- <td >Division</td> -->
                 <td >Account</td>
                 <td>Production Date</td>
                 <td >Action</td>
@@ -107,7 +107,7 @@ Employees
                     <td>{{ $employee->team_name }}</td>
                     <td>{{ @$employee->supervisor_name }}</td>
                     <!-- <td>{{ @$employee->manager_name }}</td> -->
-                    <td>{{ @$employee->division_name }}</td>
+                    <!-- <td>{{ @$employee->division_name }}</td> -->
                     <td>{{ @$employee->account->account_name }}</td>
                     <td>{{ $employee->prodDate() }}</td>
                     <td>

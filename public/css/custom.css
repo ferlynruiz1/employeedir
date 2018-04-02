@@ -2,11 +2,11 @@
 body{
     zoom: 0.99;
     background-color: #546e7a;
-    background-image: url("http://localhost/elinkemployeedirectory/public/img/debut-light.png");
+    background-image: url("http://192.168.1.89/public/img/debut-light.png");
      background-attachment: fixed;
 }
 .content-holder{
-    background-image: url(http://localhost/elinkemployeedirectory/public/img/002-subtle-light-pattern-background-texture.jpg);
+    background-image: url(http://192.168.1.89/public/img/002-subtle-light-pattern-background-texture.jpg);
 }
 footer {
     color: white !important;

@@ -56,12 +56,13 @@ nav.navbar, .content-holder{
     font-weight: 500;
     color: #e9ecf2;
     border-radius: 0px;
+    font-size: 16px;
 }
 .panel-heading span {
     border-radius: 0px !important;
 }
 .panel-heading .fa-toggle-up, .panel-heading .fa-toggle-down {
-    color: #0086cd;
+    color: white;
 }
 h4.timeline-title {
     color: #444;
@@ -89,7 +90,11 @@ h5.card-subtitle{
 h6.card-subtitle{
     color: #777;
 }
-
+.panel-settings, .panel-toggle{
+    background-color: transparent !important;
+    border-width: 0px !important;
+    background: transparent; !important;
+}
 
 /* END GLOBAL CSS */
 
@@ -111,14 +116,12 @@ table.dataTable.display tbody tr.even > .sorting_1, table.dataTable.order-column
 .dataTables_length{
     display: none;
 }
-#employees_table_wrapper{
+.dataTables_wrapper {
     margin-top: -50px;
-    padding-top: 20px;
-    padding-left: 2px;
-    padding-right: 2px;
-    padding-bottom: 30px;
+    background-color: white;
+    padding: 10px;
 }
-#employees_table_wrapper input[type="search"] {
+.dataTables_wrapper  input[type="search"] {
     background-color: white;
     border: 1px solid #ededed;
     font-size: 14px;
@@ -137,7 +140,7 @@ a.paginate_button:hover {
     border: 1px solid #f5f3f3 !important;
     font-size: 12px !important;
 }
-div#employees_table_info {
+div.dataTables_info {
     font-size: 12px !important;
 }
 a#employees_table_previous {

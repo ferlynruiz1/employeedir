@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use Carbon\Carbon; 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -55,6 +56,7 @@ Route::middleware(['admin'])->group(function () {
 	Route::get('dashboard', 'HomeController@dashboard');
 	Route::resource('department', 'DepartmentController');
 	Route::resource('employee_info', 'EmployeeInfoController');
+	Route::resource('activities', 'ActivityController');
 	Route::get('employee/{id}/changepassword', 'EmployeeInfoController@changepassword');
 });
 	Route::post('employee/{id}/savepassword', 'EmployeeInfoController@savepassword');
@@ -107,7 +109,6 @@ function genderStringValue($gender){
 			return "";
 	}
 }
-
 function joinGrammar($prod_date){
 	$prod_date_timestamp = strtotime($prod_date);
 	$current_timestamp = time();
@@ -116,4 +117,34 @@ function joinGrammar($prod_date){
 		return "Will join";
 	}
 	return "Joined";
-}	
+}
+function monthDay($prod_date){
+	if (isset($prod_date)) {
+        $dt = Carbon::parse($prod_date);
+        return $dt->format('M d');
+    } else {
+        return "";
+    } 
+}
+function truncate($string, $length, $html = true)
+{
+    if (strlen($string) > $length) {
+        if ($html) {
+            // Grabs the original and escapes any quotes
+            $original = str_replace('"', '\"', $string);
+        }
+
+        // Truncates the string
+        $string = substr($string, 0, $length);
+
+        // Appends ellipses and optionally wraps in a hoverable span
+        if ($html) {
+            $string = '<span title="' . $original . '">' . $string . '&hellip;</span>';
+        } else {
+            $string .= '...';
+        }
+    }
+
+    return $string;
+}
+

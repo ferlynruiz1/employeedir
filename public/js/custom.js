@@ -29,7 +29,7 @@ $(document).on('click', '.panel-heading span.clickable', function(e){
 })
 
 $(document).ready(function () {
-    $('#employees_table').DataTable();
+    $('.table').DataTable();
 	$('.datepicker').datepicker();
 	$('.select2').select2();
 	$('.select2').on('change', function() {

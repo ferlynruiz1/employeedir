@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use App\User;
+use App\ElinkActivities;
 use App\EmployeeDepartment;
 
 class HomeController extends Controller
@@ -37,6 +38,6 @@ class HomeController extends Controller
     }
     public function dashboard(Request $request)
     {
-        return view('dashboard')->with('new_hires', User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5))->with('employees', User::allExceptSuperAdmin()->get());
+        return view('dashboard')->with('new_hires', User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5))->with('employees', User::allExceptSuperAdmin()->get())->with('birthdays', User::whereRaw('MONTH(birth_date) = '.date('n').' && YEAR(birth_date) = '.date('Y'))->get())->with('engagements', ElinkActivities::all());
     }
 } 

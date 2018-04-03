@@ -67,7 +67,7 @@ class User extends Authenticatable
     public function scopeProdDate($query)
     {
         if (isset($this->prod_date)) {
-            $dt = Carbon::parse($this->hired_date);
+            $dt = Carbon::parse($this->prod_date);
             return $dt->format('m/d/Y');
         } else {
             return "";

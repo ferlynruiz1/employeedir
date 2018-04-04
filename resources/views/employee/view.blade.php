@@ -29,6 +29,9 @@ Employee Information
     }
 </style>
 <div id="view_profile">
+     <?php $class = "col-md-12";?>
+     @if(Auth::user()->id != $employee->id)
+     <?php $class="col-md-9" ?>
     <div class="col-md-3" style="padding-left: 0px !important; padding-right: 0px;">
         <div class="section-header">
             <h4>Profile Picture</h4>
@@ -51,7 +54,8 @@ Employee Information
             </div>
         </div>
     </div>
-    <div class="col-md-9">
+    @endif
+    <div class="{{ $class }}">
         <div class="section-header">
             <h4>Employee Information</h4>
         </div>

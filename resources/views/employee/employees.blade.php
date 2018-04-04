@@ -71,17 +71,17 @@ Employees
 	<table id="employees_table" class="table">
         <thead>
             <tr>
-                <td>#</td>
-                <td>Employee</td>
+                <td data-priority="1">#</td>
+                <td data-priority="2">Employee</td>
                 <!-- <td>EID</td> -->
-                <td>Email</td>
-                <td >Team/Department</td>
-                <td >Supervisor</td>
+                <td data-priority="4">Email</td>
+                <td>Team/Department</td>
+                <td>Supervisor</td>
                 <!-- <td >Manager</td> -->
                 <!-- <td >Division</td> -->
                 <td >Account</td>
                 <td>Production Date</td>
-                <td >Action</td>
+                <td data-priority="3">Action</td>
             </tr>        
         </thead> 
         <tbody>
@@ -89,7 +89,7 @@ Employees
             @foreach($employees as $employee)
                 <tr> 
                     <td>{{ ++$counter }}</td>
-                    <td style="min-width: 250px;">
+                    <td >
                         @if(isset($employee->profile_img))
                          <img alt="image" id="profile_image" class="img-circle pull-left" style="width: 40px; height: 40px; margin: 10px;" src="{{ $employee->profile_img }}" style="float: left !important">
                          @else
@@ -103,8 +103,8 @@ Employees
                         </small>
                     </td>
                     <!-- <td>{{ $employee->eid }}</td> -->
-                    <td style="color: #00B0FF;"><a href="mailto:{{$employee->email}}"> {{ $employee->email }}</a></td>
-                    <td>{{ $employee->team_name }}</td>
+                    <td><a href="mailto:{{$employee->email}}"> {{ $employee->email }}</a></td>
+                    <td >{{ $employee->team_name }}</td>
                     <td>{{ @$employee->supervisor_name }}</td>
                     <!-- <td>{{ @$employee->manager_name }}</td> -->
                     <!-- <td>{{ @$employee->division_name }}</td> -->

@@ -43,7 +43,7 @@ body{
     </nav>
     <div class="content-holder">
         <!-- sidebar menu -->
-        <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+        <div id="sidebar-collapse" class="sidebar">
             <div class="profile-sidebar">
                 <div class="profile-userpic">
                     <img src="{{ Auth::user()->profile_img }}" class="img-responsive" alt="" style="width: 100px; height: 100px;">
@@ -158,7 +158,8 @@ body{
         <script src="{{ asset('public/js/easypiechart-data.js')}}"></script>
         <script src="{{ asset('public/js/bootstrap-datepicker.js')}}"></script>
         <script src="{{ asset('public/js/jquery.dataTables.js')}}"></script>
-        <script src="{{ asset('public/js/jquery.validate.min.js')}}"></script>
+        <script src="{{ asset('public/js/jquery.dataTables.js')}}"></script>
+        <script src="{{ asset('public/js/dataTables.responsive.js')}}"></script>
         <script src="{{ asset('public/js/select2.full.js')}}"></script>
         <script src="{{ asset('public/js/global.js')}}"></script>
         <script src="{{ asset('public/js/custom.js')}}"></script>

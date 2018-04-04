@@ -37,8 +37,33 @@ Employee Information
 </style>
 <br>    
 <div>
-    
-    <div class="col-md-12">
+    <?php $class = "col-md-12";?>
+    @if(Auth::user()->id != $employee->id)
+        <?php $class="col-md-9" ?>
+        <div class="col-md-3" style="padding-left: 0px !important; padding-right: 0px;">
+            <div class="section-header">
+                <h4>Profile Picture</h4>
+            </div>
+            <div class="panel panel-container">
+                <div class="row no-padding">
+                    <center>
+                    <img alt="image" class="img-circle" style="width: 150px; height: 150px; margin-top: 30px;" src="{{ $employee->profile_img }}">
+                    <br>
+                    <h4 class="card-title m-t-10" style="font-size: 16px;line-height: 21px;margin-top: 15px;font-weight: 400;color: black;">
+                        {{ $employee->fullname() }}
+                    </h4>
+                    <h6 class="card-subtitle">{{ $employee->position_name }}</h6>
+                    <h6 class="card-subtitle">{{ $employee->team_name }}</h6>
+                    <hr>
+                    </center>
+                    <span class="pull-left label-profile">Production Date: <i>{{ $employee->prettyproddate() }}</i></span>
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+    @endif
+    <div class="{{ $class }}">
         <div class="section-header">
             <h4>Employee Information</h4>
         </div>

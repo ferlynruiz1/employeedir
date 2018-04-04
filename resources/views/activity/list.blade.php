@@ -54,7 +54,7 @@ Activities
 </table>
 <script type="text/javascript">
     $('.delete_btn').click(function(){
-        $('#messageModal .modal-title').html('Delete Department');
+        $('#messageModal .modal-title').html('Delete Activity');
         $('#messageModal #message').html('Are you sure you want to delete the activity ?');
         $('#messageModal .delete_form').attr('action', "{{ url('activities') }}/" + $(this).attr("data-id"));
     });

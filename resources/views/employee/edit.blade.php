@@ -44,7 +44,7 @@ Employee Information / Edit
             <div class="panel panel-container">
                 <div class="row no-padding">
                     <center>
-                        <img alt="image" id="profile_image" class="img-circle" style="width: 100px; height: 100px; margin-top: 30px;" src="{{ $employee->profile_img }}">
+                        <img alt="Profile Image" id="profile_image" style="width: 150px;margin-top: 30px;" src="{{ $employee->profile_img }}">
                         <br> 
                         <br>
                         <label id="bb" class="btn btn-default"> Upload Photo

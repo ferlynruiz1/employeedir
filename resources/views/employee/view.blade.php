@@ -39,7 +39,7 @@ Employee Information
         <div class="panel panel-container">
             <div class="row no-padding">
                 <center>
-                <img alt="image" class="img-circle" style="width: 150px; height: 150px; margin-top: 30px;" src="{{ $employee->profile_img }}">
+                <img alt="Profile" style="width: 150px; margin-top: 30px;" src="{{ $employee->profile_img }}">
                 <br>
                 <h4 class="card-title m-t-10" style="font-size: 16px;line-height: 21px;margin-top: 15px;font-weight: 400;color: black;">
                     {{ $employee->fullname() }}

@@ -96,7 +96,7 @@ Employees
                         <div class="circle pull-left" style="float: left !important">J</div>
                         @endif
                         <h5 style="text-align: left !important;">
-                            {{ $employee->first_name . ' ' . $employee->middle_name . " " .  $employee->last_name  }}
+                            {{ $employee->first_name . ' ' .  $employee->last_name  }}
                         </h5>
                         <small style="text-align: left !important;">
                             {{ $employee->position_name }}

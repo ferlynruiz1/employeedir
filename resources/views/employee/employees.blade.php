@@ -91,7 +91,7 @@ Employees
                     <td>{{ ++$counter }}</td>
                     <td >
                         @if(isset($employee->profile_img))
-                         <img alt="image" id="profile_image" class="pull-left" style="width: 40px; height: 40px; margin: 10px;" src="{{ $employee->profile_img }}" style="float: left !important">
+                         <img alt="image" id="profile_image" class="pull-left" style="width: 40px;margin: 10px;" src="{{ $employee->profile_img }}" style="float: left !important">
                          @else
                         <div class="circle pull-left" style="float: left !important">J</div>
                         @endif

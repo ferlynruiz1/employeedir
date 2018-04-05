@@ -6,6 +6,11 @@ Home
 Home
 @endsection
 @section('content')
+<style type="text/css">
+    .birthday-holder {
+    padding: 10px;
+}
+</style>
 <br>
     <div class="col-md-4">
             <div class="panel panel-default ">
@@ -46,7 +51,7 @@ Home
                         <div class="birthday-celebrants-div">
                             @foreach($birthdays as $celebrant)
                             <div class="birthday-holder">
-                                <img src="{{ $employee->profile_img }}" class="img pull-left" alt="" style="width: 50px; height: 50px; margin-right: 20px;">
+                                <img src="{{ $employee->profile_img }}" class="img pull-left" alt="" style="width: 50px; height: 50px; margin-top: -10px; box-shadow: 1px 1px 10px 7px #fff; margin-right: 20px;">
                                 <p><a target="_blank" href="employee_info/{{$celebrant->id}}" target="">{{ $celebrant->fullname() }}</a><br><span ><span class="fa fa-gift"></span> {{ monthDay($celebrant->birth_date) }}</span></p> 
                             </div>
                             @endforeach

@@ -158,7 +158,7 @@ body{
         <script src="{{ asset('public/js/easypiechart-data.js')}}"></script>
         <script src="{{ asset('public/js/bootstrap-datepicker.js')}}"></script>
         <script src="{{ asset('public/js/jquery.dataTables.js')}}"></script>
-        <script src="{{ asset('public/js/jquery.dataTables.js')}}"></script>
+        <script src="{{ asset('public/js/jquery.validate.min.js')}}"></script>
         <script src="{{ asset('public/js/dataTables.responsive.js')}}"></script>
         <script src="{{ asset('public/js/select2.full.js')}}"></script>
         <script src="{{ asset('public/js/global.js')}}"></script>

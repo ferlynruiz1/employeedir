@@ -15,6 +15,7 @@ use Carbon\Carbon;
 */
 // date_default_timezone_set('Asia/Manila');
 Route::get('test', function(){
+	return User::where('birth_date', '=', NULL)->get();
 	if (Hash::check('123123','$2y$10$UPVY0aLAstifspnrOvEJpufSL.7GM/Di.9FbHt3PlKnzQ5PxPEa.u')) {
     	return "true";
 	}

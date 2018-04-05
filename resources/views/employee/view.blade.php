@@ -39,14 +39,14 @@ Employee Information
         <div class="panel panel-container">
             <div class="row no-padding">
                 <center>
-                <img alt="Profile" style="width: 150px; margin-top: 30px;" src="{{ $employee->profile_img }}">
-                <br>
-                <h4 class="card-title m-t-10" style="font-size: 16px;line-height: 21px;margin-top: 15px;font-weight: 400;color: black;">
-                    {{ $employee->fullname() }}
-                </h4>
-                <h6 class="card-subtitle">{{ $employee->position_name }}</h6>
-                <h6 class="card-subtitle">{{ $employee->team_name }}</h6>
-                <hr>
+                    <img alt="Profile" style="width: 150px; margin-top: 30px;" src="{{ $employee->profile_img }}">
+                    <br>
+                    <h4 class="card-title m-t-10" style="font-size: 16px;line-height: 21px;margin-top: 15px;font-weight: 400;color: black;">
+                        {{ $employee->fullname() }}
+                    </h4>
+                    <h6 class="card-subtitle">{{ $employee->position_name }}</h6>
+                    <h6 class="card-subtitle">{{ $employee->team_name }}</h6>
+                    <hr>
                 </center>
                 <span class="pull-left label-profile">Production Date: <i>{{ $employee->prettyproddate() }}</i></span>
                 <br>
@@ -75,7 +75,7 @@ Employee Information
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Middle Name</label>
-                                 <p class="employee-details-value">{{ $employee->middle_name}}</p>
+                                <p class="employee-details-value">{{ $employee->middle_name}}</p>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -133,7 +133,7 @@ Employee Information
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Manager/Head</label>
-                               <p class="employee-details-value">{{ isset($employee->manager) ? $employee->manager->fullname() : $employee->manager_name }}</p>
+                                <p class="employee-details-value">{{ isset($employee->manager) ? $employee->manager->fullname() : $employee->manager_name }}</p>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -147,20 +147,20 @@ Employee Information
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Hire Date</label>
-                               <p class="employee-details-value">{{ $employee->prettydatehired()}}</p>
+                                <p class="employee-details-value">{{ $employee->prettydatehired()}}</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Status</label>
-                               <p class="employee-details-value">{{ $employee->status()}}</p>
+                                <p class="employee-details-value">{{ $employee->status()}}</p>
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Account</label>
-                               <p class="employee-details-value">{{ @$employee->account->account_name}}</p>
+                                <p class="employee-details-value">{{ @$employee->account->account_name}}</p>
                             </div>
                         </div>
 
@@ -168,7 +168,7 @@ Employee Information
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Phone Extension</label>
-                               <p class="employee-details-value">{{ @$employee->ext}}</p>
+                                <p class="employee-details-value">{{ @$employee->ext}}</p>
                             </div>
                         </div>
                         @endif
@@ -176,7 +176,7 @@ Employee Information
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Production date</label>
-                               <p class="employee-details-value">{{ @$employee->prettyproddate()}}</p>
+                                <p class="employee-details-value">{{ @$employee->prettyproddate()}}</p>
                             </div>
                         </div>
                         @endif
@@ -184,7 +184,7 @@ Employee Information
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Wave Number</label>
-                               <p class="employee-details-value">{{ $employee->wave == "" ? "--" : $employee->wave }}</p>
+                                <p class="employee-details-value">{{ $employee->wave == "" ? "--" : $employee->wave }}</p>
                             </div>
                         </div>
                         @endif
@@ -234,7 +234,7 @@ Employee Information
                     @if(Auth::user()->id == $employee->id || Auth::user()->isAdmin())
                         <br>
                         <div class="row">
-                             <div class="col-md-3" style="display: flex;">
+                            <div class="col-md-3" style="display: flex;">
                                 <a type="button" class="btn btn-default" href="{{url('employee/'. $employee->id .'/changepassword')}}">
                                     Change Password
                                 </a>
@@ -242,7 +242,7 @@ Employee Information
                                 <a class="btn btn-primary" href="{{url('employee_info/' . $employee->id . '/edit')}}">
                                     Update Profile
                                 </a>
-                              </div>
+                            </div>
                         </div>
                     @endif
                 </div>

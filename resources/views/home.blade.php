@@ -7,9 +7,24 @@ Home
 @endsection
 @section('content')
 <style type="text/css">
-    .birthday-holder {
-    padding: 10px;
-}
+   .birthday-celebrants-div{
+        margin-right: 10px;
+        margin-left: 10px;
+        padding-left: 10px;
+    }
+    .birthday-holder{
+        margin-bottom: 30px;
+    }
+    .birthday-celebrants-div a {
+        color: inherit;
+        text-decoration: inherit;
+    }
+    .birthday-celebrants-div a:hover{
+        color: #30A5FF;
+    }
+    .birthday-celebrants-div span.fa{
+        color: red;
+    }
 </style>
 <br>
     <div class="col-md-4">

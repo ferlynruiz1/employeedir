@@ -113,7 +113,6 @@ class EmployeeInfoController extends Controller
         $employee->ext = $request->ext;
         $employee->wave = $request->wave;
 
-
         $employee->password = Hash::make(env('USER_DEFAULT_PASSWORD', 'qwe123!@#$'));
         $employee->save();
 
@@ -136,6 +135,7 @@ class EmployeeInfoController extends Controller
     public function show($id)
     {
         $employee = User::find($id);
+        
         if (isset($employee)) {
             return view('employee.view')->with('employee', $employee);
         } else {
@@ -152,6 +152,7 @@ class EmployeeInfoController extends Controller
     public function edit($id)
     {   
         $employee = User::find($id);
+
         if (isset($employee)) {
             return view('employee.edit')->with('employee', $employee)->with('supervisors', User::all())->with('departments', EmployeeDepartment::all())->with('accounts', ElinkAccount::all());
         } else {
@@ -180,12 +181,15 @@ class EmployeeInfoController extends Controller
         $employee->team_name = $request->team_name;
         $employee->position_name = $request->position_name;
         $employee->supervisor_name = $request->supervisor_name;
+
         if ($request->has('gender_id')) {
             $employee->gender = $request->gender_id;
         }
+
         if ($request->has('employee_type')) {
             $employee->usertype = $request->employee_type;
         }
+
         $employee->manager_name = $request->manager_name;
         $employee->account_id = $request->account_id;
         $employee->status = $request->status_id;
@@ -197,6 +201,7 @@ class EmployeeInfoController extends Controller
         }
 
         $datetime = new DateTime();
+
         if ($request->has('birth_date') && $request->birth_date) {
             $birth_date = $datetime->createFromFormat('m/d/Y', $request->birth_date)->format("Y-m-d H:i:s");
             $employee->birth_date = $birth_date;
@@ -211,6 +216,7 @@ class EmployeeInfoController extends Controller
             $path = $request->profile_image->store('images/'.$employee->id);
             $employee->profile_img = asset('storage/app/'.$path);
         }
+
         $employee->save();
 
         return redirect()->back()->with('success', "Successfully updated employee information");

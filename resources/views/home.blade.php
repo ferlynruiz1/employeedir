@@ -61,8 +61,6 @@ Home
                     <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
                 <div class="panel-body timeline-container" >
                     @if(count($birthdays) > 0)
-                        <h4 style=" font-weight: 600;font-size: 16px;text-align: center;padding: 11px;padding-left: 30px;font-family: cursive;">{{ date('F') }}</h4>
-                        <br>
                         <div class="birthday-celebrants-div">
                             @foreach($birthdays as $celebrant)
                             <div class="birthday-holder">

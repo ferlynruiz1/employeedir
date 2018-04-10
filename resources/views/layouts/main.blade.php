@@ -192,7 +192,7 @@ body{
         <br>  
     </div>  
     <div id="engagementmodal" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title pull-left" id="engagement_title" style="width: 90%"></h5>
@@ -203,7 +203,7 @@ body{
           <div class="modal-body">
             <small id="engagement_subtitle"></small>
             <center>
-                <img id="engagement_image" src="" style="width: 400px;" />
+                <img id="engagement_image" src="" style="width: 600px;" />
             </center>
             <p id="engagement_message">Modal body text goes here.</p>
             <small id="engagement_date_posted"></small>

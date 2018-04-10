@@ -25,6 +25,9 @@ Dashboard
     .birthday-celebrants-div span.fa{
         color: red;
     }
+    .engagement_title{
+        cursor: pointer;
+    }
 </style>
 <br>
    <div class="col-md-12">
@@ -134,18 +137,18 @@ Dashboard
         <div class="col-md-4">
             <div class="panel panel-default ">
                 <div class="panel-heading">
-                    ElinkGagements Activities 
+                    ElinkGagements Activities
                     <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
                 <div class="panel-body timeline-container" >
                     @foreach($engagements as $engagement)
                      <hr>
-                        <b>{{ $engagement->title}}</b>
+                        <b class="engagement_title" data-id="{{$engagement->id}}">{{ $engagement->title}}</b>
                         <br>
-                        <small>{{ $engagement->subtitle}}</small>
+                        <small class="engagement_title" data-id="{{$engagement->id}}">{{ $engagement->subtitle}}</small>
                         <br>
                         <br>
                         @if(isset($engagement->image_url) || $engagement->image_url != "")
-                            <img src="{{ $engagement->image_url}}" style="width: 100%; padding-right: 80px; padding-left: 80px;">
+                            <img class="engagement_title" data-id="{{$engagement->id}}" src="{{ $engagement->image_url}}" style="width: 100%; padding-right: 80px; padding-left: 80px;">
                         <br>
                         <br>
                         @endif
@@ -159,4 +162,32 @@ Dashboard
                 </div>
             </div>
         </div>
+@endsection
+@section('scripts')
+<script type="text/javascript">
+    $('.engagement_title').click(function(){
+        $('#engagementmodal').modal('show');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax(
+        {
+            url: "{{url('activities')}}" + "/" + $(this).attr('data-id'), 
+            method: 'GET',
+            success: function(result) 
+            {
+                console.log(result);
+                $('#engagement_title').html(result.title);
+                $('#engagement_subtitle').html(result.subtitle);
+                $('#engagement_image').attr('src', result.image_url);
+                $('#engagement_message').html(result.message);
+                $('#engagement_date_posted').html(result.created_at);
+                console.log(result.title);
+            }
+        });
+    });
+</script>
 @endsection

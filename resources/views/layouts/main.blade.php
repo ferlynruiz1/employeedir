@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>eLink's Employee Directory | @yield('title')</title>
     <link rel="icon" type="image/png" href="http://www.elink.com.ph/wp-content/uploads/2016/01/elink-logo-site.png">
     <link href="{{ asset('public/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
@@ -190,6 +191,29 @@ body{
         </center>
         <br>  
     </div>  
+    <div id="engagementmodal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title pull-left" id="engagement_title" style="width: 90%"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <small id="engagement_subtitle"></small>
+            <center>
+                <img id="engagement_image" src="" style="width: 400px;" />
+            </center>
+            <p id="engagement_message">Modal body text goes here.</p>
+            <small id="engagement_date_posted"></small>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 <!-- Modal Success -->
 @if (session('success'))

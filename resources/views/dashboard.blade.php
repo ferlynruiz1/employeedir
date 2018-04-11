@@ -215,7 +215,7 @@ Dashboard
                 $('#engagement_subtitle').html(result.subtitle);
                 $('#engagement_image').attr('src', result.image_url);
                 $('#engagement_message').html(result.message);
-                $('#engagement_date_posted').html(result.created_at);
+                $('#engagement_date_posted').html(timeConverter2(result.created_at));
                 console.log(result.title);
             }
         });

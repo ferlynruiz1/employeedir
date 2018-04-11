@@ -83,7 +83,7 @@ Departments
                     <a href="{{ url('/department/'. $department->id . '/edit')}}" title="Edit">
                         <i class="fa fa-pencil"></i>
                     </a>&nbsp;&nbsp;
-                    <a href="#" class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Edit" data-id="{{$department->id}}">
+                    <a href="#" class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Delete" data-id="{{$department->id}}">
                         <i class="fa fa-trash" style="color: red;" ></i>
                     </a>
                 </td>

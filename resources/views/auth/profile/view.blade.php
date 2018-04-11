@@ -168,7 +168,7 @@ Employee Information
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Account</label>
-                               <p class="employee-details-value">{{ $employee->account->account_name}}</p>
+                               <p class="employee-details-value">{{ @$employee->account->account_name}}</p>
                             </div>
                         </div>
                           @if(isset($employee->ext))

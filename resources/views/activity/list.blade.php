@@ -44,7 +44,7 @@ Activities
                     <a href="{{ url('/activities/'. $activity->id . '/edit')}}" title="Edit">
                         <i class="fa fa-pencil"></i>
                     </a>&nbsp;&nbsp;
-                    <a href="#" class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Edit" data-id="{{$activity->id}}">
+                    <a href="#" class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Delete" data-id="{{$activity->id}}">
                         <i class="fa fa-trash" style="color: red;" ></i>
                     </a>
                 </td>

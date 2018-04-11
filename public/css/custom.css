@@ -24,6 +24,9 @@ nav.navbar, .content-holder{
 .sidebar ul.nav li a {
     padding-left: 30px;
 }
+#sidebar-collapse{
+    box-shadow: 0 1px 20px 1px rgba(0,0,0,.05);
+}
 .profile-sidebar {
     padding-left: 10px;
 }
@@ -295,3 +298,4 @@ input[type="file"]#image_uploader {
     font-size: 16px;
 }
 /* END FORM CSS */
+

@@ -203,7 +203,7 @@ body{
           <div class="modal-body">
             <small id="engagement_subtitle"></small>
             <center>
-                <img id="engagement_image" src="" style="width: 600px;" />
+                <img id="engagement_image" src="" style="width: 100%;" />
             </center>
             <p id="engagement_message">Modal body text goes here.</p>
             <small id="engagement_date_posted"></small>

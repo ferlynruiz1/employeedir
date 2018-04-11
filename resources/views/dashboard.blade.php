@@ -198,11 +198,6 @@ Dashboard
     var current_page = 2;
     $('.engagement_title').click(function(){
         $('#engagementmodal').modal('show');
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
 
         $.ajax(
         {

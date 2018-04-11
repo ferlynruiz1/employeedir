@@ -35,6 +35,11 @@ $(document).ready(function () {
 	$('.select2').on('change', function() {
         $(this).trigger('blur');
     });
+  $.ajaxSetup({
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+  });
 });
 
 function readURL(input) {

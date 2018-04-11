@@ -28,6 +28,26 @@ Dashboard
     .engagement_title{
         cursor: pointer;
     }
+    #new_hire_loader{
+        -webkit-animation-name: rotation-load; /* Safari 4.0 - 8.0 */
+        -webkit-animation-duration: 3s; /* Safari 4.0 - 8.0 */
+        animation: rotation-load 3s infinite;
+        -webkit-animation: rotation-load 3s infinite;
+        color: #0C59A2;
+        font-size: 35px;
+    }
+    @-webkit-keyframes rotation-load {
+        0%   { transform: rotate(0deg); color: #0C59A2; }
+        50%  { transform: rotate(180deg); color: #46B7E0; }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Standard syntax */
+    @keyframes rotation-load {
+         0%   { transform: rotate(0deg); color: #0C59A2; }
+        50%  { transform: rotate(180deg); color: #46B7E0; }
+        100% { transform: rotate(360deg); }
+    }
 </style>
 <br>
    <div class="col-md-12">
@@ -76,7 +96,7 @@ Dashboard
                 <div class="panel-body timeline-container">
                     <ul class="timeline">
                         @foreach($new_hires as $employee)
-                        <li>
+                        <li class="new_hires_div">
                             <div class="timeline-badge"><img src="{{ $employee->profile_img }}" class="img-circle" alt="" style="width: 50px; margin-top: -10px; box-shadow: 1px 1px 10px 7px #fff;"></div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
@@ -91,6 +111,7 @@ Dashboard
                             </div>
                         </li>
                         @endforeach
+
                         @if(count($new_hires) == 0)
                             <style type="text/css">
                                 .timeline:before{
@@ -99,6 +120,15 @@ Dashboard
                             </style>
                             <center>
                                     No employees so far
+                            </center>
+                        @else
+                            <center>
+                                <br>
+                                <br>
+                                <span class="fa fa-spinner" id="new_hire_loader"></span>
+                                <br>
+                                <br>
+                                <button class="btn" type="button" id="more_new_hires"><span class="fa fa-arrow-down"></span>&nbsp;&nbsp;View More</button>
                             </center>
                         @endif
                     </ul>
@@ -165,6 +195,7 @@ Dashboard
 @endsection
 @section('scripts')
 <script type="text/javascript">
+    var current_page = 2;
     $('.engagement_title').click(function(){
         $('#engagementmodal').modal('show');
         $.ajaxSetup({
@@ -186,6 +217,44 @@ Dashboard
                 $('#engagement_message').html(result.message);
                 $('#engagement_date_posted').html(result.created_at);
                 console.log(result.title);
+            }
+        });
+    });
+    $(document).ready(function(){
+        $('#new_hire_loader').hide(); 
+    });
+    $('#more_new_hires').click(function(){
+        $('#new_hire_loader').show();
+        $('#more_new_hires').hide();
+        $.ajax({
+            url: "{{url('newhires')}}" + "?page=" + current_page, 
+            success: function(result){
+                setTimeout(function(){ 
+                    $('#new_hire_loader').hide(); 
+                    $('#more_new_hires').show();
+                    result.data.forEach(function(employee) {
+                        var new_hires_div = '<li class="new_hires_div">';
+                        new_hires_div += '<div class="timeline-badge">';
+                        new_hires_div += '<img src="' + employee.profile_img +'" class="img-circle" alt="" style="width: 50px; margin-top: -10px; box-shadow: 1px 1px 10px 7px #fff;"></div>';
+                        new_hires_div += '<div class="timeline-panel">';
+                        new_hires_div += '<div class="timeline-heading">';
+                        new_hires_div += ' <h4 class="timeline-title"><a href="employee_info/' + employee.id + '" target="_blank">'+ employee.last_name + ', ' + employee.first_name +'</a></h4>';
+                        new_hires_div += '</div>';
+                        new_hires_div += '<div class="timeline-body">';
+                        new_hires_div += '<p>' + joinGrammar(employee.prod_date) + ' the ' + employee.team_name + ' as ' + employee.position_name + '</p>';
+                        new_hires_div += '</div>';
+                        new_hires_div += '<div class="timeline-body">';
+                        new_hires_div += '<small>' + timeConverter(employee.prod_date ) + '</small>';
+                        new_hires_div += "</div>";
+                        new_hires_div += "</div>";
+                        new_hires_div += "</li>";
+                        $('.new_hires_div:last-of-type').after(new_hires_div);
+                    });
+                }, 1500);
+                current_page++;
+            }, error: function(){
+                $('#new_hire_loader').hide(); 
+                $('#more_new_hires').show();
             }
         });
     });

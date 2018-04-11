@@ -46,8 +46,8 @@ Route::get('admin/invalid', ['as' => 'admin-invalid', 'uses' => function(){
 }]);
 
 Auth::routes();
-
 Route::post('login', 'EmployeeInfoController@login');
+Route::get('newhires', 'HomeController@newhires');
 Route::middleware(['auth'])->group(function(){
 	Route::get('employees', 'EmployeeInfoController@employees');
 	Route::get('profile/{id}', 'EmployeeInfoController@profile');

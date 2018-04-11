@@ -39,7 +39,10 @@ class HomeController extends Controller
     }
     public function dashboard(Request $request)
     {
-
         return view('dashboard')->with('new_hires', User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5))->with('employees', User::allExceptSuperAdmin()->get())->with('birthdays', User::whereRaw('MONTH(birth_date) = '.date('n'))->orderByRaw('DAYOFMONTH(birth_date) ASC')->get())->with('engagements', ElinkActivities::all());
+    }
+    public function newhires(Request $request)
+    {
+        return User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5);
     }
 } 

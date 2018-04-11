@@ -49,3 +49,25 @@ function readURL(input) {
 $("#image_uploader").change(function() {
   readURL(this);
 });
+
+function joinGrammar(prod_date){
+  var prod_date_timestamp = new Date(prod_date).getTime();
+  var current_timestamp = Date.now();
+
+  if(prod_date_timestamp > current_timestamp){
+    return "Will join";
+  }
+  return "Joined";
+}
+function timeConverter(prod_date){
+  var a = new Date(prod_date);
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var sec = a.getSeconds();
+  var time =  month + ' ' + date + ', ' + year;
+  return time;
+}

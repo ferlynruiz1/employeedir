@@ -134,6 +134,7 @@ Dashboard
                     </ul>
                 </div>
             </div>
+            <button class="pull-right" id="backtotop">Back to top</button>
         </div>
         <div class="col-md-4">
             <div class="panel panel-default ">
@@ -252,6 +253,12 @@ Dashboard
                 $('#more_new_hires').show();
             }
         });
+    });
+
+    $('#backtotop').click(function(){
+        $("html, body").animate({
+            scrollTop: 0
+        }, 300); 
     });
 </script>
 @endsection

@@ -34,12 +34,12 @@ class HomeController extends Controller
             return redirect('dashboard');
         } else {    
 
-            return view('home')->with('new_hires', User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5))->with('employees', User::allExceptSuperAdmin()->get())->with('birthdays', User::whereRaw('MONTH(birth_date) = '.date('n'))->orderByRaw('DAYOFMONTH(birth_date) ASC')->get())->with('engagements', ElinkActivities::all());
+            return view('home')->with('new_hires', User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5))->with('employees', User::allExceptSuperAdmin()->get())->with('birthdays', User::whereRaw('MONTH(birth_date) = '.date('n'))->orderByRaw('DAYOFMONTH(birth_date) ASC')->get())->with('engagements', ElinkActivities::orderBy('created_at', 'DESC')->get());
         }
     }
     public function dashboard(Request $request)
     {
-        return view('dashboard')->with('new_hires', User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5))->with('employees', User::allExceptSuperAdmin()->get())->with('birthdays', User::whereRaw('MONTH(birth_date) = '.date('n'))->orderByRaw('DAYOFMONTH(birth_date) ASC')->get())->with('engagements', ElinkActivities::all());
+        return view('dashboard')->with('new_hires', User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5))->with('employees', User::allExceptSuperAdmin()->get())->with('birthdays', User::whereRaw('MONTH(birth_date) = '.date('n'))->orderByRaw('DAYOFMONTH(birth_date) ASC')->get())->with('engagements', ElinkActivities::orderBy('created_at', 'DESC')->get());
     }
     public function newhires(Request $request)
     {

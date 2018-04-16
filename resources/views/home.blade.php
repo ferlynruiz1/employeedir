@@ -134,7 +134,7 @@ Home
                         <br>
                         <br>
                         @if(isset($engagement->image_url) || $engagement->image_url != "")
-                            <img class="engagement_title" data-id="{{$engagement->id}}" src="{{ $engagement->image_url}}" style="width: 100%; padding-right: 80px; padding-left: 80px;">
+                            <img class="engagement_title" data-id="{{$engagement->id}}" src="{{ $engagement->image_url}}" style="width: 100%;">
                         <br>
                         <br>
                         @endif

@@ -25,12 +25,12 @@ Activity / Edit
                     <input type="text" name="title" class="form-control" value="{{ $activity->title}}" required>
                 </div>
                 <div class="form-group">
-                    <label>Code</label>
+                    <label>Subtitle</label>
                     <input type="text" name="subtitle" value="{{ $activity->subtitle}}" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label>Message</label>
-                    <textarea name="message" class="form-control" style="height: 150px">{{ $activity->message}}</textarea>
+                    <textarea name="message" class="form-control" style="min-height: 150px;height: 250px; resize: vertical;">{{ $activity->message}}</textarea>
                 </div>
                 <br>
 
@@ -41,6 +41,12 @@ Activity / Edit
                 <div class="form-group">
                     <label>Image Attachment</label>
                     <input type="file" name="image_url" >
+                </div>
+                <br>
+                <br>
+                <div class="form-group">
+                    <label>Activity Date</label>
+                    <input type="text" name="activity_date" class="form-control datepicker" required value="{{ slashedDate($activity->activity_date) }}">
                 </div>
                 <br>
                 <br>

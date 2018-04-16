@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ElinkActivities;
+use DateTime;
 
 class ActivityController extends Controller
 {
@@ -39,6 +40,13 @@ class ActivityController extends Controller
         $activity->title = $request->title;
         $activity->subtitle = $request->subtitle;
         $activity->message = $request->message;
+
+        $datetime = new DateTime();
+        if ($request->has('activity_date') && $request->activity_date) {
+            $activity_date = $datetime->createFromFormat('m/d/Y', $request->activity_date)->format("Y-m-d H:i:s");
+            $activity->activity_date = $activity_date;
+        }
+        
         $activity->save();
 
         /* saving photo : TODO : optimize saving of image to save space */
@@ -86,6 +94,13 @@ class ActivityController extends Controller
         $activity->title = $request->title;
         $activity->subtitle = $request->subtitle;
         $activity->message = $request->message;
+
+        $datetime = new DateTime();
+        if ($request->has('activity_date') && $request->activity_date) {
+            $activity_date = $datetime->createFromFormat('m/d/Y', $request->activity_date)->format("Y-m-d H:i:s");
+            $activity->activity_date = $activity_date;
+        }
+
         $activity->save();
 
         /* saving photo : TODO : optimize saving of image to save space */
@@ -95,7 +110,7 @@ class ActivityController extends Controller
             $activity->save();
         }
 
-        return redirect()->back()->with('success', "Successfully edited an activity");;
+        return redirect()->back()->with('success', "Successfully edited an activity");
     }
 
     /**

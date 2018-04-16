@@ -127,6 +127,14 @@ function monthDay($prod_date){
         return "";
     } 
 }
+function slashedDate($prod_date){
+	if (isset($prod_date)) {
+        $dt = Carbon::parse($prod_date);
+        return $dt->format('m/d/Y');
+    } else {
+        return "";
+    } 
+}
 function truncate($string, $length, $html = true)
 {
     if (strlen($string) > $length) {

@@ -183,7 +183,7 @@ Dashboard
                         <br>
                         @endif
                         <p>{{ $engagement->message }}</p>
-                        <small style="margin-right: 20px;">{{ monthDay($engagement->created_at) }}</small>
+                        <small style="margin-right: 20px;">{{ monthDay($engagement->activity_date) }}</small>
 
                     @endforeach
                     @if(count($engagements) == 0)

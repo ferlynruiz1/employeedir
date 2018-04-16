@@ -40,7 +40,7 @@ Activity / Add New
                     </div>
                     <div class="form-group">
                         <label>Message</label>
-                        <textarea name="message" class="form-control" style="height: 150px"></textarea>
+                        <textarea name="message" class="form-control" style="min-height: 150px;height: 250px; resize: vertical;"></textarea>
                     </div>
                     <br>
                     <img src="" style="width: 200px" id="img_holder">
@@ -50,6 +50,14 @@ Activity / Add New
                         <label>Image Attachment</label>
                         <input type="file" name="image_url" required>
                     </div>
+                    <br>
+                    <br>
+                    <div class="form-group">
+                        <label>Activity Date</label>
+                        <input type="text" name="activity_date" class="form-control datepicker" required>
+                    </div>
+                    <br>
+                    <br>
                     <div class="form-group">
                         <br>
                         <button class="btn btn-primary">Save</button>               

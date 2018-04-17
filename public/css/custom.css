@@ -8,7 +8,7 @@ body{
 
 @media (max-width: 1366px){
     body{
-        zoom: 0.9 !important;
+        zoom: 0.8 !important;
     }
 }
 .content-holder{

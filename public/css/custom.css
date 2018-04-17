@@ -5,6 +5,12 @@ body{
     background-image: url("http://192.168.1.89/public/img/debut-light.png");
      background-attachment: fixed;
 }
+
+@media (max-width: 1366px){
+    body{
+        zoom: 80% !important;
+    }
+}
 .content-holder{
     background-image: url(http://192.168.1.89/public/img/002-subtle-light-pattern-background-texture.jpg);
 }

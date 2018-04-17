@@ -111,7 +111,7 @@ Employees
                     <h5 style="color: #455;">{{ $employee->position_name}}</h5>
                     <h6>{{$employee->team_name}} <?php echo isset($employee->account) ? "- ". $employee->account->account_name : "" ; ?></h6>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <h5>
                         <span class="fa fa-id-card" title="Employee ID"></span>
                         <span class="employee-description">&nbsp;&nbsp;{{$employee->eid}}</span>

@@ -224,7 +224,7 @@ Employee / Add
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="asterisk-required">Employee Status</label>
                                      <select class="select2 form-control" name="status_id" required>
@@ -234,13 +234,13 @@ Employee / Add
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label >EXT</label>
                                     <input class="form-control" placeholder="Ext" name="ext" value="" >
                                 </div>
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label >Wave </label>
                                     <input class="form-control" placeholder="Wave" name="wave" value="" >
@@ -282,7 +282,7 @@ Employee / Add
                                         <input class="form-control" placeholder="Email 3" name="email3" type="email" value="">
                                     </div>
                                 </div>
-                                <div class="col-md-5 ">
+                                <div class="col-md-6 ">
                                     <div class="form-group">
                                         <br>
                                         <p>

@@ -231,7 +231,7 @@ Employee Information / Edit
                                     <input class="form-control datepicker" placeholder="Hire Date" name="prod_date" value="{{$employee->prodDate()}}">
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="asterisk-required">Employee Status</label>
                                      <select class="select2 form-control" name="status_id" required>
@@ -241,13 +241,13 @@ Employee Information / Edit
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label >EXT</label>
                                     <input class="form-control" placeholder="Ext" name="ext" value="{{$employee->ext}}" >
                                 </div>
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label >Wave </label>
                                     <input class="form-control" placeholder="Wave" name="wave" value="{{$employee->wave}}" >

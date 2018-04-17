@@ -76,9 +76,9 @@ Employees
         @endforeach
     </ul>
     <div class="pull-right">
-        <span style="position: absolute; top: 26px; margin-left: -170px;">Search by department:</span>
+        <span style="position: absolute; top: 26px; margin-left: -170px;"></span>
        <select class="form-control" style="border-radius: 0px !important" id="departments_list">
-            <option>Select Department</option>
+            <option>Search by department:</option>
             @foreach( $departments as $department)
            <option <?php echo $request->department == $department->department_name ? "selected" : "";?> >{{ $department->department_name}}</option>
            @endforeach

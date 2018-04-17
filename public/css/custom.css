@@ -6,11 +6,7 @@ body{
      background-attachment: fixed;
 }
 
-@media (max-width: 1366px){
-    body{
-        zoom: 0.9 !important;
-    }
-}
+
 .content-holder{
     background-image: url(http://192.168.1.89/public/img/002-subtle-light-pattern-background-texture.jpg);
 }
@@ -26,6 +22,19 @@ footer {
 nav.navbar, .content-holder{
     width: 85%;
     margin: 0 auto;
+}
+@media (max-width: 1366px){
+    body{
+        zoom: 0.9 !important;
+    }
+    .sidebar {
+        left: 5%;
+        width: 14.5%;
+    }
+    nav.navbar, .content-holder{
+        width: 90%;
+        margin: 0 auto;
+    }
 }
 .sidebar ul.nav li a {
     padding-left: 30px;

@@ -53,16 +53,16 @@ Home
     <div class="col-md-4">
             <div class="panel panel-default ">
                 <div class="panel-heading">
-                    New Hires
-                    </div>
+                    Newest Hired
+                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
                 <div class="panel-body timeline-container">
                     <ul class="timeline">
                         @foreach($new_hires as $employee)
                         <li class="new_hires_div">
-                            <div class="timeline-badge"><img src="{{ $employee->profile_img }}" class="img-circle" alt="" style="width: 50px; height: 50px; margin-top: -10px; box-shadow: 1px 1px 10px 7px #fff;"></div>
+                            <div class="timeline-badge"><img src="{{ $employee->profile_img }}" class="img-circle" alt="" style="width: 50px; margin-top: -10px; box-shadow: 1px 1px 10px 7px #fff;"></div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
-                                    <h4 class="timeline-title"> <a href="employee_info/{{$employee->id}}" target="_blank">{{ $employee->fullname() }}</a></h4>
+                                    <h4 class="timeline-title"><a href="employee_info/{{$employee->id}}" target="_blank"> {{ $employee->fullname() }}</a></h4>
                                 </div>
                                 <div class="timeline-body">
                                     <p>{{ joinGrammar($employee->prod_date) }} the {{ $employee->team_name }} as {{ $employee->position_name }}</p>
@@ -73,6 +73,7 @@ Home
                             </div>
                         </li>
                         @endforeach
+
                         @if(count($new_hires) == 0)
                             <style type="text/css">
                                 .timeline:before{
@@ -104,16 +105,22 @@ Home
                     <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
                 <div class="panel-body timeline-container" >
                     @if(count($birthdays) > 0)
+                        <h4 style=" font-weight: 600;font-size: 16px;text-align: center;padding: 11px;padding-left: 30px;font-family: cursive;">{{ date('F') }}</h4>
+                        <br>
                         <div class="birthday-celebrants-div">
                             @foreach($birthdays as $celebrant)
                             <div class="birthday-holder">
-                                <img src="{{ $celebrant->profile_img }}" class="img pull-left" alt="" style="width: 50px; min-height: 50px; margin-top: -10px; box-shadow: 1px 1px 10px 7px #fff; margin-right: 20px;">
+                                <img src="{{ $celebrant->profile_img }}" class="img pull-left" alt="" style="width: 50px; margin-top: -10px; box-shadow: 1px 1px 10px 7px #fff; margin-right: 20px;">
                                 <p><a target="_blank" href="employee_info/{{$celebrant->id}}" target="">{{ $celebrant->fullname() }}</a><br><span ><span class="fa fa-gift"></span> {{ monthDay($celebrant->birth_date) }}</span></p> 
                             </div>
                             @endforeach
                         </div>
                     @else
                         <center>
+                                <br>
+                                <span class="fa fa-birthday-cake fa-xl"></span>
+                                <br>
+                                <br>
                                 No birthday celebrant for {{ date('F') }}
                         </center>
                     @endif
@@ -123,7 +130,7 @@ Home
         <div class="col-md-4">
             <div class="panel panel-default ">
                 <div class="panel-heading">
-                    ElinkGagements Activities 
+                    ElinkGagements Activities
                     <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
                 <div class="panel-body timeline-container" >
                     @foreach($engagements as $engagement)

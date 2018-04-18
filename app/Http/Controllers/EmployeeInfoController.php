@@ -295,11 +295,16 @@ class EmployeeInfoController extends Controller
         if ($request->has('department') && $request->get('department') != "") {
             $employees = $employees->where('team_name', 'LIKE', $request->get('department'));
         }
+
+        if ($request->has('position') && $request->get('position') != "") {
+            $employees = $employees->where('position_name', 'LIKE', '%' . $request->get('position') . '%');
+        }
+
         $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->paginate(10);
 
         $departments = EmployeeDepartment::all();
-
-        return view('guest.employees')->with('employees', $employees )->with('request', $request)->with('departments', $departments);
+        $positions = User::allExceptSuperAdmin()->select('position_name')->distinct()->get();
+        return view('guest.employees')->with('employees', $employees )->with('request', $request)->with('departments', $departments)->with('positions', $positions);
     }
     public function profile (Request $request, $id)
     {

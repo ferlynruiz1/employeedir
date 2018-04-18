@@ -53,37 +53,60 @@ Employees
     .emp-profile .fa{
         color: #555 !important;
     }
+    select{
+        cursor: pointer !important;
+    }
 </style>
 
 <div class="col-md-12">
 <div class="header-container" style="margin-bottom: 5px;">
-    <form style="display: unset;">
-        <input type="hidden" name="alphabet" value="{{ $request->alphabet }}">
-        <input type="hidden" name="department" value="{{ $request->department }}">
-        <input type="text" placeholder="Search by name" id="search_employee" name="keyword" value="{{ $request->keyword }}">
-        <button class="btn btn-primary" style="height:  35px; margin-top: -3px;">
-            <span class="fa fa-search"></span>
-        </button>
-    </form>
+    <ul class="alphabet-search" style="padding-left: 0px">
+        <li style="margin-left: 0px">
+            <form style="display: unset;">
+                <input type="hidden" name="alphabet" value="{{ $request->alphabet }}">
+                <input type="hidden" name="department" value="{{ $request->department }}">
+                <input type="text" placeholder="Search by name" id="search_employee" name="keyword" value="{{ $request->keyword }}">
+                <button class="btn btn-primary" style="height:  35px; margin-top: 1px;">
+                    <span class="fa fa-search"></span>
+                </button>
+            </form>
+        </li>
+    </ul>
     <ul class="alphabet-search">
         <li>
-            <a href="?alphabet=" >All</a>
+            <a href="?alphabet=">All</a>
         </li>   
         @foreach (range('A', 'Z') as $letter)
             <li>
                 <a <?php echo $request->alphabet == $letter ? "class='selected'" : '' ?> style="font-weight: 500;" href="?alphabet={{ $letter . "\n" . "&keyword=" . $request->keyword . "&department=" . $request->department }}" >{{ $letter . "\n" }}</a>
             </li>
         @endforeach
+        
     </ul>
-    <div class="pull-right">
-        <span style="position: absolute; top: 26px; margin-left: -170px;"></span>
-       <select class="form-control" style="border-radius: 0px !important" id="departments_list">
-            <option>Search by department:</option>
-            @foreach( $departments as $department)
-           <option <?php echo $request->department == $department->department_name ? "selected" : "";?> >{{ $department->department_name}}</option>
-           @endforeach
-       </select>
-    </div>
+    <ul class="alphabet-search pull-right">
+        <li>
+
+            <span class="fa fa-filter" title="Filter By" style="color: #777777; font-size: 18px; padding: 5px"></span>
+            <select id="sort_option_list" style="padding: 7px; border-radius: 0px !important; font-size: 13px !important;">
+                <option value="1" {{ isset($request->department) ? "selected" : "" }}>Department</option>
+                <option value="2" {{ isset($request->position) ? "selected" : "" }}>Position</option>
+            </select>
+        </li>
+        <li>
+            <select style="padding: 7px; border-radius: 0px !important; font-size: 13px !important;" id="departments_list">
+                <option selected>Search by department:</option>
+                @foreach( $departments as $department)
+               <option <?php echo $request->department == $department->department_name ? "selected" : "";?> >{{ $department->department_name}}</option>
+               @endforeach
+           </select>
+           <select style="padding: 7px; border-radius: 0px !important; font-size: 13px !important; display: none;" id="position_list">
+                <option selected>Search by Position:</option>
+                @foreach( $positions as $position)
+               <option <?php echo $request->position == $position->position_name ? "selected" : "";?> >{{ $position->position_name}}</option>
+               @endforeach
+           </select>
+       </li>
+    </ul>
 </div>
 @if(count($employees) == 0)
     <br>
@@ -156,12 +179,37 @@ Employees
 @endsection
 @section('scripts')
 <script type="text/javascript">
+    $(document).ready(function(){
+        $('#sort_option_list').trigger('change');
+    });
     $('#departments_list').change(function(){
         var url = location.protocol + '//' + location.host + location.pathname;
         var keyword = "keyword=" + $("#search_employee").val();
         var alphabet = "alphabet=" + $('input[name=alphabet]').val();
         var department = "department=" + $(this).val();
         url += "?" + keyword + "&" + alphabet + "&" + department;
+        window.location.replace(url);
+    });
+
+    $('#sort_option_list').change(function(){
+        switch($(this).val()){
+            case '1':
+                $('#departments_list').show();
+                $('#position_list').hide();
+            break;
+            case '2':
+                $('#departments_list').hide();
+                $('#position_list').show();
+            break;
+        }
+    });
+
+    $('#position_list').change(function(){
+        var url = location.protocol + '//' + location.host + location.pathname;
+        var keyword = "keyword=" + $("#search_employee").val();
+        var alphabet = "alphabet=" + $('input[name=alphabet]').val();
+        var position = "position=" + $(this).val();
+        url += "?" + keyword + "&" + alphabet + "&" + position;
         window.location.replace(url);
     });
 </script>

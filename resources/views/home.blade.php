@@ -110,7 +110,9 @@ Home
                         <div class="birthday-celebrants-div">
                             @foreach($birthdays as $celebrant)
                             <div class="birthday-holder">
-                                <img src="{{ $celebrant->profile_img }}" class="img pull-left" alt="" style="width: 50px; margin-top: -10px; box-shadow: 1px 1px 10px 7px #fff; margin-right: 20px;">
+                                
+                                <div style="background-image: url('{{ $celebrant->profile_img }}'); width: 50px; height: 50px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; border-radius: 50%; float: left;">
+                                </div>
                                 <p><a target="_blank" href="employee_info/{{$celebrant->id}}" target="">{{ $celebrant->fullname() }}</a><br><span ><span class="fa fa-gift"></span> {{ monthDay($celebrant->birth_date) }}</span></p> 
                             </div>
                             @endforeach

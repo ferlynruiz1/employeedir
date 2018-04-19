@@ -125,7 +125,8 @@ Employees
         <div class="emp-profile" style="padding: 10px; margin-bottom: 0px;">
             <div class="row">
                 <div class="col-md-1" style="float: left; width: 100px;">
-                    <img alt="image" id="profile_image" class="img-circle" style="width: 60px; height: 60px;margin: 15px;" src="{{ $employee->profile_img }}">
+                    <div style="background-image: url({{$employee->profile_img}}); width: 60px; height: 60px;margin: 15px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; border-radius: 50%;">
+                    </div>
                 </div>
                 <div class="col-md-4">
                         <h4 class="timeline-title" style="color: #444;font-weight: 500; font-size: 17px; margin-top: 10px;"><a href="{{url('profile/'. $employee->id)}}" target="_blank">{{$employee->fullname()}} </a>

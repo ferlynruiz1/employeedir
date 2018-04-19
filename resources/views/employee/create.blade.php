@@ -101,8 +101,8 @@ Employee / Add
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label >Alias</label>
-                                    <input class="form-control" placeholder="Alias" name="alias" value="">
+                                    <label >Phone Name</label>
+                                    <input class="form-control" placeholder="Phone Name" name="alias" value="">
                                 </div>
                             </div>
                             <div class="col-md-3">

@@ -107,8 +107,8 @@ Employee Information / Edit
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label >Alias</label>
-                                    <input class="form-control" placeholder="Alias" name="alias" value="{{$employee->alias}}">
+                                    <label >Phone Name</label>
+                                    <input class="form-control" placeholder="Phone Name" name="alias" value="{{$employee->alias}}">
                                 </div>
                             </div>
                             <div class="col-md-3">

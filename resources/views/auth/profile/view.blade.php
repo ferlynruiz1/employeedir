@@ -102,7 +102,7 @@ Employee Information
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Alias</label>
+                                <label>Phone Name</label>
                                 <p class="employee-details-value">{{ $employee->alias}}</p>
                             </div>
                         </div>

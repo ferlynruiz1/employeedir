@@ -47,7 +47,8 @@ body{
         <div id="sidebar-collapse" class="sidebar">
             <div class="profile-sidebar">
                 <div class="profile-userpic">
-                    <img src="{{ Auth::user()->profile_img }}" class="img-responsive" alt="" style="width: 100px; height: 100px;">
+                    <div style="background-image: url('{{ Auth::user()->profile_img }}'); width: 100px; height: 100px;margin: 15px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; border-radius: 50%; float: left;">
+                    </div>
                 </div>
                 <div class="profile-usertitle">
                     <br>

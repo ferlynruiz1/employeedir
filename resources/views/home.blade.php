@@ -60,7 +60,7 @@ Home
                         @foreach($new_hires as $employee)
                         <li class="new_hires_div">
                             <div class="timeline-badge">
-                                <div style="background-image: url('{{ $employee->profile_img }}'); width: 50px; height: 50px; margin-top: -10px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; box-shadow: 1px 1px 10px 7px #fff;">
+                                <div style="background-image: url('{{ $employee->profile_img }}'); width: 50px; height: 50px; margin-top: -10px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; box-shadow: 1px 1px 10px 7px #fff; border-radius: 50%;">
                                 </div>
                             </div>
                             <div class="timeline-panel">

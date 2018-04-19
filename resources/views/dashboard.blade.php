@@ -88,7 +88,7 @@ Dashboard
             </div><!--/.row-->
         </div>
     </div>
-    <div class="col-md-4">
+      <div class="col-md-4">
             <div class="panel panel-default ">
                 <div class="panel-heading">
                     Newest Hired
@@ -97,7 +97,10 @@ Dashboard
                     <ul class="timeline">
                         @foreach($new_hires as $employee)
                         <li class="new_hires_div">
-                            <div class="timeline-badge"><img src="{{ $employee->profile_img }}" class="img-circle" alt="" style="width: 50px; margin-top: -10px; box-shadow: 1px 1px 10px 7px #fff;"></div>
+                            <div class="timeline-badge">
+                                <div style="background-image: url('{{ $employee->profile_img }}'); width: 50px; height: 50px; margin-top: -10px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; box-shadow: 1px 1px 10px 7px #fff; border-radius: 50%;">
+                                </div>
+                            </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
                                     <h4 class="timeline-title"><a href="employee_info/{{$employee->id}}" target="_blank"> {{ $employee->fullname() }}</a></h4>
@@ -148,7 +151,9 @@ Dashboard
                         <div class="birthday-celebrants-div">
                             @foreach($birthdays as $celebrant)
                             <div class="birthday-holder">
-                                <img src="{{ $celebrant->profile_img }}" class="img pull-left" alt="" style="width: 50px; margin-top: -10px; box-shadow: 1px 1px 10px 7px #fff; margin-right: 20px;">
+                                
+                                <div style="background-image: url('{{ $celebrant->profile_img }}'); width: 50px; height: 50px; margin-right: 15px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; float: left;">
+                                </div>
                                 <p><a target="_blank" href="employee_info/{{$celebrant->id}}" target="">{{ $celebrant->fullname() }}</a><br><span ><span class="fa fa-gift"></span> {{ monthDay($celebrant->birth_date) }}</span></p> 
                             </div>
                             @endforeach

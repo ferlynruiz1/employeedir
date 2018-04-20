@@ -395,7 +395,8 @@ class EmployeeInfoController extends Controller
 
             } else {
                 $cells[$EMAIL] = trim($cells[$EMAIL]);
-                $emp = User::whereEmail($cells[$EMAIL]);
+                $cells[$EID] = trim($cells[$EID]);
+                $emp = User::whereEid($cells[$EID]);
 
                 if (!$cells[$EMAIL] || !filter_var($cells[$EMAIL], FILTER_VALIDATE_EMAIL)) {
                     // list invalid email
@@ -445,7 +446,6 @@ class EmployeeInfoController extends Controller
                     }
                 }
 
-                $e = User::whereRaw('CONCAT(last_name, ", ", first_name) LIKE "%'. trim($cells[$SUPERVISOR]) . '%"')->get();
                 $account = ElinkAccount::where('account_name','LIKE' , '%'.trim($cells[$ACCOUNT]).'%')->get();
                 
                 if ($emp->count() >= 1) {

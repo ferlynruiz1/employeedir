@@ -156,10 +156,10 @@ Employees
                     <td>{{ @$employee->account->account_name }}</td>
                     <td>{{ $employee->prodDate() }}</td>
                     <td>
-                        <a href="{{ url('/employee_info/'. $employee->id)}}" target="_blank" title="View">
+                        <a href="{{ url('/employee_info/'. $employee->id)}}" title="View">
                             <i class="fa fa-eye"></i>
                         </a>&nbsp;&nbsp;
-                        <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" target="_blank" title="Edit">
+                        <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" title="Edit">
                             <i class="fa fa-pencil"></i>
                         </a>&nbsp;&nbsp;
                         <a href="#"  class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Delete" data-id="{{$employee->id}}">

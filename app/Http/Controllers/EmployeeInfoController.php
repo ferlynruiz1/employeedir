@@ -271,7 +271,20 @@ class EmployeeInfoController extends Controller
     public function employees(Request $request)
     {
         if (Auth::user()->isAdmin()) {
-            return view('employee.employees')->with('employees', User::allExceptSuperAdmin()->get());
+            $employees = new User;
+
+            if ($request->has('department') && $request->get('department') != "") {
+                $employees = $employees->where('team_name', 'LIKE', $request->get('department'));
+            }
+
+            if ($request->has('position') && $request->get('position') != "") {
+                $employees = $employees->where('position_name', 'LIKE', '%' . $request->get('position') . '%');
+            }
+
+            $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->get();
+            $departments = EmployeeDepartment::all();
+            $positions = User::allExceptSuperAdmin()->select('position_name')->distinct()->get();
+            return view('employee.employees')->with('employees', $employees)->with('request', $request)->with('departments', $departments)->with('positions', $positions);
         }
 
         $employees = new User;

@@ -58,6 +58,16 @@ Employees
         .alphabet-search li{
             margin-left: 10px;
         }
+        .table-striped>tbody>tr:nth-of-type(odd) {
+            background-color: #fff !important;
+        }
+        .table-striped>tbody>tr:nth-of-type(even) {
+            background-color: #fbfbfb !important;
+        }
+        .table-striped > thead > tr {
+            background-color: #f8f8f8 !important;
+            padding-top: 10px;
+        }
     </style>
 
     <a href="{{url('employee_info/create')}}" class="btn btn-primary" >
@@ -102,7 +112,7 @@ Employees
            <a href="{{url('employees')}}" class="btn btn-default" style="margin: 0px; height: 30px;">Clear Filter</a>
        </li>
     </ul>
-	<table id="employees_table" class="table">
+	<table id="employees_table" class="table table-striped">
         <thead>
             <tr>
                 <td data-priority="1">#</td>

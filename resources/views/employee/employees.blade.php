@@ -79,24 +79,27 @@ Employees
         <li>
 
             <span class="fa fa-filter" title="Filter By" style="color: #777777; font-size: 18px; padding: 5px"></span>
-            <select id="sort_option_list" style="padding: 7px; border-radius: 0px !important; font-size: 13px !important;">
+            <select id="sort_option_list" style="border-color: #ddd; padding: 7px; border-radius: 0px !important; font-size: 13px !important;">
                 <option value="1" {{ isset($request->department) ? "selected" : "" }}>Department</option>
                 <option value="2" {{ isset($request->position) ? "selected" : "" }}>Position</option>
             </select>
         </li>
         <li>
-            <select style="padding: 7px; border-radius: 0px !important; font-size: 13px !important;" id="departments_list">
+            <select style="border-color: #ddd;padding: 7px; border-radius: 0px !important; font-size: 13px !important;" id="departments_list">
                 <option selected>Search by department:</option>
                 @foreach( $departments as $department)
                <option <?php echo $request->department == $department->department_name ? "selected" : "";?> >{{ $department->department_name}}</option>
                @endforeach
            </select>
-           <select style="padding: 7px; border-radius: 0px !important; font-size: 13px !important; display: none;" id="position_list">
+           <select style="border-color: #ddd; padding: 7px; border-radius: 0px !important; font-size: 13px !important; display: none;" id="position_list">
                 <option selected>Search by Position:</option>
                 @foreach( $positions as $position)
                <option <?php echo $request->position == $position->position_name ? "selected" : "";?> >{{ $position->position_name}}</option>
                @endforeach
            </select>
+       </li>
+       <li>
+           <a href="{{url('employees')}}" class="btn btn-default" style="margin: 0px; height: 30px;">Clear Filter</a>
        </li>
     </ul>
 	<table id="employees_table" class="table">
@@ -172,10 +175,8 @@ Employees
         });
         $('#departments_list').change(function(){
             var url = location.protocol + '//' + location.host + location.pathname;
-            var keyword = "keyword=" + $("#search_employee").val();
-            var alphabet = "alphabet=" + $('input[name=alphabet]').val();
             var department = "department=" + $(this).val();
-            url += "?" + keyword + "&" + alphabet + "&" + department;
+            url += "?" + department;
             window.location.replace(url);
         });
 
@@ -194,10 +195,8 @@ Employees
 
         $('#position_list').change(function(){
             var url = location.protocol + '//' + location.host + location.pathname;
-            var keyword = "keyword=" + $("#search_employee").val();
-            var alphabet = "alphabet=" + $('input[name=alphabet]').val();
             var position = "position=" + $(this).val();
-            url += "?" + keyword + "&" + alphabet + "&" + position;
+            url += "?" + position;
             window.location.replace(url);
         });
     </script>

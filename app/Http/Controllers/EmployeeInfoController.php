@@ -370,6 +370,7 @@ class EmployeeInfoController extends Controller
             $path = $request->dump_file->storeAs('/public/temp/'.Auth::user()->id, 'dump_file.'. \File::extension($request->dump_file->getClientOriginalName()));
         }
 
+
         $address = './storage/app/'. $path;
         
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load( $address );
@@ -383,7 +384,11 @@ class EmployeeInfoController extends Controller
             $cells = [];
 
             foreach ($cellIterator as $cell) {
-                $cells[] = $cell->getValue();
+                $cellValue = $cell->getValue();
+                if($cell == "--"){
+                    $cellValue = "";
+                }
+                $cells[] = $cellValue;
             }
             $rows[] = $cells;
             // Check if document is valid 
@@ -400,8 +405,10 @@ class EmployeeInfoController extends Controller
 
                 if (!$cells[$EMAIL] || !filter_var($cells[$EMAIL], FILTER_VALIDATE_EMAIL)) {
                     // list invalid email
-
-                    array_push($invalid_emails, $cells[$FULLNAME]);
+                    if($cells[$EMAIL] != "" && $cells[$EMAIL] != null){
+                        array_push($invalid_emails, $cells[$FIRST_NAME]);
+                    }
+                    
                     
                     continue;
                 }
@@ -570,7 +577,6 @@ class EmployeeInfoController extends Controller
                 }
             }
         }
-
         return view('employee.import')
                 ->with('num_inserts', $num_inserts)
                 ->with('num_updates', $num_updates)
@@ -694,7 +700,6 @@ class EmployeeInfoController extends Controller
                     "Content-Disposition: attachment;filename=\"filename.xlsx\"",
                     "Cache-Control: max-age=0"
                     );
-
         return Response::download('./public/excel/report/report'.$timestamp.'.xlsx', 'report'.$timestamp.'.xlsx', $headers);
     }
 
@@ -756,5 +761,258 @@ class EmployeeInfoController extends Controller
             }
         }
         return "num_updates: " . $num_updates;
+    }
+    public function checklatest(){
+        $path = "storage/app/upload"; 
+
+        $latest_ctime = 0;
+        $latest_filename = '';    
+
+        $d = dir($path);
+        while (false !== ($entry = $d->read())) {
+          $filepath = "{$path}/{$entry}";
+          // could do also other checks than just checking whether the entry is a file
+          if (is_file($filepath) && filectime($filepath) > $latest_ctime) {
+            $latest_ctime = filectime($filepath);
+            $latest_filename = $entry;
+          }
+        }
+        // return asset($filepath);
+
+        $num_inserts = 0;
+        $num_updates = 0;
+        $updates = array();
+        $inserts = array();
+        $employees = array();
+        $invalid_emails = array();
+
+        $COUNT = 0;
+        $EID = 1;
+        $EXT = 2;
+        $ALIAS = 3;
+        $LAST_NAME = 4;
+        $FIRST_NAME = 5;
+        $FULLNAME = 6;
+        $SUPERVISOR = 7;
+        $MANAGER = 8;
+        $DEPT = 9;
+        $DEPT_CODE = 10;
+        $DIVISION = 11;
+        $ROLE = 12;
+        $ACCOUNT = 13;
+        $PROD_DATE = 14;
+        $STATUS = 15;
+        $HIRED_DATE = 16;
+        $WAVE = 17;
+        $EMAIL = 18;
+        $GENDER = 19;
+        $BDAY = 20;
+
+        $address = './'. $filepath;
+        
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load( $address );
+
+        $worksheet = $spreadsheet->getActiveSheet();
+        $rows = [];
+
+        foreach ($worksheet->getRowIterator() AS $row) {
+            $cellIterator = $row->getCellIterator();
+            $cellIterator->setIterateOnlyExistingCells(FALSE); 
+            $cells = [];
+
+            foreach ($cellIterator as $cell) {
+                $cellValue = $cell->getValue();
+                if($cell == "--"){
+                    $cellValue = "";
+                }
+                $cells[] = $cellValue;
+            }
+            $rows[] = $cells;
+            // Check if document is valid 
+            if (count($rows) == 1) {
+            
+                // 
+                // TODO Trapping for excel column placing
+                //
+
+            } else {
+
+                $cells[$EMAIL] = trim($cells[$EMAIL]);
+                $cells[$EID] = trim($cells[$EID]);
+                $emp = User::whereEid($cells[$EID]);
+
+                if (!$cells[$EMAIL] || !filter_var($cells[$EMAIL], FILTER_VALIDATE_EMAIL)) {
+                    // list invalid email
+                    if($cells[$FULLNAME] != null){
+                        array_push($invalid_emails, $cells[$FIRST_NAME] . " " . $cells[$LAST_NAME]);
+                    }
+                    
+                    continue;
+                }
+
+                if ($cells[$ACCOUNT]) {
+                    $account = ElinkAccount::where('account_name', 'LIKE', $cells[$ACCOUNT]);
+                    if ($account->count() == 0) {
+                        ElinkAccount::insert([
+                            'account_name' => $cells[$ACCOUNT]
+                        ]);
+                    }
+                }
+
+                if ($cells[$DIVISION]) {
+                    $division = ElinkDivision::where('division_name','LIKE', $cells[$DIVISION]);
+                    if ($division->count() == 0) {
+                        ElinkDivision::insert([
+                            'division_name' => $cells[$DIVISION]
+                        ]);
+                    }
+                }
+
+                if ($cells[$DEPT]) {
+                    $department = EmployeeDepartment::where('department_name', 'LIKE', $cells[$DEPT]);
+                    if ($department->count() == 0) {  
+                        if($cells[$ACCOUNT]) {
+                            $dept_account = ElinkAccount::where('account_name', 'LIKE', $cells[$ACCOUNT]);
+                            if ($dept_account->count() > 0) {
+                                if ($cells[$DIVISION]) {
+                                    $dept_division = ElinkDivision::where('division_name','LIKE', $cells[$DIVISION]);
+                                    if ($dept_division->count() > 0) {
+                                        EmployeeDepartment::insert([
+                                            'department_name' => $cells[$DEPT],
+                                            'department_code' => $cells[$DEPT_CODE],
+                                            'division_id' => $dept_division->first()->id,
+                                            'account_id' => $dept_account->first()->id
+                                        ]);
+                                    }
+                                }  
+                            }
+                        }
+                    }
+                }
+
+                $account = ElinkAccount::where('account_name','LIKE' , '%'.trim($cells[$ACCOUNT]).'%')->get();
+                
+                if ($emp->count() >= 1) {
+                    // Update 
+                    $employee = array(
+                        'eid' => trim($cells[$EID]),
+                        'alias' => trim($cells[$ALIAS]),
+                        'last_name' => trim($cells[$LAST_NAME]),
+                        'first_name' => trim($cells[$FIRST_NAME]),
+                        'supervisor_name' =>  trim($cells[$SUPERVISOR]),
+                        'manager_name' => trim($cells[$MANAGER]),
+                        'team_name' => trim($cells[$DEPT]),
+                        'dept_code' => trim($cells[$DEPT_CODE]),
+                        'position_name' => trim($cells[$ROLE]),
+                        'gender' => genderValue(trim($cells[$GENDER])),
+                        'division_name' => trim($cells[$DIVISION]),
+                        'ext' => trim($cells[$EXT]),
+                        'wave' => trim($cells[$WAVE]),
+                    );
+
+                    if (count($account) > 0) {
+                        $employee['account_id'] = $account->first()->id;
+                    } else {
+                        $employee['account_id'] = 0;
+                    }
+                    if (strtolower($cells[$STATUS]) == strtolower('Active')) {
+                        $employee['status'] = 1;
+                    } else {
+                        $employee['status'] = 2;
+                    }
+                    if ($cells[$HIRED_DATE]) {
+                        if (is_numeric($cells[$HIRED_DATE])) {
+                            $UNIX_DATE = ($cells[$HIRED_DATE] - 25569) * 86400;
+                            $employee['hired_date'] = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
+                        }
+                    }
+                    if ($cells[$BDAY]) {
+                        if (is_numeric($cells[$BDAY])) {
+                            $UNIX_DATE = ($cells[$BDAY] - 25569) * 86400;
+                            $employee['birth_date'] = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
+                        }
+                    }
+                    if ($cells[$PROD_DATE]) {
+                        if (is_numeric($cells[$PROD_DATE])) {
+                            $UNIX_DATE = ($cells[$PROD_DATE] - 25569) * 86400;
+                            $employee['prod_date'] = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
+                        }
+                    }
+                    if ($employee['gender'] == 1) {
+                        $employee['profile_img'] = asset('public/img/nobody_m.original.jpg');
+                    } else {
+                        $employee['profile_img'] = asset('public/img/nobody_f.original.jpg');
+                    }
+
+                    if ($emp->update($employee)) {
+                        array_push($updates, $cells[$EMAIL]);
+                        $num_updates ++;
+                    }
+                } else {
+                    // SQL saving of data
+                    $employee = new User; // USER : EMPLOYEE
+                    $employee->eid = trim($cells[$EID]);
+                    $employee->first_name = trim($cells[$FIRST_NAME]);
+                    $employee->middle_name = '';
+                    $employee->last_name = trim($cells[$LAST_NAME]);
+                    $employee->email = trim($cells[$EMAIL]);
+                    $employee->alias = trim($cells[$ALIAS]);
+                    $employee->team_name = trim($cells[$DEPT]);
+                    $employee->dept_code = trim($cells[$DEPT_CODE]);
+                    $employee->position_name = trim($cells[$ROLE]);
+                    $employee->supervisor_name = trim($cells[$SUPERVISOR]);
+                    $employee->gender = genderValue(trim($cells[$GENDER]));
+                    $employee->usertype = 1;
+                    $employee->manager_name = trim($cells[$MANAGER]);
+                    $employee->division_name = trim($cells[$DIVISION]);
+                    $employee->all_access = 1;
+                    $employee->ext = trim($cells[$EXT]);
+                    $employee->wave = trim($cells[$WAVE]);
+                    $employee->password = Hash::make(env('USER_DEFAULT_PASSWORD', 'qwe123!@#$'));
+                    
+                    $account = ElinkAccount::where('account_name','LIKE' , '%'.$cells[$ACCOUNT].'%')->get();
+                    
+                    if (count($account) > 0) {
+                        $employee->account_id = $account->first()->id;
+                    } else {
+                        $employee->account_id = 0;
+                    }
+                    if (strtolower($cells[$STATUS]) == strtolower('Active')) {
+                        $employee->status = 1;
+                    } else {
+                        $employee->status = 2;
+                    }
+                    if ($cells[$HIRED_DATE]) {
+                        if (is_numeric($cells[$HIRED_DATE])) {
+                            $UNIX_DATE = ($cells[$HIRED_DATE] - 25569) * 86400;
+                            $employee->hired_date = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
+                        }
+                    }
+                    if ($cells[$BDAY]) {
+                        if (is_numeric($cells[$BDAY])) {
+                            $UNIX_DATE = ($cells[$BDAY] - 25569) * 86400;
+                            $employee->birth_date = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
+                        }
+                    }
+                    if ($cells[$PROD_DATE]) {
+                        if (is_numeric($cells[$PROD_DATE])) {
+                            $UNIX_DATE = ($cells[$PROD_DATE] - 25569) * 86400;
+                            $employee->prod_date = gmdate("Y-m-d H:i:s", (int)$UNIX_DATE);
+                        }
+                    }
+                    if ($employee->gender == 1) {
+                        $employee->profile_img = asset('public/img/nobody_m.original.jpg');
+                    } else {
+                        $employee->profile_img = asset('public/img/nobody_f.original.jpg');
+                    }
+
+                    $employee->save();
+                    $num_inserts ++;
+
+                    array_push($inserts, $employee);
+                }
+            }
+        }
+        return json_encode(['Number of Inserts' => $num_inserts, 'Number Of Updates' => $num_updates, 'Invalid Entry' => $invalid_emails]);
     }
 }

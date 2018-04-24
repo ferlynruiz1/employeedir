@@ -501,11 +501,6 @@ class EmployeeInfoController extends Controller
                             $employee['prod_date'] = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
                         }
                     }
-                    if ($employee['gender'] == 1) {
-                        $employee['profile_img'] = asset('public/img/nobody_m.original.jpg');
-                    } else {
-                        $employee['profile_img'] = asset('public/img/nobody_f.original.jpg');
-                    }
 
                     if ($emp->update($employee)) {
                         array_push($updates, $cells[$EMAIL]);
@@ -936,11 +931,6 @@ class EmployeeInfoController extends Controller
                             $UNIX_DATE = ($cells[$PROD_DATE] - 25569) * 86400;
                             $employee['prod_date'] = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
                         }
-                    }
-                    if ($employee['gender'] == 1) {
-                        $employee['profile_img'] = asset('public/img/nobody_m.original.jpg');
-                    } else {
-                        $employee['profile_img'] = asset('public/img/nobody_f.original.jpg');
                     }
 
                     if ($emp->update($employee)) {

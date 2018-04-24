@@ -469,7 +469,6 @@ class EmployeeInfoController extends Controller
                         'position_name' => trim($cells[$ROLE]),
                         'gender' => genderValue(trim($cells[$GENDER])),
                         'division_name' => trim($cells[$DIVISION]),
-                        'birth_date' => $cells[$BDAY],
                         'ext' => trim($cells[$EXT]),
                         'wave' => trim($cells[$WAVE]),
                     );

@@ -2,7 +2,112 @@
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\User;
-use Carbon\Carbon; 
+use Carbon\Carbon;
+
+// *********** COSTUME METHOD ***********************************
+function getNameFromNumber($num) {
+    $numeric = ($num - 1) % 26;
+    $letter = chr(65 + $numeric);
+    $num2 = intval(($num - 1) / 26);
+    if ($num2 > 0) {
+        return getNameFromNumber($num2) . $letter;
+    } else {
+        return $letter;
+    }
+}
+function genderValue($gender)
+{
+	if ($gender == 'Female' || $gender == 'F' || $gender == 'FEMALE') {
+		return 2;
+	} else if ($gender == 'Male' || $gender == 'M' || $gender == 'MALE') {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+function genderStringValue($gender)
+{
+	switch ($gender) {
+		case '1':
+			return "MALE";
+		case 1:
+			return "MALE";
+		case '2';
+			return "FEMALE";
+		case 2:
+			return "FEMALE";
+		default:
+			return "";
+	}
+}
+function joinGrammar($prod_date)
+{
+	$prod_date_timestamp = strtotime($prod_date);
+	$current_timestamp = time();
+
+	if($prod_date_timestamp > $current_timestamp){
+		return "Will join";
+	}
+	return "Joined";
+}
+function monthDay($prod_date)
+{
+	if (isset($prod_date)) {
+        $dt = Carbon::parse($prod_date);
+        return $dt->format('M d');
+    } else {
+        return "";
+    } 
+}
+function slashedDate($prod_date)
+{
+	if (isset($prod_date)) {
+        $dt = Carbon::parse($prod_date);
+        return $dt->format('m/d/Y');
+    } else {
+        return "";
+    } 
+}
+
+function truncate($string, $length, $html = true)
+{
+    if (strlen($string) > $length) {
+        if ($html) {
+            // Grabs the original and escapes any quotes
+            $original = str_replace('"', '\"', $string);
+        }
+
+        // Truncates the string
+        $string = substr($string, 0, $length);
+
+        // Appends ellipses and optionally wraps in a hoverable span
+        if ($html) {
+            $string = '<span title="' . $original . '">' . $string . '&hellip;</span>';
+        } else {
+            $string .= '...';
+        }
+    }
+
+    return $string;
+}
+function curl_get_contents($url)
+{
+	$ch = curl_init();
+	$timeout = 5;
+
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_HEADER, false);
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+
+	$data = curl_exec($ch);
+
+	curl_close($ch);
+
+	return $data;
+}
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,14 +119,14 @@ use Carbon\Carbon;
 |
 */
 // date_default_timezone_set('Asia/Manila');
-Route::get('test', function(){
-	return User::where('birth_date', '=', NULL)->get();
-	if (Hash::check('123123','$2y$10$UPVY0aLAstifspnrOvEJpufSL.7GM/Di.9FbHt3PlKnzQ5PxPEa.u')) {
-    	return "true";
-	}
-	return "false";
 
+Route::get('cron/importlatest', 'EmployeeInfoController@checklatest');
+
+Route::get('cron/code', function(){
+	$contents = curl_get_contents('http://localhost/elinkemployeedirectory/cron/importlatest');
+	echo $contents;
 });
+
 Route::get('/', function () {
 	if(Auth::check()){
 		if(Auth::user()->isAdmin()){
@@ -53,13 +158,14 @@ Route::middleware(['auth'])->group(function(){
 	Route::get('profile/{id}', 'EmployeeInfoController@profile');
 	Route::get('myprofile', 'EmployeeInfoController@myprofile');
 
-Route::middleware(['admin'])->group(function () {
-	Route::get('dashboard', 'HomeController@dashboard');
-	Route::resource('department', 'DepartmentController');
-	Route::resource('employee_info', 'EmployeeInfoController');
-	Route::resource('activities', 'ActivityController');
-	Route::get('employee/{id}/changepassword', 'EmployeeInfoController@changepassword');
-});
+	Route::middleware(['admin'])->group(function () {
+		Route::get('dashboard', 'HomeController@dashboard');
+		Route::resource('department', 'DepartmentController');
+		Route::resource('employee_info', 'EmployeeInfoController');
+		Route::resource('activities', 'ActivityController');
+		Route::get('employee/{id}/changepassword', 'EmployeeInfoController@changepassword');
+	});
+
 	Route::post('employee/{id}/savepassword', 'EmployeeInfoController@savepassword');
 	Route::get('employees/import', 'EmployeeInfoController@import');
 	Route::post('employees/import', 'EmployeeInfoController@importsave');
@@ -77,89 +183,9 @@ Route::middleware(['admin'])->group(function () {
 
 });
 
-function getNameFromNumber($num) {
-    $numeric = ($num - 1) % 26;
-    $letter = chr(65 + $numeric);
-    $num2 = intval(($num - 1) / 26);
-    if ($num2 > 0) {
-        return getNameFromNumber($num2) . $letter;
-    } else {
-        return $letter;
-    }
-}
-function genderValue($gender){
-	if($gender == 'Female' || $gender == 'F' || $gender == 'FEMALE'){
-		return 2;
-	}else if ($gender == 'Male' || $gender == 'M' || $gender == 'MALE') {
-		return 1;
-	}else{
-		return 0;
-	}
-}
-function genderStringValue($gender){
-	switch ($gender) {
-		case '1':
-			return "MALE";
-		case 1:
-			return "MALE";
-		case '2';
-			return "FEMALE";
-		case 2:
-			return "FEMALE";
-		default:
-			return "";
-	}
-}
-function joinGrammar($prod_date){
-	$prod_date_timestamp = strtotime($prod_date);
-	$current_timestamp = time();
-
-	if($prod_date_timestamp > $current_timestamp){
-		return "Will join";
-	}
-	return "Joined";
-}
-function monthDay($prod_date){
-	if (isset($prod_date)) {
-        $dt = Carbon::parse($prod_date);
-        return $dt->format('M d');
-    } else {
-        return "";
-    } 
-}
-function slashedDate($prod_date){
-	if (isset($prod_date)) {
-        $dt = Carbon::parse($prod_date);
-        return $dt->format('m/d/Y');
-    } else {
-        return "";
-    } 
-}
-function truncate($string, $length, $html = true)
-{
-    if (strlen($string) > $length) {
-        if ($html) {
-            // Grabs the original and escapes any quotes
-            $original = str_replace('"', '\"', $string);
-        }
-
-        // Truncates the string
-        $string = substr($string, 0, $length);
-
-        // Appends ellipses and optionally wraps in a hoverable span
-        if ($html) {
-            $string = '<span title="' . $original . '">' . $string . '&hellip;</span>';
-        } else {
-            $string .= '...';
-        }
-    }
-
-    return $string;
-}
+Route::post('import/birthdays', "EmployeeInfoController@importbday");
 
 Route::get('import/birthdays', function(){
 	return "<form enctype='multipart/form-data' method='POST' action='birthdays'><input type='file' name='dump_file'>
 	<input type='submit' value='submit' />".csrf_field()." </form>";
 });
-
-Route::post('import/birthdays', "EmployeeInfoController@importbday");

@@ -771,7 +771,7 @@ class EmployeeInfoController extends Controller
             $latest_filename = $entry;
           }
         }
-        // return asset($filepath);
+        return asset($filepath);
 
         $num_inserts = 0;
         $num_updates = 0;

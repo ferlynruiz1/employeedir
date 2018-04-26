@@ -771,7 +771,6 @@ class EmployeeInfoController extends Controller
             $latest_filename = $entry;
           }
         }
-        return asset($filepath);
 
         $num_inserts = 0;
         $num_updates = 0;
@@ -830,7 +829,7 @@ class EmployeeInfoController extends Controller
                 //
 
             } else {
-
+                return json_encode($cells);
                 $cells[$EMAIL] = trim($cells[$EMAIL]);
                 $cells[$EID] = trim($cells[$EID]);
                 $emp = User::whereEid($cells[$EID]);

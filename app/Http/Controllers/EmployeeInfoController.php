@@ -757,7 +757,7 @@ class EmployeeInfoController extends Controller
         return "num_updates: " . $num_updates;
     }
     public function checklatest(){
-        $path = "storage/app/upload"; 
+        $path = "/var/www/uploads"; 
 
         $latest_ctime = 0;
         $latest_filename = '';    
@@ -1003,5 +1003,57 @@ class EmployeeInfoController extends Controller
             }
         }
         return json_encode(['Number of Inserts' => $num_inserts, 'Number Of Updates' => $num_updates, 'Invalid Entry' => $invalid_emails]);
+    }
+    public function attrition(Request $request) {
+        $num_inserts = 0;
+        $num_updates = 0;
+        $updates = array();
+        $inserts = array();
+        $employees = array();
+        $invalid_emails = array();
+
+        $COUNT = 0;
+        $EID = 1;
+        $BDAY = 7;
+        
+        
+        if ($request->hasFile("dump_file")) {
+            $path = $request->dump_file->storeAs('/public/temp/'.Auth::user()->id, 'dump_file.'. \File::extension($request->dump_file->getClientOriginalName()));
+        }
+
+        $address = './storage/app/'. $path;
+        
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load( $address );
+
+        $worksheet = $spreadsheet->getActiveSheet();
+        $rows = [];
+
+        $all = User::all();
+
+        foreach($all as $employeeA){
+            foreach ($worksheet->getRowIterator() AS $row) {
+                $cellIterator = $row->getCellIterator();
+                $cellIterator->setIterateOnlyExistingCells(FALSE); 
+                $cells = [];
+                foreach ($cellIterator as $cell) {
+                    $cells[] = $cell->getValue();
+                }
+                $rows[] = $cells;
+                if (count($rows) <= 2) {
+                   
+
+                } else {
+                    $employee = User::where("eid", "LIKE", "%".trim($cells[$EID])."%");
+                    if ($employee->count() == 1) {
+                        $num_updates ++;
+                    }else{
+                        echo $cells[5] . " " . $cells[4] . "<br>";
+                    }
+                }
+            }
+        }
+
+        
+        return "Number of existing in db: " . $num_updates;
     }
 }

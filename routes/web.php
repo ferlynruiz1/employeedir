@@ -189,3 +189,10 @@ Route::get('import/birthdays', function(){
 	return "<form enctype='multipart/form-data' method='POST' action='birthdays'><input type='file' name='dump_file'>
 	<input type='submit' value='submit' />".csrf_field()." </form>";
 });
+
+Route::post('attrition', "EmployeeInfoController@attrition");
+
+Route::get('attrition', function(){
+	return "<form enctype='multipart/form-data' method='POST' action=''><input type='file' name='dump_file'>
+	<input type='submit' value='submit' />".csrf_field()." </form>";
+});

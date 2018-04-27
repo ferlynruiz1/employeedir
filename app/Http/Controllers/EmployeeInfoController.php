@@ -933,7 +933,7 @@ class EmployeeInfoController extends Controller
                     }
 
                     if ($emp->update($employee)) {
-                        array_push($updates, $cells[$EMAIL]);
+                        array_push($updates, $cells[$FIRST_NAME] . ' ' . $cells[$LAST_NAME]);
                         $num_updates ++;
                     }
                 } else {
@@ -997,11 +997,11 @@ class EmployeeInfoController extends Controller
                     $employee->save();
                     $num_inserts ++;
 
-                    array_push($inserts, $employee);
+                    array_push($inserts, $cells[$FIRST_NAME] . " " . $cells[$LAST_NAME]);
                 }
             }
         }
-        return json_encode(['Number of Inserts' => $num_inserts, 'Number Of Updates' => $num_updates, 'Invalid Entry' => $invalid_emails]);
+        return json_encode(['Number of Inserts' => $num_inserts, 'Inserted' => $inserts,'Number Of Updates' => $num_updates, 'Updated' => $updates, 'Invalid Entry' => $invalid_emails]);
     }
     public function attrition(Request $request) {
         $num_inserts = 0;

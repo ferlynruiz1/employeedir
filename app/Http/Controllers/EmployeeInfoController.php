@@ -801,7 +801,7 @@ class EmployeeInfoController extends Controller
         $GENDER = 19;
         $BDAY = 20;
 
-        $address = './'. $filepath;
+        $address = $filepath;
         
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load( $address );
 
@@ -829,7 +829,7 @@ class EmployeeInfoController extends Controller
                 //
 
             } else {
-                return json_encode($cells);
+                
                 $cells[$EMAIL] = trim($cells[$EMAIL]);
                 $cells[$EID] = trim($cells[$EID]);
                 $emp = User::whereEid($cells[$EID]);

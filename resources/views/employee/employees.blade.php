@@ -100,17 +100,26 @@ Employees
                 @foreach( $departments as $department)
                <option <?php echo $request->department == $department->department_name ? "selected" : "";?> >{{ $department->department_name}}</option>
                @endforeach
-           </select>
-           <select style="border-color: #ddd; padding: 7px; border-radius: 0px !important; font-size: 13px !important; display: none;" id="position_list">
+            </select>
+            <select style="border-color: #ddd; padding: 7px; border-radius: 0px !important; font-size: 13px !important; display: none;" id="position_list">
                 <option selected>Search by Position:</option>
                 @foreach( $positions as $position)
-               <option <?php echo $request->position == $position->position_name ? "selected" : "";?> >{{ $position->position_name}}</option>
+                <option <?php echo $request->position == $position->position_name ? "selected" : "";?> >{{ $position->position_name}}</option>
                @endforeach
-           </select>
-       </li>
-       <li>
+            </select>
+        </li>
+        <li>
            <a href="{{url('employees')}}" class="btn btn-default" style="margin: 0px; height: 30px;">Clear Filter</a>
-       </li>
+        </li>
+        <li style="margin-top: 5px">
+            &nbsp;
+            &nbsp;
+            <label>Inactive Employees</label>
+            <input type="checkbox" id="inactive_employees" {{ $request->inactive == 'true' ? 'checked' : '' }}>
+            &nbsp;
+            <label>No Profile Images</label>
+            <input type="checkbox" id="no_profile_images" {{ $request->no_profile_images == 'true' ? 'checked' : '' }}>
+        </li>
     </ul>
 	<table id="employees_table" class="table table-striped">
         <thead>
@@ -208,6 +217,26 @@ Employees
             var position = "position=" + $(this).val();
             url += "?" + position;
             window.location.replace(url);
+        });
+        $('#inactive_employees').change(function(){
+            var url = location.protocol + '//' + location.host + location.pathname;
+            if($(this).is(':checked')){
+                var inactive = "inactive=" + true;
+                url += "?" + inactive;
+                window.location.replace(url);
+            }else{
+                window.location.replace(url);
+            }
+        });
+        $('#no_profile_images').change(function(){
+            var url = location.protocol + '//' + location.host + location.pathname;
+            if($(this).is(':checked')){
+                var no_profile_images = "no_profile_images=" + true;
+                url += "?" + no_profile_images;
+                window.location.replace(url);
+            }else{
+                window.location.replace(url);
+            }
         });
     </script>
 @endsection

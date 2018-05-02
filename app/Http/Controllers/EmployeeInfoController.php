@@ -272,6 +272,7 @@ class EmployeeInfoController extends Controller
     {
         if (Auth::user()->isAdmin()) {
             $employees = new User;
+           
 
             if ($request->has('department') && $request->get('department') != "") {
                 $employees = $employees->where('team_name', 'LIKE', $request->get('department'));
@@ -279,6 +280,17 @@ class EmployeeInfoController extends Controller
 
             if ($request->has('position') && $request->get('position') != "") {
                 $employees = $employees->where('position_name', 'LIKE', '%' . $request->get('position') . '%');
+            }
+
+            if ($request->has('no_profile_images') && $request->get('no_profile_images') == 'true'){
+                $employees = $employees->where(function($query) use($request){
+                    $query->where('profile_img', 'LIKE', 'http://dir.elink.corp/public/img/nobody_m.original.jpg')
+                    ->orWhere('profile_img', '=', 'NULL');
+                });
+            }
+
+            if ($request->has('inactive') && $request->get('inactive') != "") {
+                $employees = $employees->onlyTrashed()->orWhere('status', '=', '2');
             }
 
             $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->get();
@@ -1001,7 +1013,14 @@ class EmployeeInfoController extends Controller
                 }
             }
         }
-        return json_encode(['Number of Inserts' => $num_inserts, 'Inserted' => $inserts,'Number Of Updates' => $num_updates, 'Updated' => $updates, 'Invalid Entry' => $invalid_emails]);
+        $result = json_encode(['Number of Inserts' => $num_inserts, 'Inserted' => $inserts,'Number Of Updates' => $num_updates, 'Updated' => $updates, 'Invalid Entry' => $invalid_emails]);
+
+        $bytes_written = File::put($file, $result);
+
+        if ($bytes_written === false) {
+            echo "Error writing to file";
+        }
+        return $result;
     }
     public function attrition(Request $request) {
         $num_inserts = 0;

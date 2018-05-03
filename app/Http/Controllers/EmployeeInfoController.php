@@ -13,6 +13,7 @@ use App\ElinkAccount;
 use App\ElinkDivision;
 use App\User;
 use Response;
+use File;
 
 class EmployeeInfoController extends Controller
 {
@@ -306,7 +307,16 @@ class EmployeeInfoController extends Controller
             $employees = $employees->where(function($query) use($request)
             {
                 $query->where('first_name', 'LIKE', '%'.$request->get('keyword').'%')
-                    ->orWhere('last_name', 'LIKE', '%'.$request->get('keyword').'%');
+                    ->orWhere('last_name', 'LIKE', '%'.$request->get('keyword').'%')
+                    ->orWhere('middle_name', 'LIKE', '%'.$request->get('keyword').'%')
+                    ->orWhere('email', 'LIKE', '%'.$request->get('keyword').'%')
+                    ->orWhere('email2', 'LIKE', '%'.$request->get('keyword').'%')
+                    ->orWhere('email3', 'LIKE', '%'.$request->get('keyword').'%')
+                    ->orWhere('alias', 'LIKE', '%'.$request->get('keyword').'%')
+                    ->orWhere('team_name', 'LIKE', '%'.$request->get('keyword').'%')
+                    ->orWhere('dept_code', 'LIKE', '%'.$request->get('keyword').'%')
+                    ->orWhere('position_name', 'LIKE', '%'.$request->get('keyword').'%')
+                    ->orWhere('ext', 'LIKE', '%'.$request->get('keyword').'%');
             });
         }
 
@@ -1013,9 +1023,13 @@ class EmployeeInfoController extends Controller
                 }
             }
         }
+
+        // DELETE
+
+
         $result = json_encode(['Number of Inserts' => $num_inserts, 'Inserted' => $inserts,'Number Of Updates' => $num_updates, 'Updated' => $updates, 'Invalid Entry' => $invalid_emails]);
 
-        $bytes_written = File::put($file, $result);
+        $bytes_written = File::put('./storage/logs/cron.txt', $result);
 
         if ($bytes_written === false) {
             echo "Error writing to file";

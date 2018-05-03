@@ -150,6 +150,12 @@ Employees
                         <span class="employee-description" >&nbsp;&nbsp;{{$employee->ext}}</span>
                     </h5>
                     @endif
+                    @if(isset($employee->alias) && $employee->alias != '--')
+                    <h5>
+                         <span class="fa fa-mobile" title="Phone Name"></span>
+                        <span class="employee-description" >&nbsp;&nbsp;{{$employee->alias}}</span>
+                    </h5>
+                    @endif
                 </div>
                 <div class="col-md-3">
                     @if(isset($employee->supervisor_name))

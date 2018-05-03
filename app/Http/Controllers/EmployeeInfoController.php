@@ -318,6 +318,22 @@ class EmployeeInfoController extends Controller
                     ->orWhere('position_name', 'LIKE', '%'.$request->get('keyword').'%')
                     ->orWhere('ext', 'LIKE', '%'.$request->get('keyword').'%');
             });
+            foreach(explode(" ", $request->get('keyword')) as $value){
+                $employees = $employees->orWhere(function($query) use($value)
+                {
+                    $query->orWhere('first_name', 'LIKE', '%'.$value.'%')
+                        ->orWhere('last_name', 'LIKE', '%'.$value.'%')
+                        ->orWhere('middle_name', 'LIKE', '%'.$value.'%')
+                        ->orWhere('email', 'LIKE', '%'.$value.'%')
+                        ->orWhere('email2', 'LIKE', '%'.$value.'%')
+                        ->orWhere('email3', 'LIKE', '%'.$value.'%')
+                        ->orWhere('alias', 'LIKE', '%'.$value.'%')
+                        ->orWhere('team_name', 'LIKE', '%'.$value.'%')
+                        ->orWhere('dept_code', 'LIKE', '%'.$value.'%')
+                        ->orWhere('position_name', 'LIKE', '%'.$value.'%')
+                        ->orWhere('ext', 'LIKE', '%'.$value.'%');
+                    });
+                }
         }
 
         if ($request->has('alphabet') && $request->get('alphabet') != "") {

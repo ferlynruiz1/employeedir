@@ -144,13 +144,13 @@ Employees
                         <span class="fa fa-envelope" title="Email Address"></span>
                         <span class="employee-description" style="color: #0c59a2;;">&nbsp;&nbsp;{{$employee->email}}</span>
                     </h5>
-                    @if(isset($employee->ext) && $employee->ext != '--' && $employee->ext != "")
+                    @if(isset($employee->ext) && $employee->ext != '--' && $employee->ext != '')
                     <h5>
                          <span class="fa fa-phone" title="Extension Number"></span>
                         <span class="employee-description" >&nbsp;&nbsp;{{$employee->ext}}</span>
                     </h5>
                     @endif
-                    @if(isset($employee->alias) && $employee->alias != '--' && $employee->alias) != "")
+                    @if(isset($employee->alias) && $employee->alias != '--' && $employee->alias != '')
                     <h5>
                          <span class="fa fa-mobile" title="Phone Name"></span>
                         <span class="employee-description" >&nbsp;&nbsp;{{$employee->alias}}</span>

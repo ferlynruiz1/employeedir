@@ -126,9 +126,7 @@ Employees
             <tr>
                 <td data-priority="1">#</td>
                 <td data-priority="2">Employee</td>
-                <td>Phone Name</td>
-                <td style="display: none">Phone Extension</td>
-                <td data-priority="4">Email</td>
+                <td data-priority="4">Email <br> <small>Phone name and ext</small></td>
                 <td>Team/Department</td>
                 <td>Supervisor</td>
                 <!-- <td >Manager</td> -->
@@ -157,14 +155,15 @@ Employees
                             {{ $employee->position_name }}
                         </small>
                     </td>
-                    <td>{{ $employee->alias }}
-                       @if($employee->ext != '' && isset($employee->ext))
+                    <td><a href="mailto:{{$employee->email}}"> {{ $employee->email }} 
+                        </a>
+                        <br>
+                        {{ $employee->alias }}
+                        @if($employee->ext != '' && isset($employee->ext))
                         <br>
                         <small>ext: {{$employee->ext}}</small>
                         @endif
                     </td>
-                    <td style="display: none">{{ $employee->ext }}</td>
-                    <td><a href="mailto:{{$employee->email}}"> {{ $employee->email }}</a></td>
                     <td >{{ $employee->team_name }}</td>
                     <td>{{ @$employee->supervisor_name }}</td>
                     <!-- <td>{{ @$employee->manager_name }}</td> -->

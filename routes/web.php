@@ -121,11 +121,7 @@ function curl_get_contents($url)
 // date_default_timezone_set('Asia/Manila');
 
 Route::get('cron/importlatest', 'EmployeeInfoController@checklatest');
-
-Route::get('cron/code', function(){
-	$contents = curl_get_contents('http://localhost/elinkemployeedirectory/cron/importlatest');
-	echo $contents;
-});
+Route::get('cron/attrition', 'EmployeeInfoController@attrition');
 
 Route::get('/', function () {
 	if(Auth::check()){
@@ -187,12 +183,5 @@ Route::post('import/birthdays', "EmployeeInfoController@importbday");
 
 Route::get('import/birthdays', function(){
 	return "<form enctype='multipart/form-data' method='POST' action='birthdays'><input type='file' name='dump_file'>
-	<input type='submit' value='submit' />".csrf_field()." </form>";
-});
-
-Route::post('attrition', "EmployeeInfoController@attrition");
-
-Route::get('attrition', function(){
-	return "<form enctype='multipart/form-data' method='POST' action=''><input type='file' name='dump_file'>
 	<input type='submit' value='submit' />".csrf_field()." </form>";
 });

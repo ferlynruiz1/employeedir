@@ -14,6 +14,7 @@ use App\ElinkDivision;
 use App\User;
 use Response;
 use File;
+use DB;
 
 class EmployeeInfoController extends Controller
 {
@@ -301,7 +302,7 @@ class EmployeeInfoController extends Controller
         }
 
         $employees = new User;
-        // $query = "";
+        // $query = ""; 
         $query = array();
         if ($request->has('keyword') && $request->get('keyword') != "") {
             $employees = $employees->where(function($query) use($request)
@@ -309,6 +310,7 @@ class EmployeeInfoController extends Controller
                 $query->where('first_name', 'LIKE', '%'.$request->get('keyword').'%')
                     ->orWhere('last_name', 'LIKE', '%'.$request->get('keyword').'%')
                     ->orWhere('middle_name', 'LIKE', '%'.$request->get('keyword').'%')
+                    ->orWhere(DB::raw('CONCAT(first_name, " ", last_name)'), 'LIKE', '%'.$request->get('keyword').'%')
                     ->orWhere('email', 'LIKE', '%'.$request->get('keyword').'%')
                     ->orWhere('email2', 'LIKE', '%'.$request->get('keyword').'%')
                     ->orWhere('email3', 'LIKE', '%'.$request->get('keyword').'%')
@@ -318,22 +320,6 @@ class EmployeeInfoController extends Controller
                     ->orWhere('position_name', 'LIKE', '%'.$request->get('keyword').'%')
                     ->orWhere('ext', 'LIKE', '%'.$request->get('keyword').'%');
             });
-            foreach(explode(" ", $request->get('keyword')) as $value){
-                $employees = $employees->orWhere(function($query) use($value)
-                {
-                    $query->orWhere('first_name', 'LIKE', '%'.$value.'%')
-                        ->orWhere('last_name', 'LIKE', '%'.$value.'%')
-                        ->orWhere('middle_name', 'LIKE', '%'.$value.'%')
-                        ->orWhere('email', 'LIKE', '%'.$value.'%')
-                        ->orWhere('email2', 'LIKE', '%'.$value.'%')
-                        ->orWhere('email3', 'LIKE', '%'.$value.'%')
-                        ->orWhere('alias', 'LIKE', '%'.$value.'%')
-                        ->orWhere('team_name', 'LIKE', '%'.$value.'%')
-                        ->orWhere('dept_code', 'LIKE', '%'.$value.'%')
-                        ->orWhere('position_name', 'LIKE', '%'.$value.'%')
-                        ->orWhere('ext', 'LIKE', '%'.$value.'%');
-                    });
-                }
         }
 
         if ($request->has('alphabet') && $request->get('alphabet') != "") {

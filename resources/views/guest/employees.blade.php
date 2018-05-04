@@ -129,7 +129,7 @@ Employees
                     </div>
                 </div>
                 <div class="col-md-4">
-                        <h4 class="timeline-title" style="color: #444;font-weight: 500; font-size: 17px; margin-top: 10px;"><a href="{{url('profile/'. $employee->id)}}">{{$employee->fullname()}} </a>
+                        <h4 class="timeline-title name-format" style="color: #444;font-weight: 500; font-size: 17px; margin-top: 10px;"><a href="{{url('profile/'. $employee->id)}}">{{$employee->fullname()}} </a>
                         </h4>
                    
                     <h5 style="color: #455;">{{ $employee->position_name}}</h5>
@@ -161,7 +161,7 @@ Employees
                     @if(isset($employee->supervisor_name))
                     <h5 style="font-size: 13px;">
                         <span class="fa fa-user" title="Supervisor"></span>
-                        <span style="color: gray;">Supervisor:</span>
+                        <span class="name-format" style="color: gray;">Supervisor:</span>
                         {{$employee->supervisor_name}}
                     </h5>
                     @endif
@@ -169,7 +169,7 @@ Employees
                         <h5 style="font-size: 13px;">
                             <span class="fa fa-user" title="Manager"></span>
                             <span style="color: gray;">Manager: </span>
-                            <span>{{ $employee->manager_name }}</span>
+                            <span class="name-format">{{ $employee->manager_name }}</span>
                         </h5>
                     @endif
                 </div>

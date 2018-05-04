@@ -41,11 +41,11 @@ Employee Information
                 <center>
                     <img alt="Profile" style="width: 150px; margin-top: 30px;" src="{{ $employee->profile_img }}">
                     <br>
-                    <h4 class="card-title m-t-10" style="font-size: 16px;line-height: 21px;margin-top: 15px;font-weight: 400;color: black;">
+                    <h4 class="card-title m-t-10 name-format" style="font-size: 16px;line-height: 21px;margin-top: 15px;font-weight: 400;color: black;">
                         {{ $employee->fullname() }}
                     </h4>
-                    <h6 class="card-subtitle">{{ $employee->position_name }}</h6>
-                    <h6 class="card-subtitle">{{ $employee->team_name }}</h6>
+                    <h6 class="card-subtitle name-format">{{ $employee->position_name }}</h6>
+                    <h6 class="card-subtitle name-format">{{ $employee->team_name }}</h6>
                     <hr>
                 </center>
                 <span class="pull-left label-profile">Production Date: <i>{{ $employee->prettyproddate() }}</i></span>
@@ -69,19 +69,19 @@ Employee Information
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>First Name</label>
-                                <p class="employee-details-value">{{ $employee->first_name}}</p>
+                                <p class="employee-details-value name-format">{{ $employee->first_name}}</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Middle Name</label>
-                                <p class="employee-details-value">{{ $employee->middle_name}}</p>
+                                <p class="employee-details-value name-format">{{ $employee->middle_name}}</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <p class="employee-details-value">{{ $employee->last_name}}</p>
+                                <p class="employee-details-value name-format">{{ $employee->last_name}}</p>
                             </div>
                         </div>
                     </div>
@@ -95,7 +95,7 @@ Employee Information
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Phone Name</label>
-                                <p class="employee-details-value">{{ $employee->alias}}</p>
+                                <p class="employee-details-value name-format">{{ $employee->alias}}</p>
                             </div>
                         </div>
                         <!-- <div class="col-md-3">
@@ -127,13 +127,13 @@ Employee Information
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Supervisor</label>
-                                <p class="employee-details-value">{{ isset($employee->supervisor) ? $employee->supervisor->fullname() : $employee->supervisor_name }}</p>
+                                <p class="employee-details-value name-format">{{ isset($employee->supervisor) ? $employee->supervisor->fullname() : $employee->supervisor_name }}</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Manager/Head</label>
-                                <p class="employee-details-value">{{ isset($employee->manager) ? $employee->manager->fullname() : $employee->manager_name }}</p>
+                                <p class="employee-details-value name-format">{{ isset($employee->manager) ? $employee->manager->fullname() : $employee->manager_name }}</p>
                             </div>
                         </div>
                         <div class="col-md-3">

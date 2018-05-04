@@ -77,19 +77,19 @@ Employee Information
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>First Name</label>
-                                <p class="employee-details-value">{{ $employee->first_name}}</p>
+                                <p class="employee-details-value name-format">{{ $employee->first_name}}</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Middle Name</label>
-                                 <p class="employee-details-value">{{ $employee->middle_name}}</p>
+                                 <p class="employee-details-value name-format">{{ $employee->middle_name}}</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <p class="employee-details-value">{{ $employee->last_name}}</p>
+                                <p class="employee-details-value name-format">{{ $employee->last_name}}</p>
                             </div>
                         </div>
                     </div>
@@ -103,7 +103,7 @@ Employee Information
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Phone Name</label>
-                                <p class="employee-details-value">{{ $employee->alias}}</p>
+                                <p class="employee-details-value name-format">{{ $employee->alias}}</p>
                             </div>
                         </div>
                        <!--  <div class="col-md-3">
@@ -136,13 +136,13 @@ Employee Information
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Supervisor</label>
-                                <p class="employee-details-value">{{ $employee->supervisor_name }}</p>
+                                <p class="employee-details-value name-format">{{ $employee->supervisor_name }}</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Manager</label>
-                               <p class="employee-details-value">{{  $employee->manager_name }}</p>
+                               <p class="employee-details-value name-format">{{  $employee->manager_name }}</p>
                             </div>
                         </div>
                         <div class="col-md-3">

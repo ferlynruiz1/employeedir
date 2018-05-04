@@ -12,6 +12,7 @@ use App\EmployeeDepartment;
 use App\ElinkAccount;
 use App\ElinkDivision;
 use App\User;
+use App\EmployeeAttrition;
 use Response;
 use File;
 use DB;
@@ -780,20 +781,20 @@ class EmployeeInfoController extends Controller
         }
         return "num_updates: " . $num_updates;
     }
-    public function checklatest(){
-        $path = "/var/www/uploads"; 
+    public function checklatest() {
+        $path = "/var/www/uploads/masterlist"; 
 
         $latest_ctime = 0;
         $latest_filename = '';    
 
         $d  = array_diff(scandir($path), array('.', '..'));
         foreach ($d as $entry) {
-          $filepath = "{$path}/{$entry}";
-          // could do also other checks than just checking whether the entry is a file
-          if (is_file($filepath) && filectime($filepath) > $latest_ctime) {
-            $latest_ctime = filectime($filepath);
-            $latest_filename = $entry;
-          }
+            $filepath = "{$path}/{$entry}";
+            // could do also other checks than just checking whether the entry is a file
+            if (is_file($filepath) && filectime($filepath) > $latest_ctime) {
+                $latest_ctime = filectime($filepath);
+                $latest_filename = $entry;
+            }
         }
 
         $num_inserts = 0;
@@ -1031,7 +1032,7 @@ class EmployeeInfoController extends Controller
 
         $result = json_encode(['Number of Inserts' => $num_inserts, 'Inserted' => $inserts,'Number Of Updates' => $num_updates, 'Updated' => $updates, 'Invalid Entry' => $invalid_emails]);
 
-        $bytes_written = File::put('./storage/logs/cron.txt', $result);
+        $bytes_written = File::put('./storage/logs/cron_masterlist.txt', $result);
 
         if ($bytes_written === false) {
             echo "Error writing to file";
@@ -1039,6 +1040,21 @@ class EmployeeInfoController extends Controller
         return $result;
     }
     public function attrition(Request $request) {
+        $path = "/var/www/uploads/attrition"; 
+
+        $latest_ctime = 0;
+        $latest_filename = '';    
+
+        $d  = array_diff(scandir($path), array('.', '..'));
+        foreach ($d as $entry) {
+            $filepath = "{$path}/{$entry}";
+            // could do also other checks than just checking whether the entry is a file
+            if (is_file($filepath) && filectime($filepath) > $latest_ctime) {
+                $latest_ctime = filectime($filepath);
+                $latest_filename = $entry;
+            }
+        }
+        $to_be_deleted = "";
         $num_inserts = 0;
         $num_updates = 0;
         $updates = array();
@@ -1048,46 +1064,113 @@ class EmployeeInfoController extends Controller
 
         $COUNT = 0;
         $EID = 1;
-        $BDAY = 7;
-        
-        
-        if ($request->hasFile("dump_file")) {
-            $path = $request->dump_file->storeAs('/public/temp/'.Auth::user()->id, 'dump_file.'. \File::extension($request->dump_file->getClientOriginalName()));
-        }
+        $FULLNAME = 2;
+        $START_DATE = 3;
+        $LAST_DATE = 4;
+        $EMPLOYEE_TYPE = 5;
+        $PARTICULARS = 6;
+        $ALIAS = 7;
+        $IT_STATUS = 8;
+        $RA_STATUS = 9;
 
-        $address = './storage/app/'. $path;
+        $address = $filepath;
         
+        //
+        // Read the excel file
+        //
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load( $address );
 
         $worksheet = $spreadsheet->getActiveSheet();
         $rows = [];
 
-        $all = User::all();
+        // loop excel rows
+        foreach ($worksheet->getRowIterator() AS $row) {
+            $cellIterator = $row->getCellIterator();
+            $cellIterator->setIterateOnlyExistingCells(FALSE); 
+            $cells = [];
 
-        foreach($all as $employeeA){
-            foreach ($worksheet->getRowIterator() AS $row) {
-                $cellIterator = $row->getCellIterator();
-                $cellIterator->setIterateOnlyExistingCells(FALSE); 
-                $cells = [];
-                foreach ($cellIterator as $cell) {
-                    $cells[] = $cell->getValue();
-                }
-                $rows[] = $cells;
-                if (count($rows) <= 2) {
-                   
+            // storing the row value to $cells
+            foreach ($cellIterator as $cell) {
+                $cells[] = $cell->getValue();
+            }
 
-                } else {
+            // concat / add to array $rows : use $rows in the last part to get all rows
+            $rows[] = $cells;
+
+            if (count($rows) <= 2) {
+               
+
+            } else {
+
+                if ($cells[$EID] && $cells[$EID] != "") {
                     $employee = User::where("eid", "LIKE", "%".trim($cells[$EID])."%");
+
                     if ($employee->count() == 1) {
+                        $employee = $employee->first();
                         $num_updates ++;
-                    }else{
-                        echo $cells[5] . " " . $cells[4] . "<br>";
+                        
+                        // display attrition employee name
+                        $to_be_deleted .= ucwords(strtolower($cells[$FULLNAME])) . "\n";
+
+                        // store in attrition list
+                        $attrition = EmployeeAttrition::where('employee_id', '=', '%' . $cells[$EID] . '%');
+                            // check if employee exist in database
+                            if ($attrition->count() == 0) {
+                                
+                                // create a record in employee attrition table
+                                $newAttrition = new EmployeeAttrition;
+                                $newAttrition->employee_id = $cells[$EID];
+                                $newAttrition->employee_name = ucwords(strtolower($cells[$FULLNAME]));
+
+                                $datetime = new DateTime();
+                                // start date
+                                if ($cells[$START_DATE] != "" && $cells[$START_DATE]) {
+                                    if (is_numeric($cells[$START_DATE])) {
+                                        $UNIX_DATE = ($cells[$START_DATE] - 25569) * 86400;
+                                        $newAttrition->start_work_date = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
+                                    } else {
+                                        $start_work_date = $datetime->createFromFormat('Y-m-d', $cells[$START_DATE])->format("Y-m-d H:i:s");
+                                        $newAttrition->start_work_date = $start_work_date;
+                                    }
+                                }
+
+                                // last date
+                                if ($cells[$LAST_DATE] != "" && $cells[$LAST_DATE]) {
+                                    if (is_numeric($cells[$LAST_DATE])) {
+                                        $UNIX_DATE = ($cells[$LAST_DATE] - 25569) * 86400;
+                                        $employee->last_work_date = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
+                                    }else{
+                                         $last_work_date = $datetime->createFromFormat('Y-m-d', $cells[$LAST_DATE])->format("Y-m-d H:i:s");
+                                         $newAttrition->last_work_date = $last_work_date;
+                                    }
+                                }
+
+                                $newAttrition->employee_type = $cells[$EMPLOYEE_TYPE];
+                                $newAttrition->particulars = $cells[$PARTICULARS];
+                                $newAttrition->alias = $cells[$ALIAS];
+                                $newAttrition->it_status = $cells[$IT_STATUS];
+                                $newAttrition->ra_status = $cells[$RA_STATUS];
+                                $newAttrition->save();
+
+                                // change status to deleted ..  
+                                $employee->status = 2;
+                                $employee->save();
+                            }
+
+                        // delete employee from database
+                        $employee->delete();
                     }
                 }
             }
         }
+        $result = $to_be_deleted . "\nNumber of employees deleted in db: " . $num_updates;
 
-        
-        return "Number of existing in db: " . $num_updates;
+
+        $bytes_written = File::put('./storage/logs/cron_attrition.txt', $result);
+
+        if ($bytes_written === false) {
+            echo "Error writing to file";
+        }
+        return $result;
     }
 }

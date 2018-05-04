@@ -113,7 +113,9 @@ h6.card-subtitle{
     border-width: 0px !important;
     background: transparent; !important;
 }
-
+.name-format{
+    text-transform: capitalize; !important;
+}
 /* END GLOBAL CSS */
 
 /*********************************************************************************************/
@@ -313,4 +315,3 @@ input[type="file"]#image_uploader {
     font-size: 16px;
 }
 /* END FORM CSS */
-

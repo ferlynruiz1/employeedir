@@ -1039,7 +1039,7 @@ class EmployeeInfoController extends Controller
         if ($bytes_written === false) {
             echo "Error writing to file";
         }
-        return $result;
+        return "\n\n" . $result;
     }
     public function attrition(Request $request) {
         $path = "/var/www/uploads/attrition"; 
@@ -1173,6 +1173,6 @@ class EmployeeInfoController extends Controller
         if ($bytes_written === false) {
             echo "Error writing to file";
         }
-        return $result;
+        return "\n\n" . $result;
     }
 }

@@ -121,7 +121,8 @@ class EmployeeInfoController extends Controller
 
         /* saving photo : TODO : optimize saving of image to save space */
         if ($request->hasFile("profile_image")) {
-            $path = $request->profile_image->store('images/'.$employee->id);
+            $extension = $request->file('profile_image')->guessExtension();
+            $path = $request->profile_image->storeAs('images/'.$employee->id, $employee->id . '.' . $extension);
             $employee->profile_img = asset('storage/app/'.$path);
             $employee->save();
         }
@@ -216,7 +217,8 @@ class EmployeeInfoController extends Controller
         }
 
         if ($request->hasFile("profile_image")) {
-            $path = $request->profile_image->store('images/'.$employee->id);
+            $extension = $request->file('profile_image')->guessExtension();
+            $path = $request->profile_image->storeAs('images/'.$employee->id, $employee->id . '.' . $extension);
             $employee->profile_img = asset('storage/app/'.$path);
         }
 

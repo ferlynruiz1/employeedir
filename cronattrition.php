@@ -3,7 +3,7 @@
 function curl_get_contents($url)
 {
         $ch = curl_init();
-        $timeout = 0;
+        $timeout = 100;
 
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -20,5 +20,5 @@ function curl_get_contents($url)
 
 $contents = curl_get_contents('http://dir.elink.corp/cron/attrition');
 
-echo $contents;
+echo "\n\n" . $contents;
 

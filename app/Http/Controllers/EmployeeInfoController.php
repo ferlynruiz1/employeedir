@@ -238,7 +238,7 @@ class EmployeeInfoController extends Controller
         $employee = User::find($id);
         $employee->delete();
 
-        return redirect()->back()->with('success', "Successfully deleted employee record");;
+        return redirect()->back()->with('success', "Successfully deleted employee record");
     }
     public function changepassword(Request $request, $id)
     {
@@ -254,30 +254,35 @@ class EmployeeInfoController extends Controller
     public function savepassword(Request $request, $id)
     {
         $user = User::find($id);
+
         if ($request->new_password == "" && $request->old_password == "" && $request->confirm_password == "") {
             return redirect()->back()->withErrors(array('message' => 'all field are required!', 'status' => 'error'));
         }
-        
-        if (Hash::check($request->old_password, $user->password)) {
-            if ($request->new_password == $request->confirm_password) {
-                $user->password = Hash::make($request->new_password);
-                if ($user->save()) {
-                    return redirect()->back()->withErrors(array('message' => 'Password successfully changed!', 'status' => 'success'));
-                } else {
-                    return redirect()->back()->withErrors(array('message' => 'error saving !', 'status' => 'error'));
-                }
+
+        if(!Auth::user()->isAdmin()){
+            if (Hash::check($request->old_password, $user->password)) {
+                // Do nothing
             } else {
-                return redirect()->back()->withErrors(array('message' => 'new password don\'t match', 'status' => 'error'));
+                return redirect()->back()->withErrors(array('message' => 'incorrect old password', 'status' => 'error'));
+            }  
+        }
+
+        if ($request->new_password == $request->confirm_password) {
+            $user->password = Hash::make($request->new_password);
+            if ($user->save()) {
+                return redirect()->back()->withErrors(array('message' => 'Password successfully changed!', 'status' => 'success'));
+            } else {
+                return redirect()->back()->withErrors(array('message' => 'error saving !', 'status' => 'error'));
             }
         } else {
-            return redirect()->back()->withErrors(array('message' => 'incorrect old password', 'status' => 'error'));
+            return redirect()->back()->withErrors(array('message' => 'new password don\'t match', 'status' => 'error'));
         }
+        
     }
     public function employees(Request $request)
     {
         if (Auth::user()->isAdmin()) {
             $employees = new User;
-           
 
             if ($request->has('department') && $request->get('department') != "") {
                 $employees = $employees->where('team_name', 'LIKE', $request->get('department'));
@@ -290,6 +295,7 @@ class EmployeeInfoController extends Controller
             if ($request->has('no_profile_images') && $request->get('no_profile_images') == 'true'){
                 $employees = $employees->where(function($query) use($request){
                     $query->where('profile_img', 'LIKE', 'http://dir.elink.corp/public/img/nobody_m.original.jpg')
+                    ->orWhere('profile_img', 'LIKE', 'http://dir.elink.corp/public/img/nobody_f.original.jpg')
                     ->orWhere('profile_img', '=', 'NULL');
                 });
             }
@@ -305,7 +311,6 @@ class EmployeeInfoController extends Controller
         }
 
         $employees = new User;
-        // $query = ""; 
         $query = array();
         if ($request->has('keyword') && $request->get('keyword') != "") {
             $employees = $employees->where(function($query) use($request)

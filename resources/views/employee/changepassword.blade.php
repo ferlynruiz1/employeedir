@@ -51,12 +51,14 @@ Employee Information / Change Password
             	<br>
             	<form method="POST" action="{{ url('employee/'. $id . '/savepassword') }}">
             		{{ csrf_field() }}
+                    @if(Auth::user()->isAdmin() == false)
         	        <div class="col-md-12 password">
 	                   <div class="form-group">
 	                       <label>Old Password</label>
 	                       <input type="password" class="form-control" placeholder="Password" name="old_password" >
 	                   </div>
                     </div>
+                    @endif
 	                <div class="col-md-12 password">
 	                    <div class="form-group">
     	                    <label>New Password</label>

@@ -32,7 +32,7 @@ body{
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span></button>
-                <a class="navbar-brand" href="{{url('/home')}}">
+                    <a class="navbar-brand" href="{{url('/home')}}">
                     <span>
                         <img src="{{ asset('public/img/elink-logo-site.png')}}" style="width: 40px; margin-top: -10px">
                         &nbsp;Employee
@@ -44,8 +44,8 @@ body{
     </nav>
     <div class="content-holder">
         <!-- sidebar menu -->
-        <div id="sidebar-collapse" class="sidebar">
-            <div class="profile-sidebar">
+        <div id="sidebar-collapse" class="sidebar col-md-3">
+            <div class="profile-sidebar visible-sm-block visible-xs-block">
                 <div class="profile-userpic">
                     <div style="background-image: url('{{ Auth::user()->profile_img }}'); width: 100px; height: 100px;margin: 15px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; border-radius: 50%; float: left;">
                     </div>
@@ -60,81 +60,34 @@ body{
                 <div class="clear"></div>
             </div>
             <div class="divider"></div>
-            <ul class="nav menu">
+            <ul class="nav visible-sm-block visible-xs-block">
                 @if(Auth::user()->isAdmin())
-                <li <?php echo \Request::url() == url('dashboard') ? 'class="active"' : ''; ?>>
-                    <a href="{{url('dashboard')}}">
-                        <em class="fa fa-dashboard">&nbsp;</em>
-                        Dashboard
-                    </a>
-                </li>
-                <li <?php echo \Request::url() == url('employees') ? 'class="active"' : ''; ?>>
-                    <a href="{{url('employees')}}">
-                        <em class="fa fa-user">&nbsp;</em>
-                        Employees
-                     </a>
-                 </li>
-                <li <?php echo \Request::url() == url('department') ? 'class="active"' : ''; ?>>
-                    <a href="{{url('department')}}">
-                        <em class="fa fa-users">&nbsp;</em> 
-                        Departments
-                    </a>
-                </li>
-                <li <?php echo \Request::url() == url('activities') ? 'class="active"' : ''; ?>>
-                    <a href="{{url('activities')}}">
-                        <em class="fa fa-calendar">&nbsp;</em> 
-                        Activities
-                    </a>
-                </li>
-                <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
-                    <a href="{{url('myprofile')}}">
-                        <em class="fa fa-user">&nbsp;</em>
-                        My Profile
-                    </a>
-                </li>
-                <li <?php echo \Request::url() == url('employees/import') ? 'class="active"' : ''; ?>>
-                    <a href="{{url('employees/import')}}">
-                        <em class="fa fa-upload">&nbsp;</em> 
-                        Import
-                    </a>
-                </li>
-                <li <?php echo \Request::url() == url('employees/export') ? 'class="active"' : ''; ?>>
-                    <a href="{{url('employees/export')}}">
-                        <em class="fa fa-download">&nbsp;</em> 
-                        Export
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('logout')}}">
-                        <em class="fa fa-power-off">&nbsp;</em>
-                        Logout
-                    </a>
-                </li>
+                    @include('layouts.menu.admin')
                 @else 
-                <li <?php echo \Request::url() == url('home') ? 'class="active"' : ''; ?>>
-                    <a href="{{url('home')}}">
-                        <em class="fa fa-home">&nbsp;</em>
-                        Home
-                    </a>
-                </li>
-                <li <?php echo \Request::url() == url('employees') ? 'class="active"' : ''; ?>>
-                    <a href="{{url('employees')}}">
-                        <em class="fa fa-users">&nbsp;</em>
-                        Employees
-                     </a>
-                 </li>
-                <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
-                    <a href="{{url('myprofile')}}">
-                        <em class="fa fa-user">&nbsp;</em>
-                        My Profile
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('logout')}}">
-                        <em class="fa fa-power-off">&nbsp;</em>
-                        Logout
-                    </a>
-                </li>
+                    @include('layouts.menu.normal')
+                @endif
+            </ul>
+
+            <div class="profile-sidebar visible-md-block visible-lg-block">
+                <div class="profile-userpic">
+                    <div style="background-image: url('{{ Auth::user()->profile_img }}'); width: 100px; height: 100px;margin: 15px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; border-radius: 50%; float: left;">
+                    </div>
+                </div>
+                <div class="profile-usertitle">
+                    <br>
+                    <h4 class="card-title m-t-10" style="font-size: 15px !important;">{{ Auth::user()->fullname() }}</h4>
+                    <h5 class="card-subtitle" title="Job Title">{{ Auth::user()->position_name }}</h6>
+                    <h6 class="card-subtitle" title="Department/Team">{{ Auth::user()->team_name }}</h6>
+                <br>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="divider"></div>
+            <ul class="nav menu visible-md-block visible-lg-block">
+                @if(Auth::user()->isAdmin())
+                    @include('layouts.menu.admin')
+                @else 
+                    @include('layouts.menu.normal')
                 @endif
             </ul>
         </div>
@@ -171,10 +124,10 @@ body{
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                <h4 class="modal-title"></h4>
               </div>
               <div class="modal-body">
-                <p id="message">Some text in the modal.</p>
+                <p id="message"></p>
               </div>
               <div class="modal-footer">
                  {{ Form::open(array('url' => 'employee_info/', 'class' => ' delete_form' )) }}

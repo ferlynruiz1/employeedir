@@ -50,7 +50,7 @@ Home
     }
 </style>
 <br>
-    <div class="col-md-4">
+    <div class="col-lg-4 col-md-6">
             <div class="panel panel-default ">
                 <div class="panel-heading">
                     Newest Hired
@@ -101,7 +101,7 @@ Home
             </div>
             <button class="pull-right" id="backtotop">Back to top</button>
         </div>
-        <div class="col-md-4">
+        <div class="col-lg-4 col-md-6">
             <div class="panel panel-default ">
                 <div class="panel-heading">
                     Birthday Celebrants for {{ date('F') }} 
@@ -132,7 +132,7 @@ Home
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-lg-4 col-md-6">
             <div class="panel panel-default ">
                 <div class="panel-heading">
                     ElinkGagements Activities

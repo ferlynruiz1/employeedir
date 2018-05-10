@@ -8,8 +8,8 @@
     <a href="{{url('employees')}}">
         <em class="fa fa-user">&nbsp;</em>
         Employees
-     </a>
- </li>
+    </a>
+</li>
 <li <?php echo \Request::url() == url('department') ? 'class="active"' : ''; ?>>
     <a href="{{url('department')}}">
         <em class="fa fa-users">&nbsp;</em> 

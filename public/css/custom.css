@@ -13,7 +13,7 @@ body{
 footer {
     color: white !important;
 }
-@media (min-width: 768px){
+@media (min-width: 766px){
     .sidebar {
         left: 7.5%;
         width: 14.5%;
@@ -29,11 +29,18 @@ nav.navbar, .content-holder{
     }
     .sidebar {
         left: 5%;
-        width: 14.5%;
+        width: 220px;
     }
     nav.navbar, .content-holder{
         width: 90%;
         margin: 0 auto;
+    }
+}
+
+@media (max-width: 765px){
+    .sidebar {
+        left:0;
+        width: 100%;
     }
 }
 .sidebar ul.nav li a {

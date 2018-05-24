@@ -38,6 +38,9 @@ Employee / Import
 <script type="text/javascript">
     var cronimport = false;
     var cronattrition = false;
+    var import_result;
+    var attrition_result;
+
     function checkSuccess(){
         if(cronimport && cronattrition) {
             alert("success");
@@ -45,20 +48,22 @@ Employee / Import
     }
     $('#sync_now').click(function(){
         $.ajax({url: "{{ url('/cron/attrition') }}", success: function(result){
+            import_result = result;
               console.log(result);
               cronattrition = true;
               checkSuccess();
               console.log();
             },
             dataType: "json"
-          });
+        });
         $.ajax({url: "{{ url('/cron/importlatest') }}", success: function(result){
-              console.log(result);
-              cronimport = true;
-              checkSuccess();
+            attrition_result = result;
+            console.log(result);
+            cronimport = true;
+            checkSuccess();
             },
-            dataType: "json"
-          });
+        dataType: "json"
+        });
     });
 </script>
 @endsection

@@ -60,11 +60,11 @@ Employee / Import
             <div class="panel-body">
                 <div class="col-md-6" style="padding: 0px !important;">
                     <p>Deleted Employees</p>
-                    <a type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <a type="button" data-toggle="collapse" data-target="#collapseDeleted" aria-expanded="false" aria-controls="collapseDeleted" id="deleted_toggle_btn">
                         view deleted
                       </a>
 
-                    <div class="collapse in" id="collapseExample">
+                    <div class="collapse in" id="collapseDeleted">
                       <div class="card card-body" id="deleted_employees_div">
 
                       </div>
@@ -72,10 +72,10 @@ Employee / Import
                 </div>
                 <div class="col-md-6" style="padding: 0px !important;">
                     <p>Inserted Employees</p>
-                    <a  type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <a  type="button" data-toggle="collapse" data-target="#collapseInserted" aria-expanded="false" aria-controls="collapseInserted" id="inserted_toggle_btn">
                         view inserted
                       </a>
-                    <div class="collapse in" id="collapseExample">
+                    <div class="collapse in" id="collapseInserted">
                       <div class="card card-body" id="inserted_employees_div">
 
                       </div>
@@ -94,10 +94,22 @@ Employee / Import
     var cronattrition = false;
     var import_result;
     var attrition_result;
-
+    $('#deleted_toggle_btn').click(function(){
+        if($('#collapseDeleted').attr("aria-expanded")){
+            $(this).html('hide deleted employees');
+        }else{
+            $(this).html('show deleted employees');
+        }
+    });
+     $('#inserted_toggle_btn').click(function(){
+        if($('#collapseInserted').attr("aria-expanded")){
+            $(this).html('hide inserted employees');
+        }else{
+            $(this).html('show inserted employees');
+        }
+    });
     function checkSuccess(){
         if(cronimport && cronattrition) {
-            alert("success");
             $('#deleted_employees_div').append('<br>');
             for (var i = 0; i < attrition_result.deleted.length ; i++) {
                 $('#deleted_employees_div').append('<p class="attrition">' + attrition_result.deleted[i] + '</p>');
@@ -117,7 +129,6 @@ Employee / Import
 
         $.ajax({url: "{{ url('/cron/importlatest') }}", success: function(result){
             import_result = result;
-            console.log(result);
             cronimport = true;
             checkSuccess();
             },
@@ -126,10 +137,8 @@ Employee / Import
 
         $.ajax({url: "{{ url('/cron/attrition') }}", success: function(result){
             attrition_result = result;
-              console.log(result);
               cronattrition = true;
               checkSuccess();
-              console.log();
             },
             dataType: "json"
         });

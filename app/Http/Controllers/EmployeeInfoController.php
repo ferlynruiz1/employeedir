@@ -1170,7 +1170,7 @@ class EmployeeInfoController extends Controller
                 }
             }
         }
-        $result = json_encode(["deleted" => $to_be_deleted, "number_employees_deleted" =>  $num_updates])
+        $result = json_encode(["deleted" => $to_be_deleted, "number_employees_deleted" =>  $num_updates]);
 
 
         $bytes_written = File::put('./storage/logs/cron_attrition.txt', $result);

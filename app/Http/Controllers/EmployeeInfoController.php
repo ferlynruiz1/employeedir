@@ -1044,7 +1044,7 @@ class EmployeeInfoController extends Controller
         if ($bytes_written === false) {
             echo "Error writing to file";
         }
-        return "\n\n" . $result;
+        return $result;
     }
     public function attrition(Request $request) {
         $path = "/var/www/uploads/attrition"; 
@@ -1061,7 +1061,7 @@ class EmployeeInfoController extends Controller
                 $latest_filename = $entry;
             }
         }
-        $to_be_deleted = "";
+        $to_be_deleted = array();
         $num_inserts = 0;
         $num_updates = 0;
         $updates = array();
@@ -1117,7 +1117,7 @@ class EmployeeInfoController extends Controller
                         $num_updates ++;
                         
                         // display attrition employee name
-                        $to_be_deleted .= ucwords(strtolower($cells[$FULLNAME])) . "\n";
+                        array_push($to_be_deleted, ucwords(strtolower($cells[$FULLNAME])));
 
                         // store in attrition list
                         $attrition = EmployeeAttrition::where('employee_id', '=', '%' . $cells[$EID] . '%');
@@ -1170,7 +1170,7 @@ class EmployeeInfoController extends Controller
                 }
             }
         }
-        $result = $to_be_deleted . "\nNumber of employees deleted in db: " . $num_updates;
+        $result = json_encode(["deleted" => $to_be_deleted, "number_employees_deleted" =>  $num_updates])
 
 
         $bytes_written = File::put('./storage/logs/cron_attrition.txt', $result);
@@ -1178,6 +1178,6 @@ class EmployeeInfoController extends Controller
         if ($bytes_written === false) {
             echo "Error writing to file";
         }
-        return "\n\n" . $result;
+        return $result;
     }
 }

@@ -35,6 +35,9 @@ Employee / Import
         font-size: 13px;
         padding: 5px;
     }
+    #deleted_employees_div, #inserted_employees_div{
+        margin-top: 5pxl
+    }
 </style>
     <div class="col-md-4">
         <div class="section-header">
@@ -60,6 +63,7 @@ Employee / Import
                     <a type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         view deleted
                       </a>
+
                     <div class="collapse in" id="collapseExample">
                       <div class="card card-body" id="deleted_employees_div">
 
@@ -72,7 +76,7 @@ Employee / Import
                         view inserted
                       </a>
                     <div class="collapse in" id="collapseExample">
-                      <div class="card card-body" id="inserted_employee_div">
+                      <div class="card card-body" id="inserted_employees_div">
 
                       </div>
                     </div>
@@ -94,11 +98,13 @@ Employee / Import
     function checkSuccess(){
         if(cronimport && cronattrition) {
             alert("success");
+            $('#deleted_employees_div').append('<br>');
             for (var i = 0; i < attrition_result.deleted.length ; i++) {
                 $('#deleted_employees_div').append('<p class="attrition">' + attrition_result.deleted[i] + '</p>');
             }
+            $('#inserted_employees_div').append('<br>');
             for (var i = 0; i < import_result.Inserted.length ; i++) {
-                $('#inserted_employee_div').append('<p class="inserted">' + import_result.Inserted[i] + '</p>');
+                $('#inserted_employees_div').append('<p class="inserted">' + import_result.Inserted[i] + '</p>');
             }
             $('#result_messaging_div').show();
         }
@@ -106,6 +112,9 @@ Employee / Import
     $('#sync_now').click(function(){
         cronimport = false;
         cronattrition = false;
+        $('#deleted_employees_div').html('');
+        $('#inserted_employees_div').html('');
+
         $.ajax({url: "{{ url('/cron/importlatest') }}", success: function(result){
             import_result = result;
             console.log(result);

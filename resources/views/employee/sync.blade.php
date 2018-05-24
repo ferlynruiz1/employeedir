@@ -30,11 +30,6 @@ Employee / Import
         line-height: 18px;
         margin-left: 5px;
     }
-    a[type=button]{
-        cursor: pointer;
-        font-size: 13px;
-        padding: 5px;
-    }
     #deleted_employees_div, #inserted_employees_div{
         margin-top: 5pxl
     }
@@ -60,21 +55,14 @@ Employee / Import
             <div class="panel-body">
                 <div class="col-md-6" style="padding: 0px !important;">
                     <p>Deleted Employees</p>
-                    <a type="button" data-toggle="collapse" data-target="#collapseDeleted" aria-expanded="false" aria-controls="collapseDeleted" id="deleted_toggle_btn">
-                        view deleted
-                      </a>
-
                     <div class="collapse in" id="collapseDeleted">
                       <div class="card card-body" id="deleted_employees_div">
-
                       </div>
                     </div>
                 </div>
                 <div class="col-md-6" style="padding: 0px !important;">
                     <p>Inserted Employees</p>
-                    <a  type="button" data-toggle="collapse" data-target="#collapseInserted" aria-expanded="false" aria-controls="collapseInserted" id="inserted_toggle_btn">
-                        view inserted
-                      </a>
+                    
                     <div class="collapse in" id="collapseInserted">
                       <div class="card card-body" id="inserted_employees_div">
 
@@ -94,20 +82,7 @@ Employee / Import
     var cronattrition = false;
     var import_result;
     var attrition_result;
-    $('#deleted_toggle_btn').click(function(){
-        if($('#collapseDeleted').attr("aria-expanded")){
-            $(this).html('hide deleted employees');
-        }else{
-            $(this).html('show deleted employees');
-        }
-    });
-     $('#inserted_toggle_btn').click(function(){
-        if($('#collapseInserted').attr("aria-expanded")){
-            $(this).html('hide inserted employees');
-        }else{
-            $(this).html('show inserted employees');
-        }
-    });
+   
     function checkSuccess(){
         if(cronimport && cronattrition) {
             $('#deleted_employees_div').append('<br>');

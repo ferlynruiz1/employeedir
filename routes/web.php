@@ -176,7 +176,9 @@ Route::middleware(['auth'])->group(function(){
 		return view('employee.export')->with('files', $files);
 	});
 	Route::get('exportdownload', 'EmployeeInfoController@exportdownload');
-
+	Route::get('employees/sync', function(){
+		return view('employee.sync');
+	});
 });
 
 Route::post('import/birthdays', "EmployeeInfoController@importbday");

@@ -9,7 +9,7 @@ Employees
 <style type="text/css">
     .emp-profile{
         background-color: white;
-    }
+    } 
     .col-md-12{
         margin-bottom: 1px !important;
     }

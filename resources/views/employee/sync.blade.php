@@ -17,7 +17,23 @@ Employee / Import
         display: none;
     }
     #result_messaging_div{
-        display: none;
+        /*display: none;*/
+    }
+    p.inserted {
+        color: #03A9F4;
+    }
+    p.attrition {
+        color: #DD2C00;
+    }
+    p.attrition, p.inserted {
+        font-size: 13px;
+        line-height: 18px;
+        margin-left: 5px;
+    }
+    a[type=button]{
+        cursor: pointer;
+        font-size: 13px;
+        padding: 5px;
     }
 </style>
     <div class="col-md-4">
@@ -42,7 +58,7 @@ Employee / Import
                 <div class="col-md-6" style="padding: 0px !important;">
                     <p>Deleted Employees</p>
                     <a type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        Button with data-target
+                        view deleted
                       </a>
                     <div class="collapse in" id="collapseExample">
                       <div class="card card-body" id="deleted_employees_div">
@@ -53,7 +69,7 @@ Employee / Import
                 <div class="col-md-6" style="padding: 0px !important;">
                     <p>Inserted Employees</p>
                     <a  type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        Button with data-target
+                        view inserted
                       </a>
                     <div class="collapse in" id="collapseExample">
                       <div class="card card-body" id="inserted_employee_div">
@@ -78,12 +94,12 @@ Employee / Import
     function checkSuccess(){
         if(cronimport && cronattrition) {
             alert("success");
-            for (var i = 0; i < attrition_result.deleted ; i++) {
-                $('#deleted_employees_div').append('<p>' + attrition_result.deleted[i] + '</p>');
+            for (var i = 0; i < attrition_result.deleted.length ; i++) {
+                $('#deleted_employees_div').append('<p class="attrition">' + attrition_result.deleted[i] + '</p>');
             }
-            // for (var i = 0; i < import_result.deleted ; i++) {
-            //     $('#inserted_employee_div').append('<p>' + import_result.inserted[i] + '</p>');
-            // }
+            for (var i = 0; i < import_result.Inserted.length ; i++) {
+                $('#inserted_employee_div').append('<p class="inserted">' + import_result.Inserted[i] + '</p>');
+            }
             $('#result_messaging_div').show();
         }
     }

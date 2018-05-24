@@ -19,12 +19,22 @@ Employees
     .header-container{
         margin-top: 20px;
     }
+    .header-container + div {
+        margin-top: 50px;
+    }
     #search_employee{
         padding-left: 5px;
     }
     .alphabet-search{
         display: inline-flex;
         list-style: none;
+        -webkit-padding-start: 0px !important;
+    }
+    @media(max-width: 1138px){
+        .alphabet-search{
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
     }
     .alphabet-search li{
         margin-left: 10px;
@@ -128,14 +138,14 @@ Employees
                     <div style="background-image: url({{$employee->profile_img}}); width: 60px; height: 60px;margin: 15px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; border-radius: 50%;">
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-lg-3 col-md-4">
                         <h4 class="timeline-title name-format" style="color: #444;font-weight: 500; font-size: 17px; margin-top: 10px;"><a href="{{url('profile/'. $employee->id)}}">{{$employee->fullname()}} </a>
                         </h4>
                    
                     <h5 style="color: #455;">{{ $employee->position_name}}</h5>
                     <h6>{{$employee->team_name}} <?php echo isset($employee->account) ? "- ". $employee->account->account_name : "" ; ?></h6>
                 </div>
-                <div class="col-md-3">
+                <div class="col-lg-3 col-md-12" style="padding-left: 110px;">
                     <h5>
                         <span class="fa fa-id-card" title="Employee ID"></span>
                         <span class="employee-description">&nbsp;&nbsp;{{$employee->eid}}</span>
@@ -157,7 +167,7 @@ Employees
                     </h5>
                     @endif
                 </div>
-                <div class="col-md-3">
+                <div class="col-lg-3 col-md-12" style="padding-left: 110px;">
                     @if(isset($employee->supervisor_name))
                     <h5 style="font-size: 13px;">
                         <span class="fa fa-user" title="Supervisor"></span>
@@ -178,7 +188,7 @@ Employees
     </div>
     @endforeach
 </div>
-    <div class="col-md-12 header-container" style="margin-top: 0px;">
+    <div class="col-md-12" style="margin-top: 0px;">
         <div class="pull-right">
             {{ $employees->appends(Illuminate\Support\Facades\Input::except('page'))->links() }}
         </div>

@@ -40,6 +40,12 @@
         Export
     </a>
 </li>
+<li <?php echo \Request::url() == url('employees/sync') ? 'class="active"' : ''; ?>>
+    <a href="{{url('employees/sync')}}">
+        <em class="fa fa-spinner">&nbsp;</em> 
+        Run Cron Job
+    </a>
+</li>
 <li>
     <a href="{{ route('logout')}}">
         <em class="fa fa-power-off">&nbsp;</em>

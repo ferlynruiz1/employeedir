@@ -17,7 +17,7 @@ Employee / Import
         display: none;
     }
     #result_messaging_div{
-        /*display: none;*/
+        display: none;
     }
     p.inserted {
         color: #03A9F4;

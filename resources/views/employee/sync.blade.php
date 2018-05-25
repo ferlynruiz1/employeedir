@@ -69,6 +69,15 @@ Employee / Import
                       </div>
                     </div>
                 </div>
+                <div class="col-md-6" style="padding: 0px !important;">
+                    <p>Updated Employees</p>
+                    
+                    <div class="collapse in" id="collapseUpdated">
+                      <div class="card card-body" id="updated_employees_div">
+
+                      </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -85,13 +94,16 @@ Employee / Import
    
     function checkSuccess(){
         if(cronimport && cronattrition) {
-            $('#deleted_employees_div').append('<br>');
             for (var i = 0; i < attrition_result.deleted.length ; i++) {
                 $('#deleted_employees_div').append('<p class="attrition">' + attrition_result.deleted[i] + '</p>');
             }
+
             $('#inserted_employees_div').append('<br>');
             for (var i = 0; i < import_result.Inserted.length ; i++) {
                 $('#inserted_employees_div').append('<p class="inserted">' + import_result.Inserted[i] + '</p>');
+            }
+            for (var i = 0; i < import_result.Updated.length ; i++) {
+                $('#updated_employees_div').append('<p class="updated">' + import_result.Updated[i] + '</p>');
             }
             $('#result_messaging_div').show();
         }

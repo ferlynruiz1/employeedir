@@ -69,7 +69,7 @@ Employee / Import
                       </div>
                     </div>
                 </div>
-                <div class="col-md-6" style="padding: 0px !important;">
+                <!-- <div class="col-md-6" style="padding: 0px !important;">
                     <p>Updated Employees</p>
                     
                     <div class="collapse in" id="collapseUpdated">
@@ -77,7 +77,7 @@ Employee / Import
 
                       </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -102,9 +102,9 @@ Employee / Import
             for (var i = 0; i < import_result.Inserted.length ; i++) {
                 $('#inserted_employees_div').append('<p class="inserted">' + import_result.Inserted[i] + '</p>');
             }
-            for (var i = 0; i < import_result.Updated.length ; i++) {
-                $('#updated_employees_div').append('<p class="updated">' + import_result.Updated[i] + '</p>');
-            }
+            // for (var i = 0; i < import_result.Updated.length ; i++) {
+            //     $('#updated_employees_div').append('<p class="updated">' + import_result.Updated[i] + '</p>');
+            // }
             $('#result_messaging_div').show();
         }
     }

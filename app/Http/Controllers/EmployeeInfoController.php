@@ -441,7 +441,6 @@ class EmployeeInfoController extends Controller
                         array_push($invalid_emails, $cells[$FIRST_NAME]);
                     }
                     
-                    
                     continue;
                 }
 

@@ -433,7 +433,7 @@ class EmployeeInfoController extends Controller
             } else {
                 $cells[$EMAIL] = trim($cells[$EMAIL]);
                 $cells[$EID] = trim($cells[$EID]);
-                $emp = User::whereEid($cells[$EID]);
+                $emp = User::withTrashed()->where('eid','LIKE','%'.$cells[$EID].'%');
 
                 if (!$cells[$EMAIL] || !filter_var($cells[$EMAIL], FILTER_VALIDATE_EMAIL)) {
                     // list invalid email
@@ -864,7 +864,7 @@ class EmployeeInfoController extends Controller
                 
                 $cells[$EMAIL] = trim($cells[$EMAIL]);
                 $cells[$EID] = trim($cells[$EID]);
-                $emp = User::where('eid', 'LIKE', '%'.$cells[$EID].'%');
+                $emp = User::withTrashed()->where('eid', 'LIKE', '%'.$cells[$EID].'%');
 
                 if (!$cells[$EMAIL] || !filter_var($cells[$EMAIL], FILTER_VALIDATE_EMAIL)) {
                     // list invalid email

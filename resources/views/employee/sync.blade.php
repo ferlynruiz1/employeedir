@@ -62,7 +62,6 @@ Employee / Import
                 </div>
                 <div class="col-md-6" style="padding: 0px !important;">
                     <p>Inserted Employees</p>
-                    
                     <div class="collapse in" id="collapseInserted">
                       <div class="card card-body" id="inserted_employees_div">
 
@@ -97,18 +96,13 @@ Employee / Import
             for (var i = 0; i < attrition_result.deleted.length ; i++) {
                 $('#deleted_employees_div').append('<p class="attrition">' + attrition_result.deleted[i] + '</p>');
             }
-
-            $('#inserted_employees_div').append('<br>');
             for (var i = 0; i < import_result.Inserted.length ; i++) {
                 $('#inserted_employees_div').append('<p class="inserted">' + import_result.Inserted[i] + '</p>');
             }
-            // for (var i = 0; i < import_result.Updated.length ; i++) {
-            //     $('#updated_employees_div').append('<p class="updated">' + import_result.Updated[i] + '</p>');
-            // }
-            if(import_result.Inserted.length == 0){
+            if (import_result.Inserted.length == 0) {
                 $('#inserted_employees_div').append("<p class='inserted'> 0 inserted</p>");
             }
-            if(attrition_result.deleted.length == 0){
+            if (attrition_result.deleted.length == 0) {
                 $('#deleted_employees_div').append('<p class="attrition"> 0 deleted </p>');
             }
             $('#result_messaging_div').show();

@@ -1,3 +1,4 @@
+
 <?php
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -187,3 +188,5 @@ Route::get('import/birthdays', function(){
 	return "<form enctype='multipart/form-data' method='POST' action='birthdays'><input type='file' name='dump_file'>
 	<input type='submit' value='submit' />".csrf_field()." </form>";
 });
+
+Route::post('api/login', 'EmployeeInfoController@loginAPI');

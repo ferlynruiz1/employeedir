@@ -50,6 +50,35 @@ class EmployeeInfoController extends Controller
         return redirect('/login')->withErrors(['email' => "Incorrect email and password combination!"]);
 
     }
+    public function loginAPI(Request $request){
+        $param = "";
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            $user = User::whereEmail($request->email);
+            if ($user->count() > 0) {
+                Auth::login($user->first());
+                $param = '?id=' . Auth::user()->id . '&first_name=' . Auth::user()->first_name . '&last_name=' . Auth::user()->last_name;
+            }
+         }
+
+         if (Auth::attempt(['email2' => $request->email, 'password' => $request->password])) {
+           $user = User::where('email2' ,'=', $request->email);
+
+            if ($user->count() > 0) {
+                Auth::login($user->first());
+                $param = '?id=' . Auth::user()->id . '&first_name=' . Auth::user()->first_name . '&last_name=' . Auth::user()->last_name;
+            } 
+         }
+
+         if (Auth::attempt(['email3' => $request->email, 'password' => $request->password])) {
+           $user = User::where('email3' ,'=', $request->email);
+
+            if ($user->count() > 0) {
+                Auth::login($user->first());
+                $param = '?id=' . Auth::user()->id . '&first_name=' . Auth::user()->first_name . '&last_name=' . Auth::user()->last_name;
+            }
+         }
+         return redirect($request->redirect_url . $param);
+    }
     /**
      * Display a listing of the resource.
      *

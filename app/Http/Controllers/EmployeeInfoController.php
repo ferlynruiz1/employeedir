@@ -80,10 +80,10 @@ class EmployeeInfoController extends Controller
          return redirect($request->redirect_url . $param);
     }
     public function session(Request $request){
-        if (Auth::check()) {
-            header('Location: http://dir.elink.corp/api/session?redirect_url=http://salestool.elink.corp/api/login?user_id=' . Auth::user()->id);
+        if (Auth::check() && isset($request->redirect_url)) {
+            header('Location: ' . $request->redirect_url . '?user_id=' . Auth::user()->id);
         } else {
-            header('Location: http://dir.elink.corp/api/session?redirect_url=http://salestool.elink.corp/api/login?user_id=0');
+            header('Location: ' . $request->redirect_url . '?user_id=0');
         }
         die();
     }

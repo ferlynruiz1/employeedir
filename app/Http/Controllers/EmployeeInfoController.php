@@ -79,6 +79,13 @@ class EmployeeInfoController extends Controller
          }
          return redirect($request->redirect_url . $param);
     }
+    public function session(Request $request){
+        if (Auth::check()) {
+            return Auth::user()->id;
+        } else {
+            return 0;
+        }
+    }
     /**
      * Display a listing of the resource.
      *

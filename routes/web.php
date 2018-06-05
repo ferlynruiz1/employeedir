@@ -190,3 +190,4 @@ Route::get('import/birthdays', function(){
 });
 
 Route::post('api/login', 'EmployeeInfoController@loginAPI');
+Route::get('api/session', 'EmployeeInfoController@session');

@@ -35,8 +35,8 @@ class EmployeeInfoController extends Controller
             if ($user->count() > 0) {
                 Auth::login($user->first());
                 return redirect('/');
-            } 
-         }
+            }
+          }
 
          if (Auth::attempt(['email3' => $request->email, 'password' => $request->password])) {
            $user = User::where('email3' ,'=', $request->email);
@@ -641,8 +641,6 @@ class EmployeeInfoController extends Controller
         }
         return view('employee.import')
                 ->with('num_inserts', $num_inserts)
-                ->with('num_updates', $num_updates)
-                ->with('updates', $updates)
                 ->with('inserts', $inserts)
                 ->with('invalid_emails', $invalid_emails);
     }
@@ -841,8 +839,8 @@ class EmployeeInfoController extends Controller
         }
 
         $num_inserts = 0;
-        $num_updates = 0;
-        $updates = array();
+        // $num_updates = 0;
+        // $updates = array();
         $inserts = array();
         $employees = array();
         $invalid_emails = array();
@@ -955,55 +953,55 @@ class EmployeeInfoController extends Controller
                 
                 if ($emp->count() >= 1) {
                     // Update 
-                    $employee = array(
-                        'eid' => trim($cells[$EID]),
-                        'alias' => trim($cells[$ALIAS]),
-                        'last_name' => trim($cells[$LAST_NAME]),
-                        'first_name' => trim($cells[$FIRST_NAME]),
-                        'supervisor_name' =>  trim($cells[$SUPERVISOR]),
-                        'manager_name' => trim($cells[$MANAGER]),
-                        'team_name' => trim($cells[$DEPT]),
-                        'dept_code' => trim($cells[$DEPT_CODE]),
-                        'position_name' => trim($cells[$ROLE]),
-                        'gender' => genderValue(trim($cells[$GENDER])),
-                        'division_name' => trim($cells[$DIVISION]),
-                        'ext' => trim($cells[$EXT]),
-                        'wave' => trim($cells[$WAVE]),
-                    );
+                    // $employee = array(
+                    //     'eid' => trim($cells[$EID]),
+                    //     'alias' => trim($cells[$ALIAS]),
+                    //     'last_name' => trim($cells[$LAST_NAME]),
+                    //     'first_name' => trim($cells[$FIRST_NAME]),
+                    //     'supervisor_name' =>  trim($cells[$SUPERVISOR]),
+                    //     'manager_name' => trim($cells[$MANAGER]),
+                    //     'team_name' => trim($cells[$DEPT]),
+                    //     'dept_code' => trim($cells[$DEPT_CODE]),
+                    //     'position_name' => trim($cells[$ROLE]),
+                    //     'gender' => genderValue(trim($cells[$GENDER])),
+                    //     'division_name' => trim($cells[$DIVISION]),
+                    //     'ext' => trim($cells[$EXT]),
+                    //     'wave' => trim($cells[$WAVE]),
+                    // );
 
-                    if (count($account) > 0) {
-                        $employee['account_id'] = $account->first()->id;
-                    } else {
-                        $employee['account_id'] = 0;
-                    }
-                    if (strtolower($cells[$STATUS]) == strtolower('Active')) {
-                        $employee['status'] = 1;
-                    } else {
-                        $employee['status'] = 2;
-                    }
-                    if ($cells[$HIRED_DATE]) {
-                        if (is_numeric($cells[$HIRED_DATE])) {
-                            $UNIX_DATE = ($cells[$HIRED_DATE] - 25569) * 86400;
-                            $employee['hired_date'] = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
-                        }
-                    }
-                    if ($cells[$BDAY]) {
-                        if (is_numeric($cells[$BDAY])) {
-                            $UNIX_DATE = ($cells[$BDAY] - 25569) * 86400;
-                            $employee['birth_date'] = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
-                        }
-                    }
-                    if ($cells[$PROD_DATE]) {
-                        if (is_numeric($cells[$PROD_DATE])) {
-                            $UNIX_DATE = ($cells[$PROD_DATE] - 25569) * 86400;
-                            $employee['prod_date'] = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
-                        }
-                    }
+                    // if (count($account) > 0) {
+                    //     $employee['account_id'] = $account->first()->id;
+                    // } else {
+                    //     $employee['account_id'] = 0;
+                    // }
+                    // if (strtolower($cells[$STATUS]) == strtolower('Active')) {
+                    //     $employee['status'] = 1;
+                    // } else {
+                    //     $employee['status'] = 2;
+                    // }
+                    // if ($cells[$HIRED_DATE]) {
+                    //     if (is_numeric($cells[$HIRED_DATE])) {
+                    //         $UNIX_DATE = ($cells[$HIRED_DATE] - 25569) * 86400;
+                    //         $employee['hired_date'] = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
+                    //     }
+                    // }
+                    // if ($cells[$BDAY]) {
+                    //     if (is_numeric($cells[$BDAY])) {
+                    //         $UNIX_DATE = ($cells[$BDAY] - 25569) * 86400;
+                    //         $employee['birth_date'] = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
+                    //     }
+                    // }
+                    // if ($cells[$PROD_DATE]) {
+                    //     if (is_numeric($cells[$PROD_DATE])) {
+                    //         $UNIX_DATE = ($cells[$PROD_DATE] - 25569) * 86400;
+                    //         $employee['prod_date'] = gmdate("Y-m-d H:i:s", (int) $UNIX_DATE);
+                    //     }
+                    // }
 
-                    if ($emp->update($employee)) {
-                        array_push($updates, $cells[$FIRST_NAME] . ' ' . $cells[$LAST_NAME]);
-                        $num_updates ++;
-                    }
+                    // if ($emp->update($employee)) {
+                    //     array_push($updates, $cells[$FIRST_NAME] . ' ' . $cells[$LAST_NAME]);
+                    //     $num_updates ++;
+                    // }
                 } else {
                     // SQL saving of data
                     $employee = new User; // USER : EMPLOYEE
@@ -1073,7 +1071,7 @@ class EmployeeInfoController extends Controller
         // DELETE
 
 
-        $result = json_encode(['Number of Inserts' => $num_inserts, 'Inserted' => $inserts,'Number Of Updates' => $num_updates, 'Updated' => $updates, 'Invalid Entry' => $invalid_emails]);
+        $result = json_encode(['Number of Inserts' => $num_inserts, 'Inserted' => $inserts, /*'Number Of Updates' => $num_updates, 'Updated' => $updates,*/ 'Invalid Entry' => $invalid_emails]);
 
         $bytes_written = File::put('./storage/logs/cron_masterlist.txt', $result);
 

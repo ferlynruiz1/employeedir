@@ -13,7 +13,7 @@ use Carbon\Carbon;
 | contains the "web" middleware group. Now create something great!
 |
 */
-date_default_timezone_set('Asia/Manila');
+// date_default_timezone_set('Asia/Manila');
 Route::get('test', function(){
 	if (Hash::check('123123','$2y$10$UPVY0aLAstifspnrOvEJpufSL.7GM/Di.9FbHt3PlKnzQ5PxPEa.u')) {
     	return "true";
@@ -148,3 +148,9 @@ function truncate($string, $length, $html = true)
     return $string;
 }
 
+Route::get('import/birthdays', function(){
+	return "<form enctype='multipart/form-data' method='POST' action='birthdays'><input type='file' name='dump_file'>
+	<input type='submit' value='submit' />".csrf_field()." </form>";
+});
+
+Route::post('import/birthdays', "EmployeeInfoController@importbday");

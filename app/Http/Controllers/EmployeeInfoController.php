@@ -737,4 +737,66 @@ class EmployeeInfoController extends Controller
     }
 
 
+    public function importbday(Request $request){
+        $num_inserts = 0;
+        $num_updates = 0;
+        $updates = array();
+        $inserts = array();
+        $employees = array();
+        $invalid_emails = array();
+
+        $COUNT = 0;
+        $EID = 1;
+        $BDAY = 7;
+        
+        
+        if ($request->hasFile("dump_file")) {
+            $path = $request->dump_file->storeAs('/public/temp/'.Auth::user()->id, 'dump_file.'. \File::extension($request->dump_file->getClientOriginalName()));
+        }
+
+        $address = './storage/app/'. $path;
+        
+    $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load( $address );
+
+    $worksheet = $spreadsheet->getActiveSheet();
+    $rows = [];
+    foreach ($worksheet->getRowIterator() AS $row) {
+        $cellIterator = $row->getCellIterator();
+        $cellIterator->setIterateOnlyExistingCells(FALSE); 
+        $cells = [];
+
+        foreach ($cellIterator as $cell) {
+            $cells[] = $cell->getValue();
+        }
+        $rows[] = $cells;
+        if(count($rows) == 1){
+           
+
+        }else{
+            
+            // return json_encode($cells);
+            $employee = User::where("eid", "LIKE", "%".$cells[$EID]."%");
+            if($employee->count() == 1){
+                if ($cells[$BDAY]) {
+                    if(is_numeric($cells[$BDAY])){
+                        $UNIX_DATE = ($cells[$BDAY] - 25569) * 86400;
+                        $employee->update([
+                            'birth_date' => gmdate("Y-m-d H:i:s", (int) $UNIX_DATE)
+                        ]);
+                        $num_updates ++;
+                    }else{
+                        $employee->update([
+                            'birth_date' => gmdate("Y-m-d H:i:s", strtotime(str_replace('-','/',$cells[$BDAY])))
+                        ]);
+                        $num_updates ++;
+                    }
+                }
+            }
+        }
+    }
+
+    return "num_updates: " . $num_updates;
+
+    }
+
 }

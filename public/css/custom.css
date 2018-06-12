@@ -321,4 +321,11 @@ input[type="file"]#image_uploader {
     font-weight: 500;
     font-size: 16px;
 }
+label {
+    font-size: 13px;
+    font-weight: 500 !important;
+}
+.min-widt-200{
+    min-width: 200px !important;
+}
 /* END FORM CSS */

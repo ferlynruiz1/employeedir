@@ -67,26 +67,27 @@ Employee Information
         <div class="section-header">
             <h4>Employee Information</h4>
         </div>
+
         <div class="panel panel-container">
             <div class="panel-body">
                 <label>Personal Information</label>
-                <br>
+                <hr style="border-top: 1px dashed #dadada; margin-top: 1px; margin-bottom: 10px;">
                 <br>
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-2 min-widt-200">
                             <div class="form-group">
                                 <label>First Name</label>
                                 <p class="employee-details-value name-format">{{ $employee->first_name}}</p>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2 min-widt-200">
                             <div class="form-group">
                                 <label>Middle Name</label>
                                  <p class="employee-details-value name-format">{{ $employee->middle_name}}</p>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2 min-widt-200">
                             <div class="form-group">
                                 <label>Last Name</label>
                                 <p class="employee-details-value name-format">{{ $employee->last_name}}</p>
@@ -94,13 +95,13 @@ Employee Information
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-2 min-widt-200">
                             <div class="form-group">
                                 <label>Employee ID</label>
                                 <p class="employee-details-value">{{ $employee->eid}}</p>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2 min-widt-200">
                             <div class="form-group">
                                 <label>Phone Name</label>
                                 <p class="employee-details-value name-format">{{ $employee->alias}}</p>
@@ -112,7 +113,7 @@ Employee Information
                                 <p class="employee-details-value">{{ $employee->gender()}}</p>
                             </div>
                         </div> -->
-                        <div class="col-md-3">
+                        <div class="col-md-2 min-widt-200">
                             <div class="form-group">
                                 <label>Birthdate</label>
                                 <p class="employee-details-value">{{ $employee->prettybirthdate()}}</p>
@@ -120,32 +121,31 @@ Employee Information
                         </div>
                     </div>
                     <br>
-                    <br>
                 </div>
                     <label>Job Information</label>
-                    <br>
+                    <hr style="border-top: 1px dashed #dadada; margin-top: 1px; margin-bottom: 10px;">
                     <br>
                     <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-3 min-widt-200">
                             <div class="form-group">
                                 <label>Position</label>
                                 <p class="employee-details-value">{{ $employee->position_name}}</p>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 min-widt-200">
                             <div class="form-group">
                                 <label>Supervisor</label>
                                 <p class="employee-details-value name-format">{{ $employee->supervisor_name }}</p>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 min-widt-200">
                             <div class="form-group">
                                 <label>Manager</label>
                                <p class="employee-details-value name-format">{{  $employee->manager_name }}</p>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 min-widt-200">
                             <div class="form-group">
                                 <label>Team/Department</label>
                                 <p class="employee-details-value">{{ $employee->team_name}}</p>
@@ -153,34 +153,37 @@ Employee Information
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-3 min-widt-200">
                             <div class="form-group">
                                 <label>Hire Date</label>
                                <p class="employee-details-value">{{ $employee->prettydatehired()}}</p>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 min-widt-200">
                             <div class="form-group">
                                 <label>Status</label>
                                <p class="employee-details-value">{{ $employee->status()}}</p>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 min-widt-200">
                             <div class="form-group">
                                 <label>Account</label>
                                <p class="employee-details-value">{{ @$employee->account->account_name}}</p>
                             </div>
                         </div>
                           @if(isset($employee->ext))
-                        <div class="col-md-3">
+                        <div class="col-md-3 min-widt-200">
                             <div class="form-group">
                                 <label>Phone Extension</label>
                                <p class="employee-details-value">{{ @$employee->ext}}</p>
                             </div>
                         </div>
                         @endif
+                        
+                    </div>
+                    <div class="row">
                         @if(isset($employee->prod_date))
-                        <div class="col-md-3">
+                        <div class="col-md-3 min-widt-200">
                             <div class="form-group">
                                 <label>Production date</label>
                                <p class="employee-details-value">{{ @$employee->prettyproddate()}}</p>
@@ -188,7 +191,7 @@ Employee Information
                         </div>
                         @endif
                         @if(isset($employee->wave))
-                        <div class="col-md-3">
+                        <div class="col-md-3 min-widt-200">
                             <div class="form-group">
                                 <label>Wave Number</label>
                                <p class="employee-details-value">{{ $employee->wave == "" ? "--" : $employee->wave }}</p>
@@ -197,11 +200,10 @@ Employee Information
                         @endif
                     </div>
                     <br>
-                    <br>
                 </div>
                 <br>
                 <label>Login Credentials</label>
-                <br>
+                <hr style="border-top: 1px dashed #dadada; margin-top: 1px; margin-bottom: 10px;">
                 <br>
                 <div class="col-md-12">
                     <div class="row">

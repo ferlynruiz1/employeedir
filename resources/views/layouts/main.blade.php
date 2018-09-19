@@ -45,6 +45,7 @@ body{
     <div class="content-holder">
         <!-- sidebar menu -->
         <div id="sidebar-collapse" class="sidebar col-md-3">
+            @auth
             <div class="profile-sidebar visible-sm-block visible-xs-block">
                 <div class="profile-userpic">
                     <div style="background-image: url('{{ Auth::user()->profile_img }}'); width: 100px; height: 100px;margin: 15px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; border-radius: 50%; float: left;">
@@ -60,15 +61,39 @@ body{
                 <div class="clear"></div>
             </div>
             <div class="divider"></div>
+            @endauth
+
+            <!-- @guest
+                <div class="profile-sidebar visible-sm-block visible-xs-block">
+                    
+                    <div class="profile-usertitle">
+                        <br>
+                        <h4 class="card-title m-t-10" style="font-size: 15px !important;">Hello !</h4>
+                        <h5 class="card-subtitle" title="Job Title">Guest User</h5>
+                        <h6 class="card-subtitle" title="Department/Team"></h6>
+                        <br>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="divider"></div>
+            @endguest -->
+
             <ul class="nav visible-sm-block visible-xs-block">
-                @if(Auth::user()->isAdmin())
-                    @include('layouts.menu.admin')
-                @else 
+                @auth
+                    @if(Auth::user()->isAdmin())
+                        @include('layouts.menu.admin')
+                    @else
+                        @include('layouts.menu.normal')
+                    @endif 
+                @endauth
+                @guest
                     @include('layouts.menu.normal')
-                @endif
+                @endguest
             </ul>
 
+
             <div class="profile-sidebar visible-md-block visible-lg-block">
+                @auth
                 <div class="profile-userpic">
                     <div style="background-image: url('{{ Auth::user()->profile_img }}'); width: 100px; height: 100px;margin: 15px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; border-radius: 50%; float: left;">
                     </div>
@@ -76,19 +101,40 @@ body{
                 <div class="profile-usertitle">
                     <br>
                     <h4 class="card-title m-t-10" style="font-size: 15px !important;">{{ Auth::user()->fullname() }}</h4>
-                    <h5 class="card-subtitle" title="Job Title">{{ Auth::user()->position_name }}</h6>
+                    <h5 class="card-subtitle" title="Job Title">{{ Auth::user()->position_name }}</h5>
                     <h6 class="card-subtitle" title="Department/Team">{{ Auth::user()->team_name }}</h6>
                 <br>
                 </div>
                 <div class="clear"></div>
+                @endauth
+
+                <!--  @guest
+                <div class="profile-userpic">
+                    
+                </div>
+                <div class="profile-usertitle">
+                    <br>
+                    <h4 class="card-title m-t-10" style="font-size: 15px !important;">Hello !</h4>
+                    <h5 class="card-subtitle" title="Job Title">Guest User</h5>
+                    <h6 class="card-subtitle" title="Department/Team"></h6>
+                <br>
+                </div>
+                <div class="clear"></div>
+                @endguest -->
             </div>
-            <div class="divider"></div>
+                <div class="divider"></div>
+            
             <ul class="nav menu visible-md-block visible-lg-block">
-                @if(Auth::user()->isAdmin())
-                    @include('layouts.menu.admin')
-                @else 
+                @auth
+                    @if(Auth::user()->isAdmin())
+                        @include('layouts.menu.admin')
+                    @else
+                        @include('layouts.menu.normal')
+                    @endif 
+                @endauth
+                @guest
                     @include('layouts.menu.normal')
-                @endif
+                @endguest
             </ul>
         </div>
         <!-- Content -->

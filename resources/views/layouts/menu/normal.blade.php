@@ -10,6 +10,7 @@
         Employees
      </a>
  </li>
+ @auth
 <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
     <a href="{{url('myprofile')}}">
         <em class="fa fa-user">&nbsp;</em>
@@ -22,3 +23,14 @@
         Logout
     </a>
 </li>
+@endauth
+
+@guest
+
+<li>
+    <a href="{{ route('login')}}">
+        <em class="fa fa-sign-in">&nbsp;</em>
+        Login
+    </a>
+</li>
+@endguest

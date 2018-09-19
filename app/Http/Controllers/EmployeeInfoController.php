@@ -318,35 +318,37 @@ class EmployeeInfoController extends Controller
     }
     public function employees(Request $request)
     {
-        if (Auth::user()->isAdmin()) {
-            $employees = new User;
+        if(Auth::check()) {
+            if (Auth::user()->isAdmin()) {
+                $employees = new User;
 
-            if ($request->has('department') && $request->get('department') != "") {
-                $employees = $employees->where('team_name', 'LIKE', $request->get('department'));
+                if ($request->has('department') && $request->get('department') != "") {
+                    $employees = $employees->where('team_name', 'LIKE', $request->get('department'));
+                }
+
+                if ($request->has('position') && $request->get('position') != "") {
+                    $employees = $employees->where('position_name', 'LIKE', '%' . $request->get('position') . '%');
+                }
+
+                if ($request->has('no_profile_images') && $request->get('no_profile_images') == 'true'){
+                    $employees = $employees->where(function($query) use($request){
+                        $query->where('profile_img', 'LIKE', 'http://dir.elink.corp/public/img/nobody_m.original.jpg')
+                        ->orWhere('profile_img', 'LIKE', 'http://dir.elink.corp/public/img/nobody_f.original.jpg')
+                        ->orWhere('profile_img', '=', 'NULL');
+                    });
+                }
+
+                if ($request->has('inactive') && $request->get('inactive') != "") {
+                    $employees = $employees->onlyTrashed()->orWhere('status', '=', '2');
+                }
+
+                $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->get();
+                $departments = EmployeeDepartment::all();
+                $positions = User::allExceptSuperAdmin()->select('position_name')->distinct()->get();
+                return view('employee.employees')->with('employees', $employees)->with('request', $request)->with('departments', $departments)->with('positions', $positions);
             }
-
-            if ($request->has('position') && $request->get('position') != "") {
-                $employees = $employees->where('position_name', 'LIKE', '%' . $request->get('position') . '%');
-            }
-
-            if ($request->has('no_profile_images') && $request->get('no_profile_images') == 'true'){
-                $employees = $employees->where(function($query) use($request){
-                    $query->where('profile_img', 'LIKE', 'http://dir.elink.corp/public/img/nobody_m.original.jpg')
-                    ->orWhere('profile_img', 'LIKE', 'http://dir.elink.corp/public/img/nobody_f.original.jpg')
-                    ->orWhere('profile_img', '=', 'NULL');
-                });
-            }
-
-            if ($request->has('inactive') && $request->get('inactive') != "") {
-                $employees = $employees->onlyTrashed()->orWhere('status', '=', '2');
-            }
-
-            $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->get();
-            $departments = EmployeeDepartment::all();
-            $positions = User::allExceptSuperAdmin()->select('position_name')->distinct()->get();
-            return view('employee.employees')->with('employees', $employees)->with('request', $request)->with('departments', $departments)->with('positions', $positions);
         }
-
+        
         $employees = new User;
         $query = array();
         if ($request->has('keyword') && $request->get('keyword') != "") {

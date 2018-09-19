@@ -20,7 +20,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -30,8 +30,11 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        if (Auth::user()->isAdmin()) {
-            return redirect('dashboard');
+
+        if (Auth::check()) {
+            if(Auth::user()->isAdmin()) {
+                return redirect('dashboard');
+            }
         } else {    
 
             return view('home')->with('new_hires', User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5))->with('employees', User::allExceptSuperAdmin()->get())->with('birthdays', User::whereRaw('MONTH(birth_date) = '.date('n'))->orderByRaw('DAYOFMONTH(birth_date) ASC')->get())->with('engagements', ElinkActivities::whereRaw('MONTH(activity_date) =' . date('n'))->orderBy('activity_date', 'DESC')->get());

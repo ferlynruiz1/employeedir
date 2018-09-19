@@ -95,13 +95,13 @@ Employees
             </select>
         </li>
         <li>
-            <select style="border-color: #ddd;padding: 7px; border-radius: 0px !important; font-size: 13px !important;" id="departments_list">
+            <select style="width: 200px; border-color: #ddd;padding: 7px; border-radius: 0px !important; font-size: 13px !important;" id="departments_list">
                 <option selected>Search by department:</option>
                 @foreach( $departments as $department)
                <option <?php echo $request->department == $department->department_name ? "selected" : "";?> >{{ $department->department_name}}</option>
                @endforeach
             </select>
-            <select style="border-color: #ddd; padding: 7px; border-radius: 0px !important; font-size: 13px !important; display: none;" id="position_list">
+            <select style="width: 200px; border-color: #ddd; padding: 7px; border-radius: 0px !important; font-size: 13px !important; display: none;" id="position_list">
                 <option selected>Search by Position:</option>
                 @foreach( $positions as $position)
                 <option <?php echo $request->position == $position->position_name ? "selected" : "";?> >{{ $position->position_name}}</option>
@@ -111,14 +111,16 @@ Employees
         <li>
            <a href="{{url('employees')}}" class="btn btn-default" style="margin: 0px; height: 30px;">Clear Filter</a>
         </li>
-        <li style="margin-top: 5px">
+        <li style="margin-top: -5px">
             &nbsp;
             &nbsp;
             <label>Inactive Employees</label>
-            <input type="checkbox" id="inactive_employees" {{ $request->inactive == 'true' ? 'checked' : '' }}>
+            <input type="radio" id="inactive_employees" {{ $request->inactive == 'true' ? 'checked' : '' }}>
+            <br>
+            &nbsp;
             &nbsp;
             <label>No Profile Images</label>
-            <input type="checkbox" id="no_profile_images" {{ $request->no_profile_images == 'true' ? 'checked' : '' }}>
+            <input type="radio" id="no_profile_images" {{ $request->no_profile_images == 'true' ? 'checked' : '' }}>
         </li>
     </ul>
 	<table id="employees_table" class="table table-striped">
@@ -131,7 +133,7 @@ Employees
                 <td>Supervisor</td>
                 <!-- <td >Manager</td> -->
                 <!-- <td >Division</td> -->
-                <td >Account</td>
+                <!-- <td >Account</td> -->
                 <td>Production Date</td>
                 <td data-priority="3">Action</td>
             </tr>        
@@ -168,7 +170,7 @@ Employees
                     <td>{{ @$employee->supervisor_name }}</td>
                     <!-- <td>{{ @$employee->manager_name }}</td> -->
                     <!-- <td>{{ @$employee->division_name }}</td> -->
-                    <td>{{ @$employee->account->account_name }}</td>
+                    <!-- <td>{{ @$employee->account->account_name }}</td> -->
                     <td>{{ $employee->prodDate() }}</td>
                     <td>
                         <a href="{{ url('/employee_info/'. $employee->id)}}" title="View">

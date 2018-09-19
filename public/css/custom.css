@@ -10,6 +10,7 @@ body{
 .content-holder{
     background-image: url(http://192.168.1.89/public/img/002-subtle-light-pattern-background-texture.jpg);
 }
+
 footer {
     color: white !important;
 }
@@ -23,19 +24,20 @@ nav.navbar, .content-holder{
     width: 85%;
     margin: 0 auto;
 }
-@media (max-width: 1366px){
+@media (max-width: 1663px){
     body{
-        zoom: 0.9 !important;
+        zoom: 1 !important;
     }
     .sidebar {
-        left: 5%;
+        left: 0%;
         width: 220px;
     }
     nav.navbar, .content-holder{
-        width: 90%;
+        width: 100%;
         margin: 0 auto;
     }
 }
+
 
 @media (max-width: 765px){
     .sidebar {

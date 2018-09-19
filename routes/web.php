@@ -132,16 +132,17 @@ Route::get('/', function () {
 			return redirect('/home');		
 		}
 	}else{
-    	return View::make('auth.login');
+    	return redirect('/home');	
 	}
 });
 
 Route::get('logout', function(){
 	 Auth::logout();
-	 return redirect('/login');
+	 return redirect('/');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('employees', 'EmployeeInfoController@employees');
 
 Route::get('admin/invalid', ['as' => 'admin-invalid', 'uses' => function(){
 	return view('errors.notadmin');
@@ -151,7 +152,6 @@ Auth::routes();
 Route::post('login', 'EmployeeInfoController@login');
 Route::get('newhires', 'HomeController@newhires');
 Route::middleware(['auth'])->group(function(){
-	Route::get('employees', 'EmployeeInfoController@employees');
 	Route::get('profile/{id}', 'EmployeeInfoController@profile');
 	Route::get('myprofile', 'EmployeeInfoController@myprofile');
 

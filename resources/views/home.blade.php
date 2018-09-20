@@ -198,7 +198,7 @@ Home
                     result.data.forEach(function(employee) {
                         var new_hires_div = '<li class="new_hires_div">';
                         new_hires_div += '<div class="timeline-badge">';
-                        new_hires_div += '<img src="' + employee.profile_img +'" class="img-circle" alt="" style="width: 50px; height: 50px;margin-top: -10px; box-shadow: 1px 1px 10px 7px #fff;"></div>';
+                        new_hires_div += '<div style="background-image: url(' + employee.profile_img +'); width: 50px; height: 50px; margin-top: -10px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; box-shadow: 1px 1px 10px 7px #fff; border-radius: 50%;"></div></div>';
                         new_hires_div += '<div class="timeline-panel">';
                         new_hires_div += '<div class="timeline-heading">';
                         new_hires_div += ' <h4 class="timeline-title name-format"><a href="employee_info/' + employee.id + '">'+ employee.last_name + ', ' + employee.first_name +'</a></h4>';

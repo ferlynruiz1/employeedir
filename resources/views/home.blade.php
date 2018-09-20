@@ -201,7 +201,7 @@ Home
                         new_hires_div += '<div style="background-image: url(' + employee.profile_img +'); width: 50px; height: 50px; margin-top: -10px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; box-shadow: 1px 1px 10px 7px #fff; border-radius: 50%;"></div></div>';
                         new_hires_div += '<div class="timeline-panel">';
                         new_hires_div += '<div class="timeline-heading">';
-                        new_hires_div += ' <h4 class="timeline-title name-format"><a href="employee_info/' + employee.id + '">'+ employee.last_name + ', ' + employee.first_name +'</a></h4>';
+                        new_hires_div += ' <h4 class="timeline-title name-format"><a href="profile/' + employee.id + '">'+ employee.last_name + ', ' + employee.first_name +'</a></h4>';
                         new_hires_div += '</div>';
                         new_hires_div += '<div class="timeline-body">';
                         new_hires_div += '<p>' + joinGrammar(employee.prod_date) + ' the ' + employee.team_name + ' as ' + employee.position_name + '</p>';

@@ -76,7 +76,7 @@ Employee Information
                 <hr style="border-top: 1px dashed #dadada; margin-top: 1px; margin-bottom: 10px;">
                 <br>
                 <div class="col-md-2">
-                    <img alt="image" class="img" style="width: 150px; height: 150px; margin-top: -10px;" src="{{ $employee->profile_img }}">
+                    <img alt="image" class="img" style="width: 150px; margin-top: -10px;" src="{{ $employee->profile_img }}">
                 </div>
                 <div class="col-md-10">
                     <div class="row">

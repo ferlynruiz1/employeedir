@@ -38,6 +38,7 @@ Employee Information
 <br>    
 <div>
     <?php $class = "col-md-12";?>
+    @auth
     @if(Auth::user()->id != $employee->id)
         <?php $class="col-md-9" ?>
         <div class="col-md-3" style="padding-left: 0px !important; padding-right: 0px;">
@@ -63,6 +64,7 @@ Employee Information
             </div>
         </div>
     @endif
+    @endauth
     <div class="{{ $class }}">
         <div class="section-header">
             <h4>Employee Information</h4>
@@ -73,7 +75,10 @@ Employee Information
                 <label>Personal Information</label>
                 <hr style="border-top: 1px dashed #dadada; margin-top: 1px; margin-bottom: 10px;">
                 <br>
-                <div class="col-md-12">
+                <div class="col-md-2">
+                    <img alt="image" class="img" style="width: 150px; height: 150px; margin-top: -10px;" src="{{ $employee->profile_img }}">
+                </div>
+                <div class="col-md-10">
                     <div class="row">
                         <div class="col-md-2 min-widt-200">
                             <div class="form-group">
@@ -216,6 +221,7 @@ Employee Information
                         </div>
                     </div>
                     <br>
+                    @auth
                     @if(Auth::user()->id == $employee->id)
                         <br>
                         <div class="row">
@@ -226,6 +232,7 @@ Employee Information
                             </div>
                         </div>
                     @endif
+                    @endauth
                 </div>
             </div>
         </div>

@@ -201,7 +201,7 @@ Employee Information
                 <div class="col-md-12">
                     <br>
                     <div class="row">
-                        <div class="col-md-3 min-widt-200">
+                        <div class="col-md-12 min-widt-200">
                             <div class="form-group">
                                 <label>Email</label>
                                 <br>
@@ -210,8 +210,8 @@ Employee Information
                                 </a>
                             </div>
                         </div>
-                        @if(isset($employee->email2) && $employee->email2 != "")
-                        <div class="col-md-3 min-widt-200">
+                        @if(isset($employee->email) && $employee->email != "")
+                        <div class="col-md-12 min-widt-200">
                             <div class="form-group">
                                 <label>Email 2</label>
                                 <br>
@@ -222,7 +222,7 @@ Employee Information
                         </div>
                         @endif
                         @if(isset($employee->email3) && $employee->email3 != "")
-                        <div class="col-md-3 min-widt-200">
+                        <div class="col-md-12 min-widt-200">
                             <div class="form-group">
                                 <label>Email 3</label>
                                 <br>

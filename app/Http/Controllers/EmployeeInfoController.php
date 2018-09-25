@@ -772,15 +772,9 @@ class EmployeeInfoController extends Controller
         $timestamp = date('m_d_Y_G_i');
         $writer->save("./public/excel/report/report". $timestamp . ".xlsx");
 
-        $file= public_path(). "/download/info.pdf";
+        $file_name = 'report'.$timestamp.'.xlsx';
 
-        $headers = array(
-                    "Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    "Content-Disposition: attachment;filename=\"filename.xlsx\"",
-                    "Cache-Control: max-age=0"
-                    );
-        return "aw";
-        // return Response::download('./public/excel/report/report'.$timestamp.'.xlsx', 'report'.$timestamp.'.xlsx', $headers);
+        return redirect('public/excel/report/' . $file_name);
     }
 
 

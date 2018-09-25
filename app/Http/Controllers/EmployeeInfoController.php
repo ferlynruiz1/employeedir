@@ -347,7 +347,10 @@ class EmployeeInfoController extends Controller
                 }
 
                 if ($request->has('invalid_birth_date') && $request->get('invalid_birth_date') != "") {
-                    $employees = $employees->whereRaw('YEAR(birth_date) > ' . (date('Y') - 16) . ' AND YEAR(birth_date) <' . (date('Y') - 70) . '')->orWhereNull('birth_date');
+                    $employees = $employees->where(function($query) use ($request){
+                        $query->whereRaw('YEAR(birth_date) > ' . (date('Y') - 16) . ' OR YEAR(birth_date) <' . (date('Y') - 70))
+                        ->orWhereNull('birth_date');
+                    });
                 }
 
                 $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->get();

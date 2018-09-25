@@ -779,7 +779,8 @@ class EmployeeInfoController extends Controller
                     "Content-Disposition: attachment;filename=\"filename.xlsx\"",
                     "Cache-Control: max-age=0"
                     );
-        return Response::download('./public/excel/report/report'.$timestamp.'.xlsx', 'report'.$timestamp.'.xlsx', $headers);
+        return "aw";
+        // return Response::download('./public/excel/report/report'.$timestamp.'.xlsx', 'report'.$timestamp.'.xlsx', $headers);
     }
 
 

@@ -129,6 +129,13 @@ Employees
             <label>No Profile Images</label>
             <input type="radio" id="no_profile_images" {{ $request->no_profile_images == 'true' ? 'checked' : '' }}>
         </li>
+        <li>
+
+            &nbsp;
+            &nbsp;
+            <label>Invalid Birthday</label>
+            <input type="radio" id="invalid_birth_date" {{ $request->invalid_birth_date == 'true' ? 'checked' : '' }}>
+        </li>
     </ul>
 	<table id="employees_table" class="table table-striped">
         <thead>
@@ -261,6 +268,17 @@ Employees
             var url = location.protocol + '//' + location.host + location.pathname;
             if($(this).is(':checked')){
                 var no_profile_images = "no_profile_images=" + true;
+                url += "?" + no_profile_images;
+                window.location.replace(url);
+            }else{
+                window.location.replace(url);
+            }
+        });
+
+        $('#invalid_birth_date').change(function(){
+            var url = location.protocol + '//' + location.host + location.pathname;
+            if($(this).is(':checked')){
+                var no_profile_images = "invalid_birth_date=" + true;
                 url += "?" + no_profile_images;
                 window.location.replace(url);
             }else{

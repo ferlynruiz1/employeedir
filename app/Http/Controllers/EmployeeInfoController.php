@@ -341,14 +341,20 @@ class EmployeeInfoController extends Controller
                 if ($request->has('inactive') && $request->get('inactive') != "") {
                     $employees = $employees->onlyTrashed()->orWhere('status', '=', '2');
                 }
-                
+
                 if ($request->has('birthmonth') && $request->get('birthmonth') != "") {
                     $employees = $employees->whereRaw('MONTH(birth_date) = '. $request->get('birthmonth'));
                 }
 
+                if ($request->has('invalid_birth_date') && $request->get('invalid_birth_date') != "") {
+                    $employees = $employees->whereRaw('YEAR(birth_date) > ' . (date('Y') - 16) . ' AND YEAR(birth_date) <' . (date('Y') - 70) . '')->orWhereNull('birth_date');
+                }
+
                 $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->get();
                 $departments = EmployeeDepartment::all();
+
                 $positions = User::allExceptSuperAdmin()->select('position_name')->distinct()->get();
+
                 return view('employee.employees')->with('employees', $employees)->with('request', $request)->with('departments', $departments)->with('positions', $positions);
             }
         }

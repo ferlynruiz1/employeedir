@@ -90,6 +90,7 @@ Employees
             <select id="sort_option_list" style="padding: 7px; border-radius: 0px !important; font-size: 13px !important;">
                 <option value="1" {{ isset($request->department) ? "selected" : "" }}>Department</option>
                 <option value="2" {{ isset($request->position) ? "selected" : "" }}>Position</option>
+                <option value="3" {{ isset($request->birthmonth) ? "selected" : "" }}>Birth Month</option>
             </select>
         </li>
         <li>
@@ -105,6 +106,12 @@ Employees
                <option <?php echo $request->position == $position->position_name ? "selected" : "";?> >{{ $position->position_name}}</option>
                @endforeach
            </select>
+            <select style="width: 200px; border-color: #ddd; padding: 7px; border-radius: 0px !important; font-size: 13px !important; display: none;" id="month_list">
+                <option selected>Search by Birth Month:</option>
+                @for( $m = 1; $m <= 12 ; $m++)
+                <option value="{{ $m }}" <?php echo $request->birthmonth == $m ? "selected" : "";?> >{{ date('F', mktime(0,0,0,$m, 1, date('Y'))) }}</option>
+                @endfor
+            </select>
        </li>
     </ul>
 </div>
@@ -208,9 +215,21 @@ Employees
                 $('#departments_list').hide();
                 $('#position_list').show();
             break;
+            case '3':
+                $('#departments_list').hide();
+                $('#position_list').hide();
+                $('#month_list').show();
+            break;
         }
     });
 
+    $('#month_list').change(function(){
+            var url = location.protocol + '//' + location.host + location.pathname;
+            var position = "birthmonth=" + $(this).val();
+            url += "?" + position;
+            window.location.replace(url);
+        });
+    
     $('#position_list').change(function(){
         var url = location.protocol + '//' + location.host + location.pathname;
         var keyword = "keyword=" + $("#search_employee").val();

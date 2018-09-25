@@ -341,6 +341,10 @@ class EmployeeInfoController extends Controller
                 if ($request->has('inactive') && $request->get('inactive') != "") {
                     $employees = $employees->onlyTrashed()->orWhere('status', '=', '2');
                 }
+                
+                if ($request->has('birthmonth') && $request->get('birthmonth') != "") {
+                    $employees = $employees->whereRaw('MONTH(birth_date) = '. $request->get('birthmonth'));
+                }
 
                 $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->get();
                 $departments = EmployeeDepartment::all();
@@ -382,6 +386,10 @@ class EmployeeInfoController extends Controller
 
         if ($request->has('position') && $request->get('position') != "") {
             $employees = $employees->where('position_name', 'LIKE', '%' . $request->get('position') . '%');
+        }
+
+        if ($request->has('birthmonth') && $request->get('birthmonth') != "") {
+            $employees = $employees->whereRaw('MONTH(birth_date) = '. $request->get('birthmonth'));
         }
 
         $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->paginate(10);

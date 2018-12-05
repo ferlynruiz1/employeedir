@@ -253,6 +253,11 @@ class EmployeeInfoController extends Controller
             $employee->hired_date = $hired_date;
         }
 
+        if ($request->has('prod_date') && $request->prod_date){
+            $prod_date = $datetime->createFromFormat('m/d/Y', $request->prod_date)->format("Y-m-d H:i:s");
+            $employee->prod_date = $prod_date;
+        }
+        
         if ($request->hasFile("profile_image")) {
             $extension = $request->file('profile_image')->guessExtension();
             $path = $request->profile_image->storeAs('images/'.$employee->id, $employee->id . '.' . $extension);

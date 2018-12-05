@@ -75,10 +75,17 @@ Employee Information
                 <label>Personal Information</label>
                 <hr style="border-top: 1px dashed #dadada; margin-top: 1px; margin-bottom: 10px;">
                 <br>
+                @if(Auth::guest())
                 <div class="col-md-2">
                     <img alt="image" class="img" style="width: 150px; margin-top: -10px;" src="{{ $employee->profile_img }}">
                 </div>
+                @endif
+
+                @if(Auth::guest())
                 <div class="col-md-10">
+                @else
+                <div class="col-md-12">
+                @endif
                     <div class="row">
                         <div class="col-md-2 min-widt-200">
                             <div class="form-group">

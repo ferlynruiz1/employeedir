@@ -184,7 +184,15 @@ Dashboard
                         <br>
                         <br>
                         @if(isset($engagement->image_url) || $engagement->image_url != "")
+                            @if(pathinfo($engagement->image_url, PATHINFO_EXTENSION) == "mp4")
+                                <video width="320" height="240" controls>
+                                  <source src="{{ $engagement->image_url}}" type="video/mp4">
+                                  <source src="{{ $engagement->image_url}}" type="video/ogg">
+                                Your browser does not support the video tag.
+                                </video>
+                            @else
                             <img class="engagement_title" data-id="{{$engagement->id}}" src="{{ $engagement->image_url}}" style="width: 100%;">
+                            @endif
                         <br>
                         <br>
                         @endif

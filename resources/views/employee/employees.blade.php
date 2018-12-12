@@ -187,15 +187,19 @@ Employees
                     <!-- <td>{{ @$employee->account->account_name }}</td> -->
                     <td>{{ $employee->prodDate() }}</td>
                     <td>
+
                         <a href="{{ url('/employee_info/'. $employee->id)}}" title="View">
                             <i class="fa fa-eye"></i>
                         </a>&nbsp;&nbsp;
+                        
                         <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" title="Edit">
                             <i class="fa fa-pencil"></i>
                         </a>&nbsp;&nbsp;
-                        <a href="#"  class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Delete" data-id="{{$employee->id}}">
-                            <i class="fa fa-trash" style="color: red;" ></i>
+                        @if($employee->deleted_at == null)
+                        <a href="#"  class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Deactivate" data-id="{{$employee->id}}">
+                            <i class="fa fa-user-times" style="color: red;" ></i>
                         </a>
+                        @endif
                     </td>
                 </tr>
             @endforeach

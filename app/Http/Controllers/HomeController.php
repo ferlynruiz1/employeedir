@@ -36,11 +36,15 @@ class HomeController extends Controller
                 return redirect('dashboard');
             }
         }   
-        return view('home')->with('new_hires', User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5))->with('employees', User::allExceptSuperAdmin()->get())->with('birthdays', User::whereRaw('MONTH(birth_date) = '.date('n'))->orderByRaw('DAYOFMONTH(birth_date) ASC')->get())->with('engagements', ElinkActivities::whereRaw('MONTH(activity_date) =' . date('n'))->orderBy('activity_date', 'DESC')->get());
+        return view('home')->with('new_hires', User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5))->with('employees', User::allExceptSuperAdmin()->get())->with('birthdays', User::whereRaw('MONTH(birth_date) = '.date('n'))->orderByRaw('DAYOFMONTH(birth_date) ASC')->get())->with('engagements', ElinkActivities::whereRaw('MONTH(activity_date) =' . date('n'))->orWhere('MONTH(activity_date) = ' . date("n", strtotime("first day of previous month")))->orderBy('activity_date', 'DESC')->get());
     }
     public function dashboard(Request $request)
     {
-        return view('dashboard')->with('new_hires', User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5))->with('employees', User::allExceptSuperAdmin()->get())->with('birthdays', User::whereRaw('MONTH(birth_date) = '.date('n'))->orderByRaw('DAYOFMONTH(birth_date) ASC')->get())->with('engagements', ElinkActivities::whereRaw('MONTH(activity_date) =' . date('n'))->orderBy('activity_date', 'DESC')->get());
+        return view('dashboard')
+        ->with('new_hires', User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5))
+        ->with('employees', User::allExceptSuperAdmin()->get())
+        ->with('birthdays', User::whereRaw('MONTH(birth_date) = '.date('n'))->orderByRaw('DAYOFMONTH(birth_date) ASC')->get())
+        ->with('engagements', ElinkActivities::whereRaw('MONTH(activity_date) =' . date('n'))->orWhere('MONTH(activity_date) = ' . date("n", strtotime("first day of previous month")))->orderBy('activity_date', 'DESC')->get());
     }
     public function newhires(Request $request)
     {

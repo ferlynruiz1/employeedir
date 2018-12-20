@@ -77,7 +77,7 @@ Employee Information
                         <div class="col-md-2 min-widt-200">
                             <div class="form-group">
                                 <label>Middle Name</label>
-                                <p class="employee-details-value name-format">{{ $employee->middle_name}}</p>
+                                <p class="employee-details-value name-format">{{ $employee->middle_name != "--" ?$employee->middle_name : '' }}</p>
                             </div>
                         </div>
                         <div class="col-md-2 min-widt-200">

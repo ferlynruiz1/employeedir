@@ -61,34 +61,33 @@ Employee / Add
             <div class="section-header">
                 <h4>Employee Information </h4>
             </div>
+
             <div class="panel panel-container">
                 <div class="panel-body">
-                    <label>Personal</label>
+                    <small class="asterisk-required" style="margin-left: 0px;font-size: 13px;">required fields</small>
                     <br> 
+                    <br> 
+                    <label><b>Personal</b></label>
                     <hr>
-                    <br> 
-                    <small class="asterisk-required" style="margin-left: 15px;font-size: 13px;">required fields</small>
-                    <br> 
-                    <br> 
                     <br> 
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="asterisk-required">First Name</label>
-                                    <input  class="form-control" placeholder="First Name" name="first_name" value="" required>
+                                    <input  class="form-control" name="first_name" value="" required>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Middle Name</label>
-                                    <input class="form-control" placeholder="Middle Name" name="middle_name" value="">
+                                    <input class="form-control" name="middle_name" value="">
                                 </div> 
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="asterisk-required">Last Name</label>
-                                    <input class="form-control" placeholder="Last Name" name="last_name" value="" required>
+                                    <input class="form-control" name="last_name" value="" required>
                                 </div>
                             </div>
                         </div>
@@ -96,19 +95,19 @@ Employee / Add
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="asterisk-required">Employee ID</label>
-                                    <input class="form-control" placeholder="Employee ID" name="eid" value="" required>
+                                    <input class="form-control" name="eid" value="" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label >Phone Name</label>
-                                    <input class="form-control" placeholder="Phone Name" name="alias" value="">
+                                    <input class="form-control" name="alias" value="">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="asterisk-required">Birthdate</label>
-                                    <input class="form-control datepicker" placeholder="Birthdate" name="birth_date" value="" required>
+                                    <input class="form-control datepicker" name="birth_date" value="" required>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -116,25 +115,26 @@ Employee / Add
                                     <br>
                                     <label>Gender</label>
                                     <br>
-                                    <input type="radio" id="male" name="gender_id" value="1" placeholder="test" required>
+                                    <input type="radio" id="male" name="gender_id" value="1" required>
                                     <label class="radio-label" for="male">Male</label>
                                     &nbsp;
                                     &nbsp;
-                                    <input type="radio" id="female" name="gender_id" value="2" placeholder="test" required>
+                                    <input type="radio" id="female" name="gender_id" value="2" required>
                                     <label class="radio-label" for="female">Female</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <textarea name="address" class="form-control" rows="4"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12">
                     <br>
-                    <br>
                     </div>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <label>Job Related</label>
+                    <label><b>Job Related</b></label>
                     <hr>
                     <br>
                     <div class="col-md-12">
@@ -143,26 +143,26 @@ Employee / Add
                                 <div class="form-group">
                                     <br>
                                     <label></label>
-                                    <input type="radio" checked id="employee" name="employee_type" value="1" placeholder="test" required>
+                                    <input type="radio" checked id="employee" name="employee_type" value="1" required>
                                     <label class="radio-label" for="employee">Employee</label>
                                     &nbsp;
                                     &nbsp;
-                                    <input type="radio" id="supervisor" name="employee_type" value="2" placeholder="test" required>
+                                    <input type="radio" id="supervisor" name="employee_type" value="2" required>
                                     <label class="radio-label" for="supervisor">Supervisor</label>
                                     &nbsp;
                                     &nbsp;
-                                    <input type="radio" id="manager" name="employee_type" value="3" placeholder="test" required>
+                                    <input type="radio" id="manager" name="employee_type" value="3" required>
                                     <label class="radio-label" for="manager">Manager</label>
                                     &nbsp;
                                     &nbsp;
-                                    <input type="radio" id="admin" name="employee_type" value="4" placeholder="test" required>
+                                    <input type="radio" id="admin" name="employee_type" value="4" required>
                                     <label class="radio-label" for="admin">Admin</label>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="asterisk-required">Position</label>
-                                    <input class="form-control" placeholder="Position" name="position_name" value="" required>
+                                    <input class="form-control" name="position_name" value="" required>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -214,13 +214,13 @@ Employee / Add
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Hire Date</label>
-                                    <input class="form-control datepicker" placeholder="Hire Date" name="hired_date" value="">
+                                    <input class="form-control datepicker" name="hired_date" value="">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Production Date</label>
-                                    <input class="form-control datepicker" placeholder="Hire Date" name="prod_date" value="">
+                                    <input class="form-control datepicker" name="prod_date" value="">
                                 </div>
                             </div>
 
@@ -237,13 +237,13 @@ Employee / Add
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label >EXT</label>
-                                    <input class="form-control" placeholder="Ext" name="ext" value="" >
+                                    <input class="form-control" name="ext" value="" >
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label >Wave </label>
-                                    <input class="form-control" placeholder="Wave" name="wave" value="" >
+                                    <input class="form-control" name="wave" value="" >
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -258,7 +258,39 @@ Employee / Add
                         <br>
                         <br>
                     </div>
-                    <label>Login Credentials</label>
+                    <label><b>Government Numbers</b></label>
+                    <hr>
+                    <br>
+                    <div class="col-md-12 no-padding" >
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label >SSS Number</label>
+                                <input class="form-control" name="sss" type="text" value="">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label >Pag-ibig/HDMF</label>
+                                <input class="form-control" name="pagibig" type="text" value="">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label >Philhealth Number</label>
+                                <input class="form-control" name="philhealth" type="text" value="">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>TIN ID</label>
+                                <input class="form-control" name="tin" type="text" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" id="">
+                        <br>
+                    </div>
+                    <label><b>Login Credentials</b></label>
                     <hr>
                     <br>
                     <br> 
@@ -267,19 +299,19 @@ Employee / Add
                                  <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="asterisk-required">Primary Email</label>
-                                        <input class="form-control" placeholder="Email" name="email" type="email" value="" required>
+                                        <input class="form-control" name="email" type="email" value="" required>
                                     </div>
                                 </div>
                                  <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Email 2</label>
-                                        <input class="form-control" placeholder="Email 2" name="email2" type="email" value="">
+                                        <input class="form-control"" name="email2" type="email" value="">
                                     </div>
                                 </div>
                                  <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Email 3</label>
-                                        <input class="form-control" placeholder="Email 3" name="email3" type="email" value="">
+                                        <input class="form-control" name="email3" type="email" value="">
                                     </div>
                                 </div>
                                 <div class="col-md-6 ">
@@ -293,7 +325,7 @@ Employee / Add
                                 <div class="col-md-4 hidden password">
                                     <div class="form-group">
                                         <label>Confirm Password</label>
-                                        <input class="form-control" placeholder="Confirm Password">
+                                        <input class="form-control">
                                     </div>
                                 </div>
                             </div>

@@ -106,10 +106,17 @@ Employee Information
                                 <p class="employee-details-value">{{ $employee->gender()}}</p>
                             </div>
                         </div> -->
-                        <div class="col-md-2 min-widt-200">
+                        <div class="col-md-6 min-widt-200">
                             <div class="form-group">
                                 <label>Birthdate</label>
                                 <p class="employee-details-value">{{ $employee->prettybirthdate()}}</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 min-widt-200">
+                            <div class="form-group">
+                                <label>Address</label>
+                                <p class="employee-details-value">{{ $employee->address }}</p>
                             </div>
                         </div>
                     </div>
@@ -195,6 +202,32 @@ Employee Information
                     <br>
                 </div>
                 <br>
+                <label>Government Numbers</label>
+                <hr style="border-top: 1px dashed #dadada; margin-top: 1px; margin-bottom: 10px;">
+                <br>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>SSS Number</label>
+                            <p>{{ $employee->sss }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Pag-ibig/HDMF</label>
+                            <p>{{ $employee->pagibig }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Philhealth Number</label>
+                            <p>{{ $employee->philhealth }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <label>TIN ID</label>
+                            <p>{{ $employee->tin }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <br>
+                </div>
                 <label>Login Credentials</label>
                 <hr style="border-top: 1px dashed #dadada; margin-top: 1px; margin-bottom: 10px;">
                 

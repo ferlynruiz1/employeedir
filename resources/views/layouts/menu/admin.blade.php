@@ -10,6 +10,12 @@
         Employees
     </a>
 </li>
+<li <?php echo \Request::url() == url('employees/separated') ? 'class="active"' : ''; ?>>
+    <a href="{{url('employees/separated')}}">
+        <em class="fa fa-user-times">&nbsp;</em>
+        Separated Employees
+    </a>
+</li>
 <li <?php echo \Request::url() == url('department') ? 'class="active"' : ''; ?>>
     <a href="{{url('department')}}">
         <em class="fa fa-users">&nbsp;</em> 

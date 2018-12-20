@@ -162,6 +162,7 @@ Route::middleware(['auth'])->group(function(){
 		Route::resource('employee_info', 'EmployeeInfoController');
 		Route::resource('activities', 'ActivityController');
 		Route::get('employee/{id}/changepassword', 'EmployeeInfoController@changepassword');
+		Route::get('employees/separated', 'EmployeeInfoController@separatedEmployees');
 	});
 
 	Route::post('employee/{id}/savepassword', 'EmployeeInfoController@savepassword');

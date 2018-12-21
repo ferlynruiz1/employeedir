@@ -8,7 +8,7 @@ use App\User;
 use App\EmployeeDepartment;
 use DateTime;
 use Illuminate\Support\Facades\Hash;
-use DB;
+use DB; 
 
 class EmployeeRepository implements RepositoryInterface
 {

@@ -41,9 +41,10 @@ body{
                 </a>
                 <div class="pull-right" style="margin-top: 20px;">
                     <a href="{{ url('/public/img/company-hierarchy.jpeg') }}">
-                        <span >
-                        Employee hierarchy
+                        <span class="fa fa-sitemap">
+                        
                         </span>
+                        Employee hierarchy
                     </a>
                 </div>
             </div>

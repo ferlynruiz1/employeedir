@@ -39,8 +39,16 @@ body{
                     </span>
                     Directory
                 </a>
+                <div class="pull-right" style="margin-top: 20px;">
+                    <a href="{{ url('/public/img/company-hierarchy.jpeg') }}">
+                        <span >
+                        Employee hierarchy
+                        </span>
+                    </a>
+                </div>
             </div>
         </div>
+        
     </nav>
     <div class="content-holder">
         <!-- sidebar menu -->

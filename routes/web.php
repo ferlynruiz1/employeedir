@@ -144,6 +144,7 @@ Route::get('logout', function(){
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('employees', 'EmployeeInfoController@employees');
 Route::get('profile/{id}', 'EmployeeInfoController@profile');
+Route::get('activities/{id}', 'ActivityController@show');
 
 Route::get('admin/invalid', ['as' => 'admin-invalid', 'uses' => function(){
 	return view('errors.notadmin');
@@ -183,7 +184,7 @@ Route::middleware(['auth'])->group(function(){
 		return view('employee.sync');
 	});
 });
-Route::get('activities/{id}', 'ActivityController@show');
+
 Route::post('import/birthdays', "EmployeeInfoController@importbday");
 
 Route::get('import/birthdays', function(){

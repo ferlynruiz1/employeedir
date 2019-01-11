@@ -40,7 +40,7 @@ body{
                     Directory
                 </a>
                 <div class="pull-right" style="margin-top: 20px;">
-                    <a href="{{ url('/public/img/company-hierarchy.jpeg') }}">
+                    <a target="_blank" href="{{ url('/public/img/company-hierarchy.jpeg') }}">
                         <span class="fa fa-sitemap">
                         
                         </span>

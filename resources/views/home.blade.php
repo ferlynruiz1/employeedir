@@ -177,7 +177,7 @@ Home
 
         $.ajax(
         {
-            url: "{{url('activities')}}" + "/" + $(this).attr('data-id'), 
+            url: "{{url('showactivities')}}" + "/" + $(this).attr('data-id'), 
             method: 'GET',
             success: function(result) 
             {

@@ -184,7 +184,7 @@ Route::middleware(['auth'])->group(function(){
 	});
 });
 
-Route::get('activities/{id}', 'ActivityController@show');
+Route::get('showactivities/{id}', 'ActivityController@show');
 Route::post('import/birthdays', "EmployeeInfoController@importbday");
 
 Route::get('import/birthdays', function(){

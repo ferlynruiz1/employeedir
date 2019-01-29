@@ -199,7 +199,7 @@ class EmployeeRepository implements RepositoryInterface
     }
 
     public function employees(Request $request){
-        
+
         $departments = EmployeeDepartment::all();
         $positions = User::allExceptSuperAdmin()->select('position_name')->distinct()->get();
 
@@ -262,6 +262,9 @@ class EmployeeRepository implements RepositoryInterface
                     ->orWhere('position_name', 'LIKE', '%'.$request->get('keyword').'%')
                     ->orWhere('ext', 'LIKE', '%'.$request->get('keyword').'%');
             });
+            
+            $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->get();
+
             return view('guest.employees')->with('employees', $employees )->with('request', $request)->with('departments', $departments)->with('positions', $positions);
         }
 

@@ -263,7 +263,7 @@ class EmployeeRepository implements RepositoryInterface
                     ->orWhere('ext', 'LIKE', '%'.$request->get('keyword').'%');
             });
             
-            $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->get();
+            $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->paginate(10);
 
             return view('guest.employees')->with('employees', $employees )->with('request', $request)->with('departments', $departments)->with('positions', $positions);
         }

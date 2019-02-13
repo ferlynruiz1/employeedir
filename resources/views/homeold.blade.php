@@ -48,80 +48,9 @@ Home
         50%  { transform: rotate(180deg); color: #46B7E0; }
         100% { transform: rotate(360deg); }
     }
-    #backtotop{
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: transparent;
-        border-width: 0px;
-    }
 </style>
 <br>
-<div class="col-lg-8 no-padding">
-            @foreach($engagements as $engagement)
-            <div class="panel panel-default ">
-                <div class="panel-body timeline-container" >
-                <b class="engagement_title" data-id="{{$engagement->id}}">{{ $engagement->title}}</b>
-                <br>
-                <small class="engagement_title" data-id="{{$engagement->id}}">{{ $engagement->subtitle}}</small>
-                <br>
-                <br>
-                 @if(isset($engagement->image_url) || $engagement->image_url != "")
-                    @if(pathinfo($engagement->image_url, PATHINFO_EXTENSION) == "mp4")
-                        <video controls style="width: 100%;">
-                          <source src="{{ $engagement->image_url}}" type="video/mp4">
-                          <source src="{{ $engagement->image_url}}" type="video/ogg">
-                        Your browser does not support the video tag.
-                        </video>
-                    @else
-                    <img class="engagement_title" data-id="{{$engagement->id}}" src="{{ $engagement->image_url}}" style="width: 100%;">
-                    @endif
-                <br>
-                <br>
-                @endif
-                <p>{{ $engagement->message }}</p>
-                <small style="margin-right: 20px;">{{ monthDay($engagement->activity_date) }}</small>
-                </div>
-            </div>
-            @endforeach
-            @if(count($engagements) == 0)
-                <center>No events yet</center>
-            @endif
-        
-    
-</div>
-        <div class="col-lg-3">
-            <div class="panel panel-default ">
-                <div class="panel-heading">
-                    Birthday Celebrants for {{ date('F') }} 
-                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
-                <div class="panel-body timeline-container" >
-                    @if(count($birthdays) > 0)
-                        <h4 style=" font-weight: 600;font-size: 16px;text-align: center;padding: 11px;padding-left: 30px;font-family: cursive;">{{ date('F') }}</h4>
-                        <br>
-                        <div class="birthday-celebrants-div">
-                            @foreach($birthdays as $celebrant)
-                            <div class="birthday-holder">
-                                
-                                <div style="background-image: url('{{ $celebrant->profile_img }}'); width: 50px; height: 50px; margin-right: 15px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; float: left;">
-                                </div>
-                                <p class="name-format"><a href="profile/{{$celebrant->id}}">{{ $celebrant->fullname() }}</a><br><span ><span class="fa fa-gift"></span> {{ monthDay($celebrant->birth_date) }}</span></p> 
-                            </div>
-                            @endforeach
-                        </div>
-                    @else
-                        <center>
-                                <br>
-                                <span class="fa fa-birthday-cake fa-xl"></span>
-                                <br>
-                                <br>
-                                No birthday celebrant for {{ date('F') }}
-                        </center>
-                    @endif
-                </div>
-            </div>
-        </div>
-    <div class="col-lg-3">
+    <div class="col-lg-4 col-md-6">
             <div class="panel panel-default ">
                 <div class="panel-heading">
                     Newest Hired
@@ -170,10 +99,75 @@ Home
                     </ul>
                 </div>
             </div>
+            <button class="pull-right" id="backtotop">Back to top</button>
         </div>
-    <div class="col-md-12">
-        <button class="pull-right" id="backtotop"><span class="fa fa-lg fa-arrow-up"></span>&nbsp;Back to top</button>
-    </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="panel panel-default ">
+                <div class="panel-heading">
+                    Birthday Celebrants for {{ date('F') }} 
+                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
+                <div class="panel-body timeline-container" >
+                    @if(count($birthdays) > 0)
+                        <h4 style=" font-weight: 600;font-size: 16px;text-align: center;padding: 11px;padding-left: 30px;font-family: cursive;">{{ date('F') }}</h4>
+                        <br>
+                        <div class="birthday-celebrants-div">
+                            @foreach($birthdays as $celebrant)
+                            <div class="birthday-holder">
+                                
+                                <div style="background-image: url('{{ $celebrant->profile_img }}'); width: 50px; height: 50px; margin-right: 15px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; float: left;">
+                                </div>
+                                <p class="name-format"><a href="profile/{{$celebrant->id}}">{{ $celebrant->fullname() }}</a><br><span ><span class="fa fa-gift"></span> {{ monthDay($celebrant->birth_date) }}</span></p> 
+                            </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <center>
+                                <br>
+                                <span class="fa fa-birthday-cake fa-xl"></span>
+                                <br>
+                                <br>
+                                No birthday celebrant for {{ date('F') }}
+                        </center>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="panel panel-default ">
+                <div class="panel-heading">
+                    ElinkGagements Activities
+                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
+                <div class="panel-body timeline-container" >
+                    @foreach($engagements as $engagement)
+                     <hr>
+                        <b class="engagement_title" data-id="{{$engagement->id}}">{{ $engagement->title}}</b>
+                        <br>
+                        <small class="engagement_title" data-id="{{$engagement->id}}">{{ $engagement->subtitle}}</small>
+                        <br>
+                        <br>
+                         @if(isset($engagement->image_url) || $engagement->image_url != "")
+                            @if(pathinfo($engagement->image_url, PATHINFO_EXTENSION) == "mp4")
+                                <video width="320" height="240" controls>
+                                  <source src="{{ $engagement->image_url}}" type="video/mp4">
+                                  <source src="{{ $engagement->image_url}}" type="video/ogg">
+                                Your browser does not support the video tag.
+                                </video>
+                            @else
+                            <img class="engagement_title" data-id="{{$engagement->id}}" src="{{ $engagement->image_url}}" style="width: 100%;">
+                            @endif
+                        <br>
+                        <br>
+                        @endif
+                        <p>{{ $engagement->message }}</p>
+                        <small style="margin-right: 20px;">{{ monthDay($engagement->activity_date) }}</small>
+
+                    @endforeach
+                    @if(count($engagements) == 0)
+                        <center>No events yet</center>
+                    @endif
+                </div>
+            </div>
+        </div>
 @endsection
 @section('scripts')
 <script type="text/javascript">
@@ -239,12 +233,6 @@ Home
         $("html, body").animate({
             scrollTop: 0
         }, 300); 
-    });
-    $(window).scroll(function() {
-        console.log($(window).scrollTop() + " : " + $(window).scrollHeight + " + " + $(document).scrollHeight + " = " + ($(document).scrollHeight - $(window).scrollTop()));
-       if($(window).scrollTop() + $(window).height() == $(document).height()) {
-           
-       }
     });
 </script>
 @endsection

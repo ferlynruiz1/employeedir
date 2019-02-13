@@ -68,40 +68,83 @@ class AuthRepository implements RepositoryInterface
         return $this->model->with($relations);
     }
 
-    //
-    // 
-    //
+    public function ldapLogin($username, $password){
+        $adServer = 'ldap://windc.elink.corp/';
 
-    public function login(Request $request){
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            $user = User::whereEmail($request->email);
-            if ($user->count() > 0) {
-                Auth::login($user->first());
-                return redirect('/');
+        $ldap = ldap_connect($adServer);
+
+        $ldaprdn = 'ELINK' . "\\" . $username;
+
+        ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
+
+        try {
+            $bind = @ldap_bind($ldap, $ldaprdn, $password);
+        } catch(Exception $e){
+            return false;
+        }
+
+        if ($bind) {
+            $filter="(sAMAccountName=$username)";
+            $attributes = array('mail');
+            $result = ldap_search($ldap,"dc=ELINK,dc=CORP",$filter, $attributes);
+            $info = ldap_get_entries($ldap, $result);
+            return User::where('email', '=', $info[0]['mail'][0])->first();
+        } else {
+            return false;
+        }
+    }
+
+    public function authFields($arrayIndex, $field, $password){
+
+        foreach($arrayIndex as $index){
+            if (Auth::attempt([ $index => $field, 'password' => $password])) {
+                $user = User::where($index ,'=', $field);
+                if ($user->count() > 0) {
+                    Auth::login($user->first());
+                    return redirect('/');
+                }
             }
-         }
-
-         if (Auth::attempt(['email2' => $request->email, 'password' => $request->password])) {
-           $user = User::where('email2' ,'=', $request->email);
-
-            if ($user->count() > 0) {
-                Auth::login($user->first());
-                return redirect('/');
-            }
-          }
-
-         if (Auth::attempt(['email3' => $request->email, 'password' => $request->password])) {
-           $user = User::where('email3' ,'=', $request->email);
-
-            if ($user->count() > 0) {
-                Auth::login($user->first());
-                return redirect('/');
-            }
-         }
+        }
 
         return redirect('/login')->withErrors(['email' => "Incorrect email and password combination!"]);
     }
 
+    public function login(Request $request){
+
+        $ldap_user = $this->ldapLogin($request->email, $request->password);
+
+        if($ldap_user){
+            Auth::login($ldap_user);
+            return redirect('/');
+        }
+        return $this->authFields(['email', 'email2', 'email3'], $request->email, $request->password);
+    }
+    public function loginAPIv2(Request $request){
+
+        $ldap_user = $this->ldapLogin($request->email, $request->password);
+
+        if($ldap_user){
+            Auth::login($ldap_user);
+            return "true";
+            // return response(['success' => true, 'user' => $ldap_user]);
+        }
+
+        $arrayIndex = array('email', 'email2', 'email3'); 
+
+        foreach($arrayIndex as $index){
+            if (Auth::attempt([ $index => $request->email, 'password' => $request->password ])){
+                $user = User::where($index ,'=', $request->email);
+                if ($user->count() > 0) {
+                    Auth::login($user->first());
+                    return "true";
+                    // return response(['success' => true, 'user' => $user]);
+                }
+            }
+        }
+        return "false";
+        // return response(['success' => false, 'user' => $user]);
+    }
     public function loginAPI(Request $request){
         $param = "";
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
@@ -131,6 +174,7 @@ class AuthRepository implements RepositoryInterface
          }
          return redirect($request->redirect_url . $param);
     }
+
     public function session(Request $request)
     {
         if (Auth::check() && isset($request->redirect_url)) {

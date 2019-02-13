@@ -16,12 +16,15 @@ footer {
 }
 @media (min-width: 766px){
     .sidebar {
-        left: 7.5%;
+        left: 0%;
         width: 14.5%;
+    }
+    .main{
+        margin-left: 14.5%;
     }
 }
 nav.navbar, .content-holder{
-    width: 85%;
+    width: 100%;
     margin: 0 auto;
 }
 @media (max-width: 1663px){

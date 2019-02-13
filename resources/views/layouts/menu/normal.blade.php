@@ -10,6 +10,12 @@
         Employees
      </a>
  </li>
+ <li <?php echo \Request::url() == url('leave') ? 'class="active"' : ''; ?>>
+    <a href="{{url('leave')}}">
+        <em class="fa fa-calendar">&nbsp;</em>
+        File a leave
+     </a>
+ </li>
  @auth
 <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
     <a href="{{url('myprofile')}}">

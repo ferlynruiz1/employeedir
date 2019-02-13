@@ -17,30 +17,22 @@ use App\EmployeeAttrition;
 use Response;
 use File;
 use DB;
-use App\Repositories\EmployeeRepository;
-use App\Repositories\AuthRepository;
-use App\Repositories\ExportImportRepository;
 
 class EmployeeInfoController extends Controller
 {
-    protected $model;
-    protected $authModel;
-    protected $excelModel;
-
-    public function __construct(User $employee){
-        $this->model = new EmployeeRepository($employee);
-        $this->authModel = new AuthRepository($employee);
-        $this->excelModel = new ExportImportRepository($employee);
-    }
 
     public function login(Request $request)
     {   
         return $this->authModel->login($request);
     }
 
+    public function loginAPIv2(Request $request){
+        return "test";
+        return $this->authModel->loginAPIv2($request);
+    }
+
     public function loginAPI(Request $request)
     {
-
         return $this->authModel->loginAPI($request);
     }
 

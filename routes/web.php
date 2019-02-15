@@ -53,6 +53,7 @@ Route::middleware(['auth'])->group(function(){
 		Route::resource('department', 'DepartmentController');
 		Route::resource('employee_info', 'EmployeeInfoController');
 		Route::resource('activities', 'ActivityController');
+		Route::resource('posts', 'PostController');
 		Route::get('employee/{id}/changepassword', 'EmployeeInfoController@changepassword');
 		Route::get('employees/separated', 'EmployeeInfoController@separatedEmployees');
 	});
@@ -89,3 +90,6 @@ Route::get('import/birthdays', function(){
 Route::post('api/login', 'EmployeeInfoController@loginAPI');
 Route::post('api/v2/login', 'EmployeeInfoController@loginAPIv2');
 Route::get('api/session', 'EmployeeInfoController@session');
+Route::get('test', function(){
+	return Auth::user()->id;
+});

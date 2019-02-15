@@ -211,10 +211,18 @@ Home
         }, 300); 
     });
     $(window).scroll(function() {
-        console.log($(window).scrollTop() + " : " + $(window).scrollHeight + " + " + $(document).scrollHeight + " = " + ($(document).scrollHeight - $(window).scrollTop()));
        if($(window).scrollTop() + $(window).height() == $(document).height()) {
            
        }
+    });
+
+    $(function() {
+        $('.comment-editor').froalaEditor({toolbarInline: false, toolbarButtons: ['undo', 'redo' , 'bold', '|', 'emoticons'], emoticonsStep: 12, })
+    });
+
+    $('.comment_form').submit(function(){
+        console.log($(this).serialize());
+        return false;
     });
 </script>
 @endsection

@@ -28,6 +28,12 @@
         Activities
     </a>
 </li>
+<li <?php echo \Request::url() == url('posts') ? 'class="active"' : ''; ?>>
+    <a href="{{url('posts')}}">
+        <em class="fa fa-calendar-o">&nbsp;</em> 
+        Posts
+    </a>
+</li>
 <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
     <a href="{{url('myprofile')}}">
         <em class="fa fa-user">&nbsp;</em>

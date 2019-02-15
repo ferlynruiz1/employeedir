@@ -22,8 +22,8 @@
     <p>{{ $engagement->message }}</p>
     <small style="margin-right: 20px;">{{ monthDay($engagement->activity_date) }}</small>
     </div>
-    @include('home.comments')
-</div>
+        @include('home.comments')
+    </div>
 @endforeach
 @if(count($engagements) == 0)
     <center>No events yet</center>

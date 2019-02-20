@@ -36,6 +36,12 @@ class User extends Authenticatable
     {
         return $this->last_name .', '. $this->first_name;
     }
+
+    public function scopeFullname2($query)
+    {
+        return $this->first_name .' '. $this->last_name;
+    }
+
     public function scopePrettyBirthDate($query)
     {
         if(isset($this->birth_date)){

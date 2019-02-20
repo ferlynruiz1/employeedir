@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmployeeDepartmentsTable extends Migration
+class ElinkPayTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateEmployeeDepartmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('employee_departments', function (Blueprint $table) {
+        Schema::create('leave_pay_type', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('pay_type_name');
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateEmployeeDepartmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employee_departments');
+        Schema::dropIfExists('leave_pay_type');
     }
 }

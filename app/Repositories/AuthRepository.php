@@ -102,11 +102,10 @@ class AuthRepository implements RepositoryInterface
                 $user = User::where($index ,'=', $field);
                 if ($user->count() > 0) {
                     Auth::login($user->first());
-                    return redirect('/');
+                    return redirect()->intended('/');
                 }
             }
         }
-
         return redirect('/login')->withErrors(['email' => "Incorrect email and password combination!"]);
     }
 
@@ -116,7 +115,7 @@ class AuthRepository implements RepositoryInterface
 
         if($ldap_user){
             Auth::login($ldap_user);
-            return redirect('/');
+            return redirect()->intended('/');
         }
         return $this->authFields(['email', 'email2', 'email3'], $request->email, $request->password);
     }

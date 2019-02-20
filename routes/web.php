@@ -48,6 +48,7 @@ Route::post('login', 'EmployeeInfoController@login');
 Route::get('newhires', 'HomeController@newhires');
 
 Route::middleware(['auth'])->group(function(){
+
 	Route::middleware(['admin'])->group(function () {
 		Route::get('dashboard', 'HomeController@dashboard');
 		Route::resource('department', 'DepartmentController');

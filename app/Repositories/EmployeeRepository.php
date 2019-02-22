@@ -131,6 +131,8 @@ class EmployeeRepository implements RepositoryInterface
     }
 
     public function updateEmployee(Request $request, $id){
+        
+
         $employee = User::find($id);
         $employee->eid = $request->eid;
         $employee->first_name = $request->first_name;
@@ -138,10 +140,20 @@ class EmployeeRepository implements RepositoryInterface
         $employee->last_name = $request->last_name;
         $employee->alias = $request->alias;
         $employee->position_name = $request->position_name;
-        $employee->supervisor_name = $request->supervisor_name;
+        $employee->supervisor_id = $request->supervisor_id;
+        
+        if($supervisor = User::find($request->supervisor_id)){
+            $employee->supervisor_name = $supervisor->fullName();
+        }
+
         $employee->team_name = $request->team_name;
         $employee->address = $request->address;
-        $employee->manager_name = $request->manager_name;
+        $employee->manager_id = $request->manager_id;
+
+        if($manager = User::find($request->manager_id)){
+            $employee->manager_name = $manager->fullName();
+        }
+        
         $employee->account_id = $request->account_id;
         $employee->status = $request->status_id;
         

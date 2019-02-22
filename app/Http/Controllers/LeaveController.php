@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\LeaveRequest;
+use App\LeaveType;
+use App\PayType;
 use App\User;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +19,9 @@ class LeaveController extends Controller
      */
     public function index()
     {
+        if(Auth::user()->isAdmin()){
+            return view('leave.index')->with('leave_requests', LeaveRequest::all());
+        }
         return redirect('leave/create');
     }
 
@@ -46,8 +51,8 @@ class LeaveController extends Controller
         $report_date = $datetime->createFromFormat('m/d/Y', $request->report_date)->format("Y-m-d H:i:s");
         $date_filed = $datetime->createFromFormat('m/d/Y', $request->date_filed)->format("Y-m-d H:i:s");
 
-        $leave->employee_id = Auth::user()->id;
-        $leave->file_by_id = Auth::user()->id;
+        $leave->employee_id = $request->employee_id;
+        $leave->filed_by_id = Auth::user()->id;
 
         $leave->leave_date_from = $leave_date_from;
         $leave->leave_date_to =$leave_date_to;
@@ -57,10 +62,10 @@ class LeaveController extends Controller
         $leave->contact_number = $request->contact_number;
         $leave->leave_type_id = $request->leave_type_id;
         $leave->pay_type_id = $request->pay_type_id;
-        $leave->date_filed = now();
+        $leave->date_filed = $date_filed;
         $leave->save();
 
-        return back()->with('message', 'Leave Request Successfully Submitted!!');
+        return back()->with('success', 'Leave Request Successfully Submitted!!');
     }
 
     /**
@@ -71,7 +76,9 @@ class LeaveController extends Controller
      */
     public function show($id)
     {
-        //
+        $leave_request = LeaveRequest::with('employee')->find($id);
+
+        return view('leave.show')->with('leave_request', $leave_request)->with('leave_types', LeaveType::all())->with('pay_types', PayType::all());
     }
 
     /**

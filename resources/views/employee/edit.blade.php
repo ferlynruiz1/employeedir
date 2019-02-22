@@ -207,10 +207,10 @@ Employee Information / Edit
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Manager</label>
-                                   <select class="select2 form-control" name="manager_name">
+                                   <select class="select2 form-control" name="manager_id">
                                         <option selected="" disabled="">Select</option>
                                        @foreach($supervisors as $supervisor)
-                                            <option value="{{ $supervisor->fullname() }}" <?php echo $supervisor->fullname() == $employee->manager_name ? "selected" : "" ; ?>> {{$supervisor->fullname()}}</option>
+                                            <option value="{{ $supervisor->id }}" <?php echo $supervisor->fullname() == $employee->manager_name || $supervisor->id == $employee->manager_id ? "selected" : "" ; ?>> {{$supervisor->fullname()}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -218,10 +218,10 @@ Employee Information / Edit
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Supervisor</label>
-                                    <select class="select2 form-control"  name="supervisor_name" >
+                                    <select class="select2 form-control"  name="supervisor_id" >
                                         <option selected="" disabled="">Select</option>
                                         @foreach($supervisors as $supervisor)
-                                        <option value="{{ $supervisor->fullname() }}" <?php echo $supervisor->fullname() == $employee->supervisor_name ? "selected" : "" ; ?>> {{$supervisor->fullname()}}</option>
+                                        <option value="{{ $supervisor->id }}" <?php echo $supervisor->fullname() == $employee->supervisor_name || $supervisor->id == $employee->supervisor_id ? "selected" : "" ; ?>> {{$supervisor->fullname()}}</option>
                                         @endforeach
                                     </select>
                                 </div>

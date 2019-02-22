@@ -34,6 +34,12 @@
         Posts
     </a>
 </li>
+<li <?php echo \Request::url() == url('leave') ? 'class="active"' : ''; ?>>
+    <a href="{{url('leave')}}">
+        <em class="fa fa-calendar">&nbsp;</em> 
+        Leaves
+    </a>
+</li>
 <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
     <a href="{{url('myprofile')}}">
         <em class="fa fa-user">&nbsp;</em>

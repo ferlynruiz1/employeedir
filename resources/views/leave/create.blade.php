@@ -23,13 +23,13 @@
                                 <div class="col-xs-12 col-sm-12 col-md-6">
                                     <strong><p>Date Filed: </p></strong>
                                     <div class="form-group float-right">
-                                        <input type="text" value="{{ date('m/d/Y') }}" name="date_filed" id="datepicker" class="form-control" placeholder="Date Filed" disabled>
+                                        <input type="text" value="{{ date('m/d/Y') }}" name="date_filed" id="datepicker" class="form-control" placeholder="Date Filed" readonly>
                                     </div> 
                                 </div>
                                 <div class="col-md-4">
                                     <strong><p>Name: </p></strong>
                                     <div class="form-group">
-                                        <select name="user_name" class="form-control" {{ Auth::user()->isAdmin() ? '' : 'disabled' }}>
+                                        <select name="employee_id" class="form-control" {{ Auth::user()->isAdmin() ? '' : 'readonly' }}>
                                             <option></option>
                                             @foreach($employees as $employee)
                                                 <option value="{{$employee->id}}" {{ Auth::user()->id == $employee->id ? 'selected' : '' }} >{{ $employee->fullName2() }}</option>
@@ -45,7 +45,7 @@
                                 <div class="col-md-4">
                                     <strong><p>Position:</p></strong>
                                     <div class="form-group">
-                                        <input type="text" id="txtPhone" name="position" class="form-control" placeholder="Position" value="{{ Auth::user()->position_name }}" {{ Auth::user()->isAdmin() ? '' : 'disabled' }}>
+                                        <input type="text" id="txtPhone" name="position" class="form-control" placeholder="Position" value="{{ Auth::user()->position_name }}" {{ Auth::user()->isAdmin() ? '' : 'readonly' }}>
                                     </div> 
                                     <strong><p>To:</p></strong>
                                     <div class="form-group">
@@ -55,7 +55,7 @@
                                 <div class="col-md-4">
                                     <strong><p>Department:</p></strong>
                                     <div class="form-group">
-                                        <input type="text" name="department" class="form-control email" placeholder="Dept/Section" value="{{ Auth::user()->team_name }}" {{ Auth::user()->isAdmin() ? '' : 'disabled' }}>
+                                        <input type="text" name="department" class="form-control email" placeholder="Dept/Section" value="{{ Auth::user()->team_name }}" {{ Auth::user()->isAdmin() ? '' : 'readonly' }}>
                                     </div> 
                                     <strong><p>Number of Days:</p></strong>
                                     <div class="form-group">

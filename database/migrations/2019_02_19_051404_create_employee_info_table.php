@@ -41,10 +41,10 @@ class CreateEmployeeInfoTable extends Migration
             $table->string('division_name', 100)->nullable(true);
             $table->integer('account_id')->default(0);
             $table->integer('status')->default(1);
-            $table->string('ext', 20)->nullable(true)->default(1);
-            $table->string('wave', 20)->default(1);
-            $table->integer('all_access')->default(0);
-            $table->string('profile_img', 200)->default('http://dir.elink.corp/public/img/nobody_m.original.jpg');
+            $table->string('ext', 20)->nullable(true);
+            $table->string('wave', 20)->nullable(true);
+            $table->integer('all_access')->nullable(true)->default(0);
+            $table->string('profile_img', 200)->nullable(true)->default('http://dir.elink.corp/public/img/nobody_m.original.jpg');
             $table->string('sss', 200)->nullable(true);
             $table->string('pagibig', 200)->nullable(true);
             $table->string('philhealth', 200)->nullable(true);

@@ -67,6 +67,16 @@ function slashedDate($prod_date)
     } 
 }
 
+function prettyDate($prod_date)
+{
+	if (isset($prod_date)) {
+        $dt = Carbon::parse($prod_date);
+        return $dt->format('l, M d, Y');
+    } else {
+        return "";
+    } 
+}
+
 function truncate($string, $length, $html = true)
 {
     if (strlen($string) > $length) {
@@ -104,4 +114,18 @@ function curl_get_contents($url)
 	curl_close($ch);
 
 	return $data;
+}
+
+function leaveCredits($leave_credit){
+	if($leave_credit == 0){
+		$leave_credit = "0 day";
+	} else if($leave_credit == 0.5){
+		$leave_credit = "1/2 day";
+	} else if ($leave_credit == 1){
+		$leave_credit = "1 day";
+	} else if ($leave_credit > 1){
+		$leave_credit = "$leave_credit day";
+	}
+
+	return "You have $leave_credit leave credits.";
 }

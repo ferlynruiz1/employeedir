@@ -169,8 +169,16 @@ Employee Information / Edit
                                     <label class="radio-label" for="manager">Manager</label>
                                     &nbsp;
                                     &nbsp;
-                                    <input type="radio" {{ $employee->usertype == 4 ? 'checked' : ''}} id="admin" name="employee_type" value="4" placeholder="test" required>
-                                    <label class="radio-label" for="admin">Admin</label>
+                                    &nbsp;
+                                    &nbsp;
+                                    |
+                                    &nbsp;
+                                    &nbsp;
+                                    &nbsp;
+                                    &nbsp;
+                                    <input type="checkbox" {{ $employee->is_admin == 1 ? 'checked' : ''}} id="admin" name="is_admin">
+                                    
+                                    <label class="radio-label" for="admin">is Admin?</label>
                                 </div>
                             </div>
                             <br>

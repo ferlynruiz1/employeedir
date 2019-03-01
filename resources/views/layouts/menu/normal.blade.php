@@ -10,13 +10,21 @@
         Employees
      </a>
  </li>
- <li <?php echo \Request::url() == url('leave') ? 'class="active"' : ''; ?>>
-    <a href="{{url('leave')}}">
+ <li <?php echo \Request::url() == url('leave/create') ? 'class="active"' : ''; ?>>
+    <a href="{{url('leave/create')}}">
         <em class="fa fa-calendar">&nbsp;</em>
         File a leave
      </a>
  </li>
- @auth
+@auth
+@if(Auth::user()->leaveRequestCount() > 0)
+<li <?php echo \Request::url() == url('leave') ? 'class="active"' : ''; ?>>
+<a href="{{url('leave')}}">
+    <em class="fa fa-calendar">&nbsp;</em>
+    Leave Requests&nbsp;&nbsp;<span class="badge label-danger">{{ Auth::user()->leaveRequestCount() }}</span>
+ </a>
+</li>
+@endif
 <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
     <a href="{{url('myprofile')}}">
         <em class="fa fa-user">&nbsp;</em>

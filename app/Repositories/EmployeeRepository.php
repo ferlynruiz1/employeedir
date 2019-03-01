@@ -72,6 +72,10 @@ class EmployeeRepository implements RepositoryInterface
     }
 
     public function store(Request $request){
+
+        $manager = User::find($request->manager_id);
+        $supervisor = User::find($request->supervisor_id);
+
         $employee = new User();
         $employee->eid = $request->eid;
         $employee->first_name = $request->first_name;
@@ -79,11 +83,21 @@ class EmployeeRepository implements RepositoryInterface
         $employee->last_name = $request->last_name;
         $employee->alias = $request->alias;
         $employee->position_name = $request->position_name;
-        $employee->supervisor_name = $request->supervisor_name;
+
+        $employee->supervisor_id = $request->supervisor_id;
+        $employee->manager_id = $request->manager_id;
+
+        if($supervisor){
+            $employee->supervisor_name = $supervisor->fullName();
+        }
+        
+        if($manager){
+            $employee->manager_name = $manager->fullName();
+        }
+
         $employee->team_name = $request->team_name;
         $employee->gender = $request->gender_id;
         $employee->address = $request->address;
-        $employee->manager_name = $request->manager_name;
         $employee->account_id = $request->account_id;
         $employee->status = $request->status_id;
         
@@ -96,6 +110,13 @@ class EmployeeRepository implements RepositoryInterface
             $employee->all_access = 1;
         } else {
             $employee->all_access = 0;
+        }
+
+        /* all access field */
+        if ($request->has('is_admin')) {
+            $employee->is_admin = 1;
+        } else {
+            $employee->is_admin = 0;
         }
 
         $datetime = new DateTime();
@@ -132,7 +153,6 @@ class EmployeeRepository implements RepositoryInterface
 
     public function updateEmployee(Request $request, $id){
         
-
         $employee = User::find($id);
         $employee->eid = $request->eid;
         $employee->first_name = $request->first_name;
@@ -179,6 +199,13 @@ class EmployeeRepository implements RepositoryInterface
             $employee->all_access = 1;
         } else {
             $employee->all_access = 0;
+        }
+        
+        /* all access field */
+        if ($request->has('is_admin')) {
+            $employee->is_admin = 1;
+        } else {
+            $employee->is_admin = 0;
         }
 
         $datetime = new DateTime();

@@ -8,7 +8,9 @@ use App\LeaveType;
 use App\PayType;
 use App\User;
 use DateTime;
+use App\Mail\LeaveNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class LeaveController extends Controller
 {
@@ -19,8 +21,17 @@ class LeaveController extends Controller
      */
     public function index()
     {
+        $leave_requests = LeaveRequest::whereHas('employee', function($query){
+            $query->where('supervisor_id', '=', Auth::user()->id);
+        })->orWhereHas('employee', function($query){
+            $query->where('manager_id', '=', Auth::user()->id);
+        })->where('approve_status_id', '=', 0)->get();
+
         if(Auth::user()->isAdmin()){
             return view('leave.index')->with('leave_requests', LeaveRequest::all());
+        } else {
+            return view('leave.index')
+            ->with('leave_requests', $leave_requests);
         }
         return redirect('leave/create');
     }
@@ -53,6 +64,8 @@ class LeaveController extends Controller
 
         $leave->employee_id = $request->employee_id;
         $leave->filed_by_id = Auth::user()->id;
+        $leave->recommending_approval_by_id = Auth::user()->supervisor_id;
+        $leave->approved_by_id = Auth::user()->manager_id;
 
         $leave->leave_date_from = $leave_date_from;
         $leave->leave_date_to =$leave_date_to;
@@ -65,7 +78,10 @@ class LeaveController extends Controller
         $leave->date_filed = $date_filed;
         $leave->save();
 
-        return back()->with('success', 'Leave Request Successfully Submitted!!');
+        // SEND EMAIL NOTIFICATION
+        Mail::to("jmanuel.derecho@gmail.com")->send(new LeaveNotification($leave));
+
+        return redirect("leave" . '/' . $leave->id)->with('success', 'Leave Request Successfully Submitted!!');
     }
 
     /**
@@ -113,5 +129,49 @@ class LeaveController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function recommend(Request $request){
+        $leave_request = LeaveRequest::find($request->leave_id);
+        $leave_request->recommending_approval_by_id = Auth::user()->id;
+        $leave_request->recommending_approval_by_signed_date = date('Y-m-d H:i:s');
+
+        // SEND EMAIL NOTIFICATION
+
+        if($leave_request->save()){
+            return back()->with('success', 'Leave request successfully recommended.');
+        } else {
+            return back()->with('error', 'Something went wrong.');
+        }
+    }
+
+    public function approve(Request $request){
+        $leave_request = LeaveRequest::find($request->leave_id);
+        $leave_request->approved_by_id = Auth::user()->id;
+        $leave_request->approved_by_signed_date = date('Y-m-d H:i:s');
+        $leave_request->approve_status_id = 1;
+
+        // SEND EMAIL NOTIFICATION
+
+        if($leave_request->save()){
+            return back()->with('success', 'Leave request successfully approved.');
+        } else {
+            return back()->with('error', 'Something went wrong.');
+        }
+    }
+
+    public function noted(Request $request){
+        $leave_request = LeaveRequest::find($request->leave_id);
+        $leave_request->noted_by_id = Auth::user()->id;
+        $leave_request->noted_by_signed_date = date('Y-m-d H:i:s');
+        $leave_request->approve_status_id = 1;
+
+        // SEND EMAIL NOTIFICATION
+
+        if($leave_request->save()){
+            return back()->with('success', 'Leave request successfully approved.');
+        } else {
+            return back()->with('error', 'Something went wrong.');
+        }
     }
 }

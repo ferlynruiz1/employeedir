@@ -14,6 +14,7 @@
 							<td>Employee</td>
 							<td>Leave Dates</td>
 							<td>No. Of Days</td>
+							<td>Status</td>
 							<td>Date Requested</td>
 							<td width="100px">Options</td>
 						</tr>
@@ -23,11 +24,12 @@
 						<tr>
 							<td>{{ $leave_request->id }}</td>
 							<td>{{ $leave_request->employee->fullName2() }}</td>
-							<td>{{ slashedDate($leave_request->leave_date_from) }} - {{ slashedDate($leave_request->leave_date_to) }} </td>
-							<td>{{ $leave_request->number_of_days}}</td>
-							<td>{{ slashedDate($leave_request->date_filed) }}</td>
+							<td>{{ prettyDate($leave_request->leave_date_from) }} - {{ prettyDate($leave_request->leave_date_to) }} </td>
+							<td>{{ (int)$leave_request->number_of_days }}</td>
+							<td>{{ $leave_request->status() }}</td>
+							<td>{{ prettyDate($leave_request->date_filed) }}</td>
 							<td width="100px" align="center">
-								<a href="{{url('leave') . '/' . $leave_request->id}}" title="View" data-id="{{$leave_request->id}}" class="btn_view"><span class="fa fa-eye"></span></a>
+								<a href="{{url('leave') . '/' . $leave_request->id}}" title="View" data-id="{{ $leave_request->id }}" class="btn_view"><span class="fa fa-eye"></span></a>
 								&nbsp;&nbsp;
 								<!-- <a href="" title="Edit"><span class="fa fa-pencil"></span></a>
 								&nbsp;&nbsp; -->
@@ -43,7 +45,6 @@
 		</div>
 	</div>
 </div>
-
 @endsection
 @section('scripts')
 <script type="text/javascript">

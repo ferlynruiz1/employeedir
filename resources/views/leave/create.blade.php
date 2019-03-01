@@ -11,19 +11,19 @@
                 </div>
                 <div class="panel-body timeline-container ">
                     <div class="flex-center position-ref full-height">
-                        <!-- <center><h2>LEAVE APPLICATION FORM</h2></center> -->
-                        <form action="{{ url('leave') }}" method="post">
+                        <form action="{{ url('leave') }}" method="post" id="leave_form">
                         {{ csrf_field() }}
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group float-left">
-                                        <strong><p>&nbsp;</p></strong>
+                                        <strong><p>Remaining Leave Credits: </p></strong>
+                                        <p id="p_leave_credits">{{ leaveCredits(Auth::user()->leave_credit) }}</p>
                                     </div> 
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-6">
                                     <strong><p>Date Filed: </p></strong>
                                     <div class="form-group float-right">
-                                        <input type="text" value="{{ date('m/d/Y') }}" name="date_filed" id="datepicker" class="form-control" placeholder="Date Filed" readonly>
+                                        <input type="text" value="{{ date('m/d/Y') }}" name="date_filed" class="form-control datepicker" placeholder="Date Filed" readonly autocomplete="off">
                                     </div> 
                                 </div>
                                 <div class="col-md-4">
@@ -39,7 +39,7 @@
                                     <strong><p>From:</p></strong>
                                     <div class="form-group">
                                         
-                                        <input type="text" name="leave_date_from" id="datepicker2" class="form-control" placeholder="From">
+                                        <input type="text" name="leave_date_from" class="form-control datepicker" placeholder="From" autocomplete="off">
                                     </div> 
                                 </div>
                                 <div class="col-md-4">
@@ -49,17 +49,23 @@
                                     </div> 
                                     <strong><p>To:</p></strong>
                                     <div class="form-group">
-                                        <input type="text" name="leave_date_to" id="datepicker3" class="form-control" placeholder="To">
+                                        <input type="text" name="leave_date_to"class="form-control datepicker" placeholder="To" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <strong><p>Department:</p></strong>
                                     <div class="form-group">
-                                        <input type="text" name="department" class="form-control email" placeholder="Dept/Section" value="{{ Auth::user()->team_name }}" {{ Auth::user()->isAdmin() ? '' : 'readonly' }}>
+                                        <input type="text" name="department" class="form-control" placeholder="Dept/Section" value="{{ Auth::user()->team_name }}" {{ Auth::user()->isAdmin() ? '' : 'readonly' }}>
                                     </div> 
                                     <strong><p>Number of Days:</p></strong>
                                     <div class="form-group">
-                                        <input type="text" name="number_of_days" class="form-control" placeholder="No. of Days">
+                                        <input type="text" name="number_of_days" class="form-control" list="leave_days" placeholder="No. of Days" autocomplete="off">
+                                        <datalist id="leave_days">
+                                          <option value="Half Day">
+                                        </datalist>
+                                        <div class="col-md-12 no-padding">
+                                            <small class="text-muted"><span class="fa fa-info-circle"></span>&nbsp;If not half day, input the number of days.</small>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -121,10 +127,16 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="row report-date-box">
-                                            <div class="col-xs-3">I will report for work on</div>
-                                            <div class="col-xs-2"><input type="text" name="report_date" id="datepicker4" class="form-control report_Date" placeholder="date"></div>
-                                            <div class="col-xs-7">If i fail to do so on the said date without any justifiable cause. </div>
-                                            <span>I can considered to have abandoned my employment. I understand that any misrepresentation I make on this request is a serious offense and shall be a valid ground for disciplinary action against me.</span>
+                                            I will report for work on 
+                                            <input type="text" name="report_date" class="datepicker" placeholder="date" autocomplete="off">
+                                            If i fail to do so on the said date without any justifiable cause.
+                                            I can considered to have abandoned my employment. I understand that any misrepresentation I make on this request is a serious offense and shall be a valid ground for disciplinary action against me.
+                                            <!-- <div class="col-xs-3">I will report for work on</div>
+                                            <div class="col-xs-3">
+                                                <input type="text" name="report_date" id="datepicker4" class="form-control report_Date datepicker" placeholder="date" autocomplete="off">
+                                            </div>
+                                            <div class="col-xs-6">If i fail to do so on the said date without any justifiable cause. </div>
+                                            <span>I can considered to have abandoned my employment. I understand that any misrepresentation I make on this request is a serious offense and shall be a valid ground for disciplinary action against me.</span> -->
                                         </div>
                                     </div>
                                 </div>
@@ -167,16 +179,7 @@
         $('#opportunity-table').DataTable();
     });
     
-    $('#datepicker').datepicker({
-        uiLibrary: 'bootstrap4'
-    });
-    $('#datepicker2').datepicker({
-        uiLibrary: 'bootstrap4'
-    });
-    $('#datepicker3').datepicker({
-        uiLibrary: 'bootstrap4'
-    });
-    $('#datepicker4').datepicker({
+    $('.datepicker').datepicker({
         uiLibrary: 'bootstrap4'
     });
 
@@ -195,27 +198,33 @@
         }    
     }
 
-    //disable remaining checkbox Pay type
-    // function ck2Change(ckType){
-    //     var ckName = document.getElementsByName(ckType.name);
-    //     var checked = document.getElementById(ckType.id);
+    $("#leave_form").validate({
+        rules : {
+            employee_id: "required",
+            position : "required",
+            department: "required",
+            date_filed: "required",
+            leave_date_from : "required",
+            leave_date_to : "required",
+            number_of_days : "required",
+            leave_type_id : "required",
+            report_date : "required",
+            reason : "required",
+            contact_number: "required"
+        },
+        submitHandler : function(form, event){
+            var validator = this;
 
-    //     if (checked.checked) {
-    //     for(var i=0; i < ckName.length; i++){
+            if($('input[name=leave_type_id]:checked').length == 0) {
+                
+            } else if($('input[name=pay_type_id]:checked').length == 0){
+                
+            } else {
+                form.submit();
+            }
+        }
+    });
 
-    //         if(!ckName[i].checked){
-    //             ckName[i].disabled = true;
-    //         }else{
-    //             ckName[i].disabled = false;
-    //         }
-    //     } 
-    //     }
-    //     else {
-    //     for(var i=0; i < ckName.length; i++){
-    //         ckName[i].disabled = false;
-    //     } 
-    //     }    
-    // }
 
 </script>
 @endsection

@@ -60,6 +60,10 @@ Route::middleware(['auth'])->group(function(){
 	});
 
 	Route::resource('leave', 'LeaveController');
+	Route::post('leave/recommend', 'LeaveController@recommend');
+	Route::post('leave/approve', 'LeaveController@approve');
+	Route::post('leave/noted', 'LeaveController@noted');
+
 	Route::get('myprofile', 'EmployeeInfoController@myprofile');
 	Route::post('employee/{id}/savepassword', 'EmployeeInfoController@savepassword');
 	Route::get('employees/import', 'EmployeeInfoController@import');
@@ -91,6 +95,4 @@ Route::get('import/birthdays', function(){
 Route::post('api/login', 'EmployeeInfoController@loginAPI');
 Route::post('api/v2/login', 'EmployeeInfoController@loginAPIv2');
 Route::get('api/session', 'EmployeeInfoController@session');
-Route::get('test', function(){
-	return Auth::user()->id;
-});
+Route::get('run', 'Controller@run');

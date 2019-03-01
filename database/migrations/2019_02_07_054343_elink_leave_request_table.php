@@ -28,10 +28,13 @@ class ElinkLeaveRequestTable extends Migration
             $table->integer('filed_by_id')->nullable(true);
             $table->integer('recommending_approval_by_id')->nullable(true);
             $table->dateTime('recommending_approval_by_signed_date')->nullable(true);
+            $table->integer('recommending_approval_by_is_notified')->nullable(true)->default(0);
             $table->integer('approved_by_id')->nullable(true);
             $table->dateTime('approved_by_signed_date')->nullable(true);
+            $table->integer('approved_by_is_notified')->nullable(true)->default(0);
             $table->integer('noted_by_id')->nullable(true);
             $table->dateTime('noted_by_signed_date')->nullable(true);
+            $table->integer('noted_by_is_notified')->nullable(true)->default(0);
             $table->integer('approve_status_id')->nullable(true);
             $table->string('reason_for_disapproval')->nullable(true);
             $table->dateTime('date_filed');

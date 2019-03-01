@@ -86,17 +86,20 @@
         margin: 0px;
         padding: 0px;
     }
-    input#datepicker4 {
+    input[name=report_date] {
         text-align: center;
         width: 106px;
-        /* top: -2px; */
         margin-top: -19px;
         padding: 0px;
-        /* border: none; */
         border-right: none;
         border-left: none;
         border-top: none;
-        /* height: 43px; */
+        border-bottom: 1px solid #ddd;
+    }
+    label#report_date-error {
+        position: absolute;
+        top: -30px;
+        left: 150px;
     }
     textarea{
         border-radius: 0px !important;
@@ -109,4 +112,7 @@
         border: 1px solid #ddd;
         outline: 0;
         box-shadow: none !important;
+    }
+    .datepicker4-error{
+
     }

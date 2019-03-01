@@ -14,6 +14,9 @@ body{
 footer {
     color: white !important;
 }
+p, small, a, td{
+    font-weight: 500;
+}
 @media (min-width: 766px){
     .sidebar {
         left: 0%;
@@ -48,14 +51,12 @@ nav.navbar, .content-holder{
         width: 100%;
     }
 }
+
 .sidebar ul.nav li a {
     padding-left: 30px;
 }
 #sidebar-collapse{
     box-shadow: 0 1px 20px 1px rgba(0,0,0,.05);
-}
-.profile-sidebar {
-    padding-left: 10px;
 }
 .btn{
 	border-radius: 0px !important;
@@ -86,7 +87,7 @@ nav.navbar, .content-holder{
     font-weight: 500;
     color: #e9ecf2;
     border-radius: 0px;
-    font-size: 16px;
+    font-size: 14px;
 }
 .panel-heading span {
     border-radius: 0px !important;
@@ -97,7 +98,7 @@ nav.navbar, .content-holder{
 h4.timeline-title {
     color: #444;
     font-weight: 500;
-    font-size: 17px;
+    font-size: 14px;
     margin-top: 10px;
 }
 h4.timeline-title a{

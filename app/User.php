@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon; 
+use App\LeaveRequest;
 
 class User extends Authenticatable
 {
@@ -133,6 +134,10 @@ class User extends Authenticatable
         }
     }
     public function scopeIsAdmin($query){
-        return $this->usertype == 4;
+        return $this->is_admin == 1;
+    }
+
+    public function scopeLeaveRequestCount(){
+        return LeaveRequest::all()->count();
     }
 }

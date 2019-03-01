@@ -100,14 +100,14 @@ Employee / Add
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label >Phone Name</label>
+                                    <label >Phone Name/Alias</label>
                                     <input class="form-control" name="alias" value="">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="asterisk-required">Birthdate</label>
-                                    <input class="form-control datepicker" name="birth_date" value="" required>
+                                    <input class="form-control datepicker" name="birth_date" value="" required autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -155,14 +155,26 @@ Employee / Add
                                     <label class="radio-label" for="manager">Manager</label>
                                     &nbsp;
                                     &nbsp;
-                                    <input type="radio" id="admin" name="employee_type" value="4" required>
-                                    <label class="radio-label" for="admin">Admin</label>
+                                    &nbsp;
+                                    &nbsp;
+                                    |
+                                    &nbsp;
+                                    &nbsp;
+                                    &nbsp;
+                                    &nbsp;
+                                    <input type="checkbox" id="admin" name="is_admin" >
+                                    <label class="radio-label" for="admin">is Admin?</label>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="asterisk-required">Position</label>
-                                    <input class="form-control" name="position_name" value="" required>
+                                    <input class="form-control" name="position_name" value="" list="positions" required>
+                                    <datalist id="positions">
+                                        @foreach($positions as $position)
+                                            <option value="{{ $position->position_name }}">
+                                        @endforeach
+                                    </datalist>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -191,22 +203,22 @@ Employee / Add
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Manager</label>
-                                   <select class="select2 form-control" name="manager_name">
+                                    <label >Supervisor</label>
+                                    <select class="select2 form-control"  name="supervisor_id">
                                         <option selected="" disabled="">Select</option>
-                                       @foreach($supervisors as $supervisor)
-                                            <option value="{{ $supervisor->fullname() }}"> {{$supervisor->fullname()}}</option>
+                                        @foreach($supervisors as $supervisor)
+                                            <option value="{{ $supervisor->id }}"> {{$supervisor->fullname()}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label >Supervisor</label>
-                                    <select class="select2 form-control"  name="supervisor_name">
+                                    <label>Manager</label>
+                                   <select class="select2 form-control" name="manager_id">
                                         <option selected="" disabled="">Select</option>
-                                        @foreach($supervisors as $supervisor)
-                                            <option value="{{ $supervisor->fullname() }}"> {{$supervisor->fullname()}}</option>
+                                       @foreach($managers as $manager)
+                                            <option value="{{ $manager->id }}"> {{$manager->fullname()}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -214,13 +226,13 @@ Employee / Add
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Hire Date</label>
-                                    <input class="form-control datepicker" name="hired_date" value="">
+                                    <input class="form-control datepicker" name="hired_date" value="" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Production Date</label>
-                                    <input class="form-control datepicker" name="prod_date" value="">
+                                    <input class="form-control datepicker" name="prod_date" value="" autocomplete="off">
                                 </div>
                             </div>
 
@@ -246,7 +258,7 @@ Employee / Add
                                     <input class="form-control" name="wave" value="" >
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 hidden">
                                 <div class="form-group">
                                     <input type="checkbox" name="all_access"> &nbsp;
                                     <span for="all_access">can view information from other account ?</span>

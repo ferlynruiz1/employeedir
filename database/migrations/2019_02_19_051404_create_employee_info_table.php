@@ -50,6 +50,8 @@ class CreateEmployeeInfoTable extends Migration
             $table->string('philhealth', 200)->nullable(true);
             $table->string('tin', 200)->nullable(true);
             $table->string('address', 200)->nullable(true);
+            $table->decimal('leave_credit', 5, 2)->nullable(true)->default(0);
+            $table->integer('is_admin')->nullable(true)->default(0);
             $table->string('remember_token', 200)->nullable(true);
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('updated_at')->nullable(true);

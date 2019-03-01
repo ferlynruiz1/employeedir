@@ -14,6 +14,7 @@ use App\ElinkDivision;
 use App\User;
 use App\Employee;
 use App\EmployeeAttrition;
+use App\LeaveRequest;
 use Response;
 use File;
 use DB;
@@ -58,7 +59,11 @@ class EmployeeInfoController extends Controller
      */
     public function create()
     {
-        return view('employee.create')->with('supervisors', User::all())->with('departments', EmployeeDepartment::all())->with('accounts', ElinkAccount::all());
+        return view('employee.create')
+        ->with('managers', User::allExceptSuperAdmin()->orderBy('last_name')->get())
+        ->with('supervisors', User::allExceptSuperAdmin()->orderBy('last_name')->get())
+        ->with('departments', EmployeeDepartment::all())->with('accounts', ElinkAccount::all())
+        ->with('positions', User::select('position_name')->groupBy('position_name')->get());
     }
 
     /**
@@ -166,7 +171,8 @@ class EmployeeInfoController extends Controller
         if (Auth::user()->isAdmin()) {
             return view('employee.view')->with('employee', Auth::user());
         }
-        return view('auth.profile.view')->with('employee', Auth::user());
+        return view('auth.profile.view')->with('employee', Auth::user())
+            ->with('my_requests', LeaveRequest::where('filed_by_id', Auth::user()->id)->get());
     }
 
     public function import(Request $request)

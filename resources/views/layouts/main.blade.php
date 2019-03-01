@@ -63,14 +63,14 @@ body{
             @auth
             <div class="profile-sidebar visible-sm-block visible-xs-block">
                 <div class="profile-userpic">
-                    <div style="background-image: url('{{ Auth::user()->profile_img }}'); width: 100px; height: 100px;margin: 15px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; border-radius: 50%; float: left;">
+                    <div style="background-image: url('{{ Auth::user()->profile_img }}'); width: 100px; height: 100px;margin: 15px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; border-radius: 50%; margin: 0 auto;">
                     </div>
                 </div>
                 <div class="profile-usertitle">
                     <br>
-                    <h4 class="card-title m-t-10" style="font-size: 15px !important;">{{ Auth::user()->fullname() }}</h4>
-                    <h5 class="card-subtitle" title="Job Title">{{ Auth::user()->position_name }}</h6>
-                    <h6 class="card-subtitle" title="Department/Team">{{ Auth::user()->team_name }}</h6>
+                    <h5 class="card-title m-t-10">{{ Auth::user()->fullname() }}</h5>
+                    <small class="text-muted" title="Job Title">{{ Auth::user()->position_name }}</small>
+                    <br>
                 <br>
                 </div>
                 <div class="clear"></div>
@@ -110,14 +110,14 @@ body{
             <div class="profile-sidebar visible-md-block visible-lg-block">
                 @auth
                 <div class="profile-userpic">
-                    <div style="background-image: url('{{ Auth::user()->profile_img }}'); width: 100px; height: 100px;margin: 15px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; border-radius: 50%; float: left;">
+                    <div style="background-image: url('{{ Auth::user()->profile_img }}');" class="pic-div">
                     </div>
                 </div>
                 <div class="profile-usertitle">
                     <br>
-                    <h4 class="card-title m-t-10" style="font-size: 15px !important;">{{ Auth::user()->fullname() }}</h4>
-                    <h5 class="card-subtitle" title="Job Title">{{ Auth::user()->position_name }}</h5>
-                    <h6 class="card-subtitle" title="Department/Team">{{ Auth::user()->team_name }}</h6>
+                    <h5 class="card-title m-t-10">{{ Auth::user()->fullname() }}</h5>
+                    <small class="text-muted" title="Job Title">{{ Auth::user()->position_name }}</small>
+                    <br>
                 <br>
                 </div>
                 <div class="clear"></div>

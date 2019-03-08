@@ -27,36 +27,27 @@ class Controller extends BaseController
     }
 
     public function run(){
-  //   	$admins = User::where('usertype', '=', '4')->get();
+    	$admins = User::where('usertype', '=', '4')->get();
 
-  //   	foreach($admins as $admin){
-  //   		$admin->is_admin = 1;
-  //   		$admin->save();
-  //   	}
+    	foreach($admins as $admin){
+    		$admin->is_admin = 1;
+    		$admin->save();
+    	}
 
-		// foreach(User::all() as $employee){
+		foreach(User::all() as $employee){
 
-		// 	if($supervisor = User::whereRaw('CONCAT(last_name, ", ", first_name) = ' . '"' . $employee->supervisor_name . '"')->first()){
-		// 		$employee->supervisor_id = $supervisor->id;
-		// 	}
+			if($supervisor = User::whereRaw('CONCAT(last_name, ", ", first_name) = ' . '"' . $employee->supervisor_name . '"')->first()){
+				$employee->supervisor_id = $supervisor->id;
+			}
 			
-		// 	if($manager = User::whereRaw('CONCAT(last_name, ", ", first_name) = ' . '"' . $employee->manager_name . '"')->first()){
-		// 		$employee->manager_id = $manager->id;
-		// 	}
+			if($manager = User::whereRaw('CONCAT(last_name, ", ", first_name) = ' . '"' . $employee->manager_name . '"')->first()){
+				$employee->manager_id = $manager->id;
+			}
 
-		// 	$employee->save();
-		// }
+			$employee->save();
+		}
 
-        $date_today = date('Y-m-d h:i:s');
-        $recommenders = LeaveRequest::where('date_filed', '<', $date_today)->where('recommending_approval_by_is_notified', '=', '1')->get();
-
-        return $recommenders;
-        foreach($recommenders as $recommend){
-            $recommend->recommending_approval_by_is_notified = 1;
-            $recommend->save();
-            break;
-        }
-
+        
     	return "done !";
     }
 }

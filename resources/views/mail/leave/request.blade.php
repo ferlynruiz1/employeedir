@@ -10,7 +10,7 @@
 		<br>
 		{{ $leave_request->employee->first_name }} requested to leave for <b>{{ $leave_request->leaveDays() }}</b> from <b>{{ prettyDate($leave_request->leave_date_from) }}</b> to <b>{{ prettyDate($leave_request->leave_date_to ) }}</b>.
 		<br>
-		This request needs your recommendation. Please click on the button below.
+		Please click on the button below.
 		<br>
 		<br>
 		<a href="{{ url('leave').'/'.$leave_request->id }}" style="background-color: #30a5ff; color: white; border: none; padding: 6px 12px;    text-decoration: none;">View Leave Request</a>

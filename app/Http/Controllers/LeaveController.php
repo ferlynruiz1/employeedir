@@ -79,7 +79,7 @@ class LeaveController extends Controller
         $leave->save();
 
         // SEND EMAIL NOTIFICATION
-        Mail::to("jmanuel.derecho@gmail.com")->send(new LeaveNotification($leave));
+        // Mail::to("johnmanuelderecho@elink.com.ph")->send(new LeaveNotification($leave));
 
         return redirect("leave" . '/' . $leave->id)->with('success', 'Leave Request Successfully Submitted!!');
     }

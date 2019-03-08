@@ -30,7 +30,7 @@ class LeaveNotification extends Mailable
      * @return $this
      */
     public function build()
-    {
-        return $this->from('elink.employeedirectory@gmail.com')->view('mail.leave.request');
+    { 
+        return $this->from('employeedirectory@elink.com.ph')->view('mail.leave.request');
     }
 }

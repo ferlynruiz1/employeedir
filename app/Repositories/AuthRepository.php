@@ -69,9 +69,14 @@ class AuthRepository implements RepositoryInterface
     }
 
     public function ldapLogin($username, $password){
-        $adServer = 'ldap://windc.elink.corp/';
+        $adServer = 'ldap://windc.elink.corp';
+        $port = 389;
 
-        $ldap = ldap_connect($adServer);
+        $ldap = ldap_connect($adServer, $port);
+
+        if(!$ldap){
+            return back()->withErrors(['email' => "LDAP Error!"]);
+        }
 
         $ldaprdn = 'ELINK' . "\\" . $username;
 
@@ -81,22 +86,41 @@ class AuthRepository implements RepositoryInterface
         try {
             $bind = @ldap_bind($ldap, $ldaprdn, $password);
         } catch(Exception $e){
-            return false;
+            return back()->withErrors(['email' => "LDAP Error!"]);
         }
-
+        
+        if (ldap_get_option($ldap, LDAP_OPT_DIAGNOSTIC_MESSAGE, $extended_error)) {
+            $error_code = $this->parseExentedLdapErrorCode($extended_error);
+            if($error_code == 532){
+                return back()->withErrors(['email' => "LDAP Password is expired!"]);
+            } else if($error_code == 775){
+                return back()->withErrors(['email' => "LDAP Username is locked!"]);
+            } else if($error_code == 49 || $error_code == "52e"){
+                return back()->withErrors(['email' => "LDAP Invalid credentials!"]);
+            }
+        }
+        
         if ($bind) {
             $filter="(sAMAccountName=$username)";
             $attributes = array('mail');
             $result = ldap_search($ldap,"dc=ELINK,dc=CORP",$filter, $attributes);
             $info = ldap_get_entries($ldap, $result);
-            return User::where('email', '=', $info[0]['mail'][0])->first();
+            $ldap_user = User::where('email', '=', $info[0]['mail'][0])->first();
+            Auth::login($ldap_user);
+            return redirect()->intended('/');
         } else {
-            return false;
+            return back()->withErrors(['email' => "Incorrect email and password combination!"]);
         }
+    }
+    public function parseExentedLdapErrorCode($message) {
+        $code = null;
+        if (preg_match("/(?<=data\s).*?(?=\,)/", $message, $code)) {
+            return $code[0];
+        }
+        return null;
     }
 
     public function authFields($arrayIndex, $field, $password){
-
         foreach($arrayIndex as $index){
             if (Auth::attempt([ $index => $field, 'password' => $password])) {
                 $user = User::where($index ,'=', $field);
@@ -106,19 +130,17 @@ class AuthRepository implements RepositoryInterface
                 }
             }
         }
-        return redirect('/login')->withErrors(['email' => "Incorrect email and password combination!"]);
+        return back()->withErrors(['email' => "Incorrect email and password combination!"]);
     }
 
     public function login(Request $request){
-
-        $ldap_user = $this->ldapLogin($request->email, $request->password);
-
-        if($ldap_user){
-            Auth::login($ldap_user);
-            return redirect()->intended('/');
+        if (!filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
+            return $this->ldapLogin($request->email, $request->password);
+        } else {
+            return $this->authFields(['email', 'email2', 'email3'], $request->email, $request->password);
         }
-        return $this->authFields(['email', 'email2', 'email3'], $request->email, $request->password);
     }
+
     public function loginAPIv2(Request $request){
 
         $ldap_user = $this->ldapLogin($request->email, $request->password);

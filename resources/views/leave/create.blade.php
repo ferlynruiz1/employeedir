@@ -126,7 +126,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="row report-date-box">
+                                        <div class="report-date-box">
                                             I will report for work on 
                                             <input type="text" name="report_date" class="datepicker" placeholder="date" autocomplete="off">
                                             If i fail to do so on the said date without any justifiable cause.

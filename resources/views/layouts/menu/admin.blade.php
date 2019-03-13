@@ -46,7 +46,7 @@
         My Profile
     </a>
 </li>
-<li <?php echo \Request::url() == url('employees/import') ? 'class="active"' : ''; ?>>
+<!-- <li <?php echo \Request::url() == url('employees/import') ? 'class="active"' : ''; ?>>
     <a href="{{url('employees/import')}}">
         <em class="fa fa-upload">&nbsp;</em> 
         Import
@@ -63,7 +63,7 @@
         <em class="fa fa-spinner">&nbsp;</em> 
         Run Cron Job
     </a>
-</li>
+</li> -->
 <li>
     <a href="{{ route('logout')}}">
         <em class="fa fa-power-off">&nbsp;</em>

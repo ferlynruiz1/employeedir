@@ -27,8 +27,9 @@ class EmployeeInfoController extends Controller
         return $this->authModel->login($request);
     }
 
-    public function loginAPIv2(Request $request){
-        return "test";
+    public function loginAPIv2(Request $request)
+    {
+        
         return $this->authModel->loginAPIv2($request);
     }
 

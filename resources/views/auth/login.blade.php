@@ -110,7 +110,7 @@
             </div>
             <div class="content">
                 <div style="color: white;">
-                    <span style="font-size: 18px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;LOGIN TO YOUR ACCOUNT</span><span style="font-size: 18px; font-weight: 400"> </span>
+                    <span style="font-size: 18px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;LOGIN WITH YOUR ACCOUNT</span><span style="font-size: 18px; font-weight: 400"> </span>
                     <br>
                     <br>
                 </div>
@@ -118,7 +118,7 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="form-group">
-                            <input class="form-input" type="text" name="email" placeholder="Email Address" required autofocus/>
+                            <input class="form-input" type="text" name="email" placeholder="Username" required autofocus/>
                         </div>
                         <div class="form-group">
                             <input  class="form-input" type="password" name="password" value="" placeholder="Password" required/>

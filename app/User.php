@@ -12,7 +12,7 @@ class User extends Authenticatable
 {
     use SoftDeletes;
     use Notifiable;
-    protected $table = "employee_info";
+    public $table = "employee_info";
     /**
      * The attributes that are mass assignable.
      *

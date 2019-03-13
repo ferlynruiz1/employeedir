@@ -15,9 +15,6 @@ use App\User;
 */
 // date_default_timezone_set('Asia/Manila');
 
-Route::get('cron/importlatest', 'EmployeeInfoController@checklatest');
-Route::get('cron/attrition', 'EmployeeInfoController@attrition');
-
 Route::get('/', function () {
 	if(Auth::check()){
 		if(Auth::user()->isAdmin()){
@@ -66,18 +63,7 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::get('myprofile', 'EmployeeInfoController@myprofile');
 	Route::post('employee/{id}/savepassword', 'EmployeeInfoController@savepassword');
-	Route::get('employees/import', 'EmployeeInfoController@import');
-	Route::post('employees/import', 'EmployeeInfoController@importsave');
-	Route::get('employees/export', function(){
-		try {
-			$files = File::allFiles('./public/excel/report');
-			$files = array_slice($files, 0, 5);
-		} catch (Exception $e) {
-			$files = array();
-		}
-		
-		return view('employee.export')->with('files', $files);
-	});
+
 	Route::get('exportdownload', 'EmployeeInfoController@exportdownload');
 	Route::get('employees/sync', function(){
 		return view('employee.sync');
@@ -87,12 +73,6 @@ Route::middleware(['auth'])->group(function(){
 Route::get('showactivities/{id}', 'ActivityController@show');
 Route::post('import/birthdays', "EmployeeInfoController@importbday");
 
-Route::get('import/birthdays', function(){
-	return "<form enctype='multipart/form-data' method='POST' action='birthdays'><input type='file' name='dump_file'>
-	<input type='submit' value='submit' />".csrf_field()." </form>";
-});
-
 Route::post('api/login', 'EmployeeInfoController@loginAPI');
 Route::post('api/v2/login', 'EmployeeInfoController@loginAPIv2');
 Route::get('api/session', 'EmployeeInfoController@session');
-Route::get('run', 'Controller@run');

@@ -53,7 +53,7 @@ Dashboard
    <div class="col-md-12">
         <div class="panel panel-container">
             <div class="row">
-                <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+                <div class="col-xs-6 col-md-6 col-lg-6 no-padding">
                     <div class="panel panel-teal panel-widget border-right">
                         <div class="row no-padding"><em class="fa fa-xl fa-user color-blue"></em>
                             <div class="large">{{ count($employees) }}</div>
@@ -61,7 +61,7 @@ Dashboard
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+                <div class="col-xs-6 col-md-6 col-lg-6 no-padding">
                     <div class="panel panel-blue panel-widget border-right">
                         <div class="row no-padding"><em class="fa fa-xl fa-users color-gray"></em>
                             <div class="large">8</div>
@@ -69,7 +69,7 @@ Dashboard
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+                <!-- <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-orange panel-widget border-right">
                         <div class="row no-padding"><em class="fa fa-xl fa-upload" style="color: #388E3C;"></em>
                             <div class="large"><a href="{{ url('employees/import')}}" class="btn btn-success" style="background-color: #388E3C;">Import</a></div>
@@ -84,7 +84,7 @@ Dashboard
                             <div class="text-muted">Generate Report</div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div><!--/.row-->
         </div>
     </div>

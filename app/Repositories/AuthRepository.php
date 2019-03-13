@@ -6,9 +6,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use DB;
 
 class AuthRepository implements RepositoryInterface
 {
+    public $adServer = 'ldap://windc.elink.corp';
+    public $port = 389;
     // model property on class instances
     protected $model;
 
@@ -68,11 +71,10 @@ class AuthRepository implements RepositoryInterface
         return $this->model->with($relations);
     }
 
-    public function ldapLogin($username, $password){
-        $adServer = 'ldap://windc.elink.corp';
-        $port = 389;
 
-        $ldap = ldap_connect($adServer, $port);
+
+    public function ldapLogin($username, $password){
+        $ldap = ldap_connect($this->adServer, $this->port);
 
         if(!$ldap){
             return back()->withErrors(['email' => "LDAP Error!"]);
@@ -105,13 +107,17 @@ class AuthRepository implements RepositoryInterface
             $attributes = array('mail');
             $result = ldap_search($ldap,"dc=ELINK,dc=CORP",$filter, $attributes);
             $info = ldap_get_entries($ldap, $result);
+            dd($info);
             $ldap_user = User::where('email', '=', $info[0]['mail'][0])->first();
+
             Auth::login($ldap_user);
             return redirect()->intended('/');
         } else {
             return back()->withErrors(['email' => "Incorrect email and password combination!"]);
         }
     }
+
+
     public function parseExentedLdapErrorCode($message) {
         $code = null;
         if (preg_match("/(?<=data\s).*?(?=\,)/", $message, $code)) {
@@ -141,14 +147,58 @@ class AuthRepository implements RepositoryInterface
         }
     }
 
+    public function ldapAPILogin($username, $password){
+        $ldap = ldap_connect($this->adServer, $this->port);
+
+        if(!$ldap){
+            return false;
+        }
+        
+        $ldaprdn = 'ELINK' . "\\" . $username;
+
+        
+        ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
+        
+        try {
+            $bind = @ldap_bind($ldap, $ldaprdn, $password);
+        } catch(Exception $e){
+            return false;
+        }
+        
+        if (ldap_get_option($ldap, LDAP_OPT_DIAGNOSTIC_MESSAGE, $extended_error)) {
+            $error_code = $this->parseExentedLdapErrorCode($extended_error);
+            if($error_code == 532){
+                return false;
+            } else if($error_code == 775){
+                return false;
+            } else if($error_code == 49 || $error_code == "52e"){
+                return false;
+            }
+        }
+        if ($bind) {
+            $filter="(sAMAccountName=$username)";
+            $attributes = array('mail');
+            $result = ldap_search($ldap,"dc=ELINK,dc=CORP",$filter, $attributes);
+            $info = ldap_get_entries($ldap, $result);
+            
+            $ldap_user = User::where('email', '=', $info[0]['mail'][0])->get();
+            
+            return "$ldap_user";
+            
+        } else {
+            
+            return false;
+        }
+    }
     public function loginAPIv2(Request $request){
-
-        $ldap_user = $this->ldapLogin($request->email, $request->password);
-
+        
+        // return User::where('email', '=', $request->email)->get();
+        $ldap_user = $this->ldapAPILogin($request->email, $request->password);
+        
         if($ldap_user){
-            Auth::login($ldap_user);
-            return "true";
-            // return response(['success' => true, 'user' => $ldap_user]);
+            return response(['success' => true, 'user' => $ldap_user]);
+            return "test";
         }
 
         $arrayIndex = array('email', 'email2', 'email3'); 
@@ -157,13 +207,11 @@ class AuthRepository implements RepositoryInterface
             if (Auth::attempt([ $index => $request->email, 'password' => $request->password ])){
                 $user = User::where($index ,'=', $request->email);
                 if ($user->count() > 0) {
-                    Auth::login($user->first());
-                    return "true";
-                    // return response(['success' => true, 'user' => $user]);
+                    return response(['success' => true, 'user' => $user->first()]);
                 }
             }
         }
-        return "false";
+        return response(['success' => false, 'user' => null]);
         // return response(['success' => false, 'user' => $user]);
     }
     public function loginAPI(Request $request){

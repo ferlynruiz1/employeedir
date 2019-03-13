@@ -90,8 +90,7 @@ Home
                     @endif
                 </div>
             </div>
-        </div>
-    <div class="col-lg-3">
+            <br>
             <div class="panel panel-default ">
                 <div class="panel-heading">
                     Newest Hired

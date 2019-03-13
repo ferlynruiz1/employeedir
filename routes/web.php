@@ -54,6 +54,10 @@ Route::middleware(['auth'])->group(function(){
 		Route::resource('posts', 'PostController');
 		Route::get('employee/{id}/changepassword', 'EmployeeInfoController@changepassword');
 		Route::get('employees/separated', 'EmployeeInfoController@separatedEmployees');
+
+		Route::get('hierarchy', 'HierarchyController@hierarchy');
+		Route::post('hierarchy', 'HierarchyController@updateHierarchy');
+
 	});
 
 	Route::resource('leave', 'LeaveController');
@@ -76,5 +80,3 @@ Route::post('import/birthdays', "EmployeeInfoController@importbday");
 Route::post('api/login', 'EmployeeInfoController@loginAPI');
 Route::post('api/v2/login', 'EmployeeInfoController@loginAPIv2');
 Route::get('api/session', 'EmployeeInfoController@session');
-Route::get('hierarchy', 'HierarchyController@hierarchy');
-Route::post('hierarchy', 'HierarchyController@updateHierarchy');

@@ -144,7 +144,7 @@ class EmployeeRepository implements RepositoryInterface
         if ($request->hasFile("profile_image")) {
             $extension = $request->file('profile_image')->guessExtension();
             $path = $request->profile_image->storeAs('images/'.$employee->id, $employee->id . '.' . $extension);
-            $employee->profile_img = asset('storage/app/'.$path);
+            $employee->profile_img = asset(' /app/'.$path);
             $employee->save();
         }
 

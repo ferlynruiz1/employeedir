@@ -648,4 +648,5 @@ class EmployeeInfoController extends Controller
        
         return view('employee.separated')->with('employees', $employees);
     }
+
 }

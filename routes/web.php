@@ -76,3 +76,5 @@ Route::post('import/birthdays', "EmployeeInfoController@importbday");
 Route::post('api/login', 'EmployeeInfoController@loginAPI');
 Route::post('api/v2/login', 'EmployeeInfoController@loginAPIv2');
 Route::get('api/session', 'EmployeeInfoController@session');
+Route::get('hierarchy', 'HierarchyController@hierarchy');
+Route::post('hierarchy', 'HierarchyController@updateHierarchy');

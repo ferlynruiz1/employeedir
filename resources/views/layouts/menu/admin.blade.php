@@ -46,6 +46,12 @@
         My Profile
     </a>
 </li>
+<li <?php echo \Request::url() == url('hierarchy') ? 'class="active"' : ''; ?>>
+    <a href="{{url('hierarchy')}}">
+        <em class="fa fa-sitemap">&nbsp;</em> 
+        Change Employee Hierarchy
+    </a>
+</li>
 <!-- <li <?php echo \Request::url() == url('employees/import') ? 'class="active"' : ''; ?>>
     <a href="{{url('employees/import')}}">
         <em class="fa fa-upload">&nbsp;</em> 

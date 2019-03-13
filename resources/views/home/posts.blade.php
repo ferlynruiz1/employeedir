@@ -26,5 +26,9 @@
     </div>
 @endforeach
 @if(count($engagements) == 0)
-    <center>No events yet</center>
+<div class="panel panel-default ">
+    <div class="panel-body timeline-container" >
+        <center>No events yet</center>
+    </div>
+</div>
 @endif

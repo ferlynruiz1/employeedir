@@ -120,13 +120,22 @@ class EmployeeRepository implements RepositoryInterface
         }
 
         $datetime = new DateTime();
-        $hired_date = $datetime->createFromFormat('m/d/Y', $request->hired_date)->format("Y-m-d H:i:s");
-        $birth_date = $datetime->createFromFormat('m/d/Y', $request->birth_date)->format("Y-m-d H:i:s");
-        $prod_date = $datetime->createFromFormat('m/d/Y', $request->prod_date)->format("Y-m-d H:i:s");
-        
-        $employee->hired_date = $hired_date;
-        $employee->birth_date = $birth_date;
-        $employee->prod_date = $prod_date;
+
+        if ($request->has('birth_date') && $request->birth_date) {
+            $birth_date = $datetime->createFromFormat('m/d/Y', $request->birth_date)->format("Y-m-d H:i:s");
+            $employee->birth_date = $birth_date;
+        }
+
+        if ($request->has('hired_date') && $request->hired_date){
+            $hired_date = $datetime->createFromFormat('m/d/Y', $request->hired_date)->format("Y-m-d H:i:s");
+            $employee->hired_date = $hired_date;
+        }
+
+        if ($request->has('prod_date') && $request->prod_date){
+            $prod_date = $datetime->createFromFormat('m/d/Y', $request->prod_date)->format("Y-m-d H:i:s");
+            $employee->prod_date = $prod_date;
+        }
+
         $employee->email = $request->email;
         $employee->email2 = $request->email2;
         $employee->email3 = $request->email3;

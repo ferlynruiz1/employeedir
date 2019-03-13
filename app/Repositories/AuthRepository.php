@@ -107,7 +107,6 @@ class AuthRepository implements RepositoryInterface
             $attributes = array('mail');
             $result = ldap_search($ldap,"dc=ELINK,dc=CORP",$filter, $attributes);
             $info = ldap_get_entries($ldap, $result);
-            dd($info);
             $ldap_user = User::where('email', '=', $info[0]['mail'][0])->first();
 
             Auth::login($ldap_user);

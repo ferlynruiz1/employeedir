@@ -3,135 +3,76 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>eLink's Employee Directory | @yield('title')</title>
     <link rel="icon" type="image/png" href="http://www.elink.com.ph/wp-content/uploads/2016/01/elink-logo-site.png">
-    <link href="{{ asset('public/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('public/css/font-awesome.min.css')}}" rel="stylesheet">
-    <link href="{{ asset('public/css/datepicker3.css')}}" rel="stylesheet">
-    <link href="{{ asset('public/css/styles.css')}}" rel="stylesheet">
-    <link href="{{ asset('public/css/custom.css')}}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ asset('public/css/jquery.dataTables.css')}}">
+    <link href="{{ asset('public/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('public/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('public/css/datepicker3.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('public/css/styles.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('public/css/custom.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('public/css/jquery.dataTables.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ asset('public/css/select2.min.css')}}" rel="stylesheet">
     <link href="{{ asset('public/css/css.css')}}" rel="stylesheet">
     <script src="{{ asset('public/js/jquery-1.11.1.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('public/js/jquery.bootstrap-growl.min.js') }}"></script>
+
+    <!-- FROALA EDITOR -->
+    <link rel="stylesheet" href="{{ asset('public/css/froala_editor/froala_editor.css')}}">
+    <link rel="stylesheet" href="{{ asset('public/css/froala_editor/froala_style.css')}}">
+    <link rel="stylesheet" href="{{ asset('public/css/froala_editor/plugins/emoticons.css')}}">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
+<style type="text/css">
+    body{
+
+    }
+</style>
 <body>
-    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation" style="background-color: #32373A !important;">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{url('/home')}}">
+<!-- nav header -->
+<nav class="navbar navbar-custom navbar-fixed-top" role="navigation" style="background-color: #32373A !important;">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span></button>
+            <a class="navbar-brand" href="{{url('/home')}}">
                     <span>
                         <img src="{{ asset('public/img/elink-logo-site.png')}}" style="width: 40px; margin-top: -10px">
                         &nbsp;Employee
                     </span>
-                    Directory
+                Directory
+            </a>
+            <div class="pull-right" style="margin-top: 20px;">
+                <a target="_blank" href="{{ url('/public/img/company-hierarchy.jpeg') }}">
+                        <span class="fa fa-sitemap">
+
+                        </span>
+                    Employee hierarchy
                 </a>
-               <!--  <ul class="nav navbar-top-links navbar-right">
-                    <li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                        <img alt="image" class="img-circle" style="width: 20px;" src="{{ Auth::user()->profile_img }}">
-                    </a>
-                        <ul class="dropdown-menu dropdown-alerts">
-                            <li>
-                                <a  href="{{ url('myprofile')}}">
-                                    <em class="fa fa-user"></em> My Profile
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a  href="{{ url('logout')}}">
-                                    <em class="fa fa-sign-out"></em>Logout
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul> -->
             </div>
         </div>
-    </nav>
-    
-     <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-        <div class="profile-sidebar">
-            <div class="profile-userpic">
-                <img src="{{ Auth::user()->profile_img }}" class="img-responsive" alt="" style="width: 120px; height: 120px;">
-            </div>
-            <div class="profile-usertitle">
-                <br>
-                <h4 class="card-title m-t-10" style="font-size: 15px !important;">{{ Auth::user()->alias }}</h4>
-                <h6 class="card-subtitle">{{ Auth::user()->position_name }}</h6>
-                <h6 class="card-subtitle">{{ Auth::user()->team_name }}</h6>
-            <br>
-            </div>
-            <div class="clear"></div>
-        </div>
-        <div class="divider"></div>
-        <ul class="nav menu">
-            <li <?php echo \Request::url() == url('home') ? 'class="active"' : ''; ?>>
-                <a href="{{url('home')}}">
-                    <em class="fa fa-home">&nbsp;</em>
-                    Home
-                </a>
-            </li>
-            <li <?php echo \Request::url() == url('employees') ? 'class="active"' : ''; ?>>
-                <a href="{{url('employees')}}">
-                    <em class="fa fa-users">&nbsp;</em>
-                    Employees
-                 </a>
-             </li>
-            <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
-                <a href="{{url('myprofile')}}">
-                    <em class="fa fa-user">&nbsp;</em>
-                    My Profile
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('logout')}}">
-                    <em class="fa fa-power-off">&nbsp;</em>
-                    Logout
-                </a>
-            </li>
-        </ul>
     </div>
 
-     <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+</nav>
+<div class="content-holder">
+     <!-- Content -->
+    <div class="col-sm-12">
         <div class="row">
             <ol class="breadcrumb">
                 <li><a href="#">
-                    <em class="fa fa-home"></em>
-                </a></li>
+                        <em class="fa fa-home"></em>
+                    </a></li>
                 <li class="active">@yield('pagetitle')</li>
             </ol>
         </div>
-        <div>
+        <div style="padding: 10px">
             @yield('content')
-        </div>
-    </div> 
 
-
-   <!--  <p style="height: 40px;">&nbsp;
-    </p>
-    <div class="col-sm-12 main">
-        <div class="row">
-            <ol class="breadcrumb" style="background-color: #dcdcdc !important;">
-                <li>
-                    <a href="#">
-                        <em class="fa fa-home"></em>
-                    </a>
-                </li>
-                <li class="active">Dashboard / @yield('pagetitle')</li>
-            </ol>
         </div>
-        <div>
-            @yield('content')
-        </div>
-    </div>  -->
-
+    </div>
     <script src="{{ asset('public/js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('public/js/chart.min.js')}}"></script>
     <script src="{{ asset('public/js/chart-data.js')}}"></script>
@@ -140,70 +81,108 @@
     <script src="{{ asset('public/js/bootstrap-datepicker.js')}}"></script>
     <script src="{{ asset('public/js/jquery.dataTables.js')}}"></script>
     <script src="{{ asset('public/js/jquery.validate.min.js')}}"></script>
+    <script src="{{ asset('public/js/dataTables.responsive.js')}}"></script>
     <script src="{{ asset('public/js/select2.full.js')}}"></script>
     <script src="{{ asset('public/js/global.js')}}"></script>
     <script src="{{ asset('public/js/custom.js')}}"></script>
+
+    <script src="{{ asset('public/js/froala_editor/froala_editor.min.js')}}"></script>
+    <script src="{{ asset('public/js/froala_editor/plugins/emoticons.min.js')}}"></script>
+    <script src="{{ asset('public/js/froala_editor/plugins/link.min.js')}}"></script>
+
     <!-- Modal -->
     <div id="messageModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Modal Header</h4>
-          </div>
-          <div class="modal-body">
-            <p id="message">Some text in the modal.</p>
-          </div>
-          <div class="modal-footer">
-             {{ Form::open(array('url' => 'employee_info/', 'class' => ' delete_form' )) }}
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <p id="message"></p>
+                </div>
+                <div class="modal-footer">
+                    {{ Form::open(array('url' => 'employee_info/', 'class' => ' delete_form' )) }}
                     {{ Form::hidden('_method', 'DELETE') }}
                     {{ Form::submit('Yes', array('class' => 'btn btn-danger')) }}
-                {{ Form::close() }}
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          </div>
+                    {{ Form::close() }}
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
         </div>
-      </div> 
     </div>
+    <div style="min-height: 95vh;"><br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;</div>
+    <center>
+        <small style="color: #999;font-weight: 500;">Copyright {{ date('Y')}} eLink Systems & Concepts Corp.</small>
+    </center>
+    <br>
+</div>
+<div id="engagementmodal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title pull-left" id="engagement_title" style="width: 90%"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <small id="engagement_subtitle"></small>
+                <center>
+                    <br>
+                    <img id="engagement_image" src="" style="width: 100%;" />
+                    <br>
+                    <br>
+                </center>
+                <p id="engagement_message"></p>
+                <small id="engagement_date_posted"></small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
-<!-- Success Modal -->
+<!-- Modal Success -->
 @if (session('success'))
     <div id="alertmodal" class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header" style="background-color: #2196F3;">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white !important;opacity: 1;">×</button>
-            <h4 class="modal-title"><b style="color: white">Success!</b></h4>
-          </div>
-          <div class="modal-body">
-            <p>{{ session('success') }}</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #2196F3;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white !important;opacity: 1;">×</button>
+                    <h4 class="modal-title"><b style="color: white">Success!</b></h4>
+                </div>
+                <div class="modal-body">
+                    <p>{{ session('success') }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
     <script type="text/javascript">
         $('#alertmodal').modal('show');
     </script>
 @endif
-<!-- Error Modal -->
+<!-- Modal Error -->
 @if (session('error'))
-<div id="alertmodal" class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header" style="background-color: #d32f2f;">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white !important;opacity: 1;">×</button>
-            <h4 class="modal-title"><b style="color: white">Error!</b></h4>
-          </div>
-          <div class="modal-body">
-            <p>{{ session('error') }}</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+    <div id="alertmodal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #d32f2f;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white !important;opacity: 1;">×</button>
+                    <h4 class="modal-title"><b style="color: white">Error!</b></h4>
+                </div>
+                <div class="modal-body">
+                    <p>{{ session('error') }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
     <script type="text/javascript">
         $('#alertmodal').modal('show');

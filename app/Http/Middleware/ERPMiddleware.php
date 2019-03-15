@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Http\Middleware;
+
 use Closure;
-use Auth;
-class AdminMiddleware
+
+class ERPMiddleware
 {
     /**
      * Handle an incoming request.
@@ -13,9 +15,9 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::check() || Auth::user()->is_admin == 0) {
-        	// route to not an admin page
-            return redirect()->route('403');
+        if (!Auth::check() || Auth::user()->usertype == 2) {
+            // route to not an admin page
+            return redirect()->route('admin-invalid');
         }
         return $next($request);
     }

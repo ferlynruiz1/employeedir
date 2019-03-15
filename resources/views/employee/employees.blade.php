@@ -74,14 +74,6 @@ Employees
         <i class="fa fa-plus"></i>
         &nbsp;&nbsp;Add Employee
     </a>
-    <a href="{{url('employees/export')}}" class="btn btn-warning" style="background-color: #F57C00">
-        <i class="fa fa-download"></i>
-        &nbsp;&nbsp;Export Employees
-    </a>
-    <a href="{{url('employees/import')}}" class="btn btn-success" style="background-color: #388E3C">
-        <i class="fa fa-upload"></i>
-        &nbsp;&nbsp;Import Employees
-    </a>
     <div class="section-header">
         <h4>List of Employees</h4>
     </div>

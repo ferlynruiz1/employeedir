@@ -155,8 +155,8 @@ Employee Information / Edit
                          <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label>User Access</label>
                                     <br>
-                                    <label></label>
                                     <input type="radio" {{ $employee->usertype == 1 ? 'checked' : ''}} id="employee" name="employee_type" value="1" placeholder="test" required>
                                     <label class="radio-label" for="employee">Employee</label>
                                     &nbsp;
@@ -177,8 +177,22 @@ Employee Information / Edit
                                     &nbsp;
                                     &nbsp;
                                     <input type="checkbox" {{ $employee->is_admin == 1 ? 'checked' : ''}} id="admin" name="is_admin">
-                                    
-                                    <label class="radio-label" for="admin">is Admin?</label>
+
+                                    <label class="radio-label" for="admin">WebsiteAdmin</label>
+                                    &nbsp;
+                                    &nbsp;
+                                    &nbsp;
+                                    &nbsp;
+                                    <input type="checkbox" {{ $employee->is_hr == 1 ? 'checked' : ''}} id="hr" name="is_hr">
+
+                                    <label class="radio-label" for="hr">HR</label>
+                                    &nbsp;
+                                    &nbsp;
+                                    &nbsp;
+                                    &nbsp;
+                                    <input type="checkbox" {{ $employee->is_erp == 1 ? 'checked' : ''}} id="erp" name="is_erp">
+
+                                    <label class="radio-label" for="erp">ERP</label>
                                 </div>
                             </div>
                             <br>

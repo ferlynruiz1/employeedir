@@ -141,8 +141,8 @@ Employee / Add
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label>Access Type</label>
                                     <br>
-                                    <label></label>
                                     <input type="radio" checked id="employee" name="employee_type" value="1" required>
                                     <label class="radio-label" for="employee">Employee</label>
                                     &nbsp;
@@ -163,7 +163,21 @@ Employee / Add
                                     &nbsp;
                                     &nbsp;
                                     <input type="checkbox" id="admin" name="is_admin" >
-                                    <label class="radio-label" for="admin">is Admin?</label>
+                                    <label class="radio-label" for="admin">SuperAdmin</label>
+                                    &nbsp;
+                                    &nbsp;
+                                    &nbsp;
+                                    &nbsp;
+                                    <input type="checkbox"  id="hr" name="is_hr">
+
+                                    <label class="radio-label" for="hr">HR</label>
+                                    &nbsp;
+                                    &nbsp;
+                                    &nbsp;
+                                    &nbsp;
+                                    <input type="checkbox" id="erp" name="is_erp">
+
+                                    <label class="radio-label" for="erp">ERP</label>
                                 </div>
                             </div>
                             <div class="col-md-3">

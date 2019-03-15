@@ -112,11 +112,21 @@ class EmployeeRepository implements RepositoryInterface
             $employee->all_access = 0;
         }
 
-        /* all access field */
+        /* access type */
         if ($request->has('is_admin')) {
             $employee->is_admin = 1;
         } else {
             $employee->is_admin = 0;
+        }
+        if ($request->has('is_hr')) {
+            $employee->is_hr = 1;
+        } else {
+            $employee->is_hr = 0;
+        }
+        if ($request->has('is_erp')) {
+            $employee->is_erp = 1;
+        } else {
+            $employee->is_erp = 0;
         }
 
         $datetime = new DateTime();
@@ -157,7 +167,7 @@ class EmployeeRepository implements RepositoryInterface
             $employee->save();
         }
 
-        return redirect('dashboard')->with('success', "Successfully created Employee");
+        return redirect('employee_info/' . $employee->id)->with('success', "Successfully created Employee");
     }
 
     public function updateEmployee(Request $request, $id){
@@ -210,12 +220,23 @@ class EmployeeRepository implements RepositoryInterface
             $employee->all_access = 0;
         }
         
-        /* all access field */
+        /* access type */
         if ($request->has('is_admin')) {
             $employee->is_admin = 1;
         } else {
             $employee->is_admin = 0;
         }
+        if ($request->has('is_hr')) {
+            $employee->is_hr = 1;
+        } else {
+            $employee->is_hr = 0;
+        }
+        if ($request->has('is_erp')) {
+            $employee->is_erp = 1;
+        } else {
+            $employee->is_erp = 0;
+        }
+
 
         $datetime = new DateTime();
 

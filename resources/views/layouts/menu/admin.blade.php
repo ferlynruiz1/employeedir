@@ -36,20 +36,26 @@
 </li>
 <li <?php echo \Request::url() == url('leave') ? 'class="active"' : ''; ?>>
     <a href="{{url('leave')}}">
-        <em class="fa fa-calendar">&nbsp;</em> 
+        <em class="fa fa-calendar">&nbsp;</em>
         Leaves
     </a>
 </li>
-<li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
-    <a href="{{url('myprofile')}}">
-        <em class="fa fa-user">&nbsp;</em>
-        My Profile
+<li <?php echo \Request::url() == url('referral') ? 'class="active"' : ''; ?>>
+    <a href="{{url('referral')}}">
+        <em class="fa fa-user-plus">&nbsp;</em>
+        Referrals
     </a>
 </li>
 <li <?php echo \Request::url() == url('hierarchy') ? 'class="active"' : ''; ?>>
     <a href="{{url('hierarchy')}}">
         <em class="fa fa-sitemap">&nbsp;</em> 
         Change Employee Hierarchy
+    </a>
+</li>
+<li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
+    <a href="{{url('myprofile')}}">
+        <em class="fa fa-user">&nbsp;</em>
+        My Profile
     </a>
 </li>
 <!-- <li <?php echo \Request::url() == url('employees/import') ? 'class="active"' : ''; ?>>

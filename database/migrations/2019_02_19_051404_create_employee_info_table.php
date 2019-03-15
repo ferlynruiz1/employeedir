@@ -43,7 +43,7 @@ class CreateEmployeeInfoTable extends Migration
             $table->integer('status')->default(1);
             $table->string('ext', 20)->nullable(true);
             $table->string('wave', 20)->nullable(true);
-            $table->integer('all_access')->nullable(true)->default(0);
+            $table->integer('all_access')->nullable(true)->default(0); // not used
             $table->string('profile_img', 200)->nullable(true)->default('http://dir.elink.corp/public/img/nobody_m.original.jpg');
             $table->string('sss', 200)->nullable(true);
             $table->string('pagibig', 200)->nullable(true);
@@ -52,6 +52,8 @@ class CreateEmployeeInfoTable extends Migration
             $table->string('address', 200)->nullable(true);
             $table->decimal('leave_credit', 5, 2)->nullable(true)->default(0);
             $table->integer('is_admin')->nullable(true)->default(0);
+            $table->integer('is_erp')->nullable(true)->default(0);
+            $table->integer('is_hr')->nullable(true)->default(0);
             $table->string('remember_token', 200)->nullable(true);
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('updated_at')->nullable(true);

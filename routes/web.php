@@ -13,10 +13,16 @@ use App\User;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// date_default_timezone_set('Asia/Manila');
+
+/*
+ *
+ * Redirection
+ */
 
 Route::get('/', function () {
+    // Check if user is logged in
 	if(Auth::check()){
+	    // if user is admin redirect to dashboard
 		if(Auth::user()->isAdmin()){
 			return redirect('/dashboard');
 		}else{
@@ -27,22 +33,49 @@ Route::get('/', function () {
 	}
 });
 
-Route::get('logout', function(){
-	 Auth::logout();
-	 return redirect('/');
-});
-
+/*
+ *
+ * Normal User Routes
+ */
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('employees', 'EmployeeInfoController@employees');
 Route::get('profile/{id}', 'EmployeeInfoController@profile');
 
-Route::get('admin/invalid', ['as' => 'admin-invalid', 'uses' => function(){
-	return view('errors.notadmin');
-}]);
-
-Auth::routes();
-Route::post('login', 'EmployeeInfoController@login');
+/*
+ *
+ * Normal User: JSON Results
+ */
 Route::get('newhires', 'HomeController@newhires');
+
+
+
+/*
+ *
+ * Custom Auth Routes
+ */
+Route::get('logout', function(){
+	 Auth::logout();
+	 return redirect('/');
+})->name('logout');
+
+Route::post('login', 'EmployeeInfoController@login');
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+/*
+ *
+ * Resource Controller
+ */
+
+Route::resource('referral', 'ReferralController');
+
+/*
+ *
+ * Error routes
+ */
+
+Route::get('403', 'ErrorController@forbidden')->name('403');
+Route::get('404', 'ErrorController@notfound')->name('404');
+
+
 
 Route::middleware(['auth'])->group(function(){
 

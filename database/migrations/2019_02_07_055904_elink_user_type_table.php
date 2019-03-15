@@ -13,7 +13,7 @@ class ElinkUserTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('leave_user_type', function (Blueprint $table) {
+        Schema::create('elink_user_type', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_type_name');
             $table->string('description');

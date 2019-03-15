@@ -136,7 +136,12 @@ class User extends Authenticatable
     public function scopeIsAdmin($query){
         return $this->is_admin == 1;
     }
-
+    public function scopeIsHR($query){
+        return $this->is_hr == 1;
+    }
+    public function scopeIsERP($query){
+        return $this->is_erp == 1;
+    }
     public function scopeLeaveRequestCount(){
         return LeaveRequest::all()->count();
     }

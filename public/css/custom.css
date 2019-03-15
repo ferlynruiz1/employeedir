@@ -75,7 +75,7 @@ nav.navbar, .content-holder{
     color: inherit !important;
 }
 .panel-body input[type=checkbox] + label {
-    font-weight: normal !important;
+    font-weight: 500 !important;
 }
 .panel-heading{
     background-color: #0086CD !important;

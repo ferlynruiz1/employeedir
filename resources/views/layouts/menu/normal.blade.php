@@ -16,6 +16,12 @@
         File a leave
      </a>
  </li>
+ <li <?php echo \Request::url() == url('referral/create') ? 'class="active"' : ''; ?>>
+    <a href="{{url('referral/create')}}">
+        <em class="fa fa-user-plus">&nbsp;</em>
+        Job Referral
+     </a>
+ </li>
 @auth
 @if(Auth::user()->leaveRequestCount() > 0)
 <li <?php echo \Request::url() == url('leave') ? 'class="active"' : ''; ?>>

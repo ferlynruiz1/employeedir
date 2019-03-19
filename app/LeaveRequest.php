@@ -33,6 +33,16 @@ class LeaveRequest extends Model
             return "Not yet approved";
         }
     }
+    public function getApprovalStatus(){
+        if($this->approve_status_id == 0){
+            return '<span class="fa fa-refresh"></span> Waiting for response';
+        } else if($this->approve_status_id == 1){
+            return '<span class="fa fa-check" style="color: green"></span> Approved';
+        } else if($this->approve_status_id == 2){
+            return '<span class="fa fa-thumbs-down" style="color: darkred"></span> Declined<br>Reason for disapproval: ' . $this->reason_for_disapproval;
+        }
+        return 'Waiting for response';
+    }
     public function scopeLeaveDays(){
         if($this->number_of_days == 0.5){
             return "half day";
@@ -50,18 +60,18 @@ class LeaveRequest extends Model
     }
 
     public function scopeIsForRecommend(){
-        return (Auth::user()->id == $this->employee->supervisor_id) && ($this->recommending_approval_by_signed_date == NULL);
+        return (Auth::user()->id == $this->employee->supervisor_id) && ($this->recommending_approval_by_signed_date == NULL && $this->approve_status_id != 2) || Auth::user()->isAdmin();
     }
 
     public function scopeIsForApproval(){
-        return (Auth::user()->id == $this->employee->manager_id) && ($this->approved_by_signed_date == NULL);
+        return (Auth::user()->id == $this->employee->manager_id) && ($this->approved_by_signed_date == NULL && $this->approve_status_id != 2) || Auth::user()->isAdmin();
     }
 
     public function scopeIsForNoted(){
-        return Auth::user()->isAdmin() && $this->noted_by_signed_date == NULL;
+        return Auth::user()->isHR() && ($this->noted_by_signed_date == NULL && $this->approve_status_id != 2) || Auth::user()->isAdmin();
     }
 
     public function scopeCanBeDeclined(){
-        return $this->isForRecommend() || $this->isForApproval() || $this->isForNoted();
+        return ($this->isForRecommend() || $this->isForApproval() || $this->isForNoted()) && $this->approve_status_id != 2 || Auth::user()->isAdmin();
     }
 }

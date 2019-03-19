@@ -9,6 +9,8 @@ use App\PayType;
 use App\User;
 use DateTime;
 use App\Mail\LeaveNotification;
+use App\Mail\LeaveApproved;
+use App\Mail\LeaveDeclined;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -25,7 +27,7 @@ class LeaveController extends Controller
             $query->where('supervisor_id', '=', Auth::user()->id);
         })->orWhereHas('employee', function($query){
             $query->where('manager_id', '=', Auth::user()->id);
-        })->where('approve_status_id', '=', 0)->get();
+        })->where('approve_status_id', '=', 0)->orWhereNull('approve_status_id')->get();
 
         if(Auth::user()->isAdmin()){
             return view('leave.index')->with('leave_requests', LeaveRequest::all());
@@ -79,7 +81,26 @@ class LeaveController extends Controller
         $leave->save();
 
         // SEND EMAIL NOTIFICATION
-        // Mail::to("johnmanuelderecho@elink.com.ph")->send(new LeaveNotification($leave));
+        if(false){
+            // TODO Remove this on production
+             return "queueing email...";
+            $leave = LeaveRequest::find(1);
+            $recipients = array();
+            $cc = array();
+            if($leave->employee->supervisor){
+                $recipients[count($recipients)] = $leave->employee->supervisor->email;
+            }
+            if($leave->employee->manager){
+                $recipients[count($recipients)] = $leave->employee->manager->email;
+            }
+            $cc = User::where('is_hr', '=', 1)->orWhere('is_admin', '=', 1)->select('email')->get()->toArray();
+
+            if(count($cc) > 0){
+                Mail::to($recipients)->cc($cc)->queue(new LeaveNotification(LeaveRequest::find(1)));
+            } else {
+                Mail::to($recipients)->queue(new LeaveNotification($leave));
+            }
+        }
 
         return redirect("leave" . '/' . $leave->id)->with('success', 'Leave Request Successfully Submitted!!');
     }
@@ -135,11 +156,15 @@ class LeaveController extends Controller
         $leave_request = LeaveRequest::find($request->leave_id);
         $leave_request->recommending_approval_by_id = Auth::user()->id;
         $leave_request->recommending_approval_by_signed_date = date('Y-m-d H:i:s');
-
-        // SEND EMAIL NOTIFICATION
+        $leave_request->approve_status_id = 1;
 
         if($leave_request->save()){
-            return back()->with('success', 'Leave request successfully recommended.');
+            // SEND EMAIL NOTIFICATION
+            if(false){
+                // TODO remove in production
+                Mail::to($leave_request->employee->email)->queue(new LeaveApproved($leave_request));
+            }
+            return back()->with('success', 'Leave request successfully approved.');
         } else {
             return back()->with('error', 'Something went wrong.');
         }
@@ -154,6 +179,10 @@ class LeaveController extends Controller
         // SEND EMAIL NOTIFICATION
 
         if($leave_request->save()){
+            if(false){
+                // TODO remove in production
+                Mail::to($leave_request->employee->email)->queue(new LeaveApproved($leave_request));
+            }
             return back()->with('success', 'Leave request successfully approved.');
         } else {
             return back()->with('error', 'Something went wrong.');
@@ -166,10 +195,23 @@ class LeaveController extends Controller
         $leave_request->noted_by_signed_date = date('Y-m-d H:i:s');
         $leave_request->approve_status_id = 1;
 
-        // SEND EMAIL NOTIFICATION
-
         if($leave_request->save()){
             return back()->with('success', 'Leave request successfully approved.');
+        } else {
+            return back()->with('error', 'Something went wrong.');
+        }
+    }
+    public function decline(Request $request){
+        $leave_request = LeaveRequest::find($request->leave_id);
+        $leave_request->reason_for_disapproval = $request->reason_for_disapproval;
+        $leave_request->approve_status_id = 2;
+
+        if($leave_request->save()){
+            if(false){
+                // TODO remove in production
+                Mail::to($leave_request->employee->email)->queue(new LeaveDeclined($leave_request));
+            }
+            return back()->with('success', 'Leave request successfully declined.');
         } else {
             return back()->with('error', 'Something went wrong.');
         }

@@ -28,6 +28,20 @@
         Leaves
     </a>
 </li>
+<li <?php echo \Request::url() == url('events/calendar') ? 'class="active"' : ''; ?>>
+    <a href="{{url('events/calendar')}}">
+        <em class="fa fa-calendar">&nbsp;</em>
+        Events Calendar
+    </a>
+</li>
+@if(Auth::user()->leaveRequestCount() > 0)
+    <li <?php echo \Request::url() == url('leave') ? 'class="active"' : ''; ?>>
+        <a href="{{url('leave')}}">
+            <em class="fa fa-calendar">&nbsp;</em>
+            Leave Requests&nbsp;&nbsp;<span class="badge label-danger">{{ Auth::user()->leaveRequestCount() }}</span>
+        </a>
+    </li>
+@endif
 @auth
     <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
         <a href="{{url('myprofile')}}">
@@ -42,7 +56,6 @@
         </a>
     </li>
 @endauth
-
 @guest
 
     <li>

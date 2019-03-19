@@ -14,13 +14,21 @@
     <link href="{{ asset('public/css/jquery.dataTables.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ asset('public/css/select2.min.css')}}" rel="stylesheet">
     <link href="{{ asset('public/css/css.css')}}" rel="stylesheet">
+
+
+
     <script src="{{ asset('public/js/jquery-1.11.1.min.js')}}"></script>
+
     <script type="text/javascript" src="{{ asset('public/js/jquery.bootstrap-growl.min.js') }}"></script>
 
     <!-- FROALA EDITOR -->
     <link rel="stylesheet" href="{{ asset('public/css/froala_editor/froala_editor.css')}}">
     <link rel="stylesheet" href="{{ asset('public/css/froala_editor/froala_style.css')}}">
     <link rel="stylesheet" href="{{ asset('public/css/froala_editor/plugins/emoticons.css')}}">
+
+    <link rel="stylesheet" href="{{ asset('public/css/bootstrap-datetimepicker.min.css')}}" />
+    @yield('head')
+
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
 <style type="text/css">
@@ -176,22 +184,27 @@ body{
 
             </div>
         </div> 
-        <script src="{{ asset('public/js/bootstrap.min.js')}}"></script>
-        <script src="{{ asset('public/js/chart.min.js')}}"></script>
-        <script src="{{ asset('public/js/chart-data.js')}}"></script>
-        <script src="{{ asset('public/js/easypiechart.js')}}"></script>
-        <script src="{{ asset('public/js/easypiechart-data.js')}}"></script>
-        <script src="{{ asset('public/js/bootstrap-datepicker.js')}}"></script>
-        <script src="{{ asset('public/js/jquery.dataTables.js')}}"></script>
-        <script src="{{ asset('public/js/jquery.validate.min.js')}}"></script>
-        <script src="{{ asset('public/js/dataTables.responsive.js')}}"></script>
-        <script src="{{ asset('public/js/select2.full.js')}}"></script>
-        <script src="{{ asset('public/js/global.js')}}"></script>
-        <script src="{{ asset('public/js/custom.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/js/bootstrap.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/js/chart.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/js/chart-data.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/js/easypiechart.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/js/easypiechart-data.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/js/bootstrap-datepicker.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/js/jquery.dataTables.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/js/jquery.validate.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/js/dataTables.responsive.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/js/select2.full.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/js/moment.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/bootstrap/js/transition.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/bootstrap/js/collapse.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/js/bootstrap-datetimepicker.min.js')}}"></script>
 
-        <script src="{{ asset('public/js/froala_editor/froala_editor.min.js')}}"></script>
-        <script src="{{ asset('public/js/froala_editor/plugins/emoticons.min.js')}}"></script>
-        <script src="{{ asset('public/js/froala_editor/plugins/link.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/js/global.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/js/custom.js')}}"></script>
+
+        <script type="text/javascript" src="{{ asset('public/js/froala_editor/froala_editor.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/js/froala_editor/plugins/emoticons.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/js/froala_editor/plugins/link.min.js')}}"></script>
 
         <!-- Modal -->
         <div id="messageModal" class="modal fade" role="dialog">

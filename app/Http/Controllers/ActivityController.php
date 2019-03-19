@@ -126,4 +126,5 @@ class ActivityController extends Controller
 
         return redirect()->back()->with('success', "Successfully deleted activity record");
     }
+
 }

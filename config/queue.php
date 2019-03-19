@@ -36,7 +36,7 @@ return [
             'expire' => 60,
         ),
 
-        'sync' => [
+            'sync' => [
             'driver' => 'sync',
         ],
 

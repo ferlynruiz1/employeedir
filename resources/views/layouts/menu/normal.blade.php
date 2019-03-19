@@ -22,6 +22,13 @@
         Job Referral
      </a>
  </li>
+
+<li <?php echo \Request::url() == url('events/calendar') ? 'class="active"' : ''; ?>>
+    <a href="{{url('events/calendar')}}">
+        <em class="fa fa-calendar">&nbsp;</em>
+        Events Calendar
+    </a>
+</li>
 @auth
 @if(Auth::user()->leaveRequestCount() > 0)
 <li <?php echo \Request::url() == url('leave') ? 'class="active"' : ''; ?>>
@@ -46,7 +53,6 @@
 @endauth
 
 @guest
-
 <li>
     <a href="{{ route('login')}}">
         <em class="fa fa-sign-in">&nbsp;</em>

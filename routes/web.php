@@ -43,10 +43,11 @@ Route::get('profile/{id}', 'EmployeeInfoController@profile');
 
 /*
  *
- * Normal User: JSON Results
+ * Normal User / JSON Results
  */
 Route::get('newhires', 'HomeController@newhires');
-
+Route::get('events/calendar', 'EventsController@calendar');
+Route::get('events/lists', 'EventsController@lists');
 
 
 /*
@@ -60,13 +61,16 @@ Route::get('logout', function(){
 
 Route::post('login', 'EmployeeInfoController@login');
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+
+
 /*
  *
  * Resource Controller
  */
 
 Route::resource('referral', 'ReferralController');
-
+Route::resource('events', 'EventsController');
+Route::resource('settings', 'SettingsController');
 /*
  *
  * Error routes
@@ -76,7 +80,6 @@ Route::get('403', 'ErrorController@forbidden')->name('403');
 Route::get('404', 'ErrorController@notfound')->name('404');
 
 
-
 Route::middleware(['auth'])->group(function(){
 
 	Route::middleware(['admin'])->group(function () {
@@ -84,6 +87,7 @@ Route::middleware(['auth'])->group(function(){
 		Route::resource('department', 'DepartmentController');
 		Route::resource('employee_info', 'EmployeeInfoController');
 		Route::resource('activities', 'ActivityController');
+
 		Route::resource('posts', 'PostController');
 		Route::get('employee/{id}/changepassword', 'EmployeeInfoController@changepassword');
 		Route::get('employees/separated', 'EmployeeInfoController@separatedEmployees');
@@ -96,7 +100,8 @@ Route::middleware(['auth'])->group(function(){
 	Route::resource('leave', 'LeaveController');
 	Route::post('leave/recommend', 'LeaveController@recommend');
 	Route::post('leave/approve', 'LeaveController@approve');
-	Route::post('leave/noted', 'LeaveController@noted');
+    Route::post('leave/noted', 'LeaveController@noted');
+    Route::post('leave/decline', 'LeaveController@decline');
 
 	Route::get('myprofile', 'EmployeeInfoController@myprofile');
 	Route::post('employee/{id}/savepassword', 'EmployeeInfoController@savepassword');
@@ -107,9 +112,15 @@ Route::middleware(['auth'])->group(function(){
 	});
 });
 
+/**
+ *  Custom Routes
+ */
 Route::get('showactivities/{id}', 'ActivityController@show');
 Route::post('import/birthdays', "EmployeeInfoController@importbday");
-
 Route::post('api/login', 'EmployeeInfoController@loginAPI');
 Route::post('api/v2/login', 'EmployeeInfoController@loginAPIv2');
 Route::get('api/session', 'EmployeeInfoController@session');
+Route::get('run', 'Controller@run');
+
+
+

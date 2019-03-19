@@ -6,23 +6,22 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\LeaveRequest;
+use App\Referral;
 
-class LeaveNotification extends Mailable
+class ReferralSubmitted extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $leave_request;
+    public $referral;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(LeaveRequest $leave_request)
+    public function __construct(Referral $referral)
     {
-        $this->leave_request = $leave_request;
+        $this->referral = $referral;
     }
-
 
     /**
      * Build the message.
@@ -31,6 +30,6 @@ class LeaveNotification extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.leave.request');
+        return $this->view('mail.referral.submit');
     }
 }

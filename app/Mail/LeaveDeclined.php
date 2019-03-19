@@ -8,11 +8,12 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\LeaveRequest;
 
-class LeaveNotification extends Mailable
+class LeaveDeclined extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $leave_request;
+
     /**
      * Create a new message instance.
      *
@@ -31,6 +32,6 @@ class LeaveNotification extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.leave.request');
+        return $this->view('mail.leave.declined');
     }
 }

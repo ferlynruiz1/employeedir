@@ -24,8 +24,14 @@
 </li>
 <li <?php echo \Request::url() == url('activities') ? 'class="active"' : ''; ?>>
     <a href="{{url('activities')}}">
-        <em class="fa fa-calendar">&nbsp;</em> 
+        <em class="fa fa-calendar">&nbsp;</em>
         Activities
+    </a>
+</li>
+<li <?php echo \Request::url() == url('events') ? 'class="active"' : ''; ?>>
+    <a href="{{url('events')}}">
+        <em class="fa fa-calendar">&nbsp;</em>
+        Events
     </a>
 </li>
 <li <?php echo \Request::url() == url('posts') ? 'class="active"' : ''; ?>>
@@ -56,6 +62,12 @@
     <a href="{{url('myprofile')}}">
         <em class="fa fa-user">&nbsp;</em>
         My Profile
+    </a>
+</li>
+<li <?php echo \Request::url() == url('settings') ? 'class="active"' : ''; ?>>
+    <a href="{{url('settings')}}">
+        <em class="fa fa-gear">&nbsp;</em>
+        Settings
     </a>
 </li>
 <!-- <li <?php echo \Request::url() == url('employees/import') ? 'class="active"' : ''; ?>>

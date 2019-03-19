@@ -100,6 +100,12 @@
 						<br>
 						<br>
 					</div>
+					<div class="col-md-4">
+						<label>Approve Status:</label>
+						<p><?php echo $leave_request->getApprovalStatus() ?></p>
+						<br>
+						<br>
+					</div>
 					<div class="col-md-12" style="border-top: 1px solid rgba(0,0,0,.125); padding-top: 15px; margin-top: 0px; padding-left: 0px;">
                     </div>
                     <div class="col-md-6">
@@ -113,10 +119,9 @@
 							<form action="{{ url('leave/recommend') }}" method="POST" style="display: inline-flex;">
 								{{ csrf_field() }}
 								<input type="hidden" name="leave_id" value="{{ $leave_request->id }}">
-								<button class="btn btn-primary">Recommend</button>
+								<button class="btn btn-primary">Approve</button>
 							</form>
-						@endif
-						@if($leave_request->isForApproval())
+						@elseif($leave_request->isForApproval())
 							<form action="{{ url('leave/approve') }}" method="POST" style="display: inline-flex;">
 								{{ csrf_field() }}
 								<input type="hidden" name="leave_id" value="{{ $leave_request->id }}">
@@ -131,7 +136,7 @@
 							</form>
 						@endif
 						@if($leave_request->canBeDeclined())
-						<button class="btn btn-danger">Decline</button>
+							<button class="btn btn-danger" data-target="#declinemodal" data-toggle="modal">Decline</button>
 						@endif
 					</div>
 				</div>
@@ -139,4 +144,41 @@
 		</div>
 	</div>
 </div>
+@endsection
+@section('scripts')
+	<script>
+
+	</script>
+	<div id="declinemodal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #0086CD;">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white !important;opacity: 1;">×</button>
+					<h4 class="modal-title"><b style="color: white">Reason for declining</b></h4>
+				</div>
+				<div class="modal-body">
+					<div clas="row">
+						<form action="{{ url('leave/decline') }}" method="POST">
+							<div class="form-group">
+								{{ csrf_field() }}
+								<p>You are about to decline a leave request. You may write a reason why.</p>
+							</div>
+							<div class="form-group">
+								<textarea class="form-control" name="reason_for_disapproval" style="resize: vertical;"></textarea>
+								<input type="hidden" name="leave_id" value="{{ $leave_request->id }}">
+							</div>
+							<div class="col-md-12">
+								<br>
+								<button type="submit" class="btn btn-primary pull-right" style="margin-top: 5px;">Submit</button>
+								<button type="button" class="btn btn-default pull-right" style="margin-top: 5px; margin-right: 5px;" data-dismiss="modal">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="modal-footer">
+
+				</div>
+			</div>
+		</div>
+	</div>
 @endsection

@@ -43,7 +43,6 @@
                                         <td>{{ prettyDate($referral->created_at) }}</td>
                                         <td>
                                             <a href="{{ url('referral') . '/' . $referral->id }}"><span class="fa fa-eye"></span></a>&nbsp;&nbsp;
-                                            <a href="{{ url('referral') . '/' . $referral->id . '/edit' }}"><span class="fa fa-pencil"></span></a>
                                         </td>
                                     </tr>
                                     @endforeach

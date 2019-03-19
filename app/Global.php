@@ -77,6 +77,15 @@ function prettyDate($prod_date)
     } 
 }
 
+function timeDate($date) {
+    if (isset($date)) {
+        $dt = Carbon::parse($date);
+        return $dt->format('m/d/Y h:i A');
+    } else {
+        return "";
+    }
+}
+
 function truncate($string, $length, $html = true)
 {
     if (strlen($string) > $length) {

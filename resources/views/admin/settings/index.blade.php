@@ -25,7 +25,7 @@
                     <div class="col-md-12">
                         <table class="settings-table">
                             <tr>
-                                <td><input type="checkbox" id="email_notification" name="email_notification"></td>
+                                <td><input type="checkbox" id="email_notification" name="email_notification" {{ $email_notification ? "checked" : '' }}></td>
                                 <td><label for="email_notification">Enable Email Notification</label></td>
                             </tr>
                         </table>

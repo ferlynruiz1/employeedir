@@ -88,7 +88,8 @@ Route::middleware(['auth'])->group(function(){
 		Route::resource('employee_info', 'EmployeeInfoController');
 		Route::resource('activities', 'ActivityController');
 
-		Route::resource('posts', 'PostController');
+        Route::get('posts/{id}/enabled', 'PostController@enabled');
+        Route::resource('posts', 'PostController');
 		Route::get('employee/{id}/changepassword', 'EmployeeInfoController@changepassword');
 		Route::get('employees/separated', 'EmployeeInfoController@separatedEmployees');
 
@@ -97,6 +98,9 @@ Route::middleware(['auth'])->group(function(){
 
 	});
 
+    Route::get('leave/credits', 'LeaveController@credits');
+    Route::get('leave/credits/{employee_id}', 'LeaveController@editcredits');
+    Route::post('leave/credits', 'LeaveController@updatecredits');
 	Route::resource('leave', 'LeaveController');
 	Route::post('leave/recommend', 'LeaveController@recommend');
 	Route::post('leave/approve', 'LeaveController@approve');

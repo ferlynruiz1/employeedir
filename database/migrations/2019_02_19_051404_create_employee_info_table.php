@@ -54,6 +54,7 @@ class CreateEmployeeInfoTable extends Migration
             $table->integer('is_admin')->nullable(true)->default(0);
             $table->integer('is_erp')->nullable(true)->default(0);
             $table->integer('is_hr')->nullable(true)->default(0);
+            $table->integer('is_ra')->nullable(true)->default(0);
             $table->string('remember_token', 200)->nullable(true);
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('updated_at')->nullable(true);

@@ -3,7 +3,14 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="panel panel-default">
-			<div class="panel-heading">Leave Requests</div>
+			<div class="panel-heading">
+				Leave Lists
+				@if(Auth::check())
+					@if(Auth::user()->isAdmin())
+						<a href="{{ url('leave/credits') }}" class="pull-right btn btn-primary"><span class="fa fa-gear"></span> Update Leave Credits</a>
+					@endif
+				@endif
+			</div>
 			<div class="pane-body panel">
 				<br>
 				<br>
@@ -12,6 +19,7 @@
 						<tr>
 							<td>ID</td>
 							<td>Employee</td>
+							<td>Department</td>
 							<td>Leave Dates</td>
 							<td>No. Of Days</td>
 							<td>Status</td>
@@ -24,6 +32,7 @@
 						<tr>
 							<td>{{ $leave_request->id }}</td>
 							<td>{{ $leave_request->employee->fullName2() }}</td>
+							<td>{{ $leave_request->employee->team_name }}</td>
 							<td>{{ prettyDate($leave_request->leave_date_from) }} - {{ prettyDate($leave_request->leave_date_to) }} </td>
 							<td>{{ (int)$leave_request->number_of_days }}</td>
 							<td>{{ $leave_request->status() }}</td>

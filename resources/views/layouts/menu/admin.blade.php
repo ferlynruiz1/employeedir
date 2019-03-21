@@ -44,8 +44,12 @@
     <a href="{{url('leave')}}">
         <em class="fa fa-calendar">&nbsp;</em>
         Leaves
+        @if(Auth::user()->leaveRequestCount() > 0)
+            <span class="badge label-danger">{{ Auth::user()->leaveRequestCount() }}</span>
+        @endif
     </a>
 </li>
+
 <li <?php echo \Request::url() == url('referral') ? 'class="active"' : ''; ?>>
     <a href="{{url('referral')}}">
         <em class="fa fa-user-plus">&nbsp;</em>

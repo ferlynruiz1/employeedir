@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Spatie\Valuestore\Valuestore;
 
 class SettingsController extends Controller
 {
+    public $settings;
+
     public function __construct()
     {
         $this->middleware('admin');
+        $this->settings = Valuestore::make(storage_path('app/settings.json'));
     }
     /**
      * Display a listing of the resource.
@@ -17,7 +21,9 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        return view('admin.settings.index');
+
+        $email_notification = $this->settings->get('email_notification');
+        return view('admin.settings.index')->with('email_notification', $email_notification);
     }
 
     /**
@@ -38,7 +44,15 @@ class SettingsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
+        if($request->has('email_notification')){
+            $this->settings->put('email_notification', true);
+        }else {
+            $this->settings->put('email_notification', false);
+        }
+
+        return back()->with('success', 'Settings successfully saved.');
     }
 
     /**

@@ -7,12 +7,16 @@ use App\User;
 use App\Referral;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Spatie\Valuestore\Valuestore;
 
 class ReferralController extends Controller
 {
+    public $settings;
+
     public function __construct()
     {
 //        $this->middleware('auth', ['only' => ['edit']]);
+        $this->settings = Valuestore::make(storage_path('app/settings.json'));
     }
 
     /**
@@ -60,13 +64,13 @@ class ReferralController extends Controller
         $referral->position_applied = $request->position_applied;
 
         if($referral->save()){
-            if(false){
-                // TODO Remove on production
+            if($this->settings->get('email_notification')){
                 $erp = User::where('is_erp', '=', 1)->orWhere('is_admin', '=', 1)->select('email')->get()->toArray();
                 if(count($erp) > 0){
                     Mail::to($erp)->queue(new ReferralSubmitted($referral));
                 }
             }
+
             return back()->with('success', 'Referral successfully sent to the ERP Team. Thank you.');
         }
         return back()->with('error', 'Something went wrong');

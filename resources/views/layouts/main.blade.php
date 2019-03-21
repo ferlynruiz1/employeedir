@@ -198,6 +198,7 @@ body{
         <script type="text/javascript" src="{{ asset('public/bootstrap/js/transition.js')}}"></script>
         <script type="text/javascript" src="{{ asset('public/bootstrap/js/collapse.js')}}"></script>
         <script type="text/javascript" src="{{ asset('public/js/bootstrap-datetimepicker.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('public/js/loadingoverlay.min.js')}}"></script>
 
         <script type="text/javascript" src="{{ asset('public/js/global.js')}}"></script>
         <script type="text/javascript" src="{{ asset('public/js/custom.js')}}"></script>

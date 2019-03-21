@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "812f2c9eabf47e7ad9df9d37bb15709c",
+    "content-hash": "0d9238a3f6f829b3ed83433cee1f9e10",
     "packages": [
         {
             "name": "barryvdh/laravel-async-queue",
@@ -1737,6 +1737,59 @@
                 "uuid"
             ],
             "time": "2018-01-20T00:28:24+00:00"
+        },
+        {
+            "name": "spatie/valuestore",
+            "version": "1.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/valuestore.git",
+                "reference": "798897f7d571aa0a62786ae531d573d3c6af55d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/valuestore/zipball/798897f7d571aa0a62786ae531d573d3c6af55d0",
+                "reference": "798897f7d571aa0a62786ae531d573d3c6af55d0",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Valuestore\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Jolita Grazyte",
+                    "email": "jolita@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easily store some values",
+            "homepage": "https://github.com/spatie/valuestore",
+            "keywords": [
+                "json",
+                "spatie",
+                "valuestore"
+            ],
+            "time": "2019-02-15T10:56:05+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

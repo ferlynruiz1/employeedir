@@ -19,16 +19,8 @@
 			<form id="post_form" method="POST" action="{{ url('posts') }}" enctype="multipart/form-data">
 				{{ csrf_field() }}
 				<div class="form-group">
-					<label>Title</label>
-					<input type="text" name="title" class="form-control">
-				</div>
-				<div class="form-group">
-					<label>Message</label>
-					<textarea name="message" class="form-control" rows="3"></textarea>
-				</div>
-				<div class="form-group">
-					<label>Images/Videos</label>
-					<input type="file" name="images_videos" id="images_videos" multiple>
+					<label>Images</label>
+					<input type="file" name="images_videos" id="images_videos">
 				</div>
 				<button class="btn btn-primary pull-right">Submit</button>
 			</form>

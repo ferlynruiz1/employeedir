@@ -142,11 +142,14 @@ class User extends Authenticatable
     public function scopeIsERP($query){
         return $this->is_erp == 1;
     }
+    public function scopeIsRA($query){
+        return $this->is_ra == 1;
+    }
     public function scopeLeaveRequestCount(){
         return LeaveRequest::whereHas('employee', function($query){
             $query->where('supervisor_id', '=', $this->id);
         })->orWhereHas('employee', function($query){
             $query->where('manager_id', '=', $this->id);
-        })->where('approve_status_id', '=', 0)->orWhereNull('approve_status_id')->count();
+        })->whereNull('approve_status_id')->count();
     }
 }

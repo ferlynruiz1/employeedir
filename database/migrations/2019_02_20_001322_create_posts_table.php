@@ -16,9 +16,8 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('posted_by_id');
-            $table->string('title', 255);
-            $table->text('message')->nullable(true);
-            $table->text('file_urls')->nullable(true);
+            $table->text('image')->nullable(true);
+            $table->integer('enabled')->nullable(true);
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('updated_at')->nullable(true);
             $table->dateTime('deleted_at')->nullable(true);

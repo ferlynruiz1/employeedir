@@ -13,9 +13,17 @@ use App\Mail\LeaveApproved;
 use App\Mail\LeaveDeclined;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Spatie\Valuestore\Valuestore;
 
 class LeaveController extends Controller
 {
+    public $settings;
+
+    public function __construct()
+    {
+        $this->settings = Valuestore::make(storage_path('app/settings.json'));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -81,12 +89,9 @@ class LeaveController extends Controller
         $leave->save();
 
         // SEND EMAIL NOTIFICATION
-        if(false){
-            // TODO Remove this on production
-             return "queueing email...";
+        if($this->settings->get('email_notification')){
             $leave = LeaveRequest::find(1);
             $recipients = array();
-            $cc = array();
             if($leave->employee->supervisor){
                 $recipients[count($recipients)] = $leave->employee->supervisor->email;
             }
@@ -160,8 +165,7 @@ class LeaveController extends Controller
 
         if($leave_request->save()){
             // SEND EMAIL NOTIFICATION
-            if(false){
-                // TODO remove in production
+            if($this->settings->get('email_notification')){
                 Mail::to($leave_request->employee->email)->queue(new LeaveApproved($leave_request));
             }
             return back()->with('success', 'Leave request successfully approved.');
@@ -179,8 +183,7 @@ class LeaveController extends Controller
         // SEND EMAIL NOTIFICATION
 
         if($leave_request->save()){
-            if(false){
-                // TODO remove in production
+            if($this->settings->get('email_notification')){
                 Mail::to($leave_request->employee->email)->queue(new LeaveApproved($leave_request));
             }
             return back()->with('success', 'Leave request successfully approved.');
@@ -207,13 +210,31 @@ class LeaveController extends Controller
         $leave_request->approve_status_id = 2;
 
         if($leave_request->save()){
-            if(false){
-                // TODO remove in production
+            if($this->settings->get('email_notification')){
                 Mail::to($leave_request->employee->email)->queue(new LeaveDeclined($leave_request));
             }
             return back()->with('success', 'Leave request successfully declined.');
         } else {
             return back()->with('error', 'Something went wrong.');
+        }
+    }
+
+    public function credits(Request $request){
+
+        return view('leave.credits')->with('employees', User::allExceptSuperAdmin()->get());
+    }
+
+    public function editcredits(Request $request, $employee_id){
+        return view('leave.editcredits')->with('employee', User::find($employee_id));
+    }
+
+    public function updatecredits(Request $request){
+        $employee = User::find($request->employee_id);
+        $employee->leave_credit = $request->leave_credits;
+        if($employee->save()){
+            return back()->with('success', 'Successfully updated leave credits!');
+        }else {
+            return back()->with('error', 'Something went wrong!');
         }
     }
 }

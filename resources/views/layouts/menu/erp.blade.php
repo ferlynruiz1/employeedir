@@ -23,12 +23,6 @@
         Referrals
     </a>
 </li>
-<li <?php echo \Request::url() == url('leave') ? 'class="active"' : ''; ?>>
-    <a href="{{url('leave')}}">
-        <em class="fa fa-calendar">&nbsp;</em>
-        Leaves
-    </a>
-</li>
 <li <?php echo \Request::url() == url('events/calendar') ? 'class="active"' : ''; ?>>
     <a href="{{url('events/calendar')}}">
         <em class="fa fa-calendar">&nbsp;</em>

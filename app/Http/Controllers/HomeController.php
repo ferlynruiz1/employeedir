@@ -41,7 +41,7 @@ class HomeController extends Controller
             ->with('posts', Posts::where('enabled', '=', '1')->get())
             ->with('new_hires', User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5))
             ->with('employees', User::allExceptSuperAdmin()->get())->with('birthdays', User::whereRaw('MONTH(birth_date) = '.date('n'))->orderByRaw('DAYOFMONTH(birth_date) ASC')->get())
-            ->with('engagements', ElinkActivities::whereRaw('MONTH(activity_date) =' . date('n'))->orWhereRaw('MONTH(activity_date) = ' . date("n", strtotime("first day of previous month")))->orderBy('created_at', 'DESC')->get());
+            ->with('engagements', ElinkActivities::thisMonth()->orderBy('created_at', 'DESC')->get());
     }
     public function dashboard(Request $request)
     {
@@ -50,7 +50,7 @@ class HomeController extends Controller
             ->with('new_hires', User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5))
             ->with('employees', User::allExceptSuperAdmin()->get())
             ->with('birthdays', User::whereRaw('MONTH(birth_date) = '.date('n'))->orderByRaw('DAYOFMONTH(birth_date) ASC')->get())
-            ->with('engagements', ElinkActivities::whereRaw('MONTH(activity_date) =' . date('n'))->orWhereRaw('MONTH(activity_date) = ' . date("n", strtotime("first day of previous month")))->orderBy('created_at', 'DESC')->get());
+            ->with('engagements', ElinkActivities::thisMonth()->orderBy('created_at', 'DESC')->get());
     }
     public function newhires(Request $request)
     {

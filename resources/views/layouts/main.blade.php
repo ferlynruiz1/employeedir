@@ -71,7 +71,7 @@ body{
             @auth
             <div class="profile-sidebar visible-sm-block visible-xs-block">
                 <div class="profile-userpic">
-                    <div style="background-image: url('{{ Auth::user()->profile_img }}'); width: 100px; height: 100px;margin: 15px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; border-radius: 50%; margin: 0 auto;">
+                    <div style="background-image: url('{{ Auth::user()->profile_img }}'); width: 60px; height: 60px;margin: 15px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; border-radius: 50%; margin: 0 auto;">
                     </div>
                 </div>
                 <div class="profile-usertitle">

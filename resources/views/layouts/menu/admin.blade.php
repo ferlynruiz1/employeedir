@@ -57,7 +57,7 @@
     </a>
 </li>
 <li <?php echo \Request::url() == url('hierarchy') ? 'class="active"' : ''; ?>>
-    <a href="{{url('hierarchy')}}">
+    <a href="{{url('hierarchy')}}" style="font-size: 11px;">
         <em class="fa fa-sitemap">&nbsp;</em> 
         Change Employee Hierarchy
     </a>

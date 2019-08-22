@@ -761,7 +761,7 @@ a.label:hover, a.label:focus {
   background: #fff; }
 
 .sidebar ul {
-  margin: 10px 0px;
+  margin: 0px;
 }
 
 .sidebar form {
@@ -800,7 +800,7 @@ a.label:hover, a.label:focus {
 
 .sidebar ul.nav li a {
   height: 50px;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 2em;
   color: #444444; }
 
@@ -857,7 +857,7 @@ a.label:hover, a.label:focus {
 }
 .profile-usertitle {
   text-align: center;
-  margin: 10px 0 0 0px; }
+  margin: 0px; }
 
 .profile-usertitle-name {
   font-size: 20px;

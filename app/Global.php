@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 // *********** COSTUME METHOD ***********************************
 function getNameFromNumber($num) {
@@ -137,4 +138,10 @@ function leaveCredits($leave_credit){
 	}
 
 	return "You have $leave_credit leave credits.";
+}
+
+function breadCrumbs(){
+	$path = request()->path();
+
+	return ucwords(join(' / ', explode('/', $path)));
 }

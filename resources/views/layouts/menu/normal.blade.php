@@ -37,6 +37,14 @@
     Leave Requests&nbsp;&nbsp;<span class="badge label-danger">{{ Auth::user()->leaveRequestCount() }}</span>
  </a>
 </li>
+<li >
+   <a target="_blank" href="{{ url('/public/img/company-hierarchy.jpeg') }}">
+        <span class="fa fa-sitemap">
+        
+        </span>
+        Employee hierarchy
+    </a>
+</li>
 @endif
 <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
     <a href="{{url('myprofile')}}">

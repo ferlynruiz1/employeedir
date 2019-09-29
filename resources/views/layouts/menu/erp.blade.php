@@ -29,6 +29,14 @@
         Events Calendar
     </a>
 </li>
+<li >
+   <a target="_blank" href="{{ url('/public/img/company-hierarchy.jpeg') }}">
+        <span class="fa fa-sitemap">
+        
+        </span>
+        Employee hierarchy
+    </a>
+</li>
 @if(Auth::user()->leaveRequestCount() > 0)
     <li <?php echo \Request::url() == url('leave') ? 'class="active"' : ''; ?>>
         <a href="{{url('leave')}}">

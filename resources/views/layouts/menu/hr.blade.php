@@ -34,6 +34,7 @@
         Events Calendar
     </a>
 </li>
+
 @if(Auth::user()->leaveRequestCount() > 0)
     <li <?php echo \Request::url() == url('leave') ? 'class="active"' : ''; ?>>
         <a href="{{url('leave')}}">
@@ -42,6 +43,14 @@
         </a>
     </li>
 @endif
+<li >
+   <a target="_blank" href="{{ url('/public/img/company-hierarchy.jpeg') }}">
+        <span class="fa fa-sitemap">
+        
+        </span>
+        Employee hierarchy
+    </a>
+</li>
 @auth
     <li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
         <a href="{{url('myprofile')}}">

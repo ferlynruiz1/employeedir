@@ -15,8 +15,6 @@
     <link href="{{ asset('public/css/select2.min.css')}}" rel="stylesheet">
     <link href="{{ asset('public/css/css.css')}}" rel="stylesheet">
 
-
-
     <script src="{{ asset('public/js/jquery-1.11.1.min.js')}}"></script>
 
     <script type="text/javascript" src="{{ asset('public/js/jquery.bootstrap-growl.min.js') }}"></script>
@@ -27,15 +25,11 @@
     <link rel="stylesheet" href="{{ asset('public/css/froala_editor/plugins/emoticons.css')}}">
 
     <link rel="stylesheet" href="{{ asset('public/css/bootstrap-datetimepicker.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('public/css/pages/' . request()->path() . '.css')}}" />
     @yield('head')
 
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
-<style type="text/css">
-body{
-   
-}
-</style>
 <body>
     <!-- nav header -->
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation" style="background-color: #32373A !important;">
@@ -53,133 +47,61 @@ body{
                     </span>
                     Directory
                 </a>
-                <div class="pull-right" style="margin-top: 20px;">
-                    <a target="_blank" href="{{ url('/public/img/company-hierarchy.jpeg') }}">
-                        <span class="fa fa-sitemap">
-                        
-                        </span>
-                        Employee hierarchy
-                    </a>
+               
+                <div class="dropdown pull-right">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    {{ ucwords(request()->path()) }}
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                   @auth
+                    <li>
+                        <div class="profile-userpic">
+                            <div style="background-image: url('{{ Auth::user()->profile_img }}');" class="pic-div">
+                            </div>
+                        </div>
+                        <div class="profile-usertitle">
+                            <br>
+                            <h5 class="card-title m-t-10">{{ Auth::user()->fullname() }}</h5>
+                            <small class="text-muted" title="Job Title">{{ Auth::user()->position_name }}</small>
+                            <br>
+                        <br>
+                        </div>
+                        <div class="clear"></div>
+                    </li>
+                    @endauth
+                   @auth
+                        @if(Auth::user()->isAdmin())
+                            @include('layouts.menu.admin')
+                        @elseif(Auth::user()->isHR())
+                            @include('layouts.menu.hr')
+                            test
+                        @elseif(Auth::user()->isERP())
+                            @include('layouts.menu.erp')
+                        @else
+                            @include('layouts.menu.normal')
+                        @endif 
+                    @endauth
+                    @guest
+                        @include('layouts.menu.normal')
+                    @endguest
+                  </ul>
                 </div>
             </div>
         </div>
-        
     </nav>
-    <div class="content-holder">
-        <!-- sidebar menu -->
-        <div id="sidebar-collapse" class="sidebar col-md-3">
-            @auth
-            <div class="profile-sidebar visible-sm-block visible-xs-block">
-                <div class="profile-userpic">
-                    <div style="background-image: url('{{ Auth::user()->profile_img }}'); width: 60px; height: 60px;margin: 15px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; border-radius: 50%; margin: 0 auto;">
-                    </div>
-                </div>
-                <div class="profile-usertitle">
-                    <br>
-                    <h5 class="card-title m-t-10">{{ Auth::user()->fullname() }}</h5>
-                    <small class="text-muted" title="Job Title">{{ Auth::user()->position_name }}</small>
-                    <br>
-                <br>
-                </div>
-                <div class="clear"></div>
-            </div>
-            <div class="divider"></div>
-            @endauth
-
-            <!-- @guest
-                <div class="profile-sidebar visible-sm-block visible-xs-block">
-                    
-                    <div class="profile-usertitle">
-                        <br>
-                        <h4 class="card-title m-t-10" style="font-size: 15px !important;">Hello !</h4>
-                        <h5 class="card-subtitle" title="Job Title">Guest User</h5>
-                        <h6 class="card-subtitle" title="Department/Team"></h6>
-                        <br>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-                <div class="divider"></div>
-            @endguest -->
-
-            <ul class="nav visible-sm-block visible-xs-block">
-                @auth
-                    @if(Auth::user()->isAdmin())
-                        @include('layouts.menu.admin')
-                    @elseif(Auth::user()->isHR())
-                        @include('layouts.menu.hr')
-                        test
-                    @elseif(Auth::user()->isERP())
-                        @include('layouts.menu.erp')
-                    @else
-                        @include('layouts.menu.normal')
-                    @endif 
-                @endauth
-                @guest
-                    @include('layouts.menu.normal')
-                @endguest
-            </ul>
-
-
-            <div class="profile-sidebar visible-md-block visible-lg-block">
-                @auth
-                <div class="profile-userpic">
-                    <div style="background-image: url('{{ Auth::user()->profile_img }}');" class="pic-div">
-                    </div>
-                </div>
-                <div class="profile-usertitle">
-                    <br>
-                    <h5 class="card-title m-t-10">{{ Auth::user()->fullname() }}</h5>
-                    <small class="text-muted" title="Job Title">{{ Auth::user()->position_name }}</small>
-                    <br>
-                <br>
-                </div>
-                <div class="clear"></div>
-                @endauth
-
-                <!--  @guest
-                <div class="profile-userpic">
-                    
-                </div>
-                <div class="profile-usertitle">
-                    <br>
-                    <h4 class="card-title m-t-10" style="font-size: 15px !important;">Hello !</h4>
-                    <h5 class="card-subtitle" title="Job Title">Guest User</h5>
-                    <h6 class="card-subtitle" title="Department/Team"></h6>
-                <br>
-                </div>
-                <div class="clear"></div>
-                @endguest -->
-            </div>
-                <div class="divider"></div>
-            
-            <ul class="nav menu visible-md-block visible-lg-block">
-                @auth
-                    @if(Auth::user()->isAdmin())
-                        @include('layouts.menu.admin')
-                    @elseif(Auth::user()->isHR())
-                        @include('layouts.menu.hr')
-                    @elseif(Auth::user()->isERP())
-                        @include('layouts.menu.erp')
-                    @else
-                        @include('layouts.menu.normal')
-                    @endif
-                @endauth
-                @guest
-                    @include('layouts.menu.normal')
-                @endguest
-            </ul>
-        </div>
+    <div class="content-holder row-fluid">        
         <!-- Content -->
-        <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+        <div class="col-sm-12">
             <div class="row">
                 <ol class="breadcrumb">
                     <li><a href="#">
                         <em class="fa fa-home"></em>
                     </a></li>
-                    <li class="active">@yield('pagetitle')</li>
+                    <li class="active">{{ breadCrumbs() }}</li>
                 </ol>
             </div>
-            <div style="padding: 10px">
+            <div>
                 @yield('content')
 
             </div>

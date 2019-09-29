@@ -19,6 +19,7 @@ class Controller extends BaseController
     protected $model;
     protected $authModel;
     protected $excelModel;
+    public $routeName = '';
 
     public function __construct(User $employee){
         $this->model = new EmployeeRepository($employee);

@@ -6,63 +6,10 @@ Home
 Home
 @endsection
 @section('content')
-<style type="text/css">
-   .birthday-celebrants-div{
-        margin-right: 10px;
-        margin-left: 10px;
-        padding-left: 10px;
-    }
-    .birthday-holder{
-        margin-bottom: 30px;
-    }
-    .birthday-celebrants-div a {
-        color: inherit;
-        text-decoration: inherit;
-    }
-    .birthday-celebrants-div a:hover{
-        color: #30A5FF;
-    }
-    .birthday-celebrants-div span.fa{
-        color: red;
-    }
-    .engagement_title{
-        cursor: pointer;
-    }
-    #new_hire_loader{
-        -webkit-animation-name: rotation-load; /* Safari 4.0 - 8.0 */
-        -webkit-animation-duration: 3s; /* Safari 4.0 - 8.0 */
-        animation: rotation-load 3s infinite;
-        -webkit-animation: rotation-load 3s infinite;
-        color: #0C59A2;
-        font-size: 35px;
-    }
-    @-webkit-keyframes rotation-load {
-        0%   { transform: rotate(0deg); color: #0C59A2; }
-        50%  { transform: rotate(180deg); color: #46B7E0; }
-        100% { transform: rotate(360deg); }
-    }
 
-    /* Standard syntax */
-    @keyframes rotation-load {
-         0%   { transform: rotate(0deg); color: #0C59A2; }
-        50%  { transform: rotate(180deg); color: #46B7E0; }
-        100% { transform: rotate(360deg); }
-    }
-    #backtotop{
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: transparent;
-        border-width: 0px;
-    }
-   .item{
-       max-height: 600px;
-   }
-</style>
-<br>
 @if(count($posts) > 0)
-<div class="col-md-12 no-padding">
-    <h3>HR progress </h3>
+<div class="col-md-12">
+    <h3><b>HR progress </b></h3>
 </div>
 <div class="col-md-12">
     <div class="panel panel-container" style="padding-top: 0px;">
@@ -152,7 +99,6 @@ Home
             </ul>
         </div>
     </div>
-    <button class="pull-right" id="backtotop">Back to top</button>
 </div>
 <div class="col-lg-4 col-md-4">
     <div class="panel panel-default ">

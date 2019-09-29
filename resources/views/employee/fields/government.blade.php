@@ -11,7 +11,7 @@
     </div>
 </div>
 <div class="col-md-4">
-    <div class="form-group">
+    <div class="form-group">    
         <label >Philhealth Number</label>
         <input class="form-control" name="philhealth" type="text" value="{{ @$employee->philhealth }}">
     </div>

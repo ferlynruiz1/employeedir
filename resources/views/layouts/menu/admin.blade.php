@@ -74,24 +74,15 @@
         Settings
     </a>
 </li>
-<!-- <li <?php echo \Request::url() == url('employees/import') ? 'class="active"' : ''; ?>>
-    <a href="{{url('employees/import')}}">
-        <em class="fa fa-upload">&nbsp;</em> 
-        Import
+<li >
+   <a target="_blank" href="{{ url('/public/img/company-hierarchy.jpeg') }}">
+        <span class="fa fa-sitemap">
+        
+        </span>
+        Employee hierarchy
     </a>
 </li>
-<li <?php echo \Request::url() == url('employees/export') ? 'class="active"' : ''; ?>>
-    <a href="{{url('employees/export')}}">
-        <em class="fa fa-download">&nbsp;</em> 
-        Export
-    </a>
-</li>
-<li <?php echo \Request::url() == url('employees/sync') ? 'class="active"' : ''; ?>>
-    <a href="{{url('employees/sync')}}">
-        <em class="fa fa-spinner">&nbsp;</em> 
-        Run Cron Job
-    </a>
-</li> -->
+
 <li>
     <a href="{{ route('logout')}}">
         <em class="fa fa-power-off">&nbsp;</em>

@@ -6,7 +6,22 @@ body {
 .fa{
   font-size: initial;
 }
+.main-header .nav-item a.nav-link{
+  padding: 5px 15px;
+}
+.brand-link{
+  margin-top: 10px;
+}
 
+.breadcrumb{
+  width: 100%;
+}
+.page-item span, .page-item a{
+  font-size: 14px;
+}
+small, .small{
+  font-size: 100% !important;
+}
 p {
   color: #777; }
 
@@ -773,7 +788,6 @@ a.label:hover, a.label:focus {
 @media (min-width: 768px) {
   .sidebar {
     display: block;
-    position: fixed;
     top: 60px;
     bottom: 0;
     left: 0;
@@ -781,8 +795,7 @@ a.label:hover, a.label:focus {
     display: block;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
-    overflow-y: auto; }
+  }
 
   .navbar-header {
     width: 100%; } }
@@ -793,7 +806,7 @@ a.label:hover, a.label:focus {
 
 .sidebar ul.nav .active a, .sidebar ul.nav li.parent a.active, .sidebar ul.nav .active > a:hover, .sidebar ul.nav li.parent a.active:hover, .sidebar ul.nav .active > a:focus, .sidebar ul.nav li.parent a.active:focus {
   color: #fff;
-  font-weight: 500;
+  font-weight: 400;
   background-color: #30a5ff; }
 
 .sidebar ul.nav ul, .sidebar ul.nav ul li {
@@ -802,9 +815,9 @@ a.label:hover, a.label:focus {
 
 .sidebar ul.nav li a {
   height: 50px;
-  font-size: 12px;
+  font-size: 16px;
   line-height: 2em;
-  color: #444444; }
+  color: #ddd; }
 
 .sidebar ul.nav ul.children {
   width: auto;
@@ -879,7 +892,6 @@ a.label:hover, a.label:focus {
   margin-bottom: 20px;
 }
 .breadcrumb>.active {
-  color: #f1f1f1;
   font-size: 12px;
 }
 h1.page-header {

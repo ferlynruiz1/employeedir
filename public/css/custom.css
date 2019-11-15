@@ -31,7 +31,7 @@ footer {
     color: white !important;
 }
 p, small, a, td{
-    font-weight: 500;
+    font-weight: 400;
 }
 @media (min-width: 766px){
     .main{

@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon; 
 use App\LeaveRequest;
+use Spatie\Valuestore\Valuestore;
+
 
 class User extends Authenticatable
 {
@@ -30,74 +32,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    public function scopeAllExceptSuperAdmin($query){
-        return $this->where('id', '<>', '1');
-    }
-    public function scopeFullname($query)
-    {
-        return $this->last_name .', '. $this->first_name;
-    }
+    #####################################################
+    //              RELATIONSHIPS
 
-    public function scopeFullname2($query)
-    {
-        return $this->first_name .' '. $this->last_name;
-    }
-
-    public function scopePrettyBirthDate($query)
-    {
-        if(isset($this->birth_date)){
-            $dt = Carbon::parse($this->birth_date);
-            return $dt->toFormattedDateString();
-        }else{
-            return "--";
-        }
-        
-    }
-    public function scopePrettydatehired($query)
-    {
-        if(isset($this->hired_date)){
-            $dt = Carbon::parse($this->hired_date);
-            return $dt->toFormattedDateString();
-        } else {
-            return "--";
-        }
-    }
-    public function scopePrettyproddate($query)
-    {
-        if(isset($this->prod_date)){
-            $dt = Carbon::parse($this->prod_date);
-            return $dt->toFormattedDateString();
-        } else {
-            return "--";
-        }
-    }
-    public function scopeProdDate($query)
-    {
-        if (isset($this->prod_date)) {
-            $dt = Carbon::parse($this->prod_date);
-            return $dt->format('m/d/Y');
-        } else {
-            return "";
-        } 
-    }
-    public function scopeBirthDate($query)
-    {
-        if (isset($this->birth_date)) {
-            $dt = Carbon::parse($this->birth_date);
-            return $dt->format('m/d/Y');
-        }else{
-            return "";
-        }
-    }
-    public function scopeDateHired($query)
-    {
-        if (isset($this->hired_date)) {
-            $dt = Carbon::parse($this->hired_date);
-            return $dt->format('m/d/Y');
-        } else {
-            return "";
-        }
-    }
     public function supervisor()
     {
         return $this->belongsTo('App\User', 'supervisor_id');
@@ -108,7 +45,138 @@ class User extends Authenticatable
     public function manager(){
         return $this->belongsTo('App\User', 'manager_id');
     }
-    public function scopeStatus($query){
+
+    #####################################################
+    /*                  SCOPES                         */
+    public function scopeAllExceptSuperAdmin($query){
+        return $this->where('id', '<>', '1');
+    }
+
+
+    public function scopeBusinessLeaders($query){
+        return $query->whereIn('usertype', [2,3])->orWhere('supervisor_name', '=', $this->generalManager()->fullname());
+    }
+
+    public function scopeRankAndFile($query){
+        return $query->where('usertype', '=', 1);
+    }
+    
+    public function scopeLeaveRequestCount(){
+        return LeaveRequest::whereHas('employee', function($query){
+            $query->where('supervisor_id', '=', $this->id);
+        })->orWhereHas('employee', function($query){
+            $query->where('manager_id', '=', $this->id);
+        })->whereNull('approve_status_id')->count();
+    }
+
+    public function scopeFindByCustomName($query, $custom_name){
+        $s_name =  explode(',', $custom_name);
+        $s_name = array_filter(array_map('trim', $s_name));
+        
+        $matched_users = $query->whereIn('last_name', $s_name)->whereIn('first_name', $s_name);
+        
+        return $matched_users;
+    }
+
+    #####################################################
+    public function generalManager(){
+        $settings = Valuestore::make(storage_path('app/settings.json'));
+        return User::where("email", "=", $settings->get('general_manager'))->first();
+    }
+
+    public function supervisor_email(){
+        $supervisor_email = '';
+        if($this->supervisor != NULL){
+            $supervisor_email = $this->supervisor->email;
+        } else {
+            $supervisors = User::findByCustomName($this->supervisor_name)->get();
+            if ($supervisors->count() > 0){
+                $supervisor_email = $supervisors->first()->email;
+            }
+        }
+        return $supervisor_email;
+    }
+
+    public function manager_email(){
+        $manager_email = '';
+        if($this->manager != NULL){
+            $manager_email = $this->manager->email;
+        } else {
+            $managers = User::findByCustomName($this->manager_name)->get();
+            if ($managers->count() > 0){
+                $manager_email = $managers->first()->email;
+            }
+        }
+        return $manager_email;
+    }
+
+    public function fullname()
+    {
+        return $this->last_name .', '. $this->first_name;
+    }
+
+    public function fullname2()
+    {
+        return $this->first_name .' '. $this->last_name;
+    }
+
+    public function prettyBirthDate()
+    {
+        if(isset($this->birth_date)){
+            $dt = Carbon::parse($this->birth_date);
+            return $dt->toFormattedDateString();
+        }else{
+            return "--";
+        }
+        
+    }
+    public function prettydatehired()
+    {
+        if(isset($this->hired_date)){
+            $dt = Carbon::parse($this->hired_date);
+            return $dt->toFormattedDateString();
+        } else {
+            return "--";
+        }
+    }
+    public function prettyproddate()
+    {
+        if(isset($this->prod_date)){
+            $dt = Carbon::parse($this->prod_date);
+            return $dt->toFormattedDateString();
+        } else {
+            return "--";
+        }
+    }
+    public function prodDate()
+    {
+        if (isset($this->prod_date)) {
+            $dt = Carbon::parse($this->prod_date);
+            return $dt->format('m/d/Y');
+        } else {
+            return "";
+        } 
+    }
+    public function birthDate()
+    {
+        if (isset($this->birth_date)) {
+            $dt = Carbon::parse($this->birth_date);
+            return $dt->format('m/d/Y');
+        }else{
+            return "";
+        }
+    }
+    public function dateHired()
+    {
+        if (isset($this->hired_date)) {
+            $dt = Carbon::parse($this->hired_date);
+            return $dt->format('m/d/Y');
+        } else {
+            return "";
+        }
+    }
+   
+    public function status(){
         switch ($this->status) {
             case 1:
                 return "Active"; 
@@ -118,7 +186,7 @@ class User extends Authenticatable
                 return "";
         }
     }
-    public function scopeGender($query){
+    public function gender(){
         switch ($this->gender) {
             case 1:
                 return "Male"; 
@@ -133,23 +201,33 @@ class User extends Authenticatable
                 return "--";
         }
     }
-    public function scopeIsAdmin($query){
+
+    public function isRankAndFile(){
+        return $this->usertype == 1 || !$this->isBusinessLeader();
+    }
+    
+    public function isSupervisor(){
+        $this->usertype == 2;
+    }
+
+    public function isManager(){
+        $this->usertype == 3;
+    }
+
+    public function isBusinessLeader(){
+        return $this->usertype == 2 && $this->supervisor_name == $this->generalManager()->fullname();
+    } 
+
+    public function isAdmin(){
         return $this->is_admin == 1;
     }
-    public function scopeIsHR($query){
+    public function isHR(){
         return $this->is_hr == 1;
     }
-    public function scopeIsERP($query){
+    public function isERP(){
         return $this->is_erp == 1;
     }
-    public function scopeIsRA($query){
+    public function isRA(){
         return $this->is_ra == 1;
-    }
-    public function scopeLeaveRequestCount(){
-        return LeaveRequest::whereHas('employee', function($query){
-            $query->where('supervisor_id', '=', $this->id);
-        })->orWhereHas('employee', function($query){
-            $query->where('manager_id', '=', $this->id);
-        })->whereNull('approve_status_id')->count();
     }
 }

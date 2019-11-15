@@ -31,11 +31,9 @@ class LeaveController extends Controller
      */
     public function index()
     {
-        $leave_requests = LeaveRequest::whereHas('employee', function($query){
-            $query->where('supervisor_id', '=', Auth::user()->id);
-        })->orWhereHas('employee', function($query){
-            $query->where('manager_id', '=', Auth::user()->id);
-        })->where('approve_status_id', '=', 0)->orWhereNull('approve_status_id')->get();
+
+
+        $leave_requests = LeaveRequest::unapproved()->managedBy(Auth::user())->get();
 
         if(Auth::user()->isAdmin()){
             return view('leave.index')->with('leave_requests', LeaveRequest::all());
@@ -90,21 +88,7 @@ class LeaveController extends Controller
 
         // SEND EMAIL NOTIFICATION
         if($this->settings->get('email_notification')){
-            $leave = LeaveRequest::find(1);
-            $recipients = array();
-            if($leave->employee->supervisor){
-                $recipients[count($recipients)] = $leave->employee->supervisor->email;
-            }
-            if($leave->employee->manager){
-                $recipients[count($recipients)] = $leave->employee->manager->email;
-            }
-            $cc = User::where('is_hr', '=', 1)->orWhere('is_admin', '=', 1)->select('email')->get()->toArray();
-
-            if(count($cc) > 0){
-                Mail::to($recipients)->cc($cc)->queue(new LeaveNotification(LeaveRequest::find(1)));
-            } else {
-                Mail::to($recipients)->queue(new LeaveNotification($leave));
-            }
+            Mail::to($leave->recipients())->queue(new LeaveNotification($leave));
         }
 
         return redirect("leave" . '/' . $leave->id)->with('success', 'Leave Request Successfully Submitted!!');

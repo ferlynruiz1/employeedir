@@ -44,6 +44,7 @@ nav.navbar, .content-holder{
 }
 .btn{
 	border-radius: 0px !important;
+    font-size: 12px !important;
 }
 .btn .btn-primary{
 	background-color: #36bae2 !important;
@@ -71,7 +72,7 @@ nav.navbar, .content-holder{
     font-weight: 500;
     color: #e9ecf2;
     border-radius: 0px;
-    font-size: 14px;
+    font-size: 12px;
 }
 .panel-heading span {
     border-radius: 0px !important;
@@ -82,7 +83,7 @@ nav.navbar, .content-holder{
 h4.timeline-title {
     color: #444;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 12px;
     margin-top: 10px;
 }
 h4.timeline-title a{
@@ -137,14 +138,14 @@ table.dataTable.display tbody tr.even > .sorting_1, table.dataTable.order-column
     display: none;
 }
 .dataTables_wrapper {
-    margin-top: -50px;
+    margin-top: -38px;
     background-color: white;
     padding: 10px;
 }
 .dataTables_wrapper  input[type="search"] {
     background-color: white;
     border: 1px solid #ededed;
-    font-size: 14px;
+    font-size: 12px;
     padding: 10px 10px 10px 10px;
     font-weight: 500 !important;
 }
@@ -176,10 +177,10 @@ a.paginate_button {
     font-size: 12px !important;
 }
 #employees_table tbody td {
-    font-size: 13px;
+    font-size: 11px;
 }
 .label-profile i{
-    font-size: 14px;
+    font-size: 12px;
 }
 
 /* END DATATABLE CSS */
@@ -210,7 +211,7 @@ a.paginate_button {
 label.error {
     color: red;
     font-weight: 500 !important;
-    font-size: 13px;
+    font-size: 11px;
     margin-left: 6px;
     margin-top: 5px;
 }
@@ -312,10 +313,10 @@ input[type="file"]#image_uploader {
 .section-header h4{
     color: white;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 12px;
 }
 label {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500 !important;
 }
 .min-widt-200{

@@ -34,7 +34,7 @@ Employees
     }
     .employee-description{
         color: #777;
-        font-size: 13px;
+        font-size: 12px;
     }
     h1, h2, h3, h4, h5, h6 {
         color: #777;
@@ -87,26 +87,26 @@ Employees
         <li>
 
             <span class="fa fa-filter" title="Filter By" style="color: #777777; font-size: 18px; padding: 5px"></span>
-            <select id="sort_option_list" style="padding: 7px; border-radius: 0px !important; font-size: 13px !important;">
+            <select id="sort_option_list" style="padding: 7px; border-radius: 0px !important; font-size: 11px !important;">
                 <option value="1" {{ isset($request->department) ? "selected" : "" }}>Department</option>
                 <option value="2" {{ isset($request->position) ? "selected" : "" }}>Position</option>
                 <option value="3" {{ isset($request->birthmonth) ? "selected" : "" }}>Birth Month</option>
             </select>
         </li>
         <li>
-            <select style="padding: 7px; border-radius: 0px !important; font-size: 13px !important;" id="departments_list">
+            <select style="padding: 7px; border-radius: 0px !important; font-size: 11px !important;" id="departments_list">
                 <option selected>Search by department:</option>
                 @foreach( $departments as $department)
                <option <?php echo $request->department == $department->department_name ? "selected" : "";?> >{{ $department->department_name}}</option>
                @endforeach
            </select>
-           <select style="padding: 7px; border-radius: 0px !important; font-size: 13px !important; display: none;" id="position_list">
+           <select style="padding: 7px; border-radius: 0px !important; font-size: 11px !important; display: none;" id="position_list">
                 <option selected>Search by Position:</option>
                 @foreach( $positions as $position)
                <option <?php echo $request->position == $position->position_name ? "selected" : "";?> >{{ $position->position_name}}</option>
                @endforeach
            </select>
-            <select style="width: 200px; border-color: #ddd; padding: 7px; border-radius: 0px !important; font-size: 13px !important; display: none;" id="month_list">
+            <select style="width: 200px; border-color: #ddd; padding: 7px; border-radius: 0px !important; font-size: 11px !important; display: none;" id="month_list">
                 <option selected>Search by Birth Month:</option>
                 @for( $m = 1; $m <= 12 ; $m++)
                 <option value="{{ $m }}" <?php echo $request->birthmonth == $m ? "selected" : "";?> >{{ date('F', mktime(0,0,0,$m, 1, date('Y'))) }}</option>
@@ -166,14 +166,14 @@ Employees
                 </div>
                 <div class="col-md-3">
                     @if(isset($employee->supervisor_name))
-                    <h5 style="font-size: 13px;">
+                    <h5 style="font-size: 12px;">
                         <span class="fa fa-user" title="Supervisor"></span>
                         <span class="name-format" style="color: gray;">Supervisor:</span>
                         {{$employee->supervisor_name}}
                     </h5>
                     @endif
                     @if(isset($employee->manager_name))
-                        <h5 style="font-size: 13px;">
+                        <h5 style="font-size: 12px;">
                             <span class="fa fa-user" title="Manager"></span>
                             <span style="color: gray;">Manager: </span>
                             <span class="name-format">{{ $employee->manager_name }}</span>

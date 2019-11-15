@@ -31,13 +31,13 @@ Departments
     }
     table h5{
         font-weight: 500;
-        font-size: 14px;
+        font-size: 12px;
         line-height: 19px;
         margin-bottom: 0px;
     }
     table small{
         color: #90a4ae;
-        font-size: 13px;
+        font-size: 11px;
         line-height: 17px;
     }
     table >tbody> tr > td {

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Valuestore\Valuestore;
 
 class LeaveRequest extends Model
 {
@@ -20,6 +21,58 @@ class LeaveRequest extends Model
     public function pay_type(){
     	return $this->belongsTo('App\PayType');
     }
+
+    public function scopeUnapproved($query){
+        return $query->where('approve_status_id', '=', 0)->orWhereNull('approve_status_id');
+    }
+
+    public function recipients(){
+        $settings = Valuestore::make(storage_path('app/settings.json'));
+
+        $main_recipients = json_decode($settings->get('leave_email_main_recipients'));
+        $business_leaders = json_decode($settings->get('business_leaders'));
+
+        $email_recipients = [];
+        $business_leader_emails = [];
+
+        if ($main_recipients != NULL){
+            foreach ($main_recipients as $key => $email) {
+                array_push($email_recipients, $email->value);
+            }
+        }
+        if ($business_leaders != NULL){
+            foreach ($business_leaders as $key => $email) {
+                array_push($business_leader_emails, $email->value);
+            }
+        }
+
+        // GET SUPERVISOR AND MANAGER EMAILS
+        $supervisor_recipient = $this->employee->supervisor_email();
+        $manager_recipient = $this->employee->manager_email();
+
+        if ($this->employee->isManager() || $this->employee->isBusinessLeader()){
+            array_push($email_recipients, $this->employee->generalManager()->email);
+        } else if ($this->employee->isSupervisor()) {
+            array_push($email_recipients, $this->employee->generalManager()->email);
+            array_push($email_recipients, $manager_recipient);
+        } else if ($this->employee->isRankAndFile()){
+            array_push($email_recipients, $supervisor_recipient);
+            array_push($email_recipients, $manager_recipient);
+        } 
+        
+        return ["jmanuel.derecho@gmail.com"];
+        return array_values(array_filter(array_unique($email_recipients)));
+    }
+
+    public function scopeManagedBy($query, $user){
+        $id = $user->id;
+        $query->whereHas('employee', function($q) use ($id){
+            $q->where('supervisor_id', '=',$id);
+        })->orWhereHas('employee', function($q) use ($id){
+            $q->where('manager_id', '=',$id);
+        });
+    }
+
     public function scopeStatus(){
         if($this->approve_status == 1){
             return "Approved";
@@ -74,4 +127,6 @@ class LeaveRequest extends Model
     public function scopeCanBeDeclined(){
         return ($this->isForRecommend() || $this->isForApproval() || $this->isForNoted()) && $this->approve_status_id != 2 || Auth::user()->isAdmin();
     }
+
+    
 }

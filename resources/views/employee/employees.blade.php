@@ -31,13 +31,13 @@ Employees
         }
         table h5{
             font-weight: 500;
-            font-size: 14px;
+            font-size: 12px;
             line-height: 19px;
             margin-bottom: 0px;
         }
         table small{
             color: #90a4ae;
-            font-size: 13px;
+            font-size: 11px;
             line-height: 17px;
         }
         table >tbody> tr > td {
@@ -81,7 +81,7 @@ Employees
         <li>
 
             <span class="fa fa-filter" title="Filter By" style="color: #777777; font-size: 18px; padding: 5px"></span>
-            <select id="sort_option_list" style="border-color: #ddd; padding: 7px; border-radius: 0px !important; font-size: 13px !important;">
+            <select id="sort_option_list" style="border-color: #ddd; padding: 7px; border-radius: 0px !important; font-size: 12px !important;">
                 <option value="1" {{ isset($request->department) ? "selected" : "" }}>Department</option>
                 <option value="2" {{ isset($request->position) ? "selected" : "" }}>Position</option>
                 <option value="3" {{ isset($request->birthmonth) ? "selected" : "" }}>Birth Month</option>

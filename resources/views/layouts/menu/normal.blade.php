@@ -46,18 +46,6 @@
     </a>
 </li>
 @endif
-<li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
-    <a href="{{url('myprofile')}}">
-        <em class="fa fa-user">&nbsp;</em>
-        My Profile
-    </a>
-</li>
-<li>
-    <a href="{{ route('logout')}}">
-        <em class="fa fa-power-off">&nbsp;</em>
-        Logout
-    </a>
-</li>
 @endauth
 
 @guest
@@ -68,3 +56,12 @@
     </a>
 </li>
 @endguest
+@auth
+
+<li>
+    <a href="{{ route('logout')}}">
+        <em class="fa fa-power-off">&nbsp;</em>
+        Logout
+    </a>
+</li>
+@endauth

@@ -1,65 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>eLink's Employee Directory | @yield('title')</title>
-    <link rel="icon" type="image/png" href="http://www.elink.com.ph/wp-content/uploads/2016/01/elink-logo-site.png">
-    <link href="{{ asset('public/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('public/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('public/css/datepicker3.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('public/css/styles.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('public/css/custom.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('public/css/jquery.dataTables.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('public/css/select2.min.css')}}" rel="stylesheet">
-    <link href="{{ asset('public/css/tagify.css')}}" rel="stylesheet">
-    <link href="{{ asset('public/css/css.css')}}" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>eLink's Employee Directory | @yield('title')</title>
+  <link rel="icon" type="image/png" href="http://www.elink.com.ph/wp-content/uploads/2016/01/elink-logo-site.png">
+  <link href="{{ asset('public/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ asset('public/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+  <link href="{{ asset('public/css/datepicker3.css')}}" rel="stylesheet" type="text/css">
+  <link href="{{ asset('public/css/styles.css')}}" rel="stylesheet" type="text/css">
+  <link href="{{ asset('public/css/custom.css')}}" rel="stylesheet" type="text/css">
+  <link href="{{ asset('public/css/jquery.dataTables.css')}}" rel="stylesheet" type="text/css">
+  <link href="{{ asset('public/css/select2.min.css')}}" rel="stylesheet">
+  <link href="{{ asset('public/css/tagify.css')}}" rel="stylesheet">
+  <link href="{{ asset('public/css/css.css')}}" rel="stylesheet">
 
-    <script src="{{ asset('public/js/jquery-1.11.1.min.js')}}"></script>
+  <!-- overlayScrollbars -->
+  <link href="{{ asset('public/css/OverlayScrollbars.min.css')}}" rel="stylesheet">
+  <!-- Theme style -->
+  <link href="{{ asset('public/css/adminlte.css')}}" rel="stylesheet">
 
-    <script type="text/javascript" src="{{ asset('public/js/jquery.bootstrap-growl.min.js') }}"></script>
+  <script src="{{ asset('public/js/jquery-1.11.1.min.js')}}"></script>
 
-    <!-- FROALA EDITOR -->
-    <link rel="stylesheet" href="{{ asset('public/css/froala_editor/froala_editor.css')}}">
-    <link rel="stylesheet" href="{{ asset('public/css/froala_editor/froala_style.css')}}">
-    <link rel="stylesheet" href="{{ asset('public/css/froala_editor/plugins/emoticons.css')}}">
+  <script type="text/javascript" src="{{ asset('public/js/jquery.bootstrap-growl.min.js') }}"></script>
 
-    <link rel="stylesheet" href="{{ asset('public/css/bootstrap-datetimepicker.min.css')}}" />
-    <link rel="stylesheet" href="{{ asset('public/css/pages/' . request()->path() . '.css')}}" />
-    @yield('head')
+  <!-- FROALA EDITOR -->
+  <link rel="stylesheet" href="{{ asset('public/css/froala_editor/froala_editor.css')}}">
+  <link rel="stylesheet" href="{{ asset('public/css/froala_editor/froala_style.css')}}">
+  <link rel="stylesheet" href="{{ asset('public/css/froala_editor/plugins/emoticons.css')}}">
 
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <link rel="stylesheet" href="{{ asset('public/css/bootstrap-datetimepicker.min.css')}}" />
+  <link rel="stylesheet" href="{{ asset('public/css/pages/' . request()->path() . '.css')}}" />
+  @yield('head')
+
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
 </head>
-<body>
-    <!-- nav header -->
-    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation" style="background-color: #32373A !important;">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed pull-right" data-toggle="collapse" data-target="#sidebar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{url('/home')}}">
-                    <span>
-                        <img src="{{ asset('public/img/elink-logo-site.png')}}" style="width: 40px; margin-top: -10px">
-                        &nbsp;Employee
-                    </span>
-                    Directory
-                </a>
-               
-                <div class="dropdown pull-right">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    {{ ucwords(request()->path()) }}
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                   @auth
+<body class="hold-transition sidebar-mini layout-fixed">
+<!-- Site wrapper -->
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Right navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a class="brand-link" href="{{url('/home')}}">
+        <span>
+            <img src="{{ asset('public/img/elink-logo-site.png')}}" style="width: 35px; margin-top: -10px;opacity: .8">
+            &nbsp;Employee
+        </span>
+        Directory
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user (optional) -->
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+                            @auth
                     <li>
                         <div class="profile-userpic">
-                            <div style="background-image: url('{{ Auth::user()->profile_img }}');" class="pic-div">
+                            <div style="background-image: url('public/img/liza-soberano_4.jpg');" class="pic-div">
                             </div>
                         </div>
                         <div class="profile-usertitle">
@@ -87,15 +101,20 @@
                     @guest
                         @include('layouts.menu.normal')
                     @endguest
-                  </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <div class="content-holder row-fluid">
-        
-        <!-- Content -->
-        <div class="col-sm-12">
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content">
+
+       <div class="col-sm-12">
             <div class="row">
                 <ol class="breadcrumb">
                     <li><a href="#">
@@ -109,7 +128,19 @@
 
             </div>
         </div> 
-        <script type="text/javascript" src="{{ asset('public/js/bootstrap.min.js')}}"></script>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+      <script type="text/javascript" src="{{ asset('public/js/bootstrap.min.js')}}"></script>
         <script type="text/javascript" src="{{ asset('public/js/chart.min.js')}}"></script>
         <script type="text/javascript" src="{{ asset('public/js/chart-data.js')}}"></script>
         <script type="text/javascript" src="{{ asset('public/js/easypiechart.js')}}"></script>
@@ -133,6 +164,9 @@
         <script type="text/javascript" src="{{ asset('public/js/froala_editor/plugins/link.min.js')}}"></script>
         <script type="text/javascript" src="{{ asset('public/js/tagify.js')}}"></script>
         <script type="text/javascript" src="{{ asset('public/js/jQuery.tagify.min.js')}}"></script>
+        <script src="{{ asset('public/js/jquery.overlayScrollbars.min.js')}}"></script>
+        <!-- AdminLTE App -->
+        <script type="text/javascript" src="{{ asset('public/js/adminlte.js')}}"></script>
 
         <!-- Modal -->
         <div id="messageModal" class="modal fade" role="dialog">
@@ -155,7 +189,6 @@
             </div>
           </div> 
         </div>
-        <div style="min-height: 95vh;"><br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;</div>
         <center>
             <small style="color: #999;font-weight: 500;">Copyright {{ date('Y')}} eLink Systems & Concepts Corp.</small>
         </center>

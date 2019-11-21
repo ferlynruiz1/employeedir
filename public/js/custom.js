@@ -15,6 +15,14 @@ $(window).on('resize', function () {
   if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
 })
 
+$(document).on('click', '#toggle-sidebar',function(e){
+  if ($('#sidebar-collapse:visible').length){
+    hideSidebar()
+  }else{
+    showSidebar()
+  }
+})
+
 $(document).on('click', '.panel-heading span.clickable', function(e){
     var $this = $(this);
 	if(!$this.hasClass('panel-collapsed')) {
@@ -87,4 +95,16 @@ function timeConverter2(prod_date){
   var sec = a.getSeconds();
   var time =  month + ' ' + date;
   return time;
+}
+
+function showSidebar(){
+  $('.navbar-brand').show();
+  $('#sidebar-collapse').show(100);
+  $('#main-container').removeClass().addClass('col-sm-10 col-sm-offset-2');
+}
+
+function hideSidebar(){
+  $('.navbar-brand').hide(100);
+  $('#sidebar-collapse').hide('fade');
+  $('#main-container').removeClass().addClass('col-sm-12 col-sm-offset-0');
 }

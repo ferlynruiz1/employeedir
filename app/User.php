@@ -78,6 +78,9 @@ class User extends Authenticatable
         return $matched_users;
     }
 
+    public function scopeSeparatedEmployees($query){
+        return $query->onlyTrashed()->orWhere('status', '=', '2');
+    }
     #####################################################
     public function generalManager(){
         $settings = Valuestore::make(storage_path('app/settings.json'));

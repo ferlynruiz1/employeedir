@@ -276,6 +276,28 @@ class EmployeeRepository implements RepositoryInterface
             if (Auth::user()->isAdmin()) {
                 $employees = new User;
 
+                if ($request->has('keyword') && $request->get('keyword') != "") {
+                    $employees = $employees->where(function($query) use($request)
+                    {
+                        $query->where('first_name', 'LIKE', '%'.$request->get('keyword').'%')
+                            ->orWhere('last_name', 'LIKE', '%'.$request->get('keyword').'%')
+                            ->orWhere('middle_name', 'LIKE', '%'.$request->get('keyword').'%')
+                            ->orWhere(DB::raw('CONCAT(first_name, " ", last_name)'), 'LIKE', '%'.$request->get('keyword').'%')
+                            ->orWhere('email', 'LIKE', '%'.$request->get('keyword').'%')
+                            ->orWhere('email2', 'LIKE', '%'.$request->get('keyword').'%')
+                            ->orWhere('email3', 'LIKE', '%'.$request->get('keyword').'%')
+                            ->orWhere('alias', 'LIKE', '%'.$request->get('keyword').'%')
+                            ->orWhere('team_name', 'LIKE', '%'.$request->get('keyword').'%')
+                            ->orWhere('dept_code', 'LIKE', '%'.$request->get('keyword').'%')
+                            ->orWhere('position_name', 'LIKE', '%'.$request->get('keyword').'%')
+                            ->orWhere('ext', 'LIKE', '%'.$request->get('keyword').'%');
+                    });
+                    
+                    $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->paginate(10);
+
+                    return view('guest.employees')->with('employees', $employees )->with('request', $request)->with('departments', $departments)->with('positions', $positions);
+                }
+
                 if ($request->has('department') && $request->get('department') != "") {
                     $employees = $employees->where('team_name', 'LIKE', $request->get('department'));
                 }
@@ -296,6 +318,13 @@ class EmployeeRepository implements RepositoryInterface
                     $employees = $employees->onlyTrashed()->orWhere('status', '=', '2');
                 }
 
+                if ($request->has('alphabet') && $request->get('alphabet') != "") {
+                $employees = $employees->where(function($query) use($request)
+                {
+                    $query->where('first_name', 'LIKE', $request->get('alphabet').'%')
+                        ->orWhere('last_name', 'LIKE', $request->get('alphabet').'%');
+                    });
+                }
                 if ($request->has('birthmonth') && $request->get('birthmonth') != "") {
                     $employees = $employees->whereRaw('MONTH(birth_date) = '. $request->get('birthmonth'));
                 }
@@ -307,58 +336,59 @@ class EmployeeRepository implements RepositoryInterface
                     });
                 }
 
-                $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->get();
+                $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->paginate(10);
 
                 return view('employee.employees')->with('employees', $employees)->with('request', $request)->with('departments', $departments)->with('positions', $positions);
             }
-        }
-        
-        $employees = new User;
-        $query = array();
-        if ($request->has('keyword') && $request->get('keyword') != "") {
-            $employees = $employees->where(function($query) use($request)
-            {
-                $query->where('first_name', 'LIKE', '%'.$request->get('keyword').'%')
-                    ->orWhere('last_name', 'LIKE', '%'.$request->get('keyword').'%')
-                    ->orWhere('middle_name', 'LIKE', '%'.$request->get('keyword').'%')
-                    ->orWhere(DB::raw('CONCAT(first_name, " ", last_name)'), 'LIKE', '%'.$request->get('keyword').'%')
-                    ->orWhere('email', 'LIKE', '%'.$request->get('keyword').'%')
-                    ->orWhere('email2', 'LIKE', '%'.$request->get('keyword').'%')
-                    ->orWhere('email3', 'LIKE', '%'.$request->get('keyword').'%')
-                    ->orWhere('alias', 'LIKE', '%'.$request->get('keyword').'%')
-                    ->orWhere('team_name', 'LIKE', '%'.$request->get('keyword').'%')
-                    ->orWhere('dept_code', 'LIKE', '%'.$request->get('keyword').'%')
-                    ->orWhere('position_name', 'LIKE', '%'.$request->get('keyword').'%')
-                    ->orWhere('ext', 'LIKE', '%'.$request->get('keyword').'%');
-            });
-            
+        }else{
+
+            $employees = new User;
+            $query = array();
+            if ($request->has('keyword') && $request->get('keyword') != "") {
+                $employees = $employees->where(function($query) use($request)
+                {
+                    $query->where('first_name', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('last_name', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('middle_name', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere(DB::raw('CONCAT(first_name, " ", last_name)'), 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('email', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('email2', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('email3', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('alias', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('team_name', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('dept_code', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('position_name', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('ext', 'LIKE', '%'.$request->get('keyword').'%');
+                });
+                
+                $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->paginate(10);
+
+                return view('guest.employees')->with('employees', $employees )->with('request', $request)->with('departments', $departments)->with('positions', $positions);
+            }
+
+            if ($request->has('alphabet') && $request->get('alphabet') != "") {
+                $employees = $employees->where(function($query) use($request)
+                {
+                    $query->where('first_name', 'LIKE', $request->get('alphabet').'%')
+                        ->orWhere('last_name', 'LIKE', $request->get('alphabet').'%');
+                });
+            }
+            if ($request->has('department') && $request->get('department') != "") {
+                $employees = $employees->where('team_name', 'LIKE', $request->get('department'));
+            }
+
+            if ($request->has('position') && $request->get('position') != "") {
+                $employees = $employees->where('position_name', 'LIKE', '%' . $request->get('position') . '%');
+            }
+
+            if ($request->has('birthmonth') && $request->get('birthmonth') != "") {
+                $employees = $employees->whereRaw('MONTH(birth_date) = '. $request->get('birthmonth'));
+            }
+
             $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->paginate(10);
 
+            
             return view('guest.employees')->with('employees', $employees )->with('request', $request)->with('departments', $departments)->with('positions', $positions);
         }
-
-        if ($request->has('alphabet') && $request->get('alphabet') != "") {
-            $employees = $employees->where(function($query) use($request)
-            {
-                $query->where('first_name', 'LIKE', $request->get('alphabet').'%')
-                    ->orWhere('last_name', 'LIKE', $request->get('alphabet').'%');
-            });
-        }
-        if ($request->has('department') && $request->get('department') != "") {
-            $employees = $employees->where('team_name', 'LIKE', $request->get('department'));
-        }
-
-        if ($request->has('position') && $request->get('position') != "") {
-            $employees = $employees->where('position_name', 'LIKE', '%' . $request->get('position') . '%');
-        }
-
-        if ($request->has('birthmonth') && $request->get('birthmonth') != "") {
-            $employees = $employees->whereRaw('MONTH(birth_date) = '. $request->get('birthmonth'));
-        }
-
-        $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->paginate(10);
-
-        
-        return view('guest.employees')->with('employees', $employees )->with('request', $request)->with('departments', $departments)->with('positions', $positions);
     }
 }

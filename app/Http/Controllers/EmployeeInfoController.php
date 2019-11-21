@@ -642,11 +642,29 @@ class EmployeeInfoController extends Controller
         return $result;
     }
 
-    public function separatedEmployees(){
+    public function separatedEmployees(Request $request){
 
-        $employees = User::onlyTrashed()->orWhere('status', '=', '2')->get();
-       
-        return view('employee.separated')->with('employees', $employees);
+        $employees = User::separatedEmployees();
+        if ($request->has('keyword') && $request->get('keyword') != "") {
+                $employees = $employees->where(function($query) use($request)
+                {
+                    $query->where('first_name', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('last_name', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('middle_name', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere(DB::raw('CONCAT(first_name, " ", last_name)'), 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('email', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('email2', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('email3', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('alias', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('team_name', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('dept_code', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('position_name', 'LIKE', '%'.$request->get('keyword').'%')
+                        ->orWhere('ext', 'LIKE', '%'.$request->get('keyword').'%');
+                });
+            }
+        
+        $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->paginate(10);
+        return view('employee.separated')->with('employees', $employees)->with('request', $request);
     }
 
 }

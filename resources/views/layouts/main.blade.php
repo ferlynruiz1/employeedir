@@ -1,226 +1,148 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>eLink's Employee Directory | @yield('title')</title>
-  <link rel="icon" type="image/png" href="http://www.elink.com.ph/wp-content/uploads/2016/01/elink-logo-site.png">
-  <link href="{{ asset('public/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-  <link href="{{ asset('public/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
-  <link href="{{ asset('public/css/datepicker3.css')}}" rel="stylesheet" type="text/css">
-  <link href="{{ asset('public/css/styles.css')}}" rel="stylesheet" type="text/css">
-  <link href="{{ asset('public/css/custom.css')}}" rel="stylesheet" type="text/css">
-  <link href="{{ asset('public/css/jquery.dataTables.css')}}" rel="stylesheet" type="text/css">
-  <link href="{{ asset('public/css/select2.min.css')}}" rel="stylesheet">
-  <link href="{{ asset('public/css/tagify.css')}}" rel="stylesheet">
-  <link href="{{ asset('public/css/css.css')}}" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>eLink's Employee Directory | @yield('title')</title>
+    <link rel="icon" type="image/png" href="http://www.elink.com.ph/wp-content/uploads/2016/01/elink-logo-site.png">
+    <link href="{{ asset('public/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('public/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('public/css/datepicker3.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('public/css/styles.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('public/css/custom.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('public/css/jquery.dataTables.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('public/css/select2.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('public/css/tagify.css')}}" rel="stylesheet">
+    <link href="{{ asset('public/css/css.css')}}" rel="stylesheet">
+    <link href="{{ asset('public/css/theme-midnight.css')}}" rel="stylesheet">
 
-  <!-- overlayScrollbars -->
-  <link href="{{ asset('public/css/OverlayScrollbars.min.css')}}" rel="stylesheet">
-  <!-- Theme style -->
-  <link href="{{ asset('public/css/adminlte.css')}}" rel="stylesheet">
+    <script src="{{ asset('public/js/jquery-1.11.1.min.js')}}"></script>
 
-  <script src="{{ asset('public/js/jquery-1.11.1.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/jquery.bootstrap-growl.min.js') }}"></script>
 
-  <script type="text/javascript" src="{{ asset('public/js/jquery.bootstrap-growl.min.js') }}"></script>
+    <!-- FROALA EDITOR -->
+    <link rel="stylesheet" href="{{ asset('public/css/froala_editor/froala_editor.css')}}">
+    <link rel="stylesheet" href="{{ asset('public/css/froala_editor/froala_style.css')}}">
+    <link rel="stylesheet" href="{{ asset('public/css/froala_editor/plugins/emoticons.css')}}">
 
-  <!-- FROALA EDITOR -->
-  <link rel="stylesheet" href="{{ asset('public/css/froala_editor/froala_editor.css')}}">
-  <link rel="stylesheet" href="{{ asset('public/css/froala_editor/froala_style.css')}}">
-  <link rel="stylesheet" href="{{ asset('public/css/froala_editor/plugins/emoticons.css')}}">
+    <link rel="stylesheet" href="{{ asset('public/css/bootstrap-datetimepicker.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('public/css/pages/' . request()->path() . '.css')}}" />
+    @yield('head')
 
-  <link rel="stylesheet" href="{{ asset('public/css/bootstrap-datetimepicker.min.css')}}" />
-  <link rel="stylesheet" href="{{ asset('public/css/pages/' . request()->path() . '.css')}}" />
-  @yield('head')
-
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
-<body class="hold-transition sidebar-mini">
-<!-- Site wrapper -->
-<div class="wrapper">
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Right navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
-      </li>
-    </ul>
-  </nav>
-  <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a class="brand-link" href="{{url('/home')}}">
-        <span>
-            <img src="{{ asset('public/img/elink-logo-site.png')}}" style="width: 35px; margin-top: -10px;opacity: .8">
-            &nbsp;Employee
-        </span>
-        Directory
-    </a>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user (optional) -->
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-                            @auth
-                    <li>
-                        <div class="profile-userpic">
-                            <div style="background-image: url('{{ Auth::user()->profile_img }}');" class="pic-div">
-                            </div>
-                        </div>
-                        <div class="profile-usertitle">
-                            <br>
-                            <h5 class="card-title m-t-10">{{ Auth::user()->fullname() }}</h5>
-                            <small class="text-muted" title="Job Title">{{ Auth::user()->position_name }}</small>
-                            <br>
-                        <br>
-                        </div>
-                        <div class="clear"></div>
-                    </li>
-                    @endauth
-                   @auth
-                        @if(Auth::user()->isAdmin())
-                            @include('layouts.menu.admin')
-                        @elseif(Auth::user()->isHR())
-                            @include('layouts.menu.hr')
-                            test
-                        @elseif(Auth::user()->isERP())
-                            @include('layouts.menu.erp')
-                        @else
-                            @include('layouts.menu.normal')
-                        @endif 
-                    @endauth
+<body>
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header" style="float: left">
+                <button type="button" id="toggle-sidebar">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <a class="navbar-brand" href="{{url('/home')}}">
+                    <span>
+                        <img src="{{ asset('public/img/elink-logo-site.png')}}" style="width: 40px; margin-top: -10px">
+                        &nbsp;Employee
+                    </span>
+                    Directory
+                </a>
+                <ul class="nav navbar-top-links navbar-right">
                     @guest
-                        @include('layouts.menu.normal')
+                        <li class="login-btn"><a href="{{ url('/login') }}">Login</a></li>
                     @endguest
+                    @auth
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="true">
+                                <em class="fa fa-user"></em>
+                            </a>
+                            <ul class="dropdown-menu dropdown-messages">
+                                <li>
+                                    <div class="profile-sidebar">
+                                        <div class="profile-userpic">
+                                           <div style="background-image: url('public/img/Liza-Soberano-1024x1024.jpg');" class="pic-div">
+                                                        </div>
+                                        </div>
+                                        <div class="profile-usertitle">
+                                            <div class="profile-usertitle-name">{{ Auth::user()->fullname() }}</div>
+                                            <div class="profile-usertitle-status"></span><small class="text-muted" title="Job Title">{{ Auth::user()->position_name }}</small></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                    <li class="divider" style="height: 0px"></li>
+
+                                 @if(Auth::user()->isAdmin()) 
+                                    <li>
+                                        <a href="{{url('settings')}}">
+                                            <em class="fa fa-gear">&nbsp;</em>
+                                            Global Settings
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                @endif
+                                <li >
+                                    <a href="{{url('myprofile')}}">
+                                        <em class="fa fa-user">&nbsp;</em>
+                                        My Profile
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="{{ route('logout')}}">
+                                        <em class="fa fa-power-off">&nbsp;</em>
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endauth
+                </ul>
+            </div>
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+        <ul class="nav menu">
+           @include('layouts.menu')
         </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <!-- Main content -->
-    <section class="content">
-
-       <div class="col-sm-12">
-            <div class="row">
-                <ol class="breadcrumb">
-                    <li><a href="#">
-                        <em class="fa fa-home"></em>
-                    </a></li>
-                    <li class="active">{{ breadCrumbs() }}</li>
-                </ol>
-            </div>
-            <div>
-                @yield('content')
-
-            </div>
-        </div> 
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-      <script type="text/javascript" src="{{ asset('public/js/bootstrap.min.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/chart.min.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/chart-data.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/easypiechart.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/easypiechart-data.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/bootstrap-datepicker.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/jquery.dataTables.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/jquery.validate.min.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/dataTables.responsive.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/select2.full.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/moment.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/bootstrap/js/transition.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/bootstrap/js/collapse.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/bootstrap-datetimepicker.min.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/loadingoverlay.min.js')}}"></script>
-
-        <script type="text/javascript" src="{{ asset('public/js/global.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/custom.js')}}"></script>
-
-        <script type="text/javascript" src="{{ asset('public/js/froala_editor/froala_editor.min.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/froala_editor/plugins/emoticons.min.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/froala_editor/plugins/link.min.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/tagify.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/jQuery.tagify.min.js')}}"></script>
-        <script src="{{ asset('public/js/jquery.overlayScrollbars.min.js')}}"></script>
-        <!-- AdminLTE App -->
-        <script type="text/javascript" src="{{ asset('public/js/adminlte.js')}}"></script>
-
-        <!-- Modal -->
-        <div id="messageModal" class="modal fade" role="dialog">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"></h4>
-              </div>
-              <div class="modal-body">
-                <p id="message"></p>
-              </div>
-              <div class="modal-footer">
-                 {{ Form::open(array('url' => 'employee_info/', 'class' => ' delete_form' )) }}
-                        {{ Form::hidden('_method', 'DELETE') }}
-                        {{ Form::submit('Yes', array('class' => 'btn btn-danger')) }}
-                    {{ Form::close() }}
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              </div>
-            </div>
-          </div> 
+    </div><!--/.sidebar-->
+        
+    <div class="col-sm-10 col-sm-offset-2" id="main-container">
+        <div class="row" style="margin-top: 60px;">
+            <ol class="breadcrumb">
+                <li><a href="#">
+                    <em class="fa fa-home"></em>
+                </a></li>
+                <li class="active">{{ breadCrumbs() }}</li>
+            </ol>
+        </div><!--/.row-->
+        <div class="page-content">
+            @yield('content')
         </div>
-        <center>
-            <small style="color: #999;font-weight: 500;">Copyright {{ date('Y')}} eLink Systems & Concepts Corp.</small>
-        </center>
-        <br>  
-    </div>  
-    <div id="engagementmodal" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title pull-left" id="engagement_title" style="width: 90%"></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <small id="engagement_subtitle"></small>
-            <center>
-                <br>
-                <img id="engagement_image" src="" style="width: 100%;" />
-                <br>
-                <br>
-            </center>
-            <p id="engagement_message"></p>
-            <small id="engagement_date_posted"></small>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-</body>
+    </div>  <!--/.main-->
+    <script type="text/javascript" src="{{ asset('public/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/chart.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/chart-data.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/easypiechart.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/easypiechart-data.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/bootstrap-datepicker.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/jquery.dataTables.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/jquery.validate.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/dataTables.responsive.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/select2.full.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/moment.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/bootstrap/js/transition.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/bootstrap/js/collapse.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/bootstrap-datetimepicker.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/loadingoverlay.min.js')}}"></script>
+
+    <script type="text/javascript" src="{{ asset('public/js/global.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/custom.js')}}"></script>
+
+    <script type="text/javascript" src="{{ asset('public/js/froala_editor/froala_editor.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/froala_editor/plugins/emoticons.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/froala_editor/plugins/link.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/tagify.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/jQuery.tagify.min.js')}}"></script>
+
 <!-- Modal Success -->
 @if (session('success'))
     <div id="alertmodal" class="modal fade">
@@ -271,4 +193,6 @@
     }
 </style>
 @yield('scripts')
+</body>
+
 </html>

@@ -6,109 +6,70 @@ Employees
 Employees
 @endsection
 @section('content')
-    <style type="text/css">
-        #employees_table_wrapper{
-            background-color: #fff;
-            padding: 10px;
-        }
-        h1.page-header{
-            margin-left: 20px;
-            margin-bottom: -10px;
-        }
-        div.circle{
-            border-radius: 100px;
-            border: 1px solid #eaeaea;
-            width: 46px;
-            padding: 12px;
-            text-align: center;
-            vertical-align: middle;
-            background-color: green;
-            color: white;
-            margin-right: 10px;
-        }
-        table tr {
-            background-color: #fff;
-        }
-        table h5{
-            font-weight: 500;
-            font-size: 12px;
-            line-height: 19px;
-            margin-bottom: 0px;
-        }
-        table small{
-            color: #90a4ae;
-            font-size: 11px;
-            line-height: 17px;
-        }
-        table >tbody> tr > td {
-            vertical-align: middle !important;
-            margin: auto;
-        }
-        .sorting_1{
-            padding-left: 20px !important;
-        }
-        a.btn.btn-primary, a.btn.btn-warning, a.btn.btn-success{
-            float: right;
-            margin: 10px;
-        }
-        .alphabet-search{
+<style type="text/css">
+    .emp-profile{
+        background-color: white;
+    }
+    .col-md-12{
+        margin-bottom: 1px !important;
+    }
+    .emp-profile{
+        margin: auto;
+    }
+    .header-container{
+        margin-top: 20px;
+    }
+    #search_employee{
+        padding-left: 5px;
+    }
+    .alphabet-search{
         display: inline-flex;
         list-style: none;
-        }
-        .alphabet-search li{
-            margin-left: 10px;
-        }
-        .table-striped>tbody>tr:nth-of-type(odd) {
-            background-color: #fff !important;
-        }
-        .table-striped>tbody>tr:nth-of-type(even) {
-            background-color: #fbfbfb !important;
-        }
-        .table-striped > thead > tr {
-            background-color: #f8f8f8 !important;
-            padding-top: 10px;
-        }
-    </style>
+    }
+    .alphabet-search li{
+        margin-left: 10px;
+    }
+    .header-list{
 
-    <a href="{{url('employee_info/create')}}" class="btn btn-primary" >
-        <i class="fa fa-plus"></i>
-        &nbsp;&nbsp;Add Employee
-    </a>
-    <div class="section-header">
-        <h4>List of Employees</h4>
-    </div>
-    <ul class="alphabet-search pull-right" style="position: absolute; padding: 8px; z-index: 1 !important">
-        <li>
+    }
+    .employee-description{
+        color: #777;
+        font-size: 12px;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        color: #777;
+    }
+    li a.selected{
+        font-weight: 900!important;
+    }
+    .pagination>li:first-child>a, .pagination>li:first-child>span{
+        border-top-left-radius: 0px !important;
+        border-bottom-left-radius: 0px !important;
+    }
+    .pagination>li:last-child>a, .pagination>li:last-child>span {
+        border-top-right-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
+    }
+    .emp-profile .fa{
+        color: #555;
+    }
+    select{
+        cursor: pointer !important;
+    }
+</style>
 
-            <span class="fa fa-filter" title="Filter By" style="color: #777777; font-size: 18px; padding: 5px"></span>
-            <select id="sort_option_list" style="border-color: #ddd; padding: 7px; border-radius: 0px !important; font-size: 12px !important;">
-                <option value="1" {{ isset($request->department) ? "selected" : "" }}>Department</option>
-                <option value="2" {{ isset($request->position) ? "selected" : "" }}>Position</option>
-                <option value="3" {{ isset($request->birthmonth) ? "selected" : "" }}>Birth Month</option>
-            </select>
-        </li>
-        <li>
-            <select style="width: 200px; border-color: #ddd;padding: 7px; border-radius: 0px !important; font-size: 13px !important;" id="departments_list">
-                <option selected>Search by department:</option>
-                @foreach( $departments as $department)
-               <option <?php echo $request->department == $department->department_name ? "selected" : "";?> >{{ $department->department_name}}</option>
-               @endforeach
-            </select>
-            <select style="width: 200px; border-color: #ddd; padding: 7px; border-radius: 0px !important; font-size: 13px !important; display: none;" id="position_list">
-                <option selected>Search by Position:</option>
-                @foreach( $positions as $position)
-                <option <?php echo $request->position == $position->position_name ? "selected" : "";?> >{{ $position->position_name}}</option>
-               @endforeach
-            </select>
-            <select style="width: 200px; border-color: #ddd; padding: 7px; border-radius: 0px !important; font-size: 13px !important; display: none;" id="month_list">
-                <option selected>Search by Birth Month:</option>
-                @for( $m = 1; $m <= 12 ; $m++)
-                <option value="{{ $m }}" <?php echo $request->birthmonth == $m ? "selected" : "";?> >{{ date('F', mktime(0,0,0,$m, 1, date('Y'))) }}</option>
-                @endfor
-            </select>
-        </li>
-        <li>
-           <a href="{{url('employees')}}" class="btn btn-default" style="margin: 0px; height: 30px;">Clear Filter</a>
+<div class="col-md-12">
+<div class="header-container" style="margin-bottom: 5px;">
+    <ul class="alphabet-search" style="padding-left: 0px">
+        <li style="margin-left: 0px">
+            <form style="display: unset;">
+                <input type="hidden" name="alphabet" value="{{ $request->alphabet }}">
+                <input type="hidden" name="department" value="{{ $request->department }}">
+                <input type="text" placeholder="Search by name" id="search_employee" name="keyword" value="{{ $request->keyword }}">
+                <button class="btn btn-primary" style="height:  35px; margin-top: 1px;">
+                    <span class="fa fa-search"></span>
+                </button>
+            </form>
         </li>
         <li style="margin-top: -5px">
             &nbsp;
@@ -128,59 +89,138 @@ Employees
             <label>Invalid Birthday</label>
             <input type="radio" id="invalid_birth_date" {{ $request->invalid_birth_date == 'true' ? 'checked' : '' }}>
         </li>
-    </ul>
-	<table id="employees_table" class="table table-striped">
-        <thead>
-            <tr>
-                <td data-priority="1">#</td>
-                <td data-priority="2">Employee</td>
-                <td data-priority="4">Email <br> <small>Phone name and ext</small></td>
-                <td>Team/Department</td>
-                <td>Supervisor</td>
-                <!-- <td >Manager</td> -->
-                <!-- <td >Division</td> -->
-                <!-- <td >Account</td> -->
-                <td>Production Date</td>
-                <td data-priority="3">Action</td>
-            </tr>        
-        </thead> 
-        <tbody>
-            <?php $counter = 0; ?>
-            @foreach($employees as $employee)
-                <tr> 
-                    <td>{{ ++$counter }}</td>
-                    <td >
-                        @if(isset($employee->profile_img))
-                         <div style="background-image: url('{{ $employee->profile_img }}'); width: 40px; height: 40px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; box-shadow: 1px 1px 10px 7px #fff; float: left; margin-right: 10px;">
-                        </div>
-                         @else
-                        <div class="circle pull-left" style="float: left !important">J</div>
-                        @endif
-                        <h5 style="text-align: left !important;">
-                            {{ $employee->first_name . ' ' .  $employee->last_name  }}
-                        </h5>
-                        <small style="text-align: left !important;">
-                            {{ $employee->position_name }}
-                        </small>
-                    </td>
-                    <td><a href="mailto:{{$employee->email}}"> {{ $employee->email }} 
-                        </a>
-                        <br>
-                        {{ $employee->alias }}
-                        @if($employee->ext != '' && isset($employee->ext))
-                        <br>
-                        <small>ext: {{$employee->ext}}</small>
-                        @endif
-                    </td>
-                    <td >{{ $employee->team_name }}</td>
-                    <td>{{ @$employee->supervisor_name }}</td>
-                    <!-- <td>{{ @$employee->manager_name }}</td> -->
-                    <!-- <td>{{ @$employee->division_name }}</td> -->
-                    <!-- <td>{{ @$employee->account->account_name }}</td> -->
-                    <td>{{ $employee->prodDate() }}</td>
-                    <td>
+        <li>
 
-                        <a href="{{ url('/employee_info/'. $employee->id)}}" title="View">
+            <span class="fa fa-filter" title="Filter By" style="color: #777777; font-size: 18px; padding: 5px"></span>
+            <select id="sort_option_list" style="padding: 7px; border-radius: 0px !important; font-size: 11px !important;">
+                <option value="1" {{ isset($request->department) ? "selected" : "" }}>Department</option>
+                <option value="2" {{ isset($request->position) ? "selected" : "" }}>Position</option>
+                <option value="3" {{ isset($request->birthmonth) ? "selected" : "" }}>Birth Month</option>
+            </select>
+        </li>
+        <li>
+            <select style="padding: 7px; border-radius: 0px !important; font-size: 11px !important;" id="departments_list">
+                <option selected>Search by department:</option>
+                @foreach( $departments as $department)
+               <option <?php echo $request->department == $department->department_name ? "selected" : "";?> >{{ $department->department_name}}</option>
+               @endforeach
+           </select>
+           <select style="padding: 7px; border-radius: 0px !important; font-size: 11px !important; display: none;" id="position_list">
+                <option selected>Search by Position:</option>
+                @foreach( $positions as $position)
+               <option <?php echo $request->position == $position->position_name ? "selected" : "";?> >{{ $position->position_name}}</option>
+               @endforeach
+           </select>
+            <select style="width: 200px; border-color: #ddd; padding: 7px; border-radius: 0px !important; font-size: 11px !important; display: none;" id="month_list">
+                <option selected>Search by Birth Month:</option>
+                @for( $m = 1; $m <= 12 ; $m++)
+                <option value="{{ $m }}" <?php echo $request->birthmonth == $m ? "selected" : "";?> >{{ date('F', mktime(0,0,0,$m, 1, date('Y'))) }}</option>
+                @endfor
+            </select>
+       </li>
+         <li>
+           <a href="{{url('employees')}}" class="btn btn-default" style="margin: 0px; height: 30px;">Clear Filter</a>
+        </li>
+    </ul>
+    <!-- <ul class="alphabet-search pull-right">
+        <li>
+
+            <span class="fa fa-filter" title="Filter By" style="color: #777777; font-size: 18px; padding: 5px"></span>
+            <select id="sort_option_list" style="padding: 7px; border-radius: 0px !important; font-size: 11px !important;">
+                <option value="1" {{ isset($request->department) ? "selected" : "" }}>Department</option>
+                <option value="2" {{ isset($request->position) ? "selected" : "" }}>Position</option>
+                <option value="3" {{ isset($request->birthmonth) ? "selected" : "" }}>Birth Month</option>
+            </select>
+        </li>
+        <li>
+            <select style="padding: 7px; border-radius: 0px !important; font-size: 11px !important;" id="departments_list">
+                <option selected>Search by department:</option>
+                @foreach( $departments as $department)
+               <option <?php echo $request->department == $department->department_name ? "selected" : "";?> >{{ $department->department_name}}</option>
+               @endforeach
+           </select>
+           <select style="padding: 7px; border-radius: 0px !important; font-size: 11px !important; display: none;" id="position_list">
+                <option selected>Search by Position:</option>
+                @foreach( $positions as $position)
+               <option <?php echo $request->position == $position->position_name ? "selected" : "";?> >{{ $position->position_name}}</option>
+               @endforeach
+           </select>
+            <select style="width: 200px; border-color: #ddd; padding: 7px; border-radius: 0px !important; font-size: 11px !important; display: none;" id="month_list">
+                <option selected>Search by Birth Month:</option>
+                @for( $m = 1; $m <= 12 ; $m++)
+                <option value="{{ $m }}" <?php echo $request->birthmonth == $m ? "selected" : "";?> >{{ date('F', mktime(0,0,0,$m, 1, date('Y'))) }}</option>
+                @endfor
+            </select>
+       </li>
+    </ul> -->
+</div>
+@if(count($employees) == 0)
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <center>
+        <h3>No results found.</h3>
+    </center>
+@endif
+@foreach($employees as $employee)
+    <div class="col-md-12" style="padding-left: 0px; padding-right: 0px; ">
+        <div class="emp-profile" style="padding: 10px; margin-bottom: 0px;">
+            <div class="row">
+                <div class="col-md-1" style="float: left;">
+                    <div style="background-image: url({{$employee->profile_img}}); width: 60px; height: 60px;margin: 15px; background-size: cover; background-repeat: no-repeat; background-position: 50% 50%; border-radius: 50%;">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                        <h4 class="timeline-title name-format" style="color: #444;font-weight: 500; font-size: 17px; margin-top: 10px;"><a href="{{url('profile/'. $employee->id)}}">{{$employee->fullname()}} </a>
+                        </h4>
+                   
+                    <h5 style="color: #455;">{{ $employee->position_name}}</h5>
+                    <h6>{{$employee->team_name}} <?php echo isset($employee->account) ? "- ". $employee->account->account_name : "" ; ?></h6>
+                </div>
+                <div class="col-md-3">
+                    <h5>
+                        <span class="fa fa-id-card" title="Employee ID"></span>
+                        <span class="employee-description">&nbsp;&nbsp;{{$employee->eid}}</span>
+                    </h5>
+                    <h5>
+                        <span class="fa fa-envelope" title="Email Address"></span>
+                        <span class="employee-description" style="color: #0c59a2;;">&nbsp;&nbsp;{{$employee->email}}</span>
+                    </h5>
+                    @if(isset($employee->ext) && $employee->ext != '--' && $employee->ext != '')
+                    <h5>
+                         <span class="fa fa-phone" title="Extension Number"></span>
+                        <span class="employee-description" >&nbsp;&nbsp;{{$employee->ext}}</span>
+                    </h5>
+                    @endif
+                    @if(isset($employee->alias) && $employee->alias != '--' && $employee->alias != '')
+                    <h5>
+                         <span class="fa fa-mobile" title="Phone Name"></span>
+                        <span class="employee-description" >&nbsp;&nbsp;{{$employee->alias}}</span>
+                    </h5>
+                    @endif
+                </div>
+                <div class="col-md-3">
+                    @if(isset($employee->supervisor_name))
+                    <h5 style="font-size: 12px;">
+                        <span class="fa fa-user" title="Supervisor"></span>
+                        <span class="name-format" style="color: gray;">Supervisor:</span>
+                        {{$employee->supervisor_name}}
+                    </h5>
+                    @endif
+                    @if(isset($employee->manager_name))
+                        <h5 style="font-size: 12px;">
+                            <span class="fa fa-user" title="Manager"></span>
+                            <span style="color: gray;">Manager: </span>
+                            <span class="name-format">{{ $employee->manager_name }}</span>
+                        </h5>
+                    @endif
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ url('/employee_info/'. $employee->id)}}" title="View">
                             <i class="fa fa-eye"></i>
                         </a>&nbsp;&nbsp;
                         
@@ -192,65 +232,66 @@ Employees
                             <i class="fa fa-user-times" style="color: red;" ></i>
                         </a>
                         @endif
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-    <script type="text/javascript">
-        $('.delete_btn').click(function(){
-            $('#messageModal .modal-title').html('Delete Employee');
-            $('#messageModal #message').html('Are you sure you want to delete the employee ?');
+                </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
+</div>
+    <div class="col-md-12 header-container" style="margin-top: 0px;">
+        <div class="pull-right">
+            {{ $employees->appends(Illuminate\Support\Facades\Input::except('page'))->links() }}
+        </div>
+    </div>
+@endsection
+@section('scripts')
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#sort_option_list').trigger('change');
+    });
+    $('#departments_list').change(function(){
+        var url = location.protocol + '//' + location.host + location.pathname;
+        var keyword = "keyword=" + $("#search_employee").val();
+        var alphabet = "alphabet=" + $('input[name=alphabet]').val();
+        var department = "department=" + $(this).val();
+        url += "?" + keyword + "&" + alphabet + "&" + department;
+        window.location.replace(url);
+    });
 
-            $('#messageModal .delete_form').attr('action', "{{ url('employee_info') }}/" + $(this).attr("data-id"));
-        });
-        $('#messageModal #yes').click(function(){
-                $('#messageModal .delete_form').submit();
-        });
-        $(document).ready(function(){
-            $('#sort_option_list').trigger('change');
-        });
-        $('#departments_list').change(function(){
-            var url = location.protocol + '//' + location.host + location.pathname;
-            var department = "department=" + $(this).val();
-            url += "?" + department;
-            window.location.replace(url);
-        });
+    $('#sort_option_list').change(function(){
+        switch($(this).val()){
+            case '1':
+                $('#departments_list').show();
+                $('#position_list').hide();
+            break;
+            case '2':
+                $('#departments_list').hide();
+                $('#position_list').show();
+            break;
+            case '3':
+                $('#departments_list').hide();
+                $('#position_list').hide();
+                $('#month_list').show();
+            break;
+        }
+    });
 
-        $('#sort_option_list').change(function(){
-            switch($(this).val()){
-                case '1':
-                    $('#departments_list').show();
-                    $('#position_list').hide();
-                break;
-                case '2':
-                    $('#departments_list').hide();
-                    $('#position_list').show();
-                break;
-                case '3':
-                    $('#departments_list').hide();
-                    $('#position_list').hide();
-                    $('#month_list').show();
-                break;
-            }
-        });
-
-        $('#position_list').change(function(){
-            var url = location.protocol + '//' + location.host + location.pathname;
-            var position = "position=" + $(this).val();
-            url += "?" + position;
-            window.location.replace(url);
-        });
-
-        $('#month_list').change(function(){
+    $('#month_list').change(function(){
             var url = location.protocol + '//' + location.host + location.pathname;
             var position = "birthmonth=" + $(this).val();
             url += "?" + position;
             window.location.replace(url);
         });
-
-
-        $('#inactive_employees').change(function(){
+    
+    $('#position_list').change(function(){
+        var url = location.protocol + '//' + location.host + location.pathname;
+        var keyword = "keyword=" + $("#search_employee").val();
+        var alphabet = "alphabet=" + $('input[name=alphabet]').val();
+        var position = "position=" + $(this).val();
+        url += "?" + keyword + "&" + alphabet + "&" + position;
+        window.location.replace(url);
+    });
+     $('#inactive_employees').change(function(){
             var url = location.protocol + '//' + location.host + location.pathname;
             if($(this).is(':checked')){
                 var inactive = "inactive=" + true;
@@ -281,5 +322,5 @@ Employees
                 window.location.replace(url);
             }
         });
-    </script>
-@endsection
+</script>
+@endsection 

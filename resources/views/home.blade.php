@@ -12,7 +12,7 @@ Home
     <h3><b>HR progress </b></h3>
 </div>
 <div class="col-md-12">
-    <div class="panel panel-container" style="padding-top: 0px;">
+    <div class="panel panel-container" style="padding-top: 0px; background: none">
         <div class="row">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
@@ -243,7 +243,7 @@ Home
     });
 
     $(function() {
-        $('.comment-editor').froalaEditor({toolbarInline: false, toolbarButtons: ['undo', 'redo' , 'bold', '|', 'emoticons'], emoticonsStep: 12, })
+        // $('.comment-editor').froalaEditor({toolbarInline: false, toolbarButtons: ['undo', 'redo' , 'bold', '|', 'emoticons'], emoticonsStep: 12, })
     });
 
     $('.comment_form').submit(function(){

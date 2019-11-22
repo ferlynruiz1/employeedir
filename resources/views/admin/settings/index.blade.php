@@ -84,9 +84,12 @@
             enforceWhitelist : true,
             whitelist : [
               <?php
-                foreach ($employee_emails as $employee) {
-                    echo "{ value: '" . $employee->email . "'},"; 
+                if($employee_emails != null && count($employee_emails) > 0){
+                    foreach ($employee_emails as $employee) {
+                        echo "{ value: '" . $employee->email . "'},"; 
+                    }
                 }
+
               ?>
             ],
             dropdown : {
@@ -105,8 +108,10 @@
         email_recipients_tagify.addTags(
              <?php
                 echo "[";
-                foreach (json_decode($current_email_recipients) as $index => $email) {
-                    echo "{ value: '" . $email->value . "'},"; 
+                if ($current_email_recipients != null && count($current_email_recipients) > 0){
+                    foreach (json_decode($current_email_recipients) as $index => $email) {
+                        echo "{ value: '" . $email->value . "'},"; 
+                    }
                 }
                 echo "]";
               ?>

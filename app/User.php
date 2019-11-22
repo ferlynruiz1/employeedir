@@ -84,7 +84,7 @@ class User extends Authenticatable
     #####################################################
     public function generalManager(){
         $settings = Valuestore::make(storage_path('app/settings.json'));
-        return User::where("email", "=", $settings->get('general_manager'))->first();
+        return User::where("email", "=", 'ferdinandpasion@elink.com.ph')->first();
     }
 
     public function supervisor_email(){
@@ -232,5 +232,9 @@ class User extends Authenticatable
     }
     public function isRA(){
         return $this->is_ra == 1;
+    }
+
+    public function isDeleted(){
+        return $this->status == 2 || $this->trashed();
     }
 }

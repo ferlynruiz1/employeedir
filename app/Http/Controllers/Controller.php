@@ -25,6 +25,7 @@ class Controller extends BaseController
         $this->model = new EmployeeRepository($employee);
         $this->authModel = new AuthRepository($employee);
         $this->excelModel = new ExportImportRepository($employee);
+
     }
 
     public function run(){

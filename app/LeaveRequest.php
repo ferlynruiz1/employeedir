@@ -60,7 +60,6 @@ class LeaveRequest extends Model
             array_push($email_recipients, $manager_recipient);
         } 
         
-        return ["jmanuel.derecho@gmail.com"];
         return array_values(array_filter(array_unique($email_recipients)));
     }
 

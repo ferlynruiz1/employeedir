@@ -48,6 +48,15 @@
 @endif
 @endauth
 
+<li >
+   <a target="_blank" href="{{ url('/public/img/company-hierarchy.jpeg') }}">
+        <span class="fa fa-sitemap">
+        
+        </span>
+        Employee hierarchy
+    </a>
+</li>
+
 @guest
 <li>
     <a href="{{ route('login')}}">

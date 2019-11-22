@@ -59,7 +59,7 @@
                                 <li>
                                     <div class="profile-sidebar">
                                         <div class="profile-userpic">
-                                           <div style="background-image: url('public/img/Liza-Soberano-1024x1024.jpg');" class="pic-div">
+                                           <div style="background-image: url('{{ Auth::user()->profile_img }}');" class="pic-div">
                                                         </div>
                                         </div>
                                         <div class="profile-usertitle">

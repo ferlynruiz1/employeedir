@@ -181,7 +181,7 @@ Employees
                     </div>
                 </div>
                 <div class="col-md-3">
-                        <h4 class="timeline-title name-format" style="color: #444;font-weight: 500; font-size: 17px; margin-top: 10px;"><a href="{{url('profile/'. $employee->id)}}">{{$employee->fullname()}} </a>
+                        <h4 class="timeline-title name-format" style="color: #444;font-weight: 500; font-size: 17px; margin-top: 10px;"><a href="{{url('employee_info/'. $employee->id)}}">{{$employee->fullname()}} </a>
                         </h4>
                    
                     <h5 style="color: #455;">{{ $employee->position_name}}</h5>

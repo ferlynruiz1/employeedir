@@ -25,6 +25,7 @@ class SettingsController extends Controller
 
         $email_notification = $this->settings->get('email_notification');
         $employee_emails = User::select('email')->get();
+
         $current_email_recipients = $this->settings->get('leave_email_main_recipients');
         return view('admin.settings.index')->with('email_notification', $email_notification)->with('employee_emails', $employee_emails)->with('current_email_recipients', $current_email_recipients);
     }
@@ -54,7 +55,6 @@ class SettingsController extends Controller
         }else {
             $this->settings->put('email_notification', false);
         }
-
         $this->settings->put('leave_email_main_recipients', $request->email_recipients);
 
         return back()->with('success', 'Settings successfully saved.');

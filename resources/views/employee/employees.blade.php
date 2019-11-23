@@ -60,6 +60,12 @@ Employees
 
 <div class="col-md-12">
 <div class="header-container" style="margin-bottom: 5px;">
+    <a href="{{url('employee_info/create')}}" class="btn btn-primary" >
+        <i class="fa fa-plus"></i>
+        &nbsp;&nbsp;Add Employee
+    </a>
+    <br>
+    <br>
     <ul class="alphabet-search" style="padding-left: 0px">
         <li style="margin-left: 0px">
             <form style="display: unset;">
@@ -221,11 +227,11 @@ Employees
                 </div>
                 <div class="col-md-2">
                     <a href="{{ url('/employee_info/'. $employee->id)}}" title="View">
-                            <i class="fa fa-eye"></i>
+                            <i class="fa fa-eye" style="color: #3A75FB;"></i>
                         </a>&nbsp;&nbsp;
                         
                         <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" title="Edit">
-                            <i class="fa fa-pencil"></i>
+                            <i class="fa fa-pencil" style="color: #3A75FB;"></i>
                         </a>&nbsp;&nbsp;
                         @if($employee->deleted_at == null)
                         <a href="#"  class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Deactivate" data-id="{{$employee->id}}">
@@ -292,12 +298,8 @@ Employees
         window.location.replace(url);
     });
      $('#inactive_employees').change(function(){
-            var url = location.protocol + '//' + location.host + location.pathname;
             if($(this).is(':checked')){
-                var inactive = "inactive=" + true;
-                url += "?" + inactive;
-                window.location.replace(url);
-            }else{
+                var url = '{{ url("employees/separated") }}';
                 window.location.replace(url);
             }
         });

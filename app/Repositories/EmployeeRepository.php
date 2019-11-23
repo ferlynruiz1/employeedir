@@ -170,6 +170,16 @@ class EmployeeRepository implements RepositoryInterface
         return redirect('employee_info/' . $employee->id)->with('success', "Successfully created Employee");
     }
 
+    public function reactivateEmployee(Request $request, $id){
+         $employee = User::withTrashed()->find($id);
+
+         if ($employee->reactivate()){
+            return redirect('employee_info/' . $employee->id)->with('success', "Successfully reactivated employee.");
+         } else{
+            return redirect('employee_info/' . $employee->id)->with('error', "Something went wrong.");
+         }
+    }
+
     public function updateEmployee(Request $request, $id){
         
         $employee = User::find($id);
@@ -295,7 +305,7 @@ class EmployeeRepository implements RepositoryInterface
                     
                     $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->paginate(10);
 
-                    return view('guest.employees')->with('employees', $employees )->with('request', $request)->with('departments', $departments)->with('positions', $positions);
+                    return view('employee.employees')->with('employees', $employees )->with('request', $request)->with('departments', $departments)->with('positions', $positions);
                 }
 
                 if ($request->has('department') && $request->get('department') != "") {
@@ -362,7 +372,7 @@ class EmployeeRepository implements RepositoryInterface
             });
             
             $employees = $employees->where('id', '<>', 1)->orderBy('last_name', 'ASC')->paginate(10);
-
+            
             return view('guest.employees')->with('employees', $employees )->with('request', $request)->with('departments', $departments)->with('positions', $positions);
         }
 

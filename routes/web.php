@@ -92,6 +92,7 @@ Route::middleware(['auth'])->group(function(){
         Route::resource('posts', 'PostController');
 		Route::get('employee/{id}/changepassword', 'EmployeeInfoController@changepassword');
 		Route::get('employees/separated', 'EmployeeInfoController@separatedEmployees');
+		Route::get('employees/{id}/reactivate', 'EmployeeInfoController@reactivate');
 
 		Route::get('hierarchy', 'HierarchyController@hierarchy');
 		Route::post('hierarchy', 'HierarchyController@updateHierarchy');

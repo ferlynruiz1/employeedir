@@ -870,7 +870,7 @@ a.label:hover, a.label:focus {
   margin: 0 auto;
 }
 .profile-usertitle .text-muted{
-  color: #5f5f5f;
+  color: #999;
 }
 .profile-usertitle {
   text-align: center;

@@ -123,6 +123,16 @@ class User extends Authenticatable
         return $this->first_name .' '. $this->last_name;
     }
 
+    public function active_state(){
+        return $this->trashed() || $this->status == 2 ? "(inactive)" : '';
+    }
+
+    public function reactivate(){
+        $this->restore();
+        $this->status = 1;
+        return $this->save();
+    }
+
     public function prettyBirthDate()
     {
         if(isset($this->birth_date)){
@@ -189,6 +199,10 @@ class User extends Authenticatable
                 return "";
         }
     }
+    public function isActive(){
+        return $this->status == 1 && !$this->trashed();
+    }
+
     public function gender(){
         switch ($this->gender) {
             case 1:

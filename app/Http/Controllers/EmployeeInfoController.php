@@ -667,4 +667,7 @@ class EmployeeInfoController extends Controller
         return view('employee.separated')->with('employees', $employees)->with('request', $request);
     }
 
+    public function reactivate(Request $request, $id){
+        return $this->model->reactivateEmployee($request, $id);
+    }
 }

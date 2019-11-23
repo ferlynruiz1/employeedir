@@ -59,7 +59,6 @@ class LeaveRequest extends Model
             array_push($email_recipients, $supervisor_recipient);
             array_push($email_recipients, $manager_recipient);
         } 
-        
         return array_values(array_filter(array_unique($email_recipients)));
     }
 

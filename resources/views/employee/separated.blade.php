@@ -138,16 +138,20 @@ Separated Employees
                 </div>
                 <div class="col-md-2">
                     <a href="{{ url('/employee_info/'. $employee->id)}}" title="View">
-                            <i class="fa fa-eye"></i>
+                            <i class="fa fa-eye"  style="color: #3A75FB;"></i>
                         </a>&nbsp;&nbsp;
                         
-                        <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" title="Edit">
-                            <i class="fa fa-pencil"></i>
-                        </a>&nbsp;&nbsp;
-                        @if($employee->deleted_at == null)
-                        <a href="#"  class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Deactivate" data-id="{{$employee->id}}">
-                            <i class="fa fa-user-times" style="color: red;" ></i>
-                        </a>
+                        @if($employee->isActive())
+                            <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" title="Edit">
+                                <i class="fa fa-pencil" style="color: #3A75FB;"></i>
+                            </a>&nbsp;&nbsp;
+                            <a href="#"  class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Deactivate" data-id="{{$employee->id}}">
+                                <i class="fa fa-user-times" style="color: red;" ></i>
+                            </a>
+                        @else
+                            <a href="{{ url('/employees/'. $employee->id . '/reactivate')}}" title="Reactivate Employee" data-id="{{$employee->id}}">
+                                <i class="fa fa-user-plus" style="color: green;"></i>
+                            </a>
                         @endif
                 </div>
             </div>

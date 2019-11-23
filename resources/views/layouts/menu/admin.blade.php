@@ -59,7 +59,7 @@
 <li <?php echo \Request::url() == url('hierarchy') ? 'class="active"' : ''; ?>>
     <a href="{{url('hierarchy')}}" style="font-size: 11px;">
         <em class="fa fa-sitemap">&nbsp;</em> 
-        Edit Employee Hierarchy
+        Update Employee Hierarchy
     </a>
 </li>
 <li >

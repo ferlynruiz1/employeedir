@@ -116,6 +116,11 @@
         </div><!--/.row-->
         <div class="page-content">
             @yield('content')
+            <div class="col-md-12">
+                <center>
+                    <small style="color: #999;font-weight: 400; padding: 40px 0px;">Copyright {{ date('Y')}} eLink Systems & Concepts   Corp.</small>
+                </center>
+            </div>
         </div>
     </div>  <!--/.main-->
     <script type="text/javascript" src="{{ asset('public/js/bootstrap.min.js')}}"></script>

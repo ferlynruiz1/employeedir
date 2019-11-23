@@ -149,6 +149,26 @@
     <script type="text/javascript" src="{{ asset('public/js/jQuery.tagify.min.js')}}"></script>
 
 <!-- Modal Success -->
+   <div id="messageModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal">&times;</button>
+           <h4 class="modal-title"></h4>
+         </div>
+          <div class="modal-body">
+           <p id="message"></p>
+          </div>
+          <div class="modal-footer">
+             {{ Form::open(array('url' => 'employee_info/', 'class' => ' delete_form' )) }}
+                   {{ Form::hidden('_method', 'DELETE') }}
+                    {{ Form::submit('Yes', array('class' => 'btn btn-danger')) }}
+                {{ Form::close() }}
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div> 
+    </div>
 @if (session('success'))
     <div id="alertmodal" class="modal fade">
       <div class="modal-dialog">

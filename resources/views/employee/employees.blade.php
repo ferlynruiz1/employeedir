@@ -252,6 +252,15 @@ Employees
 @endsection
 @section('scripts')
 <script type="text/javascript">
+    $('.delete_btn').click(function(){
+        $('#messageModal .modal-title').html('Delete Employee');
+        $('#messageModal #message').html('Are you sure you want to delete the employee ?');
+
+        $('#messageModal .delete_form').attr('action', "{{ url('employee_info') }}/" + $(this).attr("data-id"));
+    });
+    $('#messageModal #yes').click(function(){
+            $('#messageModal .delete_form').submit();
+    });
     $(document).ready(function(){
         $('#sort_option_list').trigger('change');
     });

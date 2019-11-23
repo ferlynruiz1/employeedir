@@ -30,7 +30,7 @@ Department / Edit
                 </div>
                 <div class="form-group">
                     <label>Division </label>
-                    <select class="select2 form-control"  name="division_id" required>
+                    <select class="select2 form-control"  name="division_id">
                         <option selected="" disabled="">Select</option>
                         @foreach($divisions as $division)
                             <option {{ $department->division_id == $division->id ? 'selected' : '' }} value="{{ $division->id }}"> {{$division->division_name}}</option>

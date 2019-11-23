@@ -78,10 +78,13 @@ class User extends Authenticatable
         return $matched_users;
     }
 
+    public function scopeSeparatedEmployees($query){
+        return $query->onlyTrashed()->orWhere('status', '=', '2');
+    }
     #####################################################
     public function generalManager(){
         $settings = Valuestore::make(storage_path('app/settings.json'));
-        return User::where("email", "=", $settings->get('general_manager'))->first();
+        return User::where("email", "=", 'ferdinandpasion@elink.com.ph')->first();
     }
 
     public function supervisor_email(){
@@ -118,6 +121,16 @@ class User extends Authenticatable
     public function fullname2()
     {
         return $this->first_name .' '. $this->last_name;
+    }
+
+    public function active_state(){
+        return $this->trashed() || $this->status == 2 ? "(inactive)" : '';
+    }
+
+    public function reactivate(){
+        $this->restore();
+        $this->status = 1;
+        return $this->save();
     }
 
     public function prettyBirthDate()
@@ -186,6 +199,10 @@ class User extends Authenticatable
                 return "";
         }
     }
+    public function isActive(){
+        return $this->status == 1 && !$this->trashed();
+    }
+
     public function gender(){
         switch ($this->gender) {
             case 1:
@@ -229,5 +246,9 @@ class User extends Authenticatable
     }
     public function isRA(){
         return $this->is_ra == 1;
+    }
+
+    public function isDeleted(){
+        return $this->status == 2 || $this->trashed();
     }
 }

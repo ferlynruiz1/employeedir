@@ -37,7 +37,7 @@
 <li <?php echo \Request::url() == url('posts') ? 'class="active"' : ''; ?>>
     <a href="{{url('posts')}}">
         <em class="fa fa-calendar-o">&nbsp;</em> 
-        Posts
+        HR Progress
     </a>
 </li>
 <li <?php echo \Request::url() == url('leave') ? 'class="active"' : ''; ?>>
@@ -59,19 +59,7 @@
 <li <?php echo \Request::url() == url('hierarchy') ? 'class="active"' : ''; ?>>
     <a href="{{url('hierarchy')}}" style="font-size: 11px;">
         <em class="fa fa-sitemap">&nbsp;</em> 
-        Change Employee Hierarchy
-    </a>
-</li>
-<li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
-    <a href="{{url('myprofile')}}">
-        <em class="fa fa-user">&nbsp;</em>
-        My Profile
-    </a>
-</li>
-<li <?php echo \Request::url() == url('settings') ? 'class="active"' : ''; ?>>
-    <a href="{{url('settings')}}">
-        <em class="fa fa-gear">&nbsp;</em>
-        Settings
+        Update Employee Hierarchy
     </a>
 </li>
 <li >
@@ -82,7 +70,6 @@
         Employee hierarchy
     </a>
 </li>
-
 <li>
     <a href="{{ route('logout')}}">
         <em class="fa fa-power-off">&nbsp;</em>

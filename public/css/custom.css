@@ -1,7 +1,7 @@
 /* GLOBALS */
 body{
     zoom: 0.99;
-    background-color: #546e7a;
+    background-color: #dddddd;
     background-image: url("../../public/img/debut-light.png");
      background-attachment: fixed;
 }
@@ -31,7 +31,7 @@ footer {
     color: white !important;
 }
 p, small, a, td{
-    font-weight: 500;
+    font-weight: 400;
 }
 @media (min-width: 766px){
     .main{
@@ -133,6 +133,12 @@ table.dataTable.display tbody tr.even > .sorting_1, table.dataTable.order-column
 }
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
     border-top-width: 0px;
+}
+.table>thead>tr>td{
+    font-size: 14px;
+}
+.table>tbody>tr>td{
+    font-size: 12px;
 }
 .dataTables_length{
     display: none;
@@ -323,3 +329,21 @@ label {
     min-width: 200px !important;
 }
 /* END FORM CSS */
+.navbar-top-links .login-btn a{
+    color: white;
+    background: none;
+    padding: 20px;
+    cursor: pointer;
+}
+.page-item.active .page-link{
+    color: white !important;
+}
+button#toggle-sidebar{
+    margin: 18px 0px;
+    background: transparent;
+    border: none;
+    color: white;
+}
+button#toggle-sidebar span{
+    font-size: 22px;
+}

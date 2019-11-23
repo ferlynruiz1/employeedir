@@ -37,6 +37,9 @@
     Leave Requests&nbsp;&nbsp;<span class="badge label-danger">{{ Auth::user()->leaveRequestCount() }}</span>
  </a>
 </li>
+@endif
+@endauth
+
 <li >
    <a target="_blank" href="{{ url('/public/img/company-hierarchy.jpeg') }}">
         <span class="fa fa-sitemap">
@@ -45,20 +48,6 @@
         Employee hierarchy
     </a>
 </li>
-@endif
-<li <?php echo \Request::url() == url('myprofile') ? 'class="active"' : ''; ?>>
-    <a href="{{url('myprofile')}}">
-        <em class="fa fa-user">&nbsp;</em>
-        My Profile
-    </a>
-</li>
-<li>
-    <a href="{{ route('logout')}}">
-        <em class="fa fa-power-off">&nbsp;</em>
-        Logout
-    </a>
-</li>
-@endauth
 
 @guest
 <li>
@@ -68,3 +57,12 @@
     </a>
 </li>
 @endguest
+@auth
+
+<li>
+    <a href="{{ route('logout')}}">
+        <em class="fa fa-power-off">&nbsp;</em>
+        Logout
+    </a>
+</li>
+@endauth

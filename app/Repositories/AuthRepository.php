@@ -107,7 +107,8 @@ class AuthRepository implements RepositoryInterface
             $attributes = array('mail');
             $result = ldap_search($ldap,"dc=ELINK,dc=CORP",$filter, $attributes);
             $info = ldap_get_entries($ldap, $result);
-            $ldap_user = User::where('email', '=', $info[0]['mail'][0])->first();
+
+            $ldap_user = User::withTrashed()->where('email', '=', $info[0]['mail'][0])->first();
 
             Auth::login($ldap_user);
             return redirect()->intended('/');
@@ -139,9 +140,6 @@ class AuthRepository implements RepositoryInterface
     }
 
     public function login(Request $request){
-        // Auth::loginUsingId(1);
-        // Auth::loginUsingId(2787);
-        return redirect('/');
         if (!filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
             return $this->ldapLogin($request->email, $request->password);
         } else {

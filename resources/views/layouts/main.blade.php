@@ -15,6 +15,7 @@
     <link href="{{ asset('public/css/select2.min.css')}}" rel="stylesheet">
     <link href="{{ asset('public/css/tagify.css')}}" rel="stylesheet">
     <link href="{{ asset('public/css/css.css')}}" rel="stylesheet">
+    <link href="{{ asset('public/css/theme-midnight.css')}}" rel="stylesheet">
 
     <script src="{{ asset('public/js/jquery-1.11.1.min.js')}}"></script>
 
@@ -32,15 +33,11 @@
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
 <body>
-    <!-- nav header -->
-    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation" style="background-color: #32373A !important;">
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed pull-right" data-toggle="collapse" data-target="#sidebar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+            <div class="navbar-header" style="float: left">
+                <button type="button" id="toggle-sidebar">
+                    <span class="fa fa-bars"></span>
                 </button>
                 <a class="navbar-brand" href="{{url('/home')}}">
                     <span>
@@ -49,145 +46,108 @@
                     </span>
                     Directory
                 </a>
-               
-                <div class="dropdown pull-right">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    {{ ucwords(request()->path()) }}
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                   @auth
-                    <li>
-                        <div class="profile-userpic">
-                            <div style="background-image: url('{{ Auth::user()->profile_img }}');" class="pic-div">
-                            </div>
-                        </div>
-                        <div class="profile-usertitle">
-                            <br>
-                            <h5 class="card-title m-t-10">{{ Auth::user()->fullname() }}</h5>
-                            <small class="text-muted" title="Job Title">{{ Auth::user()->position_name }}</small>
-                            <br>
-                        <br>
-                        </div>
-                        <div class="clear"></div>
-                    </li>
-                    @endauth
-                   @auth
-                        @if(Auth::user()->isAdmin())
-                            @include('layouts.menu.admin')
-                        @elseif(Auth::user()->isHR())
-                            @include('layouts.menu.hr')
-                            test
-                        @elseif(Auth::user()->isERP())
-                            @include('layouts.menu.erp')
-                        @else
-                            @include('layouts.menu.normal')
-                        @endif 
-                    @endauth
+                <ul class="nav navbar-top-links navbar-right">
                     @guest
-                        @include('layouts.menu.normal')
+                        <li class="login-btn"><a href="{{ url('/login') }}">Login</a></li>
                     @endguest
-                  </ul>
-                </div>
+                    @auth
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="true">
+                                <em class="fa fa-user"></em>
+                            </a>
+                            <ul class="dropdown-menu dropdown-messages">
+                                <li>
+                                    <div class="profile-sidebar">
+                                        <div class="profile-userpic">
+                                           <div style="background-image: url('{{ Auth::user()->profile_img }}');" class="pic-div">
+                                                        </div>
+                                        </div>
+                                        <div class="profile-usertitle">
+                                            <div class="profile-usertitle-name">{{ Auth::user()->fullname() }}</div>
+                                            <div class="profile-usertitle-status"></span><small class="text-muted" title="Job Title">{{ Auth::user()->position_name }}</small></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                    <li class="divider" style="height: 0px"></li>
+
+                                 @if(Auth::user()->isAdmin()) 
+                                    <li>
+                                        <a href="{{url('settings')}}">
+                                            <em class="fa fa-gear">&nbsp;</em>
+                                            Global Settings
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                @endif
+                                <li >
+                                    <a href="{{url('myprofile')}}">
+                                        <em class="fa fa-user">&nbsp;</em>
+                                        My Profile
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="{{ route('logout')}}">
+                                        <em class="fa fa-power-off">&nbsp;</em>
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endauth
+                </ul>
             </div>
-        </div>
+        </div><!-- /.container-fluid -->
     </nav>
-    <div class="content-holder row-fluid">
+    <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+        <ul class="nav menu">
+           @include('layouts.menu')
+        </ul>
+    </div><!--/.sidebar-->
         
-        <!-- Content -->
-        <div class="col-sm-12">
-            <div class="row">
-                <ol class="breadcrumb">
-                    <li><a href="#">
-                        <em class="fa fa-home"></em>
-                    </a></li>
-                    <li class="active">{{ breadCrumbs() }}</li>
-                </ol>
+    <div class="col-sm-10 col-sm-offset-2" id="main-container">
+        <div class="row" style="margin-top: 60px;">
+            <ol class="breadcrumb">
+                <li><a href="#">
+                    <em class="fa fa-home"></em>
+                </a></li>
+                <li class="active">{{ breadCrumbs() }}</li>
+            </ol>
+        </div><!--/.row-->
+        <div class="page-content">
+            @yield('content')
+            <div class="col-md-12">
+                <center>
+                    <small style="color: #999;font-weight: 400; padding: 40px 0px;">Copyright {{ date('Y')}} eLink Systems & Concepts   Corp.</small>
+                </center>
             </div>
-            <div>
-                @yield('content')
-
-            </div>
-        </div> 
-        <script type="text/javascript" src="{{ asset('public/js/bootstrap.min.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/chart.min.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/chart-data.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/easypiechart.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/easypiechart-data.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/bootstrap-datepicker.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/jquery.dataTables.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/jquery.validate.min.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/dataTables.responsive.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/select2.full.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/moment.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/bootstrap/js/transition.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/bootstrap/js/collapse.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/bootstrap-datetimepicker.min.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/loadingoverlay.min.js')}}"></script>
-
-        <script type="text/javascript" src="{{ asset('public/js/global.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/custom.js')}}"></script>
-
-        <script type="text/javascript" src="{{ asset('public/js/froala_editor/froala_editor.min.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/froala_editor/plugins/emoticons.min.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/froala_editor/plugins/link.min.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/tagify.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('public/js/jQuery.tagify.min.js')}}"></script>
-
-        <!-- Modal -->
-        <div id="messageModal" class="modal fade" role="dialog">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"></h4>
-              </div>
-              <div class="modal-body">
-                <p id="message"></p>
-              </div>
-              <div class="modal-footer">
-                 {{ Form::open(array('url' => 'employee_info/', 'class' => ' delete_form' )) }}
-                        {{ Form::hidden('_method', 'DELETE') }}
-                        {{ Form::submit('Yes', array('class' => 'btn btn-danger')) }}
-                    {{ Form::close() }}
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              </div>
-            </div>
-          </div> 
         </div>
-        <div style="min-height: 95vh;"><br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;</div>
-        <center>
-            <small style="color: #999;font-weight: 500;">Copyright {{ date('Y')}} eLink Systems & Concepts Corp.</small>
-        </center>
-        <br>  
-    </div>  
-    <div id="engagementmodal" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title pull-left" id="engagement_title" style="width: 90%"></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <small id="engagement_subtitle"></small>
-            <center>
-                <br>
-                <img id="engagement_image" src="" style="width: 100%;" />
-                <br>
-                <br>
-            </center>
-            <p id="engagement_message"></p>
-            <small id="engagement_date_posted"></small>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-</body>
+    </div>  <!--/.main-->
+    <script type="text/javascript" src="{{ asset('public/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/chart.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/chart-data.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/easypiechart.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/easypiechart-data.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/bootstrap-datepicker.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/jquery.dataTables.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/jquery.validate.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/dataTables.responsive.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/select2.full.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/moment.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/bootstrap/js/transition.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/bootstrap/js/collapse.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/bootstrap-datetimepicker.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/loadingoverlay.min.js')}}"></script>
+
+    <script type="text/javascript" src="{{ asset('public/js/global.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/custom.js')}}"></script>
+
+    <script type="text/javascript" src="{{ asset('public/js/froala_editor/froala_editor.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/froala_editor/plugins/emoticons.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/froala_editor/plugins/link.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/tagify.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/jQuery.tagify.min.js')}}"></script>
+
 <!-- Modal Success -->
 @if (session('success'))
     <div id="alertmodal" class="modal fade">
@@ -238,4 +198,6 @@
     }
 </style>
 @yield('scripts')
+</body>
+
 </html>

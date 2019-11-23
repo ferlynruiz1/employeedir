@@ -27,7 +27,7 @@ Activities
             <td>Activity Title</td>
             <td>Subtitle</td>
             <td>Message</td>
-            <td>Image Url</td>
+            <td>Image</td>
             <td></td>
         </tr>        
     </thead> 
@@ -39,7 +39,7 @@ Activities
                 <td>  {{ $activity->title }}</td>
                 <td>  {{ $activity->subtitle }}</td>
                 <td>  {{ truncate($activity->message, 50, false) }}</td>
-                <td align="center">  <a target="_blank" href="{{ $activity->image_url }}" ><img title="{{ $activity->image_url }}" src="{{ $activity->image_url }}" style=" height: 40px;" /></a></td>
+                <td align="center">  <a target="_blank" href="{{ $activity->image_url }}" ><img src="{{ $activity->image_url }}" style=" height: 40px;" /></a></td>
                 <td align="center">
                     <a href="{{ url('/activities/'. $activity->id . '/edit')}}" title="Edit">
                         <i class="fa fa-pencil"></i>

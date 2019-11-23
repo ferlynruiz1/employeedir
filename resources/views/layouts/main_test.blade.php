@@ -56,7 +56,7 @@
     <!-- Brand Logo -->
     <a class="brand-link" href="{{url('/home')}}">
         <span>
-            <img src="{{ asset('public/img/elink-logo-site.png')}}" style="width: 40px; margin-top: -10px;opacity: .8">
+            <img src="{{ asset('public/img/elink-logo-site.png')}}" style="width: 35px; margin-top: -10px;opacity: .8">
             &nbsp;Employee
         </span>
         Directory
@@ -73,7 +73,7 @@
                             @auth
                     <li>
                         <div class="profile-userpic">
-                            <div style="background-image: url('{{ Auth::user()->profile_img }}');" class="pic-div">
+                            <div style="background-image: url('public/img/liza-soberano_4.jpg');" class="pic-div">
                             </div>
                         </div>
                         <div class="profile-usertitle">
@@ -189,7 +189,6 @@
             </div>
           </div> 
         </div>
-        <div style="min-height: 95vh;"><br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;</div>
         <center>
             <small style="color: #999;font-weight: 500;">Copyright {{ date('Y')}} eLink Systems & Concepts Corp.</small>
         </center>

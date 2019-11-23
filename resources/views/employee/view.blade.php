@@ -60,6 +60,8 @@ Employee Information
     <div class="{{ $class }}">
         <div class="section-header">
             <h4>Employee Information</h4>
+            <span class="text-muted pull-right" style="margin-top: -25px;font-size: 12px">{{ $employee->active_state()}}</span>
+
         </div>
         <div class="panel panel-container">
             <div class="panel-body">
@@ -71,7 +73,9 @@ Employee Information
                         <div class="col-md-2 min-widt-200">
                             <div class="form-group">
                                 <label>First Name</label>
-                                <p class="employee-details-value name-format">{{ $employee->first_name}}</p>
+                                <p class="employee-details-value name-format">
+                                    {{ $employee->first_name}} 
+                                </p>
                             </div>
                         </div>
                         <div class="col-md-2 min-widt-200">
@@ -274,10 +278,16 @@ Employee Information
                                 <a type="button" class="btn btn-default" href="{{url('employee/'. $employee->id .'/changepassword')}}">
                                     Change Password
                                 </a>
+                                @if($employee->isActive())
                                  &nbsp;
                                 <a class="btn btn-primary" href="{{url('employee_info/' . $employee->id . '/edit')}}">
                                     Update Profile
                                 </a>
+                                @else
+                                <a class="btn btn-primary" href="{{url('employees/' . $employee->id . '/reactivate')}}">
+                                    Reactivate Employee
+                                </a>
+                                @endif
                             </div>
                         </div>
                     @endif

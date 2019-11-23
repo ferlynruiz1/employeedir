@@ -233,7 +233,7 @@ Employees
                         <a href="{{ url('/employee_info/'. $employee->id . '/edit')}}" title="Edit">
                             <i class="fa fa-pencil" style="color: #3A75FB;"></i>
                         </a>&nbsp;&nbsp;
-                        @if($employee->deleted_at == null)
+                        @if($employee->isActive())
                         <a href="#"  class="delete_btn" data-toggle="modal" data-target="#messageModal" title="Deactivate" data-id="{{$employee->id}}">
                             <i class="fa fa-user-times" style="color: red;" ></i>
                         </a>

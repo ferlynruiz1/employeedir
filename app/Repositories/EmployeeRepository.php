@@ -83,6 +83,7 @@ class EmployeeRepository implements RepositoryInterface
         $employee->last_name = $request->last_name;
         $employee->alias = $request->alias;
         $employee->position_name = $request->position_name;
+        $employee->contact_number = $request->contact_number;
 
         $employee->supervisor_id = $request->supervisor_id;
         $employee->manager_id = $request->manager_id;
@@ -190,6 +191,7 @@ class EmployeeRepository implements RepositoryInterface
         $employee->alias = $request->alias;
         $employee->position_name = $request->position_name;
         $employee->supervisor_id = $request->supervisor_id;
+        $employee->contact_number = $request->contact_number;
         
         if($supervisor = User::find($request->supervisor_id)){
             $employee->supervisor_name = $supervisor->fullName();
@@ -285,6 +287,7 @@ class EmployeeRepository implements RepositoryInterface
         if(Auth::check()) {
             if (Auth::user()->isAdmin()) {
                 $employees = new User;
+                $employees = $employees->activeEmployees();
 
                 if ($request->has('keyword') && $request->get('keyword') != "") {
                     $employees = $employees->where(function($query) use($request)
@@ -353,6 +356,7 @@ class EmployeeRepository implements RepositoryInterface
         }
 
         $employees = new User;
+        $employees = $employees->activeEmployees();
         $query = array();
         if ($request->has('keyword') && $request->get('keyword') != "") {
             $employees = $employees->where(function($query) use($request)

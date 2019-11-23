@@ -63,7 +63,7 @@
         <input class="form-control datepicker" placeholder="Hire Date" name="prod_date" value="{{@$employee->prodDate()}}">
     </div>
 </div>
-<div class="col-md-3">
+<!-- <div class="col-md-3">
     <div class="form-group">
         <label class="asterisk-required">Employee Status</label>
          <select class="select2 form-control" name="status_id" required>
@@ -72,7 +72,9 @@
             <option <?php echo @$employee->status == 2 ? "selected" : "" ; ?> value="2">Inactive</option>
         </select>
     </div>
-</div>
+</div> -->
+<!-- Status 1 for active, (deleted_at != null || status = 2) -> inactive, to deactivate go to employee/edit -> deactivate buton-->
+<input type="hidden" class="form-control" placeholder="Ext" name="status_id" value="{{@$employee->status || 1}}" >
 <div class="col-md-2">
     <div class="form-group">
         <label >EXT</label>

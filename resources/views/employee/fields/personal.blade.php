@@ -19,10 +19,10 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-3">
         <div class="form-group">
             <label class="asterisk-required">Employee ID</label>
-            <input class="form-control" placeholder="Employee ID" name="eid" value="{{@$employee->eid}}" required>
+            <input class="form-control" placeholder="Employee ID" name="eid" value="{{@$employee->eid}}" maxLength="20" required>
         </div>
     </div>
     <div class="col-md-4">
@@ -40,7 +40,7 @@
     <div class="col-md-4">
         <div class="form-group">
             <label>Contact Number</label>            
-            <input type="text" class="form-control" name="contact_number" value="{{@$employee->contact_number}}">
+            <input type="text" class="form-control" name="contact_number" maxLength="20" value="{{@$employee->contact_number}}">
         </div>
     </div>
     <div class="col-md-8">
@@ -59,7 +59,7 @@
     <div class="col-md-12">
         <div class="form-group">
             <label>Address</label>
-            <textarea name="address" class="form-control" rows="4" style="width: 75%; border-radius: 0">{{ @$employee->address }}</textarea>
+            <textarea name="address" class="form-control" maxLength="200" rows="4" style="width: 75%; border-radius: 0">{{ @$employee->address }}</textarea>
         </div>
     </div>
 </div>

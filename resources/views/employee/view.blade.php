@@ -110,17 +110,17 @@ Employee Information
                                 <p class="employee-details-value">{{ $employee->gender()}}</p>
                             </div>
                         </div> -->
-                        <div class="col-md-6 min-widt-200">
+                        <div class="col-md-4 min-widt-200">
                             <div class="form-group">
                                 <label>Birthdate</label>
                                 <p class="employee-details-value">{{ $employee->prettybirthdate()}}</p>
                             </div>
                         </div>
 
-                        <div class="col-md-2 min-widt-200">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Address</label>
-                                <p class="employee-details-value">{{ $employee->address }}</p>
+                                <p class="employee-details-value" style="word-break: break-all;">{{ $employee->address }}</p>
                             </div>
                         </div>
                     </div>
@@ -274,14 +274,16 @@ Employee Information
                     @if(Auth::user()->id == $employee->id || Auth::user()->isAdmin())
                         <br>
                         <div class="row">
-                            <div class="col-md-3" style="display: flex;">
+                            <div class="col-md-12" >
                                 <a type="button" class="btn btn-default" href="{{url('employee/'. $employee->id .'/changepassword')}}">
                                     Change Password
                                 </a>
                                 @if($employee->isActive())
-                                 &nbsp;
                                 <a class="btn btn-primary" href="{{url('employee_info/' . $employee->id . '/edit')}}">
                                     Update Profile
+                                </a>
+                                <a href="#"  class="pull-right btn btn-primary delete_btn" data-toggle="modal" data-target="#messageModal"  data-id="{{$employee->id}}" style="background: red !important; border-color: red !important;">
+                                Deactivate Employee
                                 </a>
                                 @else
                                 <a class="btn btn-primary" href="{{url('employees/' . $employee->id . '/reactivate')}}">

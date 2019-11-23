@@ -107,11 +107,28 @@ class AuthRepository implements RepositoryInterface
             $attributes = array('mail');
             $result = ldap_search($ldap,"dc=ELINK,dc=CORP",$filter, $attributes);
             $info = ldap_get_entries($ldap, $result);
+            $email = $info[0]['mail'][0];
 
-            $ldap_user = User::withTrashed()->where('email', '=', $info[0]['mail'][0])->first();
+            $ldap_user = null;
 
-            Auth::login($ldap_user);
-            return redirect()->intended('/');
+            if($email){
+                $ldap_user = User::withTrashed()->findByEmail($email)->first();
+            }else{
+                return back()->withErrors(['email' => "Incorrect login credentials."]); 
+            }
+
+            $ldap_name = '';
+
+            try {
+               $ldap_name = explode('=',explode(",",$info[0]["dn"])[0])[1]; 
+            } catch (Exception $e) {}
+
+            if($ldap_user){
+                Auth::login($ldap_user);
+                return redirect('/');
+            }else{
+                return back()->withErrors(['email' => "$email was not set for $ldap_name. Please contact admin for assistance."]);
+            }
         } else {
             return back()->withErrors(['email' => "Incorrect email and password combination!"]);
         }
@@ -193,7 +210,6 @@ class AuthRepository implements RepositoryInterface
     }
     public function loginAPIv2(Request $request){
         
-        // return User::where('email', '=', $request->email)->get();
         $ldap_user = $this->ldapAPILogin($request->email, $request->password);
         
         if($ldap_user){
@@ -212,7 +228,6 @@ class AuthRepository implements RepositoryInterface
             }
         }
         return response(['success' => false, 'user' => null]);
-        // return response(['success' => false, 'user' => $user]);
     }
     public function loginAPI(Request $request){
         $param = "";

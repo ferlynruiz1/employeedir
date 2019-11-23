@@ -86,6 +86,11 @@ class User extends Authenticatable
         return $query->whereNull('deleted_at')->where('status', '!=', '2');
     }
 
+    public function scopeFindByEmail($query, $email){
+       
+        return $query->where('email', '=',$email)->orWhere('email2','=',$email)->orWhere('email3', '=', $email);
+    }
+
     #####################################################
     public function generalManager(){
         $settings = Valuestore::make(storage_path('app/settings.json'));

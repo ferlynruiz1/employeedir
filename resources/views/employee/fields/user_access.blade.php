@@ -60,9 +60,9 @@
             
                 <label>Additional Linkees</label>
                 <div class="my-2 d-flex gap-2  p-2" style="width: 100%;flex-wrap: wrap;">
-                        <div class="border border-success rounded-pill p-2" style="font-size: 12px; min-width:100px;">
+                        <div class="border border-success rounded-pill p-2 " style="font-size: 12px; min-width:100px;">
                             Ferlyn Ruiz
-                            <span>x</span>
+                            <span class="ms-2">x</span>
                         </div>
                 </div>
 

@@ -116,8 +116,11 @@ class EmployeeInfoController extends Controller
      */
     public function edit($id)
     {   
+        dd($id);
         $employee = User::find($id);
         $obj = EmployeeInfoDetails::where('employee_id',"=",$id)->get();
+        $user = Auth::user();
+        $linkees = $user->getLinkees();
         if(count($obj) > 0):
             $obj = $obj[0];
         else:
@@ -136,7 +139,8 @@ class EmployeeInfoController extends Controller
                 ->with('supervisors', User::all())
                 ->with('departments', EmployeeDepartment::all())
                 ->with('accounts', ElinkAccount::all())
-                ->with('details',$obj);
+                ->with('details',$obj)
+                ->with('linkees', $linkees);
         } else {
             return abort(404);
         }

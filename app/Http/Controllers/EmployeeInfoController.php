@@ -99,9 +99,7 @@ class EmployeeInfoController extends Controller
      */
     public function index()
     {
-        return view('index',[
-            'adtl_linkees' => DB::paginate(5)
-        ]);
+        return 'index';
     }
 
     /**

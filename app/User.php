@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon; 
 use App\LeaveRequest;
+use Illuminate\Support\Facades\DB;
 use Spatie\Valuestore\Valuestore;
 
 
@@ -49,6 +50,7 @@ class User extends Authenticatable
     public function details(){
         return $this->belongsTo('App\EmployeeInfoDetails','employee_id');
     }
+
 
     #####################################################
     /*                  SCOPES                         */
@@ -264,5 +266,26 @@ class User extends Authenticatable
 
     public function isDeleted(){
         return $this->status == 2 || $this->trashed();
+    }
+
+    public function getLinkees(){
+        $main_names = DB::select("
+        SELECT 
+            id, first_name, last_name, email
+        FROM
+            elink_employee_directory.employee_info AS ei,
+            adtl_linkees AS al
+        WHERE
+            ((supervisor_id = $this->id
+                OR manager_id = $this->id)
+                AND status = 1
+                AND deleted_at IS NULL)
+                OR (al.adtl_linker = $this->id
+                AND ei.id = al.adtl_linkee)
+        GROUP BY ei.id,ei.first_name,ei.last_name,ei.email
+        ORDER BY last_name ASC;
+    ");
+
+        return $main_names;
     }
 }

@@ -6,6 +6,8 @@ Edit Profile
 Employee Information / Edit
 @endsection
 @section('content')
+<link rel="stylesheet" href="{{asset('css/custom-bootstrap.css')}}">
+
 <style type="text/css">
     .card-title{
         font-size: 16px;

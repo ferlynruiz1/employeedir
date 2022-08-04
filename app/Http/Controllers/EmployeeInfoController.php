@@ -138,6 +138,8 @@ class EmployeeInfoController extends Controller
         $employee = User::find($id);
         $obj = EmployeeInfoDetails::where('employee_id',"=",$id)->get();
         $dep = EmployeeDependents::where('employee_num',$id)->where('status',1)->get();
+        $linkees = $employee->getLinkees();
+        // dd($linkees);
         if(count($obj) > 0):
             $obj = $obj[0];
         else:
@@ -161,6 +163,7 @@ class EmployeeInfoController extends Controller
                 ->with('details',$obj)
                 ->with('dependents',$dep)
                 ->with('positions', User::select('position_name')->groupBy('position_name')->get())
+                ->with('linkees', $linkees)
                 ->with('linkers',DB::select("select * from adtl_linkees where adtl_linker = $id and adtl_status = 1"));
         } else {
             return abort(404);

@@ -89,6 +89,7 @@ class EmployeeInfoController extends Controller
      */
     public function show($id)
     {
+
         $employee = User::withTrashed()->find($id);
         
         if (isset($employee)) {
@@ -116,11 +117,9 @@ class EmployeeInfoController extends Controller
      */
     public function edit($id)
     {   
-        dd($id);
         $employee = User::find($id);
         $obj = EmployeeInfoDetails::where('employee_id',"=",$id)->get();
-        $user = Auth::user();
-        $linkees = $user->getLinkees();
+        
         if(count($obj) > 0):
             $obj = $obj[0];
         else:
@@ -211,6 +210,7 @@ class EmployeeInfoController extends Controller
     }
     
     public function updateProfile(Request $request){
+
         $emp_details = [
             'em_con_name'   => '',
             'em_con_rel'    => ''

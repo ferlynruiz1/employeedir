@@ -60,15 +60,12 @@
             
                 <label>Additional Linkees</label>
                 <div class="my-2 d-flex gap-2">
-                    <div class="border border-success rounded-pill p-2">
-                        Ferlyn Ruiz
-                        <span>x</span>
-                    </div>
-
-                    <div class="border border-success rounded-pill p-2">
-                        Ferlyn Ruiz
-                    </div>
-
+                    @foreach ($linkees as $linkee)
+                        <div class="border border-success rounded-pill p-2">
+                            {{$linkee->first_name}} {{$linkee->last_name}}
+                            <span>x</span>
+                        </div>
+                    @endforeach
                 </div>
 
                 <select name="adtl_linkees[]" data-val="1" class="select2 process_linkee form-control">

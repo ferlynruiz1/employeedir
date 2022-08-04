@@ -55,35 +55,38 @@
         </select>
     </div>
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md">
             <div class="form-group">
             
                 <label>Additional Linkees</label>
-                <div class="my-2 d-flex gap-2">
+                <div class="my-2 d-flex gap-2  p-2" style="width: 100%;flex-wrap: wrap;">
                     @foreach ($linkees as $linkee)
-                        <div class="border border-success rounded-pill p-2">
+                        <div class="border border-success rounded-pill p-2" style="font-size: 12px; min-width:100px;">
                             {{$linkee->first_name}} {{$linkee->last_name}}
                             <span>x</span>
                         </div>
                     @endforeach
                 </div>
 
-                <select name="adtl_linkees[]" data-val="1" class="select2 process_linkee form-control">
-                    <option value="0">Select a Linkee</option>
-                    <?php
-                    foreach($supervisors as $s):
-                    ?>
-                    <option value="{{ $s->id }}">{{$s->fullname()}}</option>
-                    <?php
-                    endforeach;
-                    ?>
-                </select>
-                <input type="hidden" id="hidden_id_1" value="">
+                <div class="d-flex gap-2">
+
+                    <select name="adtl_linkees[]" data-val="1" class="select2 process_linkee form-control">
+                        <option value="0">Select a Linkee</option>
+                        <?php
+                        foreach($supervisors as $s):
+                        ?>
+                        <option value="{{ $s->id }}">{{$s->fullname()}}</option>
+                        <?php
+                        endforeach;
+                        ?>
+                    </select>
+                    <input type="hidden" id="hidden_id_1" value="">
+                    <div class="">
+                        <button class="btn btn-primary add-linkee">Add a Linkee</button>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-md-1">
-            <label>&nbsp;</label>
-            <button class="btn btn-primary add-linkee">Add a Linkee</button>
-        </div>
+        
     </div>
 </div>

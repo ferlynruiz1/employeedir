@@ -56,21 +56,8 @@
     </div>
     <div class="row">
         <div class="col-md-5">
-            <div class="form-group">
-            
-                <label>Additional Linkees</label>
-                <div class="my-2 d-flex gap-2">
-                    <div class="border border-success rounded-pill p-2">
-                        Ferlyn Ruiz
-                        <span>x</span>
-                    </div>
-
-                    <div class="border border-success rounded-pill p-2">
-                        Ferlyn Ruiz
-                    </div>
-
-                </div>
-
+            <div class="form-group"> 
+                <label>Additional Linkeesfdfdf</label>
                 <select name="adtl_linkees[]" data-val="1" class="select2 process_linkee form-control">
                     <option value="0">Select a Linkee</option>
                     <?php
@@ -80,7 +67,7 @@
                     <?php
                     endforeach;
                     ?>
-                </select>
+                </select> 
                 <input type="hidden" id="hidden_id_1" value="">
             </div>
         </div>

@@ -7,7 +7,8 @@
                     Leave Credits
                     @if(Auth::check())
                         @if(Auth::user()->isAdmin())
-                            <a href="{{ url('leave') }}" class="pull-right btn btn-primary"><span class="fa fa-gear"></span>View Leave Lists</a>
+                        <a href="{{ url('download-credits') }}" class="pull-right btn btn-info"><span class="fa fa-gear"></span>&nbsp;Download Leave Credits</a>&nbsp;
+                        <a href="{{ url('leave') }}" class="pull-right btn btn-primary"><span class="fa fa-gear"></span>&nbsp;View Leave Lists</a>&nbsp;
                         @endif
                     @endif
                 </div>
@@ -17,27 +18,32 @@
                     <table class="table table-striped" id="leave_credits_table">
                         <thead>
                         <tr>
-                            <td>DB ID</td>
-                            <td>Employee ID</td>
-                            <td>Employee Name</td>
-                            <td>Position</td>
-                            <td>Department</td>
-                            <td>Leave Credits</td>
-                            <td></td>
+                            <th>Employee ID</th>
+                            <th>Employee Name</th>
+                            <th>Position</th>
+                            <th><?php echo date('Y') - 1  ?> PTO<br> For Conversion</th>
+                            <th><?php echo date('Y') - 1 ?> PTO<br>Expiry - June <?php echo date('Y') ?></th>
+                            <th><?php echo date('Y') ?> PTO<br>Monthly Accrual</th>
+                            <th>Used PTO</th>
+                            <th>PTO Balance</th>
                         </tr>
                         </thead>
                         <tbody>
                             @foreach($employees as $employee)
                             <tr>
-                                <td>{{ $employee->id }}</td>
                                 <td>{{ $employee->eid }}</td>
-                                <td>{{ $employee->fullName2() }}</td>
+                                <td>{{ $employee->employee_name }}</td>
                                 <td>{{ $employee->position_name }}</td>
-                                <td>{{ $employee->team_name }}</td>
-                                <td>{{ $employee->leave_credit }}</td>
+                                <td>{{ number_format($employee->conversion_credit,1) }}</td>
+                                <td>{{ number_format($employee->past_credit - $employee->conversion_credit,1) }}</td>
+                                <td>{{ number_format($employee->current_credit,1) }}</td>
+                                <td>{{ number_format($employee->used_credit,1) }}</td>
+                                <td>{{ number_format($employee->total_credits,1) }}</td>
+                                <!--
                                 <td>
                                     <a title="Adjust leave credits" href="{{ url('leave/credits') . '/' . $employee->id }}"><i class="fa fa-gear"></i></a>
                                 </td>
+                                -->
                             </tr>
                             @endforeach
                         </tbody>

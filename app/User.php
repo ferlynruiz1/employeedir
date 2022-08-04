@@ -45,6 +45,10 @@ class User extends Authenticatable
     public function manager(){
         return $this->belongsTo('App\User', 'manager_id');
     }
+    
+    public function details(){
+        return $this->belongsTo('App\EmployeeInfoDetails','employee_id');
+    }
 
     #####################################################
     /*                  SCOPES                         */

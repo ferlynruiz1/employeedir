@@ -131,7 +131,8 @@ Employee Information / Edit
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <button class="btn btn-primary">Save</button>                         
+                                    <input type="submit" class="btn btn-primary" value="Save" />
+                                                 
                                 </div>
                             </div>
                         </div>
@@ -141,10 +142,181 @@ Employee Information / Edit
         </div>
     </div>
 </form>
+
+<!-- Modal -->
+<div class="modal fade" id="modalMovements" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Staff Position Movements</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="modal-body" style="max-height:500px; height: 450px; overflow: auto;">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Date of Transfer</th>
+              <th scope="col">Department</th>
+              <th scope="col">Position</th>
+            </tr>
+      
+          </thead>
+          <tr style="background-color: #fd9a47;">
+              <td><input class="form-control datepicker" id="mv_transfer_date"></td>
+              <td>
+                  <select class="select2 form-control" id="department_name" style="width: 100%">
+                    <option selected="" disabled="">Select</option>
+                    @foreach($departments as $department)
+                        <option <?php echo $department->department_name == @$employee->team_name ? "selected" : "";?> value="{{ $department->id }}"> {{$department->department_name}}</option>
+                    @endforeach
+                </select>
+              </td>
+              <td>
+                <input class="form-control" id="mv_position" value="" list="positions" required>
+                <datalist id="positions">
+                    @foreach($positions as $position)
+                        <option value="{{ $position->position_name }}">
+                    @endforeach
+                </datalist>
+              </td>
+          </tr>
+          <tbody id="mdl_bodyMvmt">
+          </tbody>
+        </table>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button id="savingOption" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+        <input type="hidden" id="active-employee-id" value="{{ $employee->id }}">
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 @section('scripts')
+
+<script id="tmpl_rowMvmt" type="text/template">
+    <tr>
+        <td scope="row">~mv_transfer_date~</td>
+        <td>~department_name~</td>
+        <td>~mv_position~</td>
+    </tr>
+</script>
+
+<script id="tmpl_addDependents" type="text/template">
+    <div id="dep_~id~" class="row">
+        <div class="col-md-3 form-group">
+            <label>Dependent's Name</label>
+            <br>
+            <input id="dep_name_~id~" class="form-control" name="dependent_name[]" value="">
+        </div>
+        <div class="col-md-3 form-group">
+            <label>Birthday</label>
+            <br>
+            <input id="dep_bday_~id~" class="form-control datepicker" name="dependent_bday[]" value="" autocomplete="off">
+        </div>
+        <div class="col-md-3 form-group">
+            <label>Generali Number</label>
+            <br>
+            <input class="form-control" name="generali_num[]" value="<?php echo count($dependents) > 0 ? $dependents[0]->generali_num : "" ?>" autocomplete="off">
+        </div>
+        <div class="col-md-3 form-group" style="vertical-align: middle;">
+            <br>
+            <a href="#dependentsDiv" class="btn btn-danger" data-id="~id~" onclick="removeThisDependent(this)">Remove Dependent</a>
+        </div>
+    </div>
+</script>
+
+<script id="tmpl_addLinkee" type="text/template">
+    <div id="linkee_row_~id~" class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <select id="sl_linkee_~id~" data-val="~id~" name="adtl_linkees[]" class="select2 process_linkee form-control">
+                    <option value="0">Select a Linkee</option>
+                    <?php
+                    foreach($supervisors as $s):
+                    ?>
+                    <option value="{{ $s->id }}">{{$s->fullname()}}</option>
+                    <?php
+                    endforeach;
+                    ?>
+                </select>
+                <input type="hidden" id="hidden_id_~id~" value="">
+            </div>
+        </div>
+        <div class="col-md-1">
+            <a href="#u_access-div" class="btn btn-danger" onclick="removeThisLinkee(~id~)">Remove Linkee</a>
+        </div>
+    </div>
+</script>
+
  <script type="text/javascript">
     var changed = false;
+    var ctr = 1;
+    var emp_no = {{ @$employee->id }};
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    var ctr_linkee = 2;
+    
+    $.ajaxPrefilter(function(options, originalOptions, jqXHR){
+        if (options.type.toLowerCase() === "post") {
+            options.data = options.data || "";
+            options.data += options.data?"&":"";
+            options.data += "_token=" + encodeURIComponent(csrf_token);
+        }
+    });
+    
+    $(function(){
+    <?php
+        if(count($dependents) > 1):
+            for($i = 1; $i < count($dependents); $i++):
+            ?>
+                addDep();
+                $("#dep_name_" + <?php echo $i ?>).val("<?php echo $dependents[$i]->dependent ?>");
+                $("#dep_bday_" + <?php echo $i ?>).val("<?php echo date("m/d/Y",strtotime($dependents[$i]->bday)) ?>")
+            <?php
+            endfor;
+        endif;
+    ?>
+    });
+        $("#_team_name").change(function(){
+            var val = $(this).find(':selected').data('_dept_code');
+            $("#_dept_code").val(val);
+        });
+        
+        $("#btnViewMovments").click(function(x){
+        x.preventDefault();
+        $.get('/browse-transfer',{emp_no  : emp_no},function(data){
+            var template = document.getElementById("tmpl_rowMvmt").innerHTML;
+            var js_tmpl = "";
+            $.each(data,function(key,val){
+                js_tmpl += template
+                            .replace(/~mv_transfer_date~/g,val.mv_transfer_date)
+                            .replace(/~department_name~/g,val.department_name)
+                            .replace(/~mv_position~/g,val.mv_position);
+            });
+            $("#mdl_bodyMvmt").html(js_tmpl);
+                
+            console.log(data);
+        },'json');
+    });
+    
+    $("#savingOption").click(function(x){
+        x.preventDefault();
+        var obj = {
+            mv_employee_no      : emp_no,
+            mv_transfer_date    : $("#mv_transfer_date").val(),
+            mv_dept             : $("#department_name").val(),
+            dept_name           : $("#department_name option:selected").text(),
+            mv_position         : $("#mv_position").val()
+        };
+        console.log(obj);
+        $.post("/save-transfer",obj,function(x){
+            location.reload();
+        },'json');
+    });
+    
      $('#edit_employee_form').validate({
         ignore: [], 
         rules : {
@@ -180,6 +352,7 @@ Employee Information / Edit
      $('#edit_employee_form').submit(function(){
         changed = false;
      });
+     
      window.onbeforeunload = function(){
         if(changed){
             return '';
@@ -210,5 +383,89 @@ Employee Information / Edit
     //     }
     // });
     // $('input[name=employee_type]').trigger('change');
+    
+    $(".is_reg_event").change(function(){
+        var val = $(this).val();
+        console.log('type event triggered ' + val);
+        if(parseInt(val) == 1)
+            $(".reg_div_").show();
+        else
+            $(".reg_div_").hide();
+    });
+
+    if($(".is_reg_event").val() == 1)    
+        $(".reg_div_").show();
+    else
+        $(".reg_div_").hide();
+    
+    $(".add-dependent").click(function(e){
+        e.preventDefault();
+        console.log(ctr);
+        addDep();
+    });
+    
+    $(".datepicker").datepicker({
+        changeYear  : true,
+        changeMonth : true,
+        yearRange   : "1930:<?php echo date("Y") ?>"
+    });
+    
+    $(".is_reg_event").change(function(){
+        var val = $(this).val();
+        console.log('type event triggered ' + val);
+        if(parseInt(val) == 1)
+            $(".reg_div_").show();
+        else
+            $(".reg_div_").hide();
+    });
+    
+    $(".reg_div_").hide();
+    
+    $(".add-linkee").click(function(e){
+        var template = document.getElementById("tmpl_addLinkee").innerHTML;
+        var js_tmpl = "";
+        js_tmpl = template.replace(/~id~/g,ctr_linkee);
+        $("#u_access-div").append(js_tmpl);
+        $("#sl_linkee_" + ctr_linkee).select2();
+        console.log('You Clicked Here');
+        ctr_linkee++;
+        e.preventDefault();
+    });
+    
+    $(document).on('change', '.process_linkee', function() {
+        var emp = $("#active-employee-id").val();
+        var val = $(this).val();
+        var row = $(this).data('val');
+        var obj = {adtl_linker : emp, adtl_linkee : val, adtl_row: row};
+        
+        $.get("/process-linkee",obj,function(data){
+            console.log(data);
+        },"json");
+        console.log(obj);
+    });
+    
+    function removeThisLinkee(id){
+        console.log(id);
+    }
+    
+    function removeThisDependent(obj){
+        
+        var id = $(obj).data('id');
+        $("#dep_" + id).remove();
+    }
+    
+    function addDep(){
+        var template = document.getElementById("tmpl_addDependents").innerHTML;
+        var js_tmpl = "";
+        js_tmpl = template.replace(/~id~/g,ctr);
+        $("#dependentsDiv").append(js_tmpl);
+        console.log('You Clicked Here');
+        $("#dep_bday_" + ctr).datepicker({
+            changeYear  : true,
+            changeMonth : true,
+            yearRange   : "1930:<?php echo date("Y") ?>"
+        });
+        ctr++;
+    }
  </script>
 @endsection

@@ -40,7 +40,7 @@ class HomeController extends Controller
         return view('home')
             ->with('posts', Posts::where('enabled', '=', '1')->get())
             ->with('new_hires', User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5))
-            ->with('employees', User::allExceptSuperAdmin()->get())->with('birthdays', User::whereRaw('MONTH(birth_date) = '.date('n'))->orderByRaw('DAYOFMONTH(birth_date) ASC')->get())
+            ->with('employees', User::allExceptSuperAdmin()->get())->with('birthdays', User::whereRaw('MONTH(birth_date) = '.date('n'))->whereRaw('deleted_at is null')->where("status","=",1)->orderByRaw('DAYOFMONTH(birth_date) ASC')->get())
             ->with('engagements', ElinkActivities::thisMonth()->orderBy('created_at', 'DESC')->get());
     }
     public function dashboard(Request $request)
@@ -49,7 +49,7 @@ class HomeController extends Controller
             ->with('posts', Posts::where('enabled', '=', '1')->get())
             ->with('new_hires', User::allExceptSuperAdmin()->orderBy('prod_date', 'DESC')->paginate(5))
             ->with('employees', User::allExceptSuperAdmin()->get())
-            ->with('birthdays', User::whereRaw('MONTH(birth_date) = '.date('n'))->orderByRaw('DAYOFMONTH(birth_date) ASC')->get())
+            ->with('birthdays', User::whereRaw('MONTH(birth_date) = '.date('n'))->whereRaw('deleted_at is null')->where("status","=",1)->orderByRaw('DAYOFMONTH(birth_date) ASC')->get())
             ->with('engagements', ElinkActivities::thisMonth()->orderBy('created_at', 'DESC')->get());
     }
     public function newhires(Request $request)

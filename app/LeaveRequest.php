@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Valuestore\Valuestore;
+use Illuminate\Support\Facades\DB;
 
 class LeaveRequest extends Model
 {
@@ -21,6 +22,20 @@ class LeaveRequest extends Model
     public function pay_type(){
     	return $this->belongsTo('App\PayType');
     }
+    
+    public function leave_details_from(){
+        return $this->hasMany('App\LeaveRequestDetails',"leave_id")->orderBy("date","asc")->take(1);
+
+    }
+    
+    public function leave_details_to(){
+        return $this->hasMany('App\LeaveRequestDetails',"leave_id")->orderBy("date","desc")->take(1);
+    }
+
+    public function leave_details(){
+        return $this->hasMany('App\LeaveRequestDetails',"leave_id");
+    }
+
 
     public function scopeUnapproved($query){
         return $query->where('approve_status_id', '=', 0)->orWhereNull('approve_status_id');
@@ -64,11 +79,16 @@ class LeaveRequest extends Model
 
     public function scopeManagedBy($query, $user){
         $id = $user->id;
-        $query->whereHas('employee', function($q) use ($id){
+        return $query->whereHas('employee', function($q) use ($id){
             $q->where('supervisor_id', '=',$id);
         })->orWhereHas('employee', function($q) use ($id){
             $q->where('manager_id', '=',$id);
         });
+    }
+
+    public function scopeMyLeaves($query,$user){
+        $id = $user->id;
+        return $query->where('employee_id','=',$id);
     }
 
     public function scopeStatus(){
@@ -111,20 +131,70 @@ class LeaveRequest extends Model
     }
 
     public function scopeIsForRecommend(){
-        return (Auth::user()->id == $this->employee->supervisor_id) && ($this->recommending_approval_by_signed_date == NULL && $this->approve_status_id != 2) || Auth::user()->isAdmin();
+        //return (Auth::user()->id == $this->employee->supervisor_id) && ($this->recommending_approval_by_signed_date == NULL && $this->approve_status_id != 2) || Auth::user()->isAdmin();
+        return Auth::user()->id == $this->employee->supervisor_id && $this->recommending_approval_by_signed_date == NULL && $this->approve_status_id != 2;
     }
 
     public function scopeIsForApproval(){
-        return (Auth::user()->id == $this->employee->manager_id) && ($this->approved_by_signed_date == NULL && $this->approve_status_id != 2) || Auth::user()->isAdmin();
+        //return (Auth::user()->id == $this->employee->manager_id) && ($this->approved_by_signed_date == NULL && $this->approve_status_id != 2) || Auth::user()->isAdmin();
+        return Auth::user()->id == $this->employee->manager_id && $this->approved_by_signed_date == NULL && $this->approve_status_id != 2;
     }
 
     public function scopeIsForNoted(){
-        return Auth::user()->isHR() && ($this->noted_by_signed_date == NULL && $this->approve_status_id != 2) || Auth::user()->isAdmin();
+        //return Auth::user()->isHR() && ($this->noted_by_signed_date == NULL && $this->approve_status_id != 2) || Auth::user()->isAdmin();
+        return Auth::user()->isHR() && ($this->noted_by_signed_date == NULL && $this->approve_status_id != 2);
     }
 
     public function scopeCanBeDeclined(){
-        return ($this->isForRecommend() || $this->isForApproval() || $this->isForNoted()) && $this->approve_status_id != 2 || Auth::user()->isAdmin();
+        return ($this->isForRecommend() || $this->isForApproval() || $this->isForNoted()) && $this->approve_status_id != 2;
+    }
+    
+    public function getEmployeeName($id){
+        return DB::table('employee_info')->where('id', $id)->get();
     }
 
+    public static function getBlockedDates($dept){
+        if(Auth::user()->isManager())
+            DB::select("
+                SELECT 
+                    d.date AS cwd
+                FROM
+                    leave_request_details AS d
+                        LEFT JOIN
+                    leave_request AS l ON l.id = d.leave_id
+                        LEFT JOIN
+                    employee_info AS e ON l.employee_id = e.id
+                WHERE
+                    (e.team_name = '$dept' or e.usertype = 3 )
+                        AND d.date >= CURDATE()
+                ORDER BY d.date ASC
+            ");
+        else
+            return DB::select("
+                SELECT 
+                    d.date AS cwd
+                FROM
+                    leave_request_details AS d
+                        LEFT JOIN
+                    leave_request AS l ON l.id = d.leave_id
+                        LEFT JOIN
+                    employee_info AS e ON l.employee_id = e.id
+                WHERE
+                    e.team_name = '$dept'
+                        AND d.date >= CURDATE()
+                ORDER BY d.date ASC
+            ");
+    }
+    
+    public static function getCWD(){
+        return DB::select("
+            SELECT 
+                DATE_FORMAT(start_date, '%Y-%m-%d') AS cwd
+            FROM
+                events
+            WHERE
+                start_date >= CURDATE();"
+        );
+    }
     
 }

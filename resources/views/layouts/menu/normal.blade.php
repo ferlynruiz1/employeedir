@@ -4,16 +4,27 @@
         Home
     </a>
 </li>
+<li <?php echo \Request::url() == url('time-keeping') ? 'class="active"' : ''; ?>>
+    <a href="{{url('time-keeping')}}">
+        <em class="fa fa-clock-o">&nbsp;</em>
+        Offline Break Logger
+     </a>
+ </li><li <?php echo \Request::url() == url('coaching-session') ? 'class="active"' : ''; ?>>
+    <a href="{{url('coaching-session')}}">
+        <em class="fa fa-cogs">&nbsp;</em>
+        Linking Sessions
+     </a>
+ </li>
 <li <?php echo \Request::url() == url('employees') ? 'class="active"' : ''; ?>>
     <a href="{{url('employees')}}">
         <em class="fa fa-users">&nbsp;</em>
-        Employees
+        Employees 
      </a>
  </li>
  <li <?php echo \Request::url() == url('leave/create') ? 'class="active"' : ''; ?>>
-    <a href="{{url('leave/create')}}">
+    <a href="{{url('leave/')}}">
         <em class="fa fa-calendar">&nbsp;</em>
-        File a leave
+        Leaves 
      </a>
  </li>
  <li <?php echo \Request::url() == url('referral/create') ? 'class="active"' : ''; ?>>
@@ -30,14 +41,28 @@
     </a>
 </li>
 @auth
-@if(Auth::user()->leaveRequestCount() > 0)
-<li <?php echo \Request::url() == url('leave') ? 'class="active"' : ''; ?>>
-<a href="{{url('leave')}}">
-    <em class="fa fa-calendar">&nbsp;</em>
-    Leave Requests&nbsp;&nbsp;<span class="badge label-danger">{{ Auth::user()->leaveRequestCount() }}</span>
- </a>
-</li>
-@endif
+    @if(Auth::user()->leaveRequestCount() > 0)
+        <!--<li <?php echo \Request::url() == url('leave') ? 'class="active"' : ''; ?>>
+            <a href="{{url('leave')}}">
+                <em class="fa fa-calendar">&nbsp;</em>
+                Leave Requests&nbsp;&nbsp;<span class="badge label-danger">{{ Auth::user()->leaveRequestCount() }}</span>
+            </a>
+        </li>-->
+    @endif
+    @if(Auth::user()->usertype == 2 || Auth::user()->usertype == 3)
+    <li <?php echo \Request::url() == url('leave') ? 'class="active"' : ''; ?>>
+        <a href="\for-approval">
+            <em class="fa fa-calendar">&nbsp;</em>
+            Team Leave Request&nbsp;&nbsp;<span class="badge label-danger"></span>
+        </a>
+    </li>
+    <li <?php echo \Request::url() == url('sup-view') ? 'class="active"' : ''; ?>>
+    <a href="{{url('sup-view')}}">
+        <em class="fa fa-clock-o">&nbsp;</em>
+        Break Management 
+     </a>
+    </li>
+    @endif
 @endauth
 
 <li >

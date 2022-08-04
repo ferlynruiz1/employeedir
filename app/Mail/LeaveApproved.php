@@ -31,6 +31,7 @@ class LeaveApproved extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.leave.approved');
+        return $this->subject("Leave Request Approved ". uniqid())
+                ->view('mail.leave.approved');
     }
 }

@@ -68,7 +68,7 @@
                 let calendar = new FullCalendar.Calendar(calendarEl, {
                     plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
                     defaultView: 'dayGridMonth',
-                    defaultDate: '2019-03-07',
+                    //defaultDate: '2019-03-07',
                     header: {
                         left: 'prev,next today',
                         center: 'title',

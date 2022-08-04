@@ -64,6 +64,10 @@ Employees
         <i class="fa fa-plus"></i>
         &nbsp;&nbsp;Add Employee
     </a>
+    <a href="/download-filter?" class="btn btn-info" >
+        <i class="glyphicon glyphicon-arrow-down"></i>
+        &nbsp;&nbsp;Download Employee Information
+    </a>
     <br>
     <br>
     <ul class="alphabet-search" style="padding-left: 0px">
@@ -127,7 +131,9 @@ Employees
          <li>
            <a href="{{url('employees')}}" class="btn btn-default" style="margin: 0px; height: 30px;">Clear Filter</a>
         </li>
+        <!-- <li><a href="/download-filter?" class="btn btn-default" style="margin: 0px; height: 30px;">Download Results</a></li> -->
     </ul>
+
     <!-- <ul class="alphabet-search pull-right">
         <li>
 
@@ -181,7 +187,8 @@ Employees
                     </div>
                 </div>
                 <div class="col-md-3">
-                        <h4 class="timeline-title name-format" style="color: #444;font-weight: 500; font-size: 17px; margin-top: 10px;"><a href="{{url('employee_info/'. $employee->id)}}">{{$employee->fullname()}} </a>
+                        <h4 class="timeline-title name-format" style="color: #444;font-weight: 500; font-size: 17px; margin-top: 10px; text-transform: uppercase;">
+                            <a href="{{url('employee_info/'. $employee->id)}}">{{$employee->fullname()}} </a>
                         </h4>
                    
                     <h5 style="color: #455;">{{ $employee->position_name}}</h5>

@@ -9,7 +9,7 @@ Home
 
 @if(count($posts) > 0)
 <div class="col-md-12">
-    <h3><b>HR progress </b></h3>
+    <h3><b>Announcement</b></h3>
 </div>
 <div class="col-md-12">
     <div class="panel panel-container" style="padding-top: 0px; background: none">
@@ -53,7 +53,7 @@ Home
 <div class="col-lg-4 col-md-4">
     <div class="panel panel-default ">
         <div class="panel-heading">
-            Newest Hired
+            New Hires
             <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
         <div class="panel-body timeline-container">
             <ul class="timeline">
@@ -134,7 +134,7 @@ Home
 <div class="col-lg-4 col-md-4">
     <div class="panel panel-default ">
         <div class="panel-heading">
-            ElinkGagements Activities
+            eLinkgagement Activities
             <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
         <div class="panel-body timeline-container" >
             @foreach($engagements as $engagement)

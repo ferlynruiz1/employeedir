@@ -18,7 +18,7 @@ class LeaveNotification extends Mailable
      *
      * @return void
      */
-    public function __construct(LeaveRequest $leave_request)
+    public function __construct($leave_request)
     {
         $this->leave_request = $leave_request;
     }
@@ -31,6 +31,7 @@ class LeaveNotification extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.leave.request');
+        return $this->subject("Leave Request - ".$this->leave_request['leave']->employee->first_name. " ".$this->leave_request['leave']->employee->last_name." ". uniqid())
+                ->view('mail.leave.request');
     }
 }

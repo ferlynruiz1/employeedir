@@ -111,22 +111,161 @@ Employee / Add
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <br>
-                                    <label>Gender</label>
-                                    <br>
-                                    <input type="radio" id="male" name="gender_id" value="1" required>
-                                    <label class="radio-label" for="male">Male</label>
-                                    &nbsp;
-                                    &nbsp;
-                                    <input type="radio" id="female" name="gender_id" value="2" required>
-                                    <label class="radio-label" for="female">Female</label>
+                                <div class="row">
+                                    <div class="col-md-2 form-group">
+                                        <br>
+                                        <label>Gender</label>
+                                        <br>
+                                        <input type="radio" id="male" name="gender_id" value="1" required>
+                                        <label class="radio-label" for="male">Male</label>
+                                        &nbsp;
+                                        &nbsp;
+                                        <input type="radio" id="female" name="gender_id" value="2" required>
+                                        <label class="radio-label" for="female">Female</label>
+                                    </div>  
+                                    <div class="col-md-2 form-group">
+                                        <br>
+                                        <label>Civil Status</label>
+                                        <br>
+                                        <select name="civil_status" class="select2">
+                                            <option value="1">Single</option>
+                                            <option value="2">Married</option>
+                                            <option value="3">Separated</option>
+                                            <option value="4">Anulled</option>
+                                            <option value="5">Divorced</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <br>
+                                            <label>Avega Number</label>
+                                        <br>
+                                        <input type="text" class="form-control" name="avega_num">
+                                    </div>
+                                    <div class="col-md-6" form-group></div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Address</label>
-                                    <textarea name="address" class="form-control" rows="4"></textarea>
+                            
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <br>
+                                        <label>Father's Name</label>
+                                        <br>
+                                        <input class="form-control" name="fathers_name" value="">
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <br>
+                                        <label>Complete Mother's Maiden Name</label>
+                                        <br>
+                                        <input class="form-control" name="mothers_name" value="">
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <br>
+                                        <label>Spouse's Name</label>
+                                        <br>
+                                        <input class="form-control" name="spouse_name" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label>Father's Birthday</label>
+                                        <br>
+                                        <input class="form-control datepicker" name="fathers_bday" value="" autocomplete="off">
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label>Mother's Birthday</label>
+                                        <br>
+                                        <input class="form-control datepicker" name="mothers_bday" value="" autocomplete="off">
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label>Spouse's Birthday</label>
+                                        <br>
+                                        <input class="form-control datepicker" name="spouse_bday" value="" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="dependentsDiv" class="col-md-12" style="border-style: solid; border-width: thin; border-color: blue;">
+                                <div class="row">
+                                    <div class="col-md-3 form-group">
+                                        <br>
+                                        <label>Dependent's Name</label>
+                                        <br>
+                                        <input class="form-control" name="dependent_name[]" value="">
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <br>
+                                        <label>Birthday</label>
+                                        <br>
+                                        <input class="form-control datepicker" name="dependent_bday[]" value="" autocomplete="off">
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <br>
+                                        <label>Generali Number</label>
+                                        <br>
+                                        <input class="form-control" name="generali_num[]" value="" autocomplete="off">
+                                    </div>
+                                    <div class="col-md-3 form-group" style="vertical-align: middle;">
+                                        <br>
+                                        <br>
+                                        <button class="btn btn-primary add-dependent">Add Dependent</button>
+                                    </div>
+                                </div>                                
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>City Address</label>
+                                            <textarea name="address" class="form-control" rows="4"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Home Town Address</label>
+                                            <textarea name="town_address" class="form-control" rows="4"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>In case of emergency please contact.</label>
+                                            <br>
+                                            <input type="text" name="em_con_name" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Relationship</label>
+                                            <br>
+                                            <input type="text" name="em_con_rel" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Contact Number</label>
+                                            <br>
+                                            <input type="text" name="em_con_num" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Address</label>
+                                            <textarea name="em_con_address" class="form-control" rows="4"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
@@ -178,6 +317,24 @@ Employee / Add
                                     <input type="checkbox" id="erp" name="is_erp">
 
                                     <label class="radio-label" for="erp">ERP</label>
+
+                                    &nbsp;
+                                    &nbsp;
+                                    <select name="is_regular" class="select2 is_reg_event">
+                                        <option value="-1">Employee Type</option>
+                                        <option value="0">Probationary</option>
+                                        <option value="1">Regular</option>
+                                        <option value="2">Project Based</option>
+                                    </select>
+                                    &nbsp;
+                                    &nbsp;
+                                    <select name="employee_category" class="select2">
+                                        <option value="0">Employee Category</option>
+                                        <option value="1">Manager</option>
+                                        <option value="2">Supervisor</option>
+                                        <option value="3">Support</option>
+                                        <option value="4">Rank</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -205,12 +362,19 @@ Employee / Add
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Team/Department</label>
-                                     <select class="select2 form-control" name="team_name">
+                                     <select class="select2 form-control" id="_team_name" name="team_name">
                                         <option selected="" disabled="">Select</option>
                                         @foreach($departments as $department)
-                                            <option value="{{ $department->department_name }}"> {{$department->department_name}}</option>
+                                            <option data-_dept_code="<?php echo $department->department_code ?>" value="{{ $department->department_name }}"> {{$department->department_name}}</option>
                                         @endforeach
                                     </select>
+                                    <input id="_dept_code" type="hidden" name="dept_code" value="">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group reg_div_">
+                                    <label>Regularization Date</label>
+                                    <input type="text" name="regularization_date" class="form-control datepicker" value="" autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -250,26 +414,47 @@ Employee / Add
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="asterisk-required">Employee Status</label>
-                                     <select class="select2 form-control" name="status_id" required>
-                                        <option selected="" disabled="">Select</option>
-                                        <option value="1" selected>Active</option>
-                                        <option value="2">Inactive</option>
-                                    </select>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="asterisk-required">Employee Status</label>
+                                         <select class="select2 form-control" name="status_id" required>
+                                            <option selected="" disabled="">Select</option>
+                                            <option value="1" selected>Active</option>
+                                            <option value="2">Inactive</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label >EXT</label>
-                                    <input class="form-control" name="ext" value="" >
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label >EXT</label>
+                                        <input class="form-control" name="ext" value="" >
+                                    </div>
                                 </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label >Wave </label>
+                                        <input class="form-control" name="wave" value="" >
+                                    </div>
+                                </div>    
                             </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label >Wave </label>
-                                    <input class="form-control" name="wave" value="" >
+                            
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Rehirable</label>
+                                        <select class="select2 form-control" name="rehirable" required>
+                                            <option selected="" disabled="">Select</option>
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
+                                </div> 
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Reason</label>
+                                        <input type="text" name="rehire_reason" class="form-control">
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-12 hidden">
@@ -374,7 +559,33 @@ Employee / Add
 </form>
 @endsection
 @section('scripts')
-<script type="text/javascript">
+<script id="tmpl_addDependents" type="text/template">
+    <div id="dep_~id~" class="row">
+        <div class="col-md-3 form-group">
+            <label>Dependent's Name</label>
+            <br>
+            <input class="form-control" name="dependent_name[]" value="">
+        </div>
+        <div class="col-md-3 form-group">
+            <label>Birthday</label>
+            <br>
+            <input id="dep_bday_~id~" class="form-control datepicker" name="dependent_bday[]" value="" autocomplete="off">
+        </div>
+        <div class="col-md-3 form-group">
+            <label>Generali Number</label>
+            <br>
+            <input class="form-control" name="generali_num[]" value="" autocomplete="off">
+        </div>
+        <div class="col-md-3 form-group" style="vertical-align: middle;">
+            <br>
+            <a href="#dependentsDiv" class="btn btn-danger" data-id="~id~" onclick="removeThisDependent(this)">Remove Dependent</a>
+        </div>
+    </div>
+</script>
+<script type="text/javascript">    
+    
+    var ctr = 1;
+    
     $('#create_employee_form').validate({
         ignore: [], 
         rules : {
@@ -395,8 +606,36 @@ Employee / Add
             }
         }
     });
+    
+    $("#_team_name").change(function(){
+        var val = $(this).find(':selected').data('_dept_code');
+        $("#_dept_code").val(val);
+    });
+
+    $(".add-dependent").click(function(e){
+        e.preventDefault();
+        console.log(ctr);
+        var template = document.getElementById("tmpl_addDependents").innerHTML;
+        var js_tmpl = "";
+        js_tmpl = template.replace(/~id~/g,ctr);
+        $("#dependentsDiv").append(js_tmpl);
+        console.log('You Clicked Here');
+        $("#dep_bday_" + ctr).datepicker({
+            changeYear  : true,
+            changeMonth : true,
+            yearRange   : "1930:<?php echo date("Y") ?>"
+        });
+        
+        ctr++;
+    });
+    
+    $(".datepicker").datepicker({
+        changeYear  : true,
+        changeMonth : true,
+        yearRange   : "1930:<?php echo date("Y") ?>"
+    });
     // $('input[name=employee_type]').change(function(){
-    //     switch($(this).val()){
+    //     switch($(this).val()){'
     //         case '2':
     //              $('select[name=supervisor_id]').parent().parent().show();
     //              $('select[name=manager_id]').parent().parent().show();
@@ -420,5 +659,21 @@ Employee / Add
     //     }
     // });
     // $('input[name=employee_type]').trigger('change');
+
+    $(".is_reg_event").change(function(){
+        var val = $(this).val();
+        console.log('type event triggered ' + val);
+        if(parseInt(val) == 1)
+            $(".reg_div_").show();
+        else
+            $(".reg_div_").hide();
+    });
+    $(".reg_div_").hide();
+    
+    function removeThisDependent(obj){
+        
+        var id = $(obj).data('id');
+        $("#dep_" + id).remove();
+    }
 </script>
 @endsection

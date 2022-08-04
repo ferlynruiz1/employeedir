@@ -256,8 +256,8 @@ Employee Information
                         <div class="row">
                             <div class="col-md-3" style="display: flex;">
                                 <a type="button" class="btn btn-default" href="{{url('employee/'. $employee->id .'/changepassword')}}">Change Password</a>
-                                <!--  &nbsp;
-                                <a class="btn btn-primary" href="{{url('employee_info/' . $employee->id . '/edit')}}">Update Profile</a> -->
+                                &nbsp;
+                                <a class="btn btn-primary" href="/update-profile">Update Selected Information</a>
                             </div>
                         </div>
                     @endif

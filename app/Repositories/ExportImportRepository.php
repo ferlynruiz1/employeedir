@@ -9,6 +9,7 @@ use App\User;
 use App\ElinkAccount;
 use App\ElinkDivision;
 use App\EmployeeDepartment;
+use DB;
 
 class ExportImportRepository implements RepositoryInterface
 {
@@ -314,11 +315,176 @@ class ExportImportRepository implements RepositoryInterface
                 ->with('inserts', $inserts)
                 ->with('invalid_emails', $invalid_emails);
     }
-
+    
     public function exportdownload() {
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $worksheet = $spreadsheet->getActiveSheet();
-        $employees = User::allExceptSuperAdmin()->get();
+        //$employees = User::allExceptSuperAdmin()->get();
+        $employees = DB::table('employee_info')
+            ->leftJoin('employee_info_details','employee_info.id','=','employee_info_details.employee_id')
+            ->where('employee_info.eid','!=','--')
+            ->where('deleted_at',NULL)
+            ->get();
+        $COUNT = 0;
+        $EID = 1;
+        $LAST_NAME = 2;
+        $FIRST_NAME = 3;
+        $FULLNAME = 4;
+        $ROLE = 5;
+        $SUPERVISOR = 6;
+        $MANAGER = 7;
+        $DIVISION = 8;
+        $DEPT = 9;
+        $DEPT_CODE = 10;
+        $ACCOUNT = 11;
+        $EXT = 12;
+        $ALIAS = 13;
+        $PROD_DATE = 14;
+        $STATUS = 15;
+        $HIRED_DATE = 16;
+        $WAVE = 17;
+        $EMAIL = 18;
+        $GENDER = 19;
+        $BDAY = 20;
+        $CITYADD = 21;
+        $HOMEADD = 22;
+        $CIVILSTAT = 23;
+        $CONTACTNUM = 24;
+        $INCASECON = 25;
+        $INCASEREL = 26;
+        $INCASERELCON = 27;
+        $INCASERELADD = 28;
+        $SSS = 29;
+        $PHILHEALTH = 30;
+        $HMDF = 31;
+
+        $worksheet->getCell(getNameFromNumber($COUNT + 1) . 1 )->setValue('Count'); 
+        $worksheet->getCell(getNameFromNumber($EID + 1) . 1 )->setValue('EID');
+        $worksheet->getCell(getNameFromNumber($LAST_NAME + 1) . 1 )->setValue('Last Name');
+        $worksheet->getCell(getNameFromNumber($FIRST_NAME + 1) . 1 )->setValue('First Name');
+        $worksheet->getCell(getNameFromNumber($FULLNAME + 1) . 1 )->setValue('Name');
+        $worksheet->getCell(getNameFromNumber($ROLE + 1) . 1 )->setValue('Role');
+        $worksheet->getCell(getNameFromNumber($SUPERVISOR + 1) . 1 )->setValue('Supervisor');
+        $worksheet->getCell(getNameFromNumber($MANAGER + 1) . 1 )->setValue('Manager');
+        $worksheet->getCell(getNameFromNumber($DIVISION + 1) . 1 )->setValue('Division');
+        $worksheet->getCell(getNameFromNumber($DEPT + 1) . 1 )->setValue('Dept');
+        $worksheet->getCell(getNameFromNumber($DEPT_CODE + 1) . 1 )->setValue('Dept Code');
+        $worksheet->getCell(getNameFromNumber($ACCOUNT + 1) . 1 )->setValue('Account');
+        $worksheet->getCell(getNameFromNumber($EXT + 1) . 1 )->setValue('EXT');
+        $worksheet->getCell(getNameFromNumber($ALIAS + 1) . 1 )->setValue('Phone/Pen Names');
+        $worksheet->getCell(getNameFromNumber($PROD_DATE + 1) . 1 )->setValue('Prod Date');
+        $worksheet->getCell(getNameFromNumber($STATUS + 1) . 1 )->setValue('Status');
+        $worksheet->getCell(getNameFromNumber($HIRED_DATE + 1) . 1 )->setValue('Hire Date');
+        $worksheet->getCell(getNameFromNumber($WAVE + 1) . 1 )->setValue('Wave');
+        $worksheet->getCell(getNameFromNumber($EMAIL + 1) . 1 )->setValue('Email');
+        $worksheet->getCell(getNameFromNumber($GENDER + 1 ) . 1 )->setValue('Gender');
+        $worksheet->getCell(getNameFromNumber($BDAY + 1) . 1 )->setValue('Bday');
+        $worksheet->getCell(getNameFromNumber($CITYADD + 1) . 1 )->setValue('City Address');
+        $worksheet->getCell(getNameFromNumber($HOMEADD + 1) . 1 )->setValue('Home Address');
+        $worksheet->getCell(getNameFromNumber($CIVILSTAT + 1) . 1 )->setValue('Civil Stat');
+        $worksheet->getCell(getNameFromNumber($CONTACTNUM + 1) . 1 )->setValue('Number');
+        $worksheet->getCell(getNameFromNumber($INCASECON + 1) . 1 )->setValue('Contact Person');
+        $worksheet->getCell(getNameFromNumber($INCASEREL + 1) . 1 )->setValue('Relationship');
+        $worksheet->getCell(getNameFromNumber($INCASERELCON + 1) . 1 )->setValue('Number');
+        $worksheet->getCell(getNameFromNumber($INCASERELADD + 1) . 1 )->setValue('Address');
+        $worksheet->getCell(getNameFromNumber($SSS + 1) . 1 )->setValue('SSS');
+        $worksheet->getCell(getNameFromNumber($PHILHEALTH + 1) . 1 )->setValue('Philhealth');
+        $worksheet->getCell(getNameFromNumber($HMDF + 1) . 1 )->setValue('HMDF');
+
+        $worksheet->getColumnDimension(getNameFromNumber($COUNT + 1))->setWidth(7);
+        $worksheet->getColumnDimension(getNameFromNumber($EID + 1))->setWidth(20);
+        $worksheet->getColumnDimension(getNameFromNumber($EXT + 1))->setWidth(5);
+        $worksheet->getColumnDimension(getNameFromNumber($ALIAS + 1))->setWidth(30);
+        $worksheet->getColumnDimension(getNameFromNumber($LAST_NAME + 1))->setWidth(20);
+        $worksheet->getColumnDimension(getNameFromNumber($FIRST_NAME + 1))->setWidth(20);
+        $worksheet->getColumnDimension(getNameFromNumber($FULLNAME + 1))->setWidth(40);
+        $worksheet->getColumnDimension(getNameFromNumber($SUPERVISOR + 1))->setWidth(30);
+        $worksheet->getColumnDimension(getNameFromNumber($MANAGER + 1))->setWidth(30);
+        $worksheet->getColumnDimension(getNameFromNumber($DEPT + 1))->setWidth(25);
+        $worksheet->getColumnDimension(getNameFromNumber($DEPT_CODE + 1))->setWidth(15);
+        $worksheet->getColumnDimension(getNameFromNumber($DIVISION + 1))->setWidth(15);
+        $worksheet->getColumnDimension(getNameFromNumber($ROLE + 1))->setWidth(30);
+        $worksheet->getColumnDimension(getNameFromNumber($ACCOUNT + 1))->setWidth(15);
+        $worksheet->getColumnDimension(getNameFromNumber($PROD_DATE + 1))->setWidth(15);
+        $worksheet->getColumnDimension(getNameFromNumber($STATUS + 1))->setWidth(10);
+        $worksheet->getColumnDimension(getNameFromNumber($HIRED_DATE + 1))->setWidth(10);
+        $worksheet->getColumnDimension(getNameFromNumber($WAVE + 1))->setWidth(8);
+        $worksheet->getColumnDimension(getNameFromNumber($EMAIL + 1))->setWidth(30);
+        $worksheet->getColumnDimension(getNameFromNumber($GENDER + 1))->setWidth(10);
+        $worksheet->getColumnDimension(getNameFromNumber($BDAY + 1))->setWidth(10);
+
+        $row = 2;
+        foreach ($employees as $index => $value) {
+
+            $worksheet->getCell(getNameFromNumber($COUNT + 1) . $row )->setValue($row-1);
+            $worksheet->getCell(getNameFromNumber($EID + 1) . $row )->setValue($value->eid);
+            $worksheet->getCell(getNameFromNumber($LAST_NAME + 1) . $row )->setValue($value->last_name);
+            $worksheet->getCell(getNameFromNumber($FIRST_NAME + 1) . $row )->setValue($value->first_name);
+            $worksheet->getCell(getNameFromNumber($FULLNAME + 1) . $row )->setValue($value->first_name." ".$value->last_name);
+            $worksheet->getCell(getNameFromNumber($ROLE + 1) . $row )->setValue($value->position_name);
+            $worksheet->getCell(getNameFromNumber($SUPERVISOR + 1) . $row )->setValue($value->supervisor_name);
+            $worksheet->getCell(getNameFromNumber($MANAGER + 1) . $row )->setValue($value->manager_name);
+            $worksheet->getCell(getNameFromNumber($DIVISION + 1) . $row )->setValue($value->division_name);
+            $worksheet->getCell(getNameFromNumber($DEPT + 1) . $row )->setValue($value->team_name);
+            $worksheet->getCell(getNameFromNumber($DEPT_CODE + 1) . $row )->setValue($value->dept_code);
+            
+            
+
+            $account = ElinkAccount::find($value->account_id);
+            if ($account) 
+            {
+                $worksheet->getCell(getNameFromNumber($ACCOUNT + 1) . $row )->setValue($account->account_name);
+            }
+            
+            $civil_status = $value->civil_status == 1 ? "Single" : (
+                $value->civil_status == 2 ? "Married" : (
+                    $value->civil_status == 3 ? "Separated" : (
+                        $value->civil_status == 4 ? "Anulled" : "Divorced"
+                    )
+                )
+            );
+            $worksheet->getCell(getNameFromNumber($EXT + 1) . $row )->setValue($value->ext);
+            $worksheet->getCell(getNameFromNumber($ALIAS + 1) . $row )->setValue($value->alias);
+            $worksheet->getCell(getNameFromNumber($PROD_DATE + 1) . $row )->setValue(date("F d, Y", strtotime($value->prod_date)));
+            $worksheet->getCell(getNameFromNumber($STATUS + 1) . $row )->setValue($value->deleted_at == NULL && $value->status == 1 ? 'Active' : 'Inactive');
+            $worksheet->getCell(getNameFromNumber($HIRED_DATE + 1) . $row )->setValue(date("F d, Y", strtotime($value->hired_date)));
+            $worksheet->getCell(getNameFromNumber($WAVE + 1) . $row )->setValue($value->wave);
+            $worksheet->getCell(getNameFromNumber($EMAIL + 1) . $row )->setValue($value->email);
+            $worksheet->getCell(getNameFromNumber($GENDER + 1) . $row )->setValue(genderStringValue($value->gender));
+            $worksheet->getCell(getNameFromNumber($BDAY + 1) . $row )->setValue(date("F d, Y", strtotime($value->birth_date)));
+            $worksheet->getCell(getNameFromNumber($CITYADD + 1) . $row )->setValue($value->address);
+            $worksheet->getCell(getNameFromNumber($HOMEADD + 1) . $row )->setValue($value->town_address);
+            $worksheet->getCell(getNameFromNumber($CIVILSTAT + 1) . $row )->setValue($civil_status);
+            $worksheet->getCell(getNameFromNumber($CONTACTNUM + 1) . $row )->setValue($value->contact_number);
+            $worksheet->getCell(getNameFromNumber($INCASECON + 1) . $row )->setValue($value->em_con_name);
+            $worksheet->getCell(getNameFromNumber($INCASEREL + 1) . $row )->setValue($value->em_con_rel);
+            $worksheet->getCell(getNameFromNumber($INCASERELCON + 1) . $row )->setValue($value->em_con_num);
+            $worksheet->getCell(getNameFromNumber($INCASERELADD + 1) . $row )->setValue($value->em_con_address);
+            $worksheet->getCell(getNameFromNumber($SSS + 1) . $row )->setValue($value->sss);
+            $worksheet->getCell(getNameFromNumber($PHILHEALTH + 1) . $row )->setValue($value->philhealth);
+            $worksheet->getCell(getNameFromNumber($HMDF + 1) . $row )->setValue($value->pagibig);
+            
+
+            $row++;
+        }
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, "Xlsx");
+        $timestamp = date('m_d_Y_G_i');
+        $writer->save("./public/excel/report/report". $timestamp . ".xlsx");
+
+        $file_name = 'report'.$timestamp.'.xlsx';
+
+        return redirect('public/excel/report/' . $file_name);
+    }
+
+    public function exportdownload_2020_08_19() {
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $worksheet = $spreadsheet->getActiveSheet();
+        //$employees = User::allExceptSuperAdmin()->get();
+        $employees = DB::table('employee_info')
+            ->leftJoin('employee_info_details','employee_info.id','=','employee_info_details.employee_id')
+            ->where('employee_info.eid','!=','--')
+            ->get();
         $COUNT = 0;
         $EID = 1;
         $EXT = 2;
@@ -340,6 +506,17 @@ class ExportImportRepository implements RepositoryInterface
         $EMAIL = 18;
         $GENDER = 19;
         $BDAY = 20;
+        $CITYADD = 21;
+        $HOMEADD = 22;
+        $CIVILSTAT = 23;
+        $CONTACTNUM = 24;
+        $INCASECON = 25;
+        $INCASEREL = 26;
+        $INCASERELCON = 27;
+        $INCASERELADD = 28;
+        $SSS = 29;
+        $PHILHEALTH = 30;
+        $HMDF = 31;
 
         $worksheet->getCell(getNameFromNumber($COUNT + 1) . 1 )->setValue('Count'); 
         $worksheet->getCell(getNameFromNumber($EID + 1) . 1 )->setValue('EID');
@@ -362,6 +539,17 @@ class ExportImportRepository implements RepositoryInterface
         $worksheet->getCell(getNameFromNumber($EMAIL + 1) . 1 )->setValue('Email');
         $worksheet->getCell(getNameFromNumber($GENDER + 1 ) . 1 )->setValue('Gender');
         $worksheet->getCell(getNameFromNumber($BDAY + 1) . 1 )->setValue('Bday');
+        $worksheet->getCell(getNameFromNumber($CITYADD + 1) . 1 )->setValue('Address');
+        $worksheet->getCell(getNameFromNumber($HOMEADD + 1) . 1 )->setValue('Home Adress');
+        $worksheet->getCell(getNameFromNumber($CIVILSTAT + 1) . 1 )->setValue('Civil Stat');
+        $worksheet->getCell(getNameFromNumber($CONTACTNUM + 1) . 1 )->setValue('Number');
+        $worksheet->getCell(getNameFromNumber($INCASECON + 1) . 1 )->setValue('Contact Person');
+        $worksheet->getCell(getNameFromNumber($INCASEREL + 1) . 1 )->setValue('Relationship');
+        $worksheet->getCell(getNameFromNumber($INCASERELCON + 1) . 1 )->setValue('Number');
+        $worksheet->getCell(getNameFromNumber($INCASERELADD + 1) . 1 )->setValue('Address');
+        $worksheet->getCell(getNameFromNumber($SSS + 1) . 1 )->setValue('SSS');
+        $worksheet->getCell(getNameFromNumber($PHILHEALTH + 1) . 1 )->setValue('Philhealth');
+        $worksheet->getCell(getNameFromNumber($HMDF + 1) . 1 )->setValue('HMDF');
 
         $worksheet->getColumnDimension(getNameFromNumber($COUNT + 1))->setWidth(7);
         $worksheet->getColumnDimension(getNameFromNumber($EID + 1))->setWidth(20);
@@ -394,7 +582,7 @@ class ExportImportRepository implements RepositoryInterface
             $worksheet->getCell(getNameFromNumber($ALIAS + 1) . $row )->setValue($value->alias);
             $worksheet->getCell(getNameFromNumber($LAST_NAME + 1) . $row )->setValue($value->last_name);
             $worksheet->getCell(getNameFromNumber($FIRST_NAME + 1) . $row )->setValue($value->first_name);
-            $worksheet->getCell(getNameFromNumber($FULLNAME + 1) . $row )->setValue($value->fullname());
+            $worksheet->getCell(getNameFromNumber($FULLNAME + 1) . $row )->setValue($value->first_name." ".$value->last_name);
             $worksheet->getCell(getNameFromNumber($SUPERVISOR + 1) . $row )->setValue($value->supervisor_name);
             $worksheet->getCell(getNameFromNumber($MANAGER + 1) . $row )->setValue($value->manager_name);
             $worksheet->getCell(getNameFromNumber($DEPT + 1) . $row )->setValue($value->team_name);
@@ -407,14 +595,33 @@ class ExportImportRepository implements RepositoryInterface
             {
                 $worksheet->getCell(getNameFromNumber($ACCOUNT + 1) . $row )->setValue($account->account_name);
             }
-
-            $worksheet->getCell(getNameFromNumber($PROD_DATE + 1) . $row )->setValue($value->prodDate());
+            
+            $civil_status = $value->civil_status == 1 ? "Single" : (
+                $value->civil_status == 2 ? "Married" : (
+                    $value->civil_status == 3 ? "Separated" : (
+                        $value->civil_status == 4 ? "Anulled" : "Divorced"
+                    )
+                )
+            );
+            $worksheet->getCell(getNameFromNumber($PROD_DATE + 1) . $row )->setValue(date("F d, Y", strtotime($value->prod_date)));
             $worksheet->getCell(getNameFromNumber($STATUS + 1) . $row )->setValue($value->status == 1 ? 'Active' : 'Inactive');
-            $worksheet->getCell(getNameFromNumber($HIRED_DATE + 1) . $row )->setValue($value->dateHired());
+            $worksheet->getCell(getNameFromNumber($HIRED_DATE + 1) . $row )->setValue(date("F d, Y", strtotime($value->hired_date)));
             $worksheet->getCell(getNameFromNumber($WAVE + 1) . $row )->setValue($value->wave);
             $worksheet->getCell(getNameFromNumber($EMAIL + 1) . $row )->setValue($value->email);
             $worksheet->getCell(getNameFromNumber($GENDER + 1) . $row )->setValue(genderStringValue($value->gender));
-            $worksheet->getCell(getNameFromNumber($BDAY + 1) . $row )->setValue($value->birthDate());
+            $worksheet->getCell(getNameFromNumber($BDAY + 1) . $row )->setValue(date("F d, Y", strtotime($value->birth_date)));
+            $worksheet->getCell(getNameFromNumber($CITYADD + 1) . $row )->setValue($value->address);
+            $worksheet->getCell(getNameFromNumber($HOMEADD + 1) . $row )->setValue($value->town_address);
+            $worksheet->getCell(getNameFromNumber($CIVILSTAT + 1) . $row )->setValue($civil_status);
+            $worksheet->getCell(getNameFromNumber($CONTACTNUM + 1) . $row )->setValue($value->contact_number);
+            $worksheet->getCell(getNameFromNumber($INCASECON + 1) . $row )->setValue($value->em_con_name);
+            $worksheet->getCell(getNameFromNumber($INCASEREL + 1) . $row )->setValue($value->em_con_rel);
+            $worksheet->getCell(getNameFromNumber($INCASERELCON + 1) . $row )->setValue($value->em_con_num);
+            $worksheet->getCell(getNameFromNumber($INCASERELADD + 1) . $row )->setValue($value->em_con_address);
+            $worksheet->getCell(getNameFromNumber($SSS + 1) . $row )->setValue($value->sss);
+            $worksheet->getCell(getNameFromNumber($PHILHEALTH + 1) . $row )->setValue($value->philhealth);
+            $worksheet->getCell(getNameFromNumber($HMDF + 1) . $row )->setValue($value->pagibig);
+            
 
             $row++;
         }

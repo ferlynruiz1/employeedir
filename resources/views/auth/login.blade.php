@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/png" href="http://www.elink.com.ph/wp-content/uploads/2016/01/elink-logo-site.png">
         <title>Elink Employee Directory | Login</title>
-        <link href="{{ asset('public/css/css.css')}}" rel="stylesheet">
+        <link href="{{ asset('./css/css.css')}}" rel="stylesheet">
         <style>
             html, body {
                 background-color: #fff;
@@ -16,7 +16,7 @@
                 height: 100vh;
                 margin: 0;
                 background-size: cover;
-                background-image: url({{asset('public/img/blue.jpg')}});
+                background-image: url({{asset('./img/blue.jpg')}});
                 background-repeat: no-repeat;
 
             }
@@ -105,8 +105,8 @@
     <body>
         <div class="flex-center position-ref full-height">
             <div style="margin: 0 auto; width: 100%;text-align: center; padding-top: 180px">
-                <img src="{{ asset('public/img/elink-logo-site.png')}}" style="width: 80px; margin: 0 auto !important;">
-                <h1 style="color: #0C59A2; margin-top: -8px;">EMPLOYEE <span style="color: white">DIRECTORY</span></h1>
+                <img src="{{ asset('./img/elink-logo-site.png')}}" style="width: 80px; margin: 0 auto !important;">
+                <h1 style="color: #0C59A2; margin-top: -8px;">eLink  F A L C O N&nbsp;&nbsp;<span style="color: white">∞&nbsp;&nbsp;HR Portal</span></h1>
             </div>
             <div class="content">
                 <div style="color: white;">
@@ -136,7 +136,7 @@
                         <div class="form-group btn-holder">
                             <button class="button flat" name="submit" style="width: 106%;padding: 12px 12px 12px 12px;">
                                 <span class="icon">
-                                    <img src="{{ asset('public/img/arrow-right.gif')}}" alt="→">
+                                    <img src="{{ asset('./img/arrow-right.gif')}}" alt="→">
                                 </span> 
                                 Login
                             </button>

@@ -4,30 +4,31 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>eLink's Employee Directory | @yield('title')</title>
+    <title>eLink Falcon - HR Portal | @yield('title')</title>
     <link rel="icon" type="image/png" href="http://www.elink.com.ph/wp-content/uploads/2016/01/elink-logo-site.png">
-    <link href="{{ asset('public/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('public/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('public/css/datepicker3.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('public/css/styles.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('public/css/custom.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('public/css/jquery.dataTables.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('public/css/select2.min.css')}}" rel="stylesheet">
-    <link href="{{ asset('public/css/tagify.css')}}" rel="stylesheet">
-    <link href="{{ asset('public/css/css.css')}}" rel="stylesheet">
-    <link href="{{ asset('public/css/theme-midnight.css')}}" rel="stylesheet">
+    <link href="{{ asset('./css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('./css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('./css/datepicker3.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('./css/styles.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('./css/custom.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('./css/jquery.dataTables.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('./css/select2.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('./css/tagify.css')}}" rel="stylesheet">
+    <link href="{{ asset('./css/css.css')}}" rel="stylesheet">
+    <link href="{{ asset('./css/theme-midnight.css')}}" rel="stylesheet">
 
-    <script src="{{ asset('public/js/jquery-1.11.1.min.js')}}"></script>
+    <script src="{{ asset('./js/jquery-1.11.1.min.js')}}"></script>
 
-    <script type="text/javascript" src="{{ asset('public/js/jquery.bootstrap-growl.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('./js/jquery.bootstrap-growl.min.js') }}"></script>
 
     <!-- FROALA EDITOR -->
-    <link rel="stylesheet" href="{{ asset('public/css/froala_editor/froala_editor.css')}}">
-    <link rel="stylesheet" href="{{ asset('public/css/froala_editor/froala_style.css')}}">
-    <link rel="stylesheet" href="{{ asset('public/css/froala_editor/plugins/emoticons.css')}}">
+    <link rel="stylesheet" href="{{ asset('./css/froala_editor/froala_editor.css')}}">
+    <link rel="stylesheet" href="{{ asset('./css/froala_editor/froala_style.css')}}">
+    <link rel="stylesheet" href="{{ asset('./css/froala_editor/plugins/emoticons.css')}}">
 
-    <link rel="stylesheet" href="{{ asset('public/css/bootstrap-datetimepicker.min.css')}}" />
-    <link rel="stylesheet" href="{{ asset('public/css/pages/' . request()->path() . '.css')}}" />
+    <link rel="stylesheet" href="{{ asset('./css/bootstrap-datetimepicker.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('./css/jquery-ui.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('./css/pages/' . request()->path() . '.css')}}" />
     @yield('head')
 
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
@@ -41,10 +42,11 @@
                 </button>
                 <a class="navbar-brand" href="{{url('/home')}}">
                     <span>
-                        <img src="{{ asset('public/img/elink-logo-site.png')}}" style="width: 40px; margin-top: -10px">
-                        &nbsp;Employee
+                        <img src="{{ asset('./img/elink-logo-site.png')}}" style="width: 40px; margin-top: -10px">
+                        &nbsp;eLink&nbsp; F A L C O N&nbsp;&nbsp;
                     </span>
-                    Directory
+                    ∞&nbsp;&nbsp; HR Portal&nbsp;&nbsp; 
+                    <img src="{{ asset('./img/falcon-logo.png')}}" style="width: 30px; margin-top: -10px; float: right; padding-top: 7px;">
                 </a>
                 <ul class="nav navbar-top-links navbar-right">
                     @guest
@@ -123,30 +125,31 @@
             </div>
         </div>
     </div>  <!--/.main-->
-    <script type="text/javascript" src="{{ asset('public/js/bootstrap.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/js/chart.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/js/chart-data.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/js/easypiechart.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/js/easypiechart-data.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/js/bootstrap-datepicker.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/js/jquery.dataTables.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/js/jquery.validate.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/js/dataTables.responsive.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/js/select2.full.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/js/moment.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/bootstrap/js/transition.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/bootstrap/js/collapse.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/js/bootstrap-datetimepicker.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/js/loadingoverlay.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/chart.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/chart-data.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/easypiechart.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/easypiechart-data.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/bootstrap-datepicker.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/jquery.dataTables.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/jquery.validate.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/dataTables.responsive.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/select2.full.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/moment.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./bootstrap/js/transition.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./bootstrap/js/collapse.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/bootstrap-datetimepicker.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/loadingoverlay.min.js')}}"></script>
 
-    <script type="text/javascript" src="{{ asset('public/js/global.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/js/custom.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/global.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/custom.js')}}"></script>
 
-    <script type="text/javascript" src="{{ asset('public/js/froala_editor/froala_editor.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/js/froala_editor/plugins/emoticons.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/js/froala_editor/plugins/link.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/js/tagify.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('public/js/jQuery.tagify.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/froala_editor/froala_editor.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/froala_editor/plugins/emoticons.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/froala_editor/plugins/link.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/tagify.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/jQuery.tagify.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('./js/jquery-ui.min.js')}}"></script>
 
 <!-- Modal Success -->
    <div id="messageModal" class="modal fade" role="dialog">

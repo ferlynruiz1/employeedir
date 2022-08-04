@@ -12,7 +12,7 @@
 		@elseif($leave_request->approved_by_signed_date != null)
 		{{ $leave_request->employee->manager->fullName2() }}
 		@endif
-		&nbsp;approved your {{$leave_request->leaveDays() }} leave request (<b>{{ prettyDate($leave_request->leave_date_from) }}</b> - <b>{{ prettyDate($leave_request->leave_date_to ) }}</b>).
+		&nbsp;approved your {{$leave_request->leaveDays() }} leave request.
 		<br>
 		<br>
 		<br>

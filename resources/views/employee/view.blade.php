@@ -30,6 +30,7 @@ Employee Information
     
     
 </style>
+
 <div id="view_profile">
      <?php $class = "col-md-12";?>
      @if(Auth::user()->id != $employee->id)
@@ -84,10 +85,18 @@ Employee Information
                                 <p class="employee-details-value name-format">{{ $employee->middle_name != "--" ?$employee->middle_name : '' }}</p>
                             </div>
                         </div>
-                        <div class="col-md-2 min-widt-200">
+                        <div class="col-md-3 min-widt-200">
                             <div class="form-group">
                                 <label>Last Name</label>
                                 <p class="employee-details-value name-format">{{ $employee->last_name}}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 min-widt-200">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <?php $gender = [1 => 'Single', 2 => "Married", 3 => "Separated", 4 => "Annulled", 5 => "Divorced"]; ?>
+                                <p class="employee-details-value name-format">{{ $gender[$employee->civil_status] }}</p>
                             </div>
                         </div>
                     </div>
@@ -104,25 +113,61 @@ Employee Information
                                 <p class="employee-details-value name-format">{{ $employee->alias}}</p>
                             </div>
                         </div>
-                        <!-- <div class="col-md-3">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Gender</label>
                                 <p class="employee-details-value">{{ $employee->gender()}}</p>
                             </div>
-                        </div> -->
+                        </div>
                         <div class="col-md-4 min-widt-200">
                             <div class="form-group">
                                 <label>Birthdate</label>
                                 <p class="employee-details-value">{{ $employee->prettybirthdate()}}</p>
                             </div>
                         </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Address</label>
-                                <p class="employee-details-value" style="word-break: break-all;">{{ $employee->address }}</p>
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>City Address</label>
+                                    <p class="employee-details-value" style="word-break: break-all;">{{ $employee->address }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Home Town Address</label>
+                                    <p class="employee-details-value" style="word-break: break-all;">{{ $employee_details->town_address }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Contact Number</label>
+                                    <p class="employee-details-value" style="word-break: break-all;">{{ $employee->contact_number }}</p>
+                                </div>
                             </div>
                         </div>
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>In case of emergency, please notify</label>
+                                    <p class="employee-details-value" style="word-break: break-all;">{{ $employee_details->em_con_name }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Relationship</label>
+                                    <p class="employee-details-value" style="word-break: break-all;">{{ $employee_details->em_con_rel }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Contact Number</label>
+                                    <p class="employee-details-value" style="word-break: break-all;">{{ $employee_details->em_con_num }}</p>
+                                </div>
+                            </div>
+                        </div>
+               
                     </div>
                     <br>
                 </div>

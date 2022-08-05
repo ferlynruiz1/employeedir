@@ -423,28 +423,102 @@ Employee Information / Edit
     
     $(".reg_div_").hide();
     
-    $(".add-linkee").click(function(e){
-        var template = document.getElementById("tmpl_addLinkee").innerHTML;
-        var js_tmpl = "";
-        js_tmpl = template.replace(/~id~/g,ctr_linkee);
-        $("#u_access-div").append(js_tmpl);
-        $("#sl_linkee_" + ctr_linkee).select2();
-        console.log('You Clicked Here');
-        ctr_linkee++;
-        e.preventDefault();
-    });
+    // $(".add-linkee").click(function(e){
+    //     var template = document.getElementById("tmpl_addLinkee").innerHTML;
+    //     var js_tmpl = "";
+    //     js_tmpl = template.replace(/~id~/g,ctr_linkee);
+    //     $("#u_access-div").append(js_tmpl);
+    //     $("#sl_linkee_" + ctr_linkee).select2();
+    //     console.log('You Clicked Here');
+    //     ctr_linkee++;
+    //     e.preventDefault();
+    // });
     
-    $(document).on('change', '.process_linkee', function() {
-        var emp = $("#active-employee-id").val();
-        var val = $(this).val();
-        var row = $(this).data('val');
-        var obj = {adtl_linker : emp, adtl_linkee : val, adtl_row: row};
+    // $(document).on('change', '.process_linkee', function() {
+    //     var emp = $("#active-employee-id").val();
+    //     var val = $(this).val();
+    //     var row = $(this).data('val');
+    //     var obj = {adtl_linker : emp, adtl_linkee : val, adtl_row: row};
+    //     console.log(row)
         
-        $.get("/process-linkee",obj,function(data){
-            console.log(data);
-        },"json");
-        console.log(obj);
+    //     $.get("/process-linkee",obj,function(data){
+    //         console.log(data);
+    //     },"json");
+    //     console.log(obj);
+    // });
+
+
+    const createNodeUsingTemplate = ({data}) => {
+        let cloneTemplate = document.getElementById('linkee_template').content.cloneNode(true)
+        let app = document.getElementById('linkees');
+
+        let div = cloneTemplate.querySelector('div');
+        let span = cloneTemplate.querySelector('span');
+        let button = cloneTemplate.querySelector('button');
+        let input = cloneTemplate.querySelector('input');
+
+        div.id = "linkee-"+data.id
+        input.name = "linkee-"+data.id
+        input.value = data.id
+        span.innerText = data.first_name +" "+data.last_name
+        app.appendChild(cloneTemplate)
+        button.setAttribute("onclick",`deleteNodeAndData(document.getElementById('${div.id}'))`)
+        // button.addEventListener('click', deleteNodeAndData(document.getElementById(div.id)))
+    }
+
+    const deleteNodeAndData = async(node) => {
+        let input = node.querySelector('input')
+
+        let confirmmed = confirm('Are you sure you would like to remove this linkee?')
+        if(confirmmed){
+            let response = await fetch('{{route('remove-linkees')}}',{
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                '_token': '{{csrf_token()}}',
+                'adtl_linkee': input.value,
+                'adtl_linker': '{{$employee->id}}'
+            })
+        });
+
+            response = await response.json()
+            console.log(response);
+            if(response.data){
+                node.remove();
+            }
+        }
+        
+
+        // node.remove()
+    }
+
+    document.getElementById('addLinkeeBtn').addEventListener('click', async(e) => {
+        e.preventDefault();
+
+        let linkee = document.getElementById('linkees_list').value;
+
+        let response = await fetch('{{route('add-linkees')}}', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                '_token': '{{csrf_token()}}',
+                'adtl_linker': '{{$employee->id}}',
+                'adtl_linkee': linkee,
+                'adtl_row': '1',
+            })
+        });
+
+        response = await response.json()
+        if(response.data){
+            createNodeUsingTemplate(response)
+            // console.log(true)
+        }
     });
+
     
     function removeThisLinkee(id){
         console.log(id);

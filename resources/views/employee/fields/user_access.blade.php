@@ -59,30 +59,26 @@
             <div class="form-group">
             
                 <label>Additional Linkees</label>
-                <div class="my-2 d-flex gap-2  p-2" style="width: 100%;flex-wrap: wrap;">
+                <div class="my-2 d-flex gap-2  p-2" style="width: 100%;flex-wrap: wrap;" id="linkees">
                     @foreach ($linkees as $linkee)
-                        <div class="border border-success rounded-pill p-2" style="font-size: 12px; min-width:100px;">
-                            {{$linkee->first_name}} {{$linkee->last_name}}
-                            <span>x</span>
+                        <div class="border border-success rounded-pill p-2" id="linkee-{{$linkee->id}}" style="font-size: 12px; min-width:100px;">
+                            <input type="hidden" name="linkee-{{$linkee->id}}" value="{{$linkee->id}}">
+                            <span>{{$linkee->first_name}} {{$linkee->last_name}}</span>
+                            <button type="button" onclick="deleteNodeAndData(document.getElementById('linkee-{{$linkee->id}}'))">x</button>
                         </div>
                     @endforeach
                 </div>
 
-                <div class="d-flex gap-2">
+                <div class="d-flex gap-2" style="max-width: 80%">
 
-                    <select name="adtl_linkees[]" data-val="1" class="select2 process_linkee form-control">
-                        <option value="0">Select a Linkee</option>
-                        <?php
-                        foreach($supervisors as $s):
-                        ?>
-                        <option value="{{ $s->id }}">{{$s->fullname()}}</option>
-                        <?php
-                        endforeach;
-                        ?>
+                    <select name="adtl_linkees" id="linkees_list" data-val="1" class="select2 process_linkee form-control">
+                        <option value="">Select a Linkee</option>
+                        @foreach($supervisors as $s)
+                            <option value="{{ $s->id }}">{{$s->fullname()}}</option>
+                        @endforeach
                     </select>
-                    <input type="hidden" id="hidden_id_1" value="">
                     <div class="">
-                        <button class="btn btn-primary add-linkee">Add a Linkee</button>
+                        <button type="button" id="addLinkeeBtn" class="btn btn-primary ">Add a Linkee</button>
                     </div>
                 </div>
             </div>
@@ -90,3 +86,11 @@
         
     </div>
 </div>
+
+<template id="linkee_template">
+    <div class="border border-success rounded-pill p-2" id="linkee-" style="font-size: 12px; min-width:100px;">
+        <input type="hidden" name="linkee-" value="">
+        <span></span>
+        <button type="button">x</button>
+    </div>
+</template>

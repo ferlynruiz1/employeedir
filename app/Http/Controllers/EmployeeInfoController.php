@@ -25,9 +25,11 @@ use App\TempDetails;
 use App\MovementsTransfer;
 use App\Mail\UpdateInfo;
 use App\Mail\ApproveInformation;
+use App\AdtlLinkee;
 use Response;
 use File;
 use DB;
+use Illuminate\Support\Facades\Validator;
 
 class EmployeeInfoController extends Controller
 {
@@ -54,42 +56,81 @@ class EmployeeInfoController extends Controller
    }
    
    public function processLinkees(Request $req){
+        $validator = Validator::make($req->all(),[
+            "adtl_linkee" => 'required'
+        ]);
+
+        if($validator->fails()){
+            return ['data' => false];
+        }
+
         $adtl_linker = $req->get('adtl_linker');
         $adtl_linkee = $req->get('adtl_linkee');
         $adtl_row = $req->get('adtl_row');
         $adtl_added_by = Auth::user()->id;
         $adtl_date_added = date("Y-m-d H:i:s");
        
-        $stat = DB::select("
-            SELECT 
-                adtl_id
-            FROM
-                adtl_linkees
-            WHERE
-                adtl_status = 1 AND adtl_linker = $adtl_linker
-                    AND adtl_row = $adtl_row;
-        ");
-        
-        if(count($stat) > 0){/* Update an existing linkee in a row */
-            $id = $stat[0]->adtl_id;
-            $status = DB::update("
-                UPDATE 
-                    `adtl_linkees` 
-                SET 
-                    `adtl_linker` = '$adtl_linker', `adtl_linkee` = '$adtl_linkee', `adtl_row` = '$adtl_row', `adtl_added_by` = '$adtl_added_by' 
-                WHERE 
-                    `adtl_linkees`.`adtl_id` = $id;
-            ");
-        }else{/* Create a Linkee in a row */
-            $status = DB::insert("
-                INSERT INTO  `adtl_linkees` 
-                    (`adtl_id`, `adtl_linker`, `adtl_linkee`, `adtl_row`, `adtl_added_by`, `adtl_date_added`, `adtl_status`) 
-                VALUES 
-                    (NULL, '$adtl_linker', '$adtl_linkee', '$adtl_row', '$adtl_added_by', '$adtl_date_added', '1');
-            ");
+        $exist = AdtlLinkee::where('adtl_linker', $adtl_linker)->where('adtl_linkee', $adtl_linkee)->first();
+
+        if(!$exist){
+            $linkee = AdtlLinkee::create([
+                'adtl_linker' => $adtl_linker,
+                'adtl_linkee' => $adtl_linkee,
+                'adtl_row' => 1,
+                'adtl_added_by' => $adtl_added_by,
+                'adtl_date_added' => $adtl_date_added,
+                'adtl_status' => 1
+            ]);
+
+            $linkeeInformation = User::where('id', $linkee->adtl_linkee)->first();
         }
+        return ['data' => $linkeeInformation ?? false];
+
         
-        return ['status' => $status];
+        // $stat = DB::select("
+        //     SELECT 
+        //         adtl_id
+        //     FROM
+        //         adtl_linkees
+        //     WHERE
+        //         adtl_status = 1 AND adtl_linker = $adtl_linker
+        //             AND adtl_row = $adtl_row;
+        // ");
+        
+        // if(count($stat) > 0){/* Update an existing linkee in a row */
+        //     $id = $stat[0]->adtl_id;
+        //     $status = DB::update("
+        //         UPDATE 
+        //             `adtl_linkees` 
+        //         SET 
+        //             `adtl_linker` = '$adtl_linker', `adtl_linkee` = '$adtl_linkee', `adtl_row` = '$adtl_row', `adtl_added_by` = '$adtl_added_by' 
+        //         WHERE 
+        //             `adtl_linkees`.`adtl_id` = $id;
+        //     ");
+        // }else{/* Create a Linkee in a row */
+        
+        // }
+        
+   }
+
+   public function deleteLinkees(Request $request)
+   {
+        $validator = Validator::make($request->all(),[
+            "adtl_linkee" => 'required'
+        ]);
+
+        if($validator->fails()){
+            return ['data' => false];
+        }
+
+        $linkee = AdtlLinkee::where('adtl_linkee',$request->adtl_linkee)->where('adtl_linker', $request->adtl_linker)->first();
+
+        if($linkee){
+            DB::table('adtl_linkees')->where('adtl_id', $linkee->adtl_id)->delete();
+            return ['data' => true];
+        }
+
+        return ['data' => false];
    }
 
     /**

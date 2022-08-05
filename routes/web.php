@@ -122,7 +122,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('leave-credits', 'LeaveController@credits');
     Route::get('time-keeping', 'TimeKeepingController@personalTimeKeeping');
     Route::get('sup-view', 'TimeKeepingController@supView');
-    Route::get('process-linkee', 'EmployeeInfoController@processLinkees');
+    Route::post('process-linkee', 'EmployeeInfoController@processLinkees')->name('add-linkees');
+    Route::post('delete-linkee', 'EmployeeInfoController@deleteLinkees')->name('remove-linkees');
     Route::get('coaching-session', 'CoachingController@mainCoaching');
     Route::get('linkee-pending', 'CoachingController@forAcknowledgement');
     Route::get('quick-link/{id}', 'CoachingController@viewQL');

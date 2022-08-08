@@ -1647,7 +1647,6 @@ class CoachingController extends Controller{
                lm.lnk_acknw = 0 AND lm.lnk_status = 1
                    AND lm.lnk_linker = $linker
         ");
-        
         return view("coaching.pending")->with("pending",$pending)->with("management",$this->isManagement());
     }
     
@@ -2826,7 +2825,7 @@ class CoachingController extends Controller{
                     $lm->lnk_linker = Auth::user()->id;
                     $lm->lnk_linkee = $req->post("lnk_linkee");
                     $lm->lnk_type = $req->post("lnk_type");
-                    $lm->lnk_acknw = 1;
+                    $lm->lnk_acknw = 0;
                     $lm->save();
                     
                     //Create GTKY or Save GTKY Session

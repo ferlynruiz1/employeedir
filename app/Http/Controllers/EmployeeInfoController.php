@@ -198,7 +198,7 @@ class EmployeeInfoController extends Controller
         if (isset($employee)) {
             return view('employee.edit')
                 ->with('employee', $employee)
-                ->with('supervisors', User::all())
+                ->with('supervisors', User::where('id', '<>', '1')->get())
                 ->with('departments', EmployeeDepartment::all())
                 ->with('accounts', ElinkAccount::all())
                 ->with('details',$obj)

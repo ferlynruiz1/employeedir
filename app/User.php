@@ -282,9 +282,16 @@ class User extends Authenticatable
                 AND deleted_at IS NULL)
                 OR (al.adtl_linker = $this->id
                 AND ei.id = al.adtl_linkee)
+                
         GROUP BY ei.id,ei.first_name,ei.last_name,ei.email
         ORDER BY last_name ASC;
     ");
+
+        // $names = DB::table('employee_info')
+        //     ->join('adtl_linkees', 'employee_info.id', '=', 'adtl_linkees.adtl_linker')
+        //     ->select('employee_info.*')
+        //     ->where('employee_info.id' , '<>', 1)
+        //     ->get();
 
         return $main_names;
     }

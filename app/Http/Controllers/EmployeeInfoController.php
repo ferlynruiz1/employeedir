@@ -649,6 +649,7 @@ class EmployeeInfoController extends Controller
         if (isset($employee)) {
             $obj = EmployeeInfoDetails::where('employee_id',$id)->get();
              $dep = EmployeeDependents::where('employee_num',$id)->where('status',1)->get();
+            $linkees = $employee->getLinkees();
             if(count($obj) > 0)
                 $details = $obj[0];
             else
@@ -662,6 +663,7 @@ class EmployeeInfoController extends Controller
                 return view('employee.view-admin')           
                     ->with('employee', $employee)
                     ->with('supervisors', User::all())
+                    ->with('linkees', $linkees)
                     ->with('departments', EmployeeDepartment::all())
                     ->with('accounts', ElinkAccount::all())
                     ->with('details',$details)

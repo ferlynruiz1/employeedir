@@ -54,4 +54,16 @@
           <option value="4" {{ $employee->employee_category == 4 ? 'selected' : ''}}>Rank</option>
       </select>
   </div>
+  <div class="my-2">
+      <small>Linkees</small>
+      <div class="my-2 d-flex gap-2  p-2" style="width: 100%;flex-wrap: wrap;" id="linkees">
+        @foreach ($linkees as $linkee)
+            <div class="border border-success rounded-pill p-2" id="linkee-{{$linkee->id}}" style="font-size: 12px; min-width:100px;">
+                <input type="hidden" name="linkee-{{$linkee->id}}" value="{{$linkee->id}}">
+                <span>{{$linkee->first_name}} {{$linkee->last_name}}</span>
+            </div>
+        @endforeach
+  </div>
 </div>
+</div>
+<link rel="stylesheet" href="{{asset('css/custom-bootstrap.css')}}">

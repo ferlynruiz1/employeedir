@@ -25,6 +25,7 @@ Linking Page
                         foreach($linking as $lk):
                         ?>
                         <tr>
+                            
                             <td><?php echo date("F d, Y", strtotime($lk->lnk_date)) ?></td>
                             <td><?php echo $lk->link_type_desc ?></td>
                             <td><?php echo $lk->focus ?></td>

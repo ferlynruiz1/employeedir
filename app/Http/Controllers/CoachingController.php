@@ -789,6 +789,8 @@ class CoachingController extends Controller{
                         gtky.gtk_com_num = '$id'
                     LIMIT 1;
                 ");
+
+            
                 $gtky = $obj[0];
                 $object = [
                     "lnk_date"          => $gtky->lnk_date, 
@@ -800,7 +802,7 @@ class CoachingController extends Controller{
                     "lnk_linkee_email"  => $gtky->lnk_linkee_email,
                     "lnk_type"          => $gtky->lnk_type,
                     "gtk_link_id"       => $gtky->gtk_link_id,
-                    "gtk_com_num"       => $gtky->gtk_com_num,
+                    "gtk_com_num"       => $gtky->gtk_com_num, 
                     "gtk_address"       => $gtky->gtk_address,
                     "gtk_bday"          => $gtky->gtk_bday,
                     "gtk_bplace"        => $gtky->gtk_bplace,
@@ -830,8 +832,12 @@ class CoachingController extends Controller{
             return view('coaching.gtky')
                 ->with("obj",$object)
                 ->with("management",$this->isManagement());
-        }else
-            return "You have no access to perform this action";
+        }else{
+            // return "You have no access to perform this action";
+            $result = DB::table('linking_master')->where('lnk_id', $id)->update(['lnk_acknw' => 1]);
+            return back();
+        }
+            
     }
     
     public function viewGS(Request $req, $id){
@@ -2077,6 +2083,7 @@ class CoachingController extends Controller{
                             WHERE
                                 sda.sda_lnk_id = lm.lnk_id
                             LIMIT 1)
+                    WHEN lm.lnk_type = 5 THEN lm.lnk_id
                     WHEN
                         lm.lnk_type = 6
                     THEN
@@ -2202,6 +2209,7 @@ class CoachingController extends Controller{
                     AND lm.lnk_status = 1
             ORDER BY lm.lnk_id DESC;
         ");
+        // dd($obj);
         return view('coaching.staff')->with('linking',$obj)->with("management",$this->isManagement());
     }
     

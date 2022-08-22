@@ -119,7 +119,7 @@ Route::middleware(['auth'])->group(function(){
     
     Route::get('recommend-request-info/{id}', 'EmployeeInfoController@recommendApproval');
     Route::get('approve-request-info/{id}', 'EmployeeInfoController@approveChangeProfile');
-    Route::get('leave-credits', 'LeaveController@credits');
+    Route::get('leave-credits', 'LeaveController@credits')->name('leave-credits');
     Route::get('time-keeping', 'TimeKeepingController@personalTimeKeeping');
     Route::get('sup-view', 'TimeKeepingController@supView');
     Route::post('process-linkee', 'EmployeeInfoController@processLinkees')->name('add-linkees');

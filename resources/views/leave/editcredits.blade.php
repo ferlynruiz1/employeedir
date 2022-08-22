@@ -7,6 +7,7 @@
     </style>
     <div class="row">
         <div class="col-md-4">
+            <a href="{{route('leave-credits')}}" class="btn btn-primary" style="margin-bottom: 1rem;">Back</a>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Edit Leave Credit
@@ -34,7 +35,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Leave Credit to be Added</label>
-                                    <input type="number" name="leave_credits" id="leave_credits" class="form-control">
+                                    <input type="number" name="leave_credits" id="leave_credits" class="form-control" step="0.01">
                                 </div>
                                 <input type="hidden" class="form-control" value="{{ $employee->id }}" name="employee_id">
                                 <button class="btn btn-primary">Save</button>

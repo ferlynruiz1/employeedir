@@ -39,11 +39,11 @@
                                 <td>{{ number_format($employee->current_credit,1) }}</td>
                                 <td>{{ number_format($employee->used_credit,1) }}</td>
                                 <td>{{ number_format($employee->total_credits,1) }}</td>
-                                <!--
+                                {{-- <!-- --}}
                                 <td>
                                     <a title="Adjust leave credits" href="{{ url('leave/credits') . '/' . $employee->id }}"><i class="fa fa-gear"></i></a>
                                 </td>
-                                -->
+                                {{-- --> --}}
                             </tr>
                             @endforeach
                         </tbody>

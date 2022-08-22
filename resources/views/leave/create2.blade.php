@@ -33,7 +33,7 @@
                                     <th><?php echo date('Y') - 1 ?> PTO<br>Forwarded</th>
                                     <th><?php echo date('Y') ?> PTO<br>Monthly Accrual</th>
                                     <th>Used PTO<br>(Jan-Jun)</th>
-                                    <th><?php echo date('Y') - 1  ?> PTO Expired</th>
+                                    <th>{{ date('Y') - 1 }}PTO Expired</th>
                                     <th>PTO Balance</th>
                                     <th>Used PTO<br>(Jul-Dec)</th>
                                     <th>Current PTO Balance</th>

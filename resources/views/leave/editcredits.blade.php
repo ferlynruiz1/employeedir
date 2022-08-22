@@ -30,9 +30,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Remaining Leave Credits</label>
-                                    <input type="number" class="form-control" value="{{ $employee->leave_credit }}" name="leave_credits">
-                                    <input type="hidden" class="form-control" value="{{ $employee->id }}" name="employee_id">
+                                    <input type="number" class="form-control" disabled value="{{number_format($credits->current_credit, 2)}}">
                                 </div>
+                                <div class="form-group">
+                                    <label for="">Leave Credit to be Added</label>
+                                    <input type="number" name="leave_credits" id="leave_credits" class="form-control">
+                                </div>
+                                <input type="hidden" class="form-control" value="{{ $employee->id }}" name="employee_id">
                                 <button class="btn btn-primary">Save</button>
                             </form>
                         </div>

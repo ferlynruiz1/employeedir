@@ -892,13 +892,31 @@ class LeaveController extends Controller
     }
 
     public function editcredits(Request $request, $employee_id){
-        return view('leave.editcredits')->with('employee', User::find($employee_id));
+        $employee = User::find($employee_id);
+        $credit = DB::select($this->newQuery($employee->id));
+        
+        if(count($credit) > 0){
+            $credits = (object) $credit[0];
+        }
+
+        return view('leave.editcredits', compact('employee', 'credits'));
     }
 
     public function updatecredits(Request $request){
+        
         $employee = User::find($request->employee_id);
-        $employee->leave_credit = $request->leave_credits;
-        if($employee->save()){
+
+        $leave = LeaveCredits::create([
+            'employee_id' => $employee->id,
+            'credit' => $request->leave_credits,
+            'type' => 1,
+            'month' => now()->month,
+            'year' => now()->year,
+            'leave_id' => 0,
+            'status' => 1
+        ]);
+
+        if($leave){
             return back()->with('success', 'Successfully updated leave credits!');
         }else {
             return back()->with('error', 'Something went wrong!');

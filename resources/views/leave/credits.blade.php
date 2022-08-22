@@ -26,6 +26,7 @@
                             <th><?php echo date('Y') ?> PTO<br>Monthly Accrual</th>
                             <th>Used PTO</th>
                             <th>PTO Balance</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -39,11 +40,11 @@
                                 <td>{{ number_format($employee->current_credit,1) }}</td>
                                 <td>{{ number_format($employee->used_credit,1) }}</td>
                                 <td>{{ number_format($employee->total_credits,1) }}</td>
-                                {{-- <!-- --}}
-                                <td>
-                                    <a title="Adjust leave credits" href="{{ url('leave/credits') . '/' . $employee->id }}"><i class="fa fa-gear"></i></a>
-                                </td>
-                                {{-- --> --}}
+                                @if(Auth::user()->isAdmin())
+                                    <td>
+                                        <a title="Adjust leave credits" href="{{ url('leave/credits') . '/' . $employee->id }}"><i class="fa fa-gear"></i></a>
+                                    </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>

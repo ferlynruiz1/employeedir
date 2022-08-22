@@ -908,7 +908,7 @@ class LeaveController extends Controller
 
         $leave = LeaveCredits::create([
             'employee_id' => $employee->id,
-            'credit' => $request->leave_credits,
+            'credit' => $request->leave_credits ?? 0,
             'type' => 1,
             'month' => now()->month,
             'year' => now()->year,

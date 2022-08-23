@@ -198,5 +198,5 @@ Route::post('api/v2/login', 'EmployeeInfoController@loginAPIv2');
 Route::get('api/session', 'EmployeeInfoController@session');
 Route::get('run', 'Controller@run');
 
-
+Route::get('/test', 'TestingController@index');
 

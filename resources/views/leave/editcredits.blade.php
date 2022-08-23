@@ -7,7 +7,7 @@
     </style>
     <div class="row">
         <div class="col-md-4">
-            <a href="{{route('leave-credits')}}" class="btn btn-primary" style="margin-bottom: 1rem;">Back</a>
+            <a href="{{route('expanded.credits')}}" class="btn btn-primary" style="margin-bottom: 1rem;">Back</a>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Edit Leave Credit

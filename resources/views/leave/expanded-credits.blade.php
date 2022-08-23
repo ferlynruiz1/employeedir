@@ -30,6 +30,7 @@
                             <th>PTO Balance<br>(start July)</th>
                             <th>Used PTO<br>(Jul-Dec)</th>
                             <th>Current PTO Balance</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -55,6 +56,11 @@
                                 <td>{{ number_format($balance,1) }}</td>
                                 <td>{{ number_format($employee->used_jul_to_dec,1) }}</td>
                                 <td>{{ $employee->is_regular == 1 ? number_format($balance - $employee->used_jul_to_dec,1) : 0.0 }}</td>
+                                @if(Auth::user()->isAdmin())
+                                    <td>
+                                        <a title="Adjust leave credits" href="{{ url('leave/credits') . '/' . $employee->id }}"><i class="fa fa-gear"></i></a>
+                                    </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>

@@ -146,7 +146,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('download-linking2', 'CoachingController@downloadLinking2');
     Route::get('test-linking', 'CoachingController@testLinking');
     Route::get('has-admin','UtilsController@setThisAdmin');
-    Route::get('expanded-credits', 'LeaveController@leaveCredits');
+    Route::get('expanded-credits', 'LeaveController@leaveCredits')->name('expanded.credits');
     Route::get('expanded-tracker', 'LeaveController@leaveTracker');
     Route::get('past-credits', 'LeaveController@pastCredits');
     Route::get('leave-report', 'LeaveController@reports');

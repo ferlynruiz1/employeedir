@@ -24,11 +24,11 @@ REDIS_PASSWORD=null
 REDIS_PORT=6379
 
 MAIL_DRIVER=smtp
-MAIL_HOST=smtp.gmail.com
-MAIL_PORT=587
-MAIL_USERNAME=elinksysdev@gmail.com
-MAIL_PASSWORD=oknewqljmvszvqxo
-MAIL_ENCRYPTION=tls
+MAIL_HOST=mxserver.readersmagnet.com
+MAIL_PORT=465
+MAIL_USERNAME=no-reply@elink.com.ph
+MAIL_PASSWORD=FhnHsbE.ULgs
+MAIL_ENCRYPTION=ssl
 MAIL_FROM_NAME="eLink HR Portal"
 
 PUSHER_APP_ID=

@@ -302,7 +302,7 @@ class EmployeeInfoController extends Controller
     }
     
     public function downloadInactive(Request $request){
-                $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $worksheet = $spreadsheet->getActiveSheet();
         //$employees = User::allExceptSuperAdmin()->get();
         $employees = $this->model->download_inactive($request);
@@ -340,6 +340,7 @@ class EmployeeInfoController extends Controller
         $SSS = 31;
         $PHILHEALTH = 32;
         $HMDF = 33;
+        $RESIGNATIONDATE = 34;
 
         $worksheet->getCell(getNameFromNumber($COUNT + 1) . 1 )->setValue('Count'); 
         $worksheet->getCell(getNameFromNumber($EID + 1) . 1 )->setValue('EID');
@@ -375,6 +376,7 @@ class EmployeeInfoController extends Controller
         $worksheet->getCell(getNameFromNumber($SSS + 1) . 1 )->setValue('SSS');
         $worksheet->getCell(getNameFromNumber($PHILHEALTH + 1) . 1 )->setValue('Philhealth');
         $worksheet->getCell(getNameFromNumber($HMDF + 1) . 1 )->setValue('HMDF');
+        $worksheet->getCell(getNameFromNumber($RESIGNATIONDATE + 1) . 1 )->setValue('Resignation Date');
 
         $worksheet->getColumnDimension(getNameFromNumber($COUNT + 1))->setWidth(7);
         $worksheet->getColumnDimension(getNameFromNumber($EID + 1))->setWidth(20);
@@ -401,7 +403,6 @@ class EmployeeInfoController extends Controller
 
         $row = 2;
         foreach ($employees as $index => $value) {
-
             $worksheet->getCell(getNameFromNumber($COUNT + 1) . $row )->setValue($row-1);
             $worksheet->getCell(getNameFromNumber($EID + 1) . $row )->setValue($value->eid);
             $worksheet->getCell(getNameFromNumber($LAST_NAME + 1) . $row )->setValue($value->last_name);
@@ -451,7 +452,7 @@ class EmployeeInfoController extends Controller
             $worksheet->getCell(getNameFromNumber($SSS + 1) . $row )->setValue($value->sss);
             $worksheet->getCell(getNameFromNumber($PHILHEALTH + 1) . $row )->setValue($value->philhealth);
             $worksheet->getCell(getNameFromNumber($HMDF + 1) . $row )->setValue($value->pagibig);
-            
+            $worksheet->getCell(getNameFromNumber($RESIGNATIONDATE + 1) . $row )->setValue($value->deleted_at);
 
             $row++;
         }
@@ -507,6 +508,7 @@ class EmployeeInfoController extends Controller
         $PHILHEALTH = 32;
         $HMDF = 33;
 
+
         $worksheet->getCell(getNameFromNumber($COUNT + 1) . 1 )->setValue('Count'); 
         $worksheet->getCell(getNameFromNumber($EID + 1) . 1 )->setValue('EID');
         $worksheet->getCell(getNameFromNumber($LAST_NAME + 1) . 1 )->setValue('Last Name');
@@ -567,7 +569,6 @@ class EmployeeInfoController extends Controller
 
         $row = 2;
         foreach ($employees as $index => $value) {
-
             $worksheet->getCell(getNameFromNumber($COUNT + 1) . $row )->setValue($row-1);
             $worksheet->getCell(getNameFromNumber($EID + 1) . $row )->setValue($value->eid);
             $worksheet->getCell(getNameFromNumber($LAST_NAME + 1) . $row )->setValue($value->last_name);

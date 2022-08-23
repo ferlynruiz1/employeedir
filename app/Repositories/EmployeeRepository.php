@@ -593,7 +593,7 @@ class EmployeeRepository implements RepositoryInterface
             if (Auth::user()->isAdmin()) {
                 $employees = User::separatedEmployees();
 
-                return $employees->where('employee_info.id', '<>', 1) ->leftJoin('employee_info_details','employee_info.id','=','employee_info_details.employee_id')->orderBy('employee_info.last_name', 'ASC')->get();
+                return $employees->select('*')->where('employee_info.id', '<>', 1) ->leftJoin('employee_info_details','employee_info.id','=','employee_info_details.employee_id')->orderBy('employee_info.last_name', 'ASC')->get();
             }
         }
     }

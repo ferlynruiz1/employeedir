@@ -69,7 +69,7 @@
                     <div class="col-md-4">
                         <strong><p>Name: </p></strong>
                         <div class="form-group">
-                            <select name="employee_id" class="form-control" {{ Auth::user()->isAdmin() ? '' : 'readonly' }}>
+                            <select name="employee_id" class="form-control select2" {{ Auth::user()->isAdmin() ? '' : 'readonly' }}>
                                 <option></option>
                                 @foreach($employees as $employee)
                                     <option value="{{$employee->id}}" {{ Auth::user()->id == $employee->id ? 'selected' : '' }} >{{ $employee->fullName2() }}</option>
@@ -270,6 +270,11 @@
 @section('scripts')
 <!-- <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
 <script>tinymce.init({ selector:'textarea', forced_root_block : 'p' });</script> -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/css/datepicker.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script type="text/javascript">
     var leave_credits = Math.floor({{ $balance - $credits->used_jul_to_dec }});
     var usePay = 0;
@@ -283,6 +288,10 @@
     var ctr = 1;
     
     $(document).ready(function(){
+        $('.select2').select2({
+            sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+        });
+        
         $('#opportunity-table').DataTable();
         $("._unplanned").hide();
         console.log(locked_days);

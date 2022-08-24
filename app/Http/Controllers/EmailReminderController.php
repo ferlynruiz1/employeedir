@@ -17,7 +17,6 @@ class EmailReminderController extends Controller
         $employees = User::where('is_regular', 0)->whereNull('deleted_at')->where('id', '<>', 1)->get();
         foreach($employees as $employee)
         {
-            if($employee->id == 3681 || $employee->id == 3689){
                 $hiredDate = Carbon::parse($employee->hired_date)->format('Y-m-d');
                 // convert string date to object carbon
                 $objectDate = Carbon::createFromFormat('Y-m-d', $hiredDate);
@@ -48,7 +47,6 @@ class EmailReminderController extends Controller
                         $data['date'] =$objectDate->addMonths(5)->format('Y-m-d');
                        Mail::to($supervisorEmail)->cc($employee->email ?? $employee->email2)->send(new ProbitionaryEmailNotificationB($data));
                 }
-            }
         }
     }
 }

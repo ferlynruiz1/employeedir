@@ -69,7 +69,7 @@
                     <div class="col-md-4">
                         <strong><p>Name: </p></strong>
                         <div class="form-group">
-                            <select name="employee_id" class="form-control" {{ Auth::user()->isAdmin() ? '' : 'readonly' }}>
+                            <select name="employee_id" class="form-control select2" {{ Auth::user()->isAdmin() ? '' : 'readonly' }}>
                                 <option></option>
                                 @foreach($employees as $employee)
                                     <option value="{{$employee->id}}" {{ Auth::user()->id == $employee->id ? 'selected' : '' }} >{{ $employee->fullName2() }}</option>
@@ -283,6 +283,9 @@
     var ctr = 1;
     
     $(document).ready(function(){
+        $('.select2').select2({
+            sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+        });
         $('#opportunity-table').DataTable();
         $("._unplanned").hide();
         console.log(locked_days);

@@ -10,15 +10,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
-class TestingController extends Controller
+class EmailReminderController extends Controller
 {
     public function index()
     {
         $employees = User::where('is_regular', 0)->whereNull('deleted_at')->where('id', '<>', 1)->get();
-        // $data = [];
         foreach($employees as $employee)
         {
-            // array_push($data, $employee->id);
             if($employee->id == 3681 || $employee->id == 3689){
                 $hiredDate = Carbon::parse($employee->hired_date)->format('Y-m-d');
                 // convert string date to object carbon
@@ -35,21 +33,21 @@ class TestingController extends Controller
                 $supervisorEmail = '';
                 foreach($supervisors as $supervisor)
                 {
-                    if(strtoupper($supervisor->fullname()) == strtoupper($employee->supervisor_name)){
+                    if($supervisor->fullname() == $employee->supervisor_name || strtoupper($supervisor->fullname()) == strtoupper($employee->supervisor_name)){
                         $supervisorEmail = $supervisor->email ?? $supervisor->email2;
-                        break;
+                    }else{
+                        $supervisorEmail= 'hrd@elink.com.ph';
                     }
                 }
     
                 // if($todayDate == $objectDate->addMonths(3)->format('Y-m-d'))
                 // {
-                        // $data['date'] =$objectDate->addMonths(3)->format('Y-m-d');
-                        // Mail::to($supervisorEmail)->cc($employee->email ?? $employee->email2)->queue(new ProbitionaryEmailNotificationA($data));
+                //         $data['date'] =$objectDate->addMonths(3)->format('Y-m-d');
+                //         Mail::to($supervisorEmail)->cc($employee->email ?? $employee->email2)->send(new ProbitionaryEmailNotificationA($data));
                 // }elseif($todayDate == $objectDate->addMonths(5)->format('Y-m-d')){
                         $data['date'] =$objectDate->addMonths(5)->format('Y-m-d');
-                        Mail::to($supervisorEmail)->cc($employee->email ?? $employee->email2)->queue(new ProbitionaryEmailNotificationB($data));
+                       Mail::to($supervisorEmail)->cc($employee->email ?? $employee->email2)->send(new ProbitionaryEmailNotificationB($data));
                 // }
-    
             }
         }
     }

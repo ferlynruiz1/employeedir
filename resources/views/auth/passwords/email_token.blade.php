@@ -6,11 +6,11 @@
         <div class="col-5 card p-3">
             <p>Hello,</p>
             <span class="mt-1" align="justify">
-                We've received a request to reset the psasword for the HR Portal Falcon account associated with sample@email.
+                We've received a request to reset the psasword for the HR Portal Falcon account associated with {{$data['email']}}.
                 No changes have been made to your account yet.
             </span>
             <p>You can reset your password by clicking the link below:</p>
-            <a href="" class="btn btn-primary mx-4 my-2">Reset password</a>
+            <a href="{{route('password.reset-confirm', ['token' => $data['token']])}}" class="btn btn-primary mx-4 my-2">Reset password</a>
             <p>If you didn't make this request, please disregard this email</p>
             <span class="mt-2" align="justify">Please note that your password will not change unless you click the link above. If your link didn't work, you can always request another.</span>
             <span class="mt-2" align="justify">If you've requested multiple reset emails, please make sure you click the link inside the most recent email.</span>

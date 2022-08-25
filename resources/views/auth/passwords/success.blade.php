@@ -112,26 +112,14 @@
             </div>
             <div class="content">
                 <div style="color: white;">
-                    <span style="font-size: 18px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;FORGOT PASSWORD</span><span style="font-size: 18px; font-weight: 400"> </span>
+                    <span style="font-size: 18px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;PASSWORD HAS BEEN SUCCESSFULLY RESET</span><span style="font-size: 18px; font-weight: 400"> </span>
                     <br>
                     <br>
                 </div>
                 <div class="links">
-                    <form method="POST" action="">
-                        @csrf
-                        
-                        <div class="form-group">
-                            <input id="email" type="email" placeholder="Email Address" class="form-input" name="email" required autocomplete="email" autofocus>
-                        </div>
-                        <div class="form-group btn-holder">
-                            <button class="button flat" name="submit" style="width: 106%;padding: 12px 12px 12px 12px;">
-                                Send Password Reset Link
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div class="text-center">
-                    <a class="small" style="color: rgb(211, 209, 209); font-size: 14px; font-weight: 50;" href="{{route('login')}}" >Login</a>
+                    <div class="form-group btn-holder">
+                        <a class="button flat" name="submit" style="width: 106%;padding: 12px 12px 12px 12px;" href="{{route('login')}}">Login</a>
+                    </div>
                 </div>
 
             </div>

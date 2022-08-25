@@ -112,13 +112,16 @@
             </div>
             <div class="content">
                 <div style="color: white;">
-                    <span style="font-size: 18px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;PASSWORD HAS BEEN SUCCESSFULLY RESET</span><span style="font-size: 18px; font-weight: 400"> </span>
+                    <span style="font-size: 18px; font-weight: 500;">&nbsp;&nbsp;&nbsp;&nbsp;PASSWORD HAS BEEN SUCCESSFULLY RESET TO DEFAULT PASSWORD</span><span style="font-size: 18px; font-weight: 400"> </span>
                     <br>
                     <br>
                 </div>
                 <div class="links">
                     <div class="form-group btn-holder">
-                        <a class="button flat" name="submit" style="width: 106%;padding: 12px 12px 12px 12px;" href="{{route('login')}}">Login</a>
+                        {{-- <a class="button flat" name="submit" style="width: 106%;padding: 12px 12px 12px 12px;" href="{{route('login')}}">Login</a> --}}
+                        <button class="button flat" onclick="location.href='{{route('login')}}'" name="submit" style="width: 106%;padding: 12px 12px 12px 12px;">
+                            Go to Login
+                        </button>
                     </div>
                 </div>
 

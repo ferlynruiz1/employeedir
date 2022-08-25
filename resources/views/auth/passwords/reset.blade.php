@@ -123,9 +123,14 @@
                         <div class="form-group">
                             <input id="email" type="email" placeholder="Email Address" class="form-input" name="email" required autocomplete="email" autofocus>
                         </div>
+                        @if ($errors->has('email'))
+                            <span class="invalid-feedback">
+                                {{ $errors->first('email') }}
+                            </span>
+                        @endif
                         <div class="form-group btn-holder">
                             <button class="button flat" name="submit" style="width: 106%;padding: 12px 12px 12px 12px;">
-                                Send Password Reset Link
+                                Reset Password
                             </button>
                         </div>
                     </form>

@@ -44,8 +44,7 @@ class PasswordResetController extends Controller
         ]);
 
         $employee = User::select('id','email')->where('email', $request->email)->get();
-
-        if(count($employee) > 1){
+        if(count($employee) > 1 || count($employee) == 0){
             $employee = User::select('id','email2')->where('email2', $request->email)->get();
         }
 

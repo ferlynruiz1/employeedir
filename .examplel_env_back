@@ -30,6 +30,7 @@ MAIL_USERNAME=elink.employeedirectory@gmail.com
 MAIL_PASSWORD=rakezsjydclnoxmz
 MAIL_ENCRYPTION=tls
 MAIL_FROM_NAME="Employee Directory"
+MAIL_FROM_ADDRESS="hrd@elink.com.ph"
 
 PUSHER_APP_ID=
 PUSHER_APP_KEY=

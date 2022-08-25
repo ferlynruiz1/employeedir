@@ -18,6 +18,7 @@ use App\Mail\LeaveApproved;
 use App\Mail\LeaveDeclined;
 use App\Mail\LeaveSelfNotification;
 use App\Mail\LeaveRecommended;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Spatie\Valuestore\Valuestore;
@@ -169,6 +170,9 @@ class LeaveController extends Controller
      */
     public function create()
     {
+        if(Auth::user()->is_regular == 0){
+            abort(403);
+        }
         //return view('leave.create')->with('employees', User::AllExceptSuperAdmin()->get());
         $id_obj = Auth::user()->id;
         $obj = DB::select($this->newQuery($id_obj));

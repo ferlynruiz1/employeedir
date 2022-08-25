@@ -44,8 +44,10 @@ class LeaveController extends Controller
         //$leave_requests = LeaveRequest::unapproved()->MyLeaves(Auth::user())->get();
         $req_obj = new LeaveRequest();
 
+        $todayDate = now();
+        // ->whereYear('created_at', '=', $todayDate->year)
         if(Auth::user()->isAdmin() && Auth::user()->id != 3246){
-            return view('leave.index')->with('leave_requests', LeaveRequest::where('status',1)->where('approve_status_id',NULL)->orWhere('approve_status_id',3)->orWhere('approve_status_id',0)->get())->with(['req_obj' => $req_obj]);
+            return view('leave.index')->with('leave_requests', LeaveRequest::where('status',1)->whereYear('created_at', '=', $todayDate->year)->where('approve_status_id',NULL)->orWhere('approve_status_id',3)->orWhere('approve_status_id',0)->get())->with(['req_obj' => $req_obj]);
         } else {
             if(Auth::user()){
                 //$leave_requests = LeaveRequest::where('employee_id',Auth::user()->id)->where('approve_status_id',NULL)->get();
@@ -64,11 +66,15 @@ class LeaveController extends Controller
     public function approveLeaves(){
         $req_obj = new LeaveRequest();
 
+        $todayDate = now();
+        // ->whereYear('created_at', '=', $todayDate->year)
         if(Auth::user()->isAdmin() && Auth::user()->id != 3246){
-            return view('leave.index')->with('leave_requests', LeaveRequest::where('approve_status_id',1)->get())->with(['req_obj' => $req_obj]);
+            return view('leave.index')->with('leave_requests', LeaveRequest::where('approve_status_id',1)
+            ->whereYear('created_at', '=', $todayDate->year)->get())->with(['req_obj' => $req_obj]);
         } else {
             if(Auth::user())
-                $leave_requests = LeaveRequest::where('employee_id',Auth::user()->id)->where('approve_status_id',1)->get();
+                $leave_requests = LeaveRequest::where('employee_id',Auth::user()->id)->where('approve_status_id',1)
+                ->whereYear('created_at', '=', $todayDate->year)->get();
             else
                 $leave_requests = [];
             return view('leave.index')
@@ -126,7 +132,7 @@ class LeaveController extends Controller
         $req_obj = new LeaveRequest();
 
         $todayDate = now();
-        // whereYear('created_at', '=', $todayDate->year)
+        // ->whereYear('created_at', '=', $todayDate->year)
 
         if(Auth::user()->isAdmin() && Auth::user()->id != 3246){
             return view('leave.index')->with('leave_requests', LeaveRequest::where('approve_status_id',2)
@@ -350,10 +356,6 @@ class LeaveController extends Controller
 
         // $leave->leave_date_from = $leave_date_from;
         // $leave->leave_date_to =$leave_date_to;
-<<<<<<< HEAD
-=======
-        // dd($request->leave_type_id);
->>>>>>> d1f194d3ae259d5f16be17155996b15b08f961ba
         $leave->number_of_days = $request->number_of_days;
         $leave->report_date = $report_date;
         $leave->reason = $request->reason;

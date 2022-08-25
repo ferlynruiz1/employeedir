@@ -328,7 +328,6 @@ class LeaveController extends Controller
             'pay_type'   => $request->pay_type
         ];
         $leave = new LeaveRequest();
-
         $datetime = new DateTime();
         //$leave_date_from = $datetime->createFromFormat('m/d/Y', $request->leave_date_from)->format("Y-m-d H:i:s");
         //$leave_date_to = $datetime->createFromFormat('m/d/Y', $request->leave_date_to)->format("Y-m-d H:i:s");
@@ -342,12 +341,11 @@ class LeaveController extends Controller
 
         // $leave->leave_date_from = $leave_date_from;
         // $leave->leave_date_to =$leave_date_to;
-        dd($request->leave_type_id);
         $leave->number_of_days = $request->number_of_days;
         $leave->report_date = $report_date;
         $leave->reason = $request->reason;
         $leave->contact_number = $request->contact_number;
-        $leave->leave_type_id = $request->leave_type_id ?? 5;
+        $leave->leave_type_id =  $request->leave_type_id ?? $request->pay_type_id == 1 ? 5 : 6;
         $leave->pay_type_id = $request->pay_type_id;
         $leave->date_filed = $date_filed;
         $leave->save();

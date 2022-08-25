@@ -40,11 +40,11 @@ class EmailReminderController extends Controller
                     }
                 }
     
-                if($todayDate == $objectDate->addMonths(3)->format('Y-m-d'))
+                if($todayDate == $objectDate->addMonths(3)->subDays(10)->format('Y-m-d'))
                 {
                         $data['date'] =$objectDate->addMonths(3)->format('Y-m-d');
                         Mail::to($supervisorEmail)->cc($employee->email ?? $employee->email2)->send(new ProbitionaryEmailNotificationA($data));
-                }elseif($todayDate == $objectDate->addMonths(5)->format('Y-m-d')){
+                }elseif($todayDate == $objectDate->addMonths(5)->subDays(10)->format('Y-m-d')){
                         $data['date'] =$objectDate->addMonths(5)->format('Y-m-d');
                        Mail::to($supervisorEmail)->cc($employee->email ?? $employee->email2)->send(new ProbitionaryEmailNotificationB($data));
                 }

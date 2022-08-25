@@ -34,8 +34,7 @@ class PasswordResetController extends Controller
         $employee->password = Hash::make($newPassword);
         $employee->save();
 
-        dd($employee->password);
-        // return view('auth.passwords.email_token');
+        return view('auth.passwords.success');
     }
     
     public function reset(Request $request)

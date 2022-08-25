@@ -346,7 +346,7 @@ class LeaveController extends Controller
         $leave->report_date = $report_date;
         $leave->reason = $request->reason;
         $leave->contact_number = $request->contact_number;
-        $leave->leave_type_id = $request->leave_type_id;
+        $leave->leave_type_id = $request->leave_type_id ?? 5;
         $leave->pay_type_id = $request->pay_type_id;
         $leave->date_filed = $date_filed;
         $leave->save();
@@ -354,7 +354,7 @@ class LeaveController extends Controller
         for($i = 0; $i < count($obj['leave_date']); $i++):
             $details = [
                 'leave_id'      => $leave_id,
-                'date'          => date("Y-m-d",strtotime($obj['leave_date'][$i])),
+                'date'          => date("Y-m-d",strtotime($obj['leave_date'][$i])) == '1970-01-01'? now()->format('Y-m-d') : date("Y-m-d",strtotime($obj['leave_date'][$i])) ,
                 'length'        => $obj['length'][$i],
                 'pay_type'      => $obj['pay_type'][$i]
             ];

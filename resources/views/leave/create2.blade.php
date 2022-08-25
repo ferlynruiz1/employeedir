@@ -176,7 +176,7 @@
                             ?>
                                 <li class="list-group-item{{$lv->status == 1 ? " _planned" : " _unplanned"}}">
                                     <label class="switch float-left">
-                                        <input type="checkbox" name="leave_type_id" value="{{ $lv->id }}" id="progress{{ $lv->id  }}" tabIndex="1" class="primary" onClick="ckChange(this)">
+                                        <input type="checkbox" name="leave_type_id" value="{{ $lv->id }}" id="progress{{ $lv->id  }}" tabIndex="1" class="primary" onClick="ckChange(this)" required>
                                         <span class="slider"></span>
                                     </label>&nbsp;
                                     <span>{{ $lv->leave_type_name }}</span>
@@ -367,11 +367,11 @@
             position : "required",
             department: "required",
             date_filed: "required",
-            //leave_date_from : "required",
-            //leave_date_to : "required",
+            leave_date_from : "required",
+            leave_date_to : "required",
             pay_type_id : "required",
             number_of_days : "required",
-            //leave_type_id : "required",
+            leave_type_id : "required",
             report_date : "required",
             reason : "required",
             contact_number: "required"

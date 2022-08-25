@@ -135,13 +135,13 @@
                         @endif
                         <div class="form-group btn-holder">
                             <button class="button flat" name="submit" style="width: 106%;padding: 12px 12px 12px 12px;">
-                                <span class="icon">
-                                    <img src="{{ asset('./img/arrow-right.gif')}}" alt="→">
-                                </span> 
                                 Login
                             </button>
                         </div>
                     </form>
+                </div>
+                <div class="text-center">
+                    <a class="small" style="color: rgb(211, 209, 209); font-size: 14px; font-weight: 50;" href="{{route('password.forgot')}}" >Forgot Password</a>
                 </div>
 
             </div>

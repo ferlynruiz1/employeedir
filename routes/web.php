@@ -61,6 +61,8 @@ Route::get('logout', function(){
 
 Route::post('login', 'EmployeeInfoController@login');
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('/password', 'PasswordResetController@index')->name('password.forgot');
+Route::get('/password/reset', 'PasswordResetController@sample');
 
 
 /*

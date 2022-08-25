@@ -128,6 +128,11 @@
                                 {{ $errors->first('email') }}
                             </span>
                         @endif
+                        @if (Session::has('Success'))
+                            <span style="color: white">
+                                {{ Session::get('Success') }}
+                            </span>
+                        @endif
                         <div class="form-group btn-holder">
                             <button class="button flat" name="submit" style="width: 106%;padding: 12px 12px 12px 12px;">
                                 Reset Password

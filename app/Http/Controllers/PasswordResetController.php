@@ -41,7 +41,10 @@ class PasswordResetController extends Controller
     {
         $request->validate([
             'email' => 'required|email'
-        ]);
+        ],[
+            'email.required' => "Email doesn't exist in our record"
+        ]
+        );
 
         $employee = User::select('id','email')->where('email', $request->email)->get();
         if(count($employee) > 1 || count($employee) == 0){
@@ -52,13 +55,14 @@ class PasswordResetController extends Controller
             return back()->withErrors(['email'=> "Email doesn't exist in our record"]);
         }
 
+        // dd($employee);
         $data = [
             'token' => Crypt::encrypt($employee[0]->id),
-            'email' => $employee[0]->email ?? $employee->email2
+            'email' => $employee[0]->email ?? $employee[0]->email2
         ];
         
         Mail::to($data['email'])->send(new ResetPasswordMail($data));
 
-        return back()->with('Success', 'Email has been sent to your email, kindly check your email. Thank you');
+        return back()->with('Success', 'Password reset message has been sent, kindly check your email. Thank you');
     }
 }

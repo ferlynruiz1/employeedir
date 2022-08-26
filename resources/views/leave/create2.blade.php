@@ -41,15 +41,15 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{{ number_format($credits->past_credit,1) }}</td>
-                                        <td>{{ number_format($credits->conversion_credit,1) }}</td>
-                                        <td>{{ number_format($credits->past_credit - $credits->conversion_credit,1) }}</td>
-                                        <td>{{ number_format($credits->current_credit,1) }}</td>
-                                        <td>{{ number_format($credits->used_jan_to_jun,1) }}</td>
-                                        <td>{{ number_format($credits->expired_credit,1) }}</td>
-                                        <td>{{ number_format($balance,1) }}</td>
-                                        <td>{{ number_format($credits->used_jul_to_dec,1) }}</td>
-                                        <td style=" text-align:  center; font-weight:  bold; color:  #0000FF; background-color: yellow;">{{ $credits->is_regular == 1 ? number_format($balance - $credits->used_jul_to_dec,1) : 0.0 }}</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>{{ number_format($credits->past_credit - $credits->conversion_credit,2) }}</td>
+                                        <td>{{ number_format($credits->current_credit,2) }}</td>
+                                        <td>{{ number_format($credits->used_jan_to_jun,2) }}</td>
+                                        <td>{{ number_format($credits->expired_credit,2) }}</td>
+                                        <td>{{ number_format($balance,2) }}</td>
+                                        <td>{{ number_format($credits->used_jul_to_dec,2) }}</td>
+                                        <td style=" text-align:  center; font-weight:  bold; color:  #0000FF; background-color: yellow;">{{ $credits->is_regular == 2 ? number_format($balance - $credits->used_jul_to_dec,1) : 0.0 }}</td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -74,7 +74,7 @@
                 </div>
 
                 <div class="d-flex gap-2" style="max-width: 80%">
-
+                    @if(Auth::user()->isAdmin() || Auth::user()->isManager() || Auth::user()->isHR())
                     <select name="adtl_linkees" id="linkees_list" data-val="1" class="select2 process_linkee form-control">
                         <option value="">Select a Linkee</option>
                         @foreach($supervisors as $s)
@@ -84,6 +84,7 @@
                     <div class="">
                         <button type="button" id="addLinkeeBtn" class="btn btn-primary ">Add a Linkee</button>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

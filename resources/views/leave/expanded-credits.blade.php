@@ -38,13 +38,13 @@
                             <tr>
                                 <td>{{ $employee->eid }}</td>
                                 <td>{{ $employee->employee_name }}</td>
-                                <td>{{ number_format($employee->past_credit,1) }}</td>
-                                <td>{{ number_format($employee->conversion_credit,1) }}</td>
-                                <td>{{ number_format($employee->past_credit - $employee->conversion_credit,1) }}</td>
-                                <td>{{ number_format($employee->current_credit,1) }}</td>
-                                <!-- <td <?php if(abs($employee->loa) > 0) { ?> style="color: red;"<?php } ?>>{{ abs(number_format($employee->loa,1)) }}</td> -->
-                                <td>{{ number_format($employee->used_jan_to_jun,1) }}</td>
-                                <td>{{ number_format($employee->expired_credit,1) }}</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>{{ number_format($employee->past_credit - $employee->conversion_credit,2) }}</td>
+                                <td>{{ number_format($employee->current_credit,2) }}</td>
+                                <!-- <td <?php if(abs($employee->loa) > 0) { ?> style="color: red;"<?php } ?>>{{ abs(number_format($employee->loa,2)) }}</td> -->
+                                <td>{{ number_format($employee->used_jan_to_jun,2) }}</td>
+                                <td>{{ number_format($employee->expired_credit,2) }}</td>
                                 <?php
                                 $pto_forwarded = $employee->past_credit - $employee->conversion_credit;
                                 $pto_accrue = $employee->current_credit;
@@ -53,9 +53,9 @@
                                 $pto_expired = $employee->expired_credit;
                                 $balance = $pto_forwarded + $pto_accrue - $loa - $use_jan_jun - $pto_expired;
                                 ?>
-                                <td>{{ number_format($balance,1) }}</td>
-                                <td>{{ number_format($employee->used_jul_to_dec,1) }}</td>
-                                <td>{{ $employee->is_regular == 1 ? number_format($balance - $employee->used_jul_to_dec,1) : 0.0 }}</td>
+                                <td>{{ number_format($balance,2) }}</td>
+                                <td>{{ number_format($employee->used_jul_to_dec,2) }}</td>
+                                <td>{{ $employee->is_regular == 2 ? number_format($balance - $employee->used_jul_to_dec,2) : 0.00 }}</td>
                                 @if(Auth::user()->isAdmin())
                                     <td>
                                         <a title="Adjust leave credits" href="{{ url('leave/credits') . '/' . $employee->id }}"><i class="fa fa-gear"></i></a>

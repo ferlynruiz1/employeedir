@@ -235,7 +235,7 @@ Employee Information / Edit
     <div id="linkee_row_~id~" class="row">
         <div class="col-md-5">
             <div class="form-group">
-                <select id="sl_linkee_~id~" data-val="~id~" name="adtl_linkees[]" class="select2 process_linkee form-control">
+                <select id="sl_linkee_~id~" data-val="~id~" name="adtl_linkees" class="select2 process_linkee form-control">
                     <option value="0">Select a Linkee</option>
                     <?php
                     foreach($supervisors as $s):

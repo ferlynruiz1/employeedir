@@ -350,10 +350,7 @@ class LeaveController extends Controller
 
         // $leave->leave_date_from = $leave_date_from;
         // $leave->leave_date_to =$leave_date_to;
-<<<<<<< HEAD
-=======
-        // dd($request->leave_type_id);
->>>>>>> d1f194d3ae259d5f16be17155996b15b08f961ba
+
         $leave->number_of_days = $request->number_of_days;
         $leave->report_date = $report_date;
         $leave->reason = $request->reason;

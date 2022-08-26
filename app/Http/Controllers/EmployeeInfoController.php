@@ -82,7 +82,11 @@ class EmployeeInfoController extends Controller
                 'adtl_status' => 1
             ]);
 
+            $linkerInformation = User::where('id', $linkee->adtl_linker)->first();
             $linkeeInformation = User::where('id', $linkee->adtl_linkee)->first();
+            $linkeeInformation->supervisor_id = $linkerInformation->id;
+            $linkeeInformation->supervisor_name = $linkerInformation->fullname();
+            $linkeeInformation->save();
         }
         return ['data' => $linkeeInformation ?? false];
 
@@ -122,15 +126,21 @@ class EmployeeInfoController extends Controller
         if($validator->fails()){
             return ['data' => false];
         }
+        
+        $employee = User::where('id', $request->adtl_linkee)->first();
+        $linkee = AdtlLinkee::where('adtl_linkee', '=',$request->adtl_linkee)->where('adtl_linker','=', $request->adtl_linker)->first();
 
-        $linkee = AdtlLinkee::where('adtl_linkee',$request->adtl_linkee)->where('adtl_linker', $request->adtl_linker)->first();
-
-        if($linkee){
-            DB::table('adtl_linkees')->where('adtl_id', $linkee->adtl_id)->delete();
-            return ['data' => true];
+        if(!$linkee && !$employee){
+            return ['data' => false];
         }
+        
+        $employee->supervisor_id = 0;
+        $employee->supervisor_name = '';
+        $employee->save();
 
-        return ['data' => false];
+        DB::table('adtl_linkees')->where('adtl_id', $linkee->adtl_id)->delete();
+        
+        return ['data' => true];
    }
 
     /**

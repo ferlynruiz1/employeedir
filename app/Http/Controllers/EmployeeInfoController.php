@@ -715,6 +715,7 @@ class EmployeeInfoController extends Controller
             ->with('departments', EmployeeDepartment::all())
             ->with('accounts', ElinkAccount::all())
             ->with('details',$details)
+            ->with('linkees', $employee->getLinkees())
             ->with('dependents',$dep);
     }
     

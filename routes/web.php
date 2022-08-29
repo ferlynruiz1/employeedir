@@ -189,6 +189,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('employees/sync', function(){
         return view('employee.sync');
     });
+
+    Route::get('/archive-leave-credits', 'ArchiveController@archiveLeaveCredits');
+
 });
 
 /**
@@ -202,4 +205,3 @@ Route::get('api/session', 'EmployeeInfoController@session');
 Route::get('run', 'Controller@run');
 
 Route::get('/send-email-reminder', 'EmailReminderController@index');
-

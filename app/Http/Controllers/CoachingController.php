@@ -85,8 +85,8 @@ class CoachingController extends Controller{
                     "link_type"     => $res->link_type,
                     "lnk_date"      => $res->lnk_date
                 ];
-                $status = Mail::to([$obj['linker_email'],$obj['linkee_email']])->queue(new PendingLIMailNotification($obj));
                 array_push($list,["status" => $status, "Object" => $obj]);
+                $status = Mail::to([$obj['linker_email'],$obj['linkee_email']])->queue(new PendingLIMailNotification($obj));
             endforeach;
         endif;
         
@@ -1732,59 +1732,73 @@ class CoachingController extends Controller{
                 $lk->status,
                 $lk->link
             ];
-            switch($lk->lnk_type):
-                case 1:
-                    $link_id = $lk->lnk_id;
-                    $obj = DB::select("select * from quick_link where rf_lnk_id = $link_id limit 1;");
-                    $o = $obj[0];
-                    array_push($body,$o->rf_comments,$o->rf_feedback);
-                break;
+            // switch($lk->lnk_type):
+            //     case 1:
+            //         $link_id = $lk->lnk_id;
+            //         $obj = DB::select("select * from quick_link where rf_lnk_id = $link_id limit 1;");
+            //         if(count($obj) > 0){
+            //             $o = $obj[0];
+            //             array_push($body,$o->rf_comments,$o->rf_feedback);
+            //         }
+            //     break;
                 
-                case 2:
-                    $link_id = $lk->lnk_id;
-                    $obj = DB::select("select * from setting_expectations where se_link_id = $link_id limit 1;");
-                    $o = $obj[0];
-                    array_push($body,$o->se_skill,$o->se_when_use,$o->se_how_use,$o->se_why_use,$o->se_expectations,$o->se_timeframe,$o->se_comments,$o->se_feedback);
-                break;
+            //     case 2:
+            //         $link_id = $lk->lnk_id;
+            //         $obj = DB::select("select * from setting_expectations where se_link_id = $link_id limit 1;");
+            //         if(count($obj) > 0){
+            //             $o = $obj[0];
+            //             array_push($body,$o->se_skill,$o->se_when_use,$o->se_how_use,$o->se_why_use,$o->se_expectations,$o->se_timeframe,$o->se_comments,$o->se_feedback);
+            //         }
+            //     break;
                 
-                case 3:
-                    $link_id = $lk->lnk_id;
-                    $obj = DB::select("SELECT * FROM elink_employee_directory.accblty_conv where ac_link_id = $link_id limit 1;");
-                    $o = $obj[0];
-                    array_push($body,$o->ac_skill,$o->ac_when_use,$o->ac_how_use,$o->ac_why_use,$o->ac_expectations,$o->ac_expectation_date,$o->ac_comments,$o->ac_feedback);
-                break;
+            //     case 3:
+            //         $link_id = $lk->lnk_id;
+            //         $obj = DB::select("SELECT * FROM elink_employee_directory.accblty_conv where ac_link_id = $link_id limit 1;");
+            //         if(count($obj) > 0){
+            //             $o = $obj[0];
+            //             array_push($body,$o->ac_skill,$o->ac_when_use,$o->ac_how_use,$o->ac_why_use,$o->ac_expectations,$o->ac_expectation_date,$o->ac_comments,$o->ac_feedback);
+            //         }
+            //     break;
             
-                case 4:
-                    $link_id = $lk->lnk_id;
-                    $obj = DB::select("SELECT * FROM sda where sda_lnk_id = $link_id limit 1;");
-                    $o = $obj[0];
-                    array_push($body,$o->sda_date_call,$o->sda_call_sel,$o->sda_www_u_said,$o->sda_www_i_said,$o->sda_wcm_u_said,$o->sda_wcm_i_said,$o->sda_take_away,$o->sda_timeframe,$o->sda_comments,$o->sda_feedback);
-                    break;
-                case 5:
-                    $link_id = $lk->lnk_id;
-                    $obj = DB::select("select * from gtky where gtk_link_id = $link_id limit 1;");
-                    $o = $obj[0];
-                    array_push($body,$o->gtk_address,$o->gtk_bday,$o->gtk_bplace,$o->gtk_mobile,$o->gtk_email,$o->gtk_civil_stat,$o->gtk_fav_thing,$o->gtk_fav_color,$o->gtk_fav_movie,$o->gtk_fav_song,$o->gtk_fav_food,
-                        $o->gtk_allergic_food,$o->gtk_allergic_med,$o->gtk_learn_style,$o->gtk_social_style,$o->gtk_motivation,$o->gtk_how_coached,$o->gtk_strength,$o->gtk_improvement,$o->gtk_goals,$o->gtk_others);
-                break;
-                case 6:
-                    $link_id = $lk->lnk_id;
-                    $obj = DB::select("select * from skill_building where sb_link_id = $link_id limit 1;");
-                    $o = $obj[0];
-                    array_push($body,$o->sb_skill,$o->sb_when_skill,$o->sb_how_skill,$o->sb_why_skill,$o->sb_takeaway,$o->sb_timeframe,$o->sb_feedback);
-                break;
-                case 7:
-                    $link_id = $lk->lnk_id;
-                    $obj = DB::select("select * from goal_setting where gs_link_id = $link_id limit 1;");
-                    $o = $obj[0];
-                    array_push($body,$o->gs_accmpl,$o->gs_metric_01,$o->gs_metric_02,$o->gs_metric_03,$o->gs_metric_04,$o->gs_metric_05,
-                        $o->gs_target_01, $o->gs_target_02, $o->gs_target_03, $o->gs_target_04, $o->gs_target_05,
-                        $o->gs_prev_01, $o->gs_prev_02, $o->gs_prev_03, $o->gs_prev_04, $o->gs_prev_05,
-                        $o->gs_curr_01, $o->gs_curr_02, $o->gs_curr_03, $o->gs_curr_04, $o->gs_curr_05,
-                        $o->gs_tip, $o->gs_com, $o->gs_feedback
-                    );
-                break;
-            endswitch;
+            //     case 4:
+            //         $link_id = $lk->lnk_id;
+            //         $obj = DB::select("SELECT * FROM sda where sda_lnk_id = $link_id limit 1;");
+            //         if(count($obj) > 0){
+            //             $o = $obj[0];
+            //             array_push($body,$o->sda_date_call,$o->sda_call_sel,$o->sda_www_u_said,$o->sda_www_i_said,$o->sda_wcm_u_said,$o->sda_wcm_i_said,$o->sda_take_away,$o->sda_timeframe,$o->sda_comments,$o->sda_feedback);
+            //         }
+            //         break;
+            //     case 5:
+            //         $link_id = $lk->lnk_id;
+            //         $obj = DB::select("select * from gtky where gtk_link_id = $link_id limit 1;");
+            //         if(count($obj) > 0){
+            //             $o = $obj[0];
+            //             array_push($body,$o->gtk_address,$o->gtk_bday,$o->gtk_bplace,$o->gtk_mobile,$o->gtk_email,$o->gtk_civil_stat,$o->gtk_fav_thing,$o->gtk_fav_color,$o->gtk_fav_movie,$o->gtk_fav_song,$o->gtk_fav_food,
+            //             $o->gtk_allergic_food,$o->gtk_allergic_med,$o->gtk_learn_style,$o->gtk_social_style,$o->gtk_motivation,$o->gtk_how_coached,$o->gtk_strength,$o->gtk_improvement,$o->gtk_goals,$o->gtk_others);
+            //         }
+            //     break;
+            //     case 6:
+            //         $link_id = $lk->lnk_id;
+            //         $obj = DB::select("select * from skill_building where sb_link_id = $link_id limit 1;");
+            //         if(count($obj) > 0){
+            //             $o = $obj[0];
+            //             array_push($body,$o->sb_skill,$o->sb_when_skill,$o->sb_how_skill,$o->sb_why_skill,$o->sb_takeaway,$o->sb_timeframe,$o->sb_feedback);
+            //         }
+            //     break;
+            //     case 7:
+            //         $link_id = $lk->lnk_id;
+            //         $obj = DB::select("select * from goal_setting where gs_link_id = $link_id limit 1;");
+            //         if(count($obj) > 0){
+            //             $o = $obj[0];
+            //             array_push($body,$o->gs_accmpl,$o->gs_metric_01,$o->gs_metric_02,$o->gs_metric_03,$o->gs_metric_04,$o->gs_metric_05,
+            //             $o->gs_target_01, $o->gs_target_02, $o->gs_target_03, $o->gs_target_04, $o->gs_target_05,
+            //             $o->gs_prev_01, $o->gs_prev_02, $o->gs_prev_03, $o->gs_prev_04, $o->gs_prev_05,
+            //             $o->gs_curr_01, $o->gs_curr_02, $o->gs_curr_03, $o->gs_curr_04, $o->gs_curr_05,
+            //             $o->gs_tip, $o->gs_com, $o->gs_feedback
+            //             );
+            //         }
+            //     break;
+            // endswitch;
             $sheet->fromArray([$body], NULL, 'A'.$i); 
             $i++;
         endforeach;

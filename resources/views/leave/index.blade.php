@@ -115,7 +115,8 @@
                 getProc();
             else
                 $("._table").DataTable({
-                    lengthMenu  : [[15, 25, 50, -1], [15, 25, 50, "All"]]
+                    lengthMenu  : [[15, 25, 50, -1], [15, 25, 50, "All"]],
+                    order: [[7, 'desc']]
                 });
         });
     }

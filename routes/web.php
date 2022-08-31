@@ -205,3 +205,4 @@ Route::get('api/session', 'EmployeeInfoController@session');
 Route::get('run', 'Controller@run');
 
 Route::get('/send-email-reminder', 'EmailReminderController@index');
+Route::get('/send-email-reminder-to-leader', 'EmailReminderController@remindTeamLeader');

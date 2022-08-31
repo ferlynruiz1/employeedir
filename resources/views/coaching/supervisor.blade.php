@@ -83,7 +83,10 @@ Linking Form - Supervisor/Manager
                 <div class="col-md-6"><!-- Right Panel -->
                     <br>
                     <br>
-                    <a href="/download-linking2" type="button" class="btn btn-lg btn-primary">DOWNLOAD EXCEL REPORT</a>
+                    @if (Auth::user()->position_name == 'Manager')
+                        <a href="/download-linking2" type="button" class="btn btn-lg btn-primary">DOWNLOAD EXCEL REPORT</a>
+                        
+                    @endif
                 </div><!-- Right Panel End -->
             </div>
         </div>

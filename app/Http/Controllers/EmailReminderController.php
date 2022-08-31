@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\LeaveRequest;
+use App\LeaveRequestDetails;
+use App\Mail\LeaveNotification;
+use App\Mail\LeaveSelfNotification;
 use App\Mail\ProbitionaryEmailNotificationA;
 use App\Mail\ProbitionaryEmailNotificationB;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -49,6 +54,32 @@ class EmailReminderController extends Controller
                        Mail::to($supervisorEmail)->cc($employee->email ?? $employee->email2)->send(new ProbitionaryEmailNotificationB($data));
                 }
             // }
+        }
+    }
+
+    public function remindTeamLeader()
+    {   
+        $todayDate = now();
+        $leaves =  LeaveRequest::where('status',1)->whereYear('created_at', '=', $todayDate->year)->where('approve_status_id',NULL)->orWhere('approve_status_id',0)->get();
+
+        foreach($leaves as $leave)
+        {
+            $employee = DB::table('employee_info')->find($leave->employee_id);
+            $supervisor = DB::table('employee_info')->where(DB::raw('concat(last_name,", ", first_name)'), 'LIKE', "%$employee->supervisor_name%")->first();
+            $manager = DB::table('employee_info')->where(DB::raw('concat(last_name,", ", first_name)'), 'LIKE', "%$employee->manager_name%")->first();
+
+            $recipients = [
+                'hrd@elink.com.ph',
+                $supervisor->email,
+                $manager->email,
+            ];
+
+            Mail::to(Auth::user()->email)->send(new LeaveSelfNotification($leave));
+            $fileDate = Carbon::parse($leave->date_filed);
+            if($fileDate->addDays(5)->format('Y-m-d') == $todayDate->format('Y-m-d')){
+                $leave_obj = ['leave' => $leave, 'details' => LeaveRequestDetails::where("leave_id",$leave->id)->get()];
+                Mail::to($recipients)->send(new LeaveNotification($leave_obj));
+            }
         }
     }
 }

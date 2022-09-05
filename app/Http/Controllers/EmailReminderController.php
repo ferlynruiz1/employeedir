@@ -74,7 +74,6 @@ class EmailReminderController extends Controller
                 $manager->email,
             ];
 
-            Mail::to(Auth::user()->email)->send(new LeaveSelfNotification($leave));
             $fileDate = Carbon::parse($leave->date_filed);
             if($fileDate->addDays(5)->format('Y-m-d') == $todayDate->format('Y-m-d')){
                 $leave_obj = ['leave' => $leave, 'details' => LeaveRequestDetails::where("leave_id",$leave->id)->get()];

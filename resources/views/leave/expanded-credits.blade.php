@@ -59,7 +59,7 @@
                                     $balance = $pto_forwarded + $pto_accrue - $loa - $use_jan_jun - $pto_expired;
                                 ?>
                                 <td>{{ number_format($employee->used_jul_to_dec,2) }}</td>
-                                <td>{{ number_format($employee->current_credit,2)  - (number_format($employee->used_jan_to_jun,2) + number_format($employee->used_jul_to_dec,2)) }}</td>
+                                <td>{{ number_format(($employee->current_credit+ ($employee->past_credit - $employee->conversion_credit))  - ($employee->used_jan_to_jun + $employee->used_jul_to_dec),2) }}</td>
                                 @if(Auth::user()->isAdmin())
                                     <td>
                                         <a title="Adjust leave credits" href="{{ url('leave/credits') . '/' . $employee->id }}"><i class="fa fa-gear"></i></a>

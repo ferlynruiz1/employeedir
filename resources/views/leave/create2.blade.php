@@ -51,7 +51,7 @@
                                         <td>{{ number_format($monthlyAccrual,2) }}</td>
                                         <td>{{ number_format($credits->used_jan_to_jun,2) }}</td>
                                         <td>{{ number_format($credits->used_jul_to_dec,2) }}</td>
-                                        <td style=" text-align:  center; font-weight:  bold; color:  #0000FF; background-color: yellow;">{{ number_format($credits->current_credit,2) - (number_format($credits->used_jan_to_jun,2) + number_format($credits->used_jul_to_dec,2)) }}</td>
+                                        <td style=" text-align:  center; font-weight:  bold; color:  #0000FF; background-color: yellow;">{{ (number_format($credits->current_credit,2) +  number_format($credits->past_credit - $credits->conversion_credit,2)) - (number_format($credits->used_jan_to_jun,2) + number_format($credits->used_jul_to_dec,2)) }}</td>
                                     </tr>
                                 </tbody>
                             </table>

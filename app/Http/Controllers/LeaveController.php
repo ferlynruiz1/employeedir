@@ -1069,6 +1069,22 @@ class LeaveController extends Controller
      *  type = 3
      */
     private function newQuery($id = NULL){
+        $today = now();
+            $today->month = 1;
+            $today->day = 1;
+        $firstHalfYearStart = $today->format('Y-m-d');
+        
+            $today->month = 6;
+            $today->day = 30;
+        $firstHalfYearEnd = $today->format('Y-m-d');
+
+            $today->month = 7;
+            $today->day = 1;
+        $lastHalfYearStart = $today->format('Y-m-d');
+
+            $today->month = 12;
+            $today->day = 31;
+        $lastHalfYearEnd = $today->format('Y-m-d');
         $sql = "  
   SELECT 
     eid,
@@ -1137,8 +1153,8 @@ class LeaveController extends Controller
                     leave_request_details AS lrd ON lrd.leave_id = lr.id
                 WHERE
                     lr.employee_id = e.id
-                        AND lrd.date >= '2022-01-01'
-                        AND date <= '2022-06-30'
+                        AND lrd.date >= '$firstHalfYearStart'
+                        AND date <= '$firstHalfYearEnd'
                         AND lrd.pay_type = 1
                         AND lrd.status = 1
                         AND lr.approve_status_id = 1),
@@ -1151,8 +1167,8 @@ class LeaveController extends Controller
                     leave_request_details AS lrd ON lrd.leave_id = lr.id
                 WHERE
                     lr.employee_id = e.id
-                        AND lrd.date >= '2022-07-01'
-                        AND date <= '2022-12-31'
+                        AND lrd.date >= '$lastHalfYearStart'
+                        AND date <= '$lastHalfYearEnd'
                         AND lrd.pay_type = 1
                         AND lrd.status = 1
                         AND lr.approve_status_id = 1),

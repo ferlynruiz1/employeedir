@@ -9,7 +9,10 @@ class TestController extends Controller
 {
     public function test()
     {
-        $user = new User();
-        dd($user->generalManager());
+        $today = now();
+            $today->month = 1;
+            $today->day = 1;
+            $thisYear = $today;
+        dd($today->format('Y-m-d'));
     }
 }

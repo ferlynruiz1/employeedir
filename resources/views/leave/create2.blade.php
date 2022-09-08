@@ -28,28 +28,30 @@
                             <table class="table table-striped" id="leave_credits_table">
                                 <thead>
                                 <tr>
-                                    <th><?php echo date('Y') - 1  ?> PTO Balance</th>
-                                    <th><?php echo date('Y') - 1  ?> PTO<br>Conversion</th>
                                     <th><?php echo date('Y') - 1 ?> PTO<br>Forwarded</th>
                                     <th><?php echo date('Y') ?> PTO<br>Monthly Accrual</th>
                                     <th>Used PTO<br>(Jan-Jun)</th>
-                                    <th>{{ date('Y') - 1 }}PTO Expired</th>
-                                    <th>PTO Balance</th>
                                     <th>Used PTO<br>(Jul-Dec)</th>
                                     <th>Current PTO Balance</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
                                         <td>{{ number_format($credits->past_credit - $credits->conversion_credit,2) }}</td>
-                                        <td>{{ number_format($credits->current_credit,2) }}</td>
+                                        <?php
+                                            $div = 0;
+                                            switch($credits->employee_category):
+                                                case 1: $div = 20; break;
+                                                case 2: $div = 14; break;
+                                                case 3: $div = 10; break;
+                                                case 4: $div = 10; break;
+                                            endswitch;
+                                            $monthlyAccrual = $div/12;
+                                        ?>
+                                        <td>{{ number_format($monthlyAccrual,2) }}</td>
                                         <td>{{ number_format($credits->used_jan_to_jun,2) }}</td>
-                                        <td>{{ number_format($credits->expired_credit,2) }}</td>
-                                        <td>{{ number_format($balance,2) }}</td>
                                         <td>{{ number_format($credits->used_jul_to_dec,2) }}</td>
-                                        <td style=" text-align:  center; font-weight:  bold; color:  #0000FF; background-color: yellow;">{{ $credits->is_regular == 2 ? number_format($balance - $credits->used_jul_to_dec,1) : 0.0 }}</td>
+                                        <td style=" text-align:  center; font-weight:  bold; color:  #0000FF; background-color: yellow;">{{ number_format($credits->current_credit,2) - (number_format($credits->used_jan_to_jun,2) + number_format($credits->used_jul_to_dec,2)) }}</td>
                                     </tr>
                                 </tbody>
                             </table>

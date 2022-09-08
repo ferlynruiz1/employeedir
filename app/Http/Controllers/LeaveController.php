@@ -181,9 +181,9 @@ class LeaveController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->is_regular == 0){
-            abort(403);
-        }
+        // if(Auth::user()->is_regular == 0){
+        //     abort(403);
+        // }
         //return view('leave.create')->with('employees', User::AllExceptSuperAdmin()->get());
         $id_obj = Auth::user()->id;
         $obj = DB::select($this->newQuery($id_obj));

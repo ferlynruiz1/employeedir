@@ -172,7 +172,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('download-filter', 'EmployeeInfoController@downloadFilter');
     Route::get('download-inactive', 'EmployeeInfoController@downloadInactive');
     Route::get('browse-transfer', 'EmployeeInfoController@searchMovements');
-    Route::get('increment-credits','LeaveController@creditIncrement');
+    //Route::get('increment-credits','LeaveController@creditIncrement');
     Route::get('inc-crd/{month}','LeaveController@creditIncrementVer2');
     Route::get('view-rec/{id}','EmployeeInfoController@viewRecord');
     Route::get('api-leaves','LeaveController@apiLeaveList');
@@ -204,5 +204,7 @@ Route::post('api/v2/login', 'EmployeeInfoController@loginAPIv2');
 Route::get('api/session', 'EmployeeInfoController@session');
 Route::get('run', 'Controller@run');
 
+Route::get('increment-credits','LeaveController@creditIncrement');
 Route::get('/send-email-reminder', 'EmailReminderController@index');
 Route::get('/send-email-reminder-to-leader', 'EmailReminderController@remindTeamLeader');
+Route::get('/test', 'TestController@test');

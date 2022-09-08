@@ -100,7 +100,9 @@ class User extends Authenticatable
     #####################################################
     public function generalManager(){
         $settings = Valuestore::make(storage_path('app/settings.json'));
-        return User::where("email", "=", 'ferdinandpasion@elink.com.ph')->first();
+        // return User::where("email", "=", 'ferdinandpasion@elink.com.ph')->first();
+        $head = DB::table('employee_info')->where('email', 'ferdinandpasion@elink.com.ph')->first();
+        return $head->last_name .', '. $head->first_name;
     }
 
     public function supervisor_email(){

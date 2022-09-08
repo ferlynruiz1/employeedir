@@ -1074,6 +1074,7 @@ class LeaveController extends Controller
     eid,
     id,
     CONCAT(e.first_name, ' ', e.last_name) AS employee_name,
+    employee_category,
     e.prod_date,
     e.position_name,
     e.is_regular,

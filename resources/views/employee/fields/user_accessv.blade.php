@@ -64,7 +64,7 @@
             <div class="border border-success rounded-pill p-2" id="linkee-{{$linkee->id}}"
                 style="font-size: 12px; min-width:100px;">
                 <input type="hidden" name="linkee-{{$linkee->id}}" value="{{$linkee->id}}">
-                <span>{{$linkee->first_name}} {{$linkee->last_name}}</span>
+                <span>{{$linkee->last_name}}, {{$linkee->first_name}} </span>
             </div>
             @endforeach
         </div>

@@ -460,7 +460,7 @@ Employee Information / Edit
         div.id = "linkee-"+data.id
         input.name = "linkee-"+data.id
         input.value = data.id
-        span.innerText = data.first_name +" "+data.last_name
+        span.innerText = data.last_name +", "+data.first_name
         app.appendChild(cloneTemplate)
         button.setAttribute("onclick",`deleteNodeAndData(document.getElementById('${div.id}'))`)
         // button.addEventListener('click', deleteNodeAndData(document.getElementById(div.id)))

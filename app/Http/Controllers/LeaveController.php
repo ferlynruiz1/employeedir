@@ -1246,7 +1246,7 @@ class LeaveController extends Controller
                 employee_id = e.id
                     AND
                 leave_credits.status = 1
-            LIMIT 1),
+            ),
         0) AS monthly_accrual,
     IFNULL((SELECT 
                     SUM(credit)

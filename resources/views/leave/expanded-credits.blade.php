@@ -55,7 +55,7 @@
                                             break;
                                     endswitch;
                                     $differentInMonths = App\Helpers\DateHelper::getDifferentMonths($employee->hired_date);
-                                    $monthlyAccrual = ($div / 12) * $differentInMonths;
+                                    $monthlyAccrual = ($div / 12) * $differentInMonths + $employee->monthly_accrual;
                                     ?>
                                     <td>{{ number_format($monthlyAccrual, 2) }}</td>
                                     <!-- <td <?php if(abs($employee->loa) > 0) { ?> style="color: red;"<?php } ?>>{{ abs(number_format($employee->loa, 2)) }}</td> -->

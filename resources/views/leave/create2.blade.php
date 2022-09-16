@@ -57,7 +57,7 @@
                                                 break;
                                         endswitch;
                                         $differentInMonths = App\Helpers\DateHelper::getDifferentMonths($credits->hired_date);
-                                        $monthlyAccrual = ($div / 12) * $differentInMonths;
+                                        $monthlyAccrual = ($div / 12) * $differentInMonths + $credits->monthly_accrual;
                                         ?>
                                         <td>{{ number_format($monthlyAccrual, 2) }}</td>
                                         <td>{{ number_format($credits->used_jan_to_jun, 2) }}</td>
@@ -101,12 +101,12 @@
                                 </select>
                             </div>
                             <!--
-                                        <strong><p>Dates Filed:</p></strong>
-                                        <div class="form-group">
+                                            <strong><p>Dates Filed:</p></strong>
+                                            <div class="form-group">
 
-                                            <input type="text" name="leave_dates[]" class="form-control datepicker" placeholder="Date Filed" autocomplete="off">
-                                        </div>
-                                        -->
+                                                <input type="text" name="leave_dates[]" class="form-control datepicker" placeholder="Date Filed" autocomplete="off">
+                                            </div>
+                                            -->
                         </div>
                         <div class="col-md-4">
                             <strong>
@@ -118,11 +118,11 @@
                                     {{ Auth::user()->isAdmin() ? '' : 'readonly' }}>
                             </div>
                             <!--
-                                        <strong><p>To:</p></strong>
-                                        <div class="form-group">
-                                            <input type="text" name="leave_date_to"class="form-control datepicker" placeholder="To" autocomplete="off">
-                                        </div>
-                                        -->
+                                            <strong><p>To:</p></strong>
+                                            <div class="form-group">
+                                                <input type="text" name="leave_date_to"class="form-control datepicker" placeholder="To" autocomplete="off">
+                                            </div>
+                                            -->
                         </div>
                         <div class="col-md-4">
                             <strong>
@@ -249,11 +249,11 @@
                                 make on this request is a serious offense and shall be a valid ground for disciplinary
                                 action against me.
                                 <!-- <div class="col-xs-3">I will report for work on</div>
-                                            <div class="col-xs-3">
-                                                <input type="text" name="report_date" id="datepicker4" class="form-control report_Date datepicker" placeholder="date" autocomplete="off">
-                                            </div>
-                                            <div class="col-xs-6">If i fail to do so on the said date without any justifiable cause. </div>
-                                            <span>I can considered to have abandoned my employment. I understand that any misrepresentation I make on this request is a serious offense and shall be a valid ground for disciplinary action against me.</span> -->
+                                                <div class="col-xs-3">
+                                                    <input type="text" name="report_date" id="datepicker4" class="form-control report_Date datepicker" placeholder="date" autocomplete="off">
+                                                </div>
+                                                <div class="col-xs-6">If i fail to do so on the said date without any justifiable cause. </div>
+                                                <span>I can considered to have abandoned my employment. I understand that any misrepresentation I make on this request is a serious offense and shall be a valid ground for disciplinary action against me.</span> -->
                             </div>
                         </div>
                     </div>
@@ -328,12 +328,12 @@
 @endsection
 @section('scripts')
     <!-- <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
-                <script>
-                    tinymce.init({
-                        selector: 'textarea',
-                        forced_root_block: 'p'
-                    });
-                </script> -->
+                    <script>
+                        tinymce.init({
+                            selector: 'textarea',
+                            forced_root_block: 'p'
+                        });
+                    </script> -->
     <script type="text/javascript">
         var leave_credits = Math.floor({{ $balance - $credits->used_jul_to_dec }});
         var usePay = 0;

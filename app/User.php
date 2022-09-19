@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Carbon\Carbon; 
+use Carbon\Carbon;
 use App\LeaveRequest;
 use Illuminate\Support\Facades\DB;
 use Spatie\Valuestore\Valuestore;
@@ -40,91 +40,105 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\User', 'supervisor_id');
     }
-    public function account(){
+    public function account()
+    {
         return $this->belongsTo('App\ElinkAccount', 'account_id');
     }
-    public function manager(){
+    public function manager()
+    {
         return $this->belongsTo('App\User', 'manager_id');
     }
-    
-    public function details(){
-        return $this->belongsTo('App\EmployeeInfoDetails','employee_id');
+
+    public function details()
+    {
+        return $this->belongsTo('App\EmployeeInfoDetails', 'employee_id');
     }
 
 
     #####################################################
     /*                  SCOPES                         */
-    public function scopeAllExceptSuperAdmin($query){
+    public function scopeAllExceptSuperAdmin($query)
+    {
         return $this->where('id', '<>', '1');
     }
 
 
-    public function scopeBusinessLeaders($query){
-        return $query->whereIn('usertype', [2,3])->orWhere('supervisor_name', '=', $this->generalManager()->fullname());
+    public function scopeBusinessLeaders($query)
+    {
+        return $query->whereIn('usertype', [2, 3])->orWhere('supervisor_name', '=', $this->generalManager());
     }
 
-    public function scopeRankAndFile($query){
+    public function scopeRankAndFile($query)
+    {
         return $query->where('usertype', '=', 1);
     }
-    
-    public function scopeLeaveRequestCount(){
-        return LeaveRequest::whereHas('employee', function($query){
+
+    public function scopeLeaveRequestCount()
+    {
+        return LeaveRequest::whereHas('employee', function ($query) {
             $query->where('supervisor_id', '=', $this->id);
-        })->orWhereHas('employee', function($query){
+        })->orWhereHas('employee', function ($query) {
             $query->where('manager_id', '=', $this->id);
         })->whereNull('approve_status_id')->count();
     }
 
-    public function scopeFindByCustomName($query, $custom_name){
+    public function scopeFindByCustomName($query, $custom_name)
+    {
         $s_name =  explode(',', $custom_name);
         $s_name = array_filter(array_map('trim', $s_name));
-        
+
         $matched_users = $query->whereIn('last_name', $s_name)->whereIn('first_name', $s_name);
-        
+
         return $matched_users;
     }
 
-    public function scopeSeparatedEmployees($query){
+    public function scopeSeparatedEmployees($query)
+    {
         return $query->onlyTrashed()->orWhere('status', '=', '2');
     }
 
-    public function scopeActiveEmployees($query){
+    public function scopeActiveEmployees($query)
+    {
         return $query->whereNull('deleted_at')->where('status', '!=', '2');
     }
 
-    public function scopeFindByEmail($query, $email){
-       
-        return $query->where('email', '=',$email)->orWhere('email2','=',$email)->orWhere('email3', '=', $email);
+    public function scopeFindByEmail($query, $email)
+    {
+
+        return $query->where('email', '=', $email)->orWhere('email2', '=', $email)->orWhere('email3', '=', $email);
     }
 
     #####################################################
-    public function generalManager(){
+    public function generalManager()
+    {
         $settings = Valuestore::make(storage_path('app/settings.json'));
         // return User::where("email", "=", 'ferdinandpasion@elink.com.ph')->first();
         $head = DB::table('employee_info')->where('email', 'ferdinandpasion@elink.com.ph')->first();
-        return $head->last_name .', '. $head->first_name;
+        return $head->last_name . ', ' . $head->first_name;
     }
 
-    public function supervisor_email(){
+    public function supervisor_email()
+    {
         $supervisor_email = '';
-        if($this->supervisor != NULL){
+        if ($this->supervisor != NULL) {
             $supervisor_email = $this->supervisor->email;
         } else {
             $supervisors = User::findByCustomName($this->supervisor_name)->get();
-            if ($supervisors->count() > 0){
+            if ($supervisors->count() > 0) {
                 $supervisor_email = $supervisors->first()->email;
             }
         }
         return $supervisor_email;
     }
 
-    public function manager_email(){
+    public function manager_email()
+    {
         $manager_email = '';
-        if($this->manager != NULL){
+        if ($this->manager != NULL) {
             $manager_email = $this->manager->email;
         } else {
             $managers = User::findByCustomName($this->manager_name)->get();
-            if ($managers->count() > 0){
+            if ($managers->count() > 0) {
                 $manager_email = $managers->first()->email;
             }
         }
@@ -133,19 +147,21 @@ class User extends Authenticatable
 
     public function fullname()
     {
-        return $this->last_name .', '. $this->first_name;
+        return $this->last_name . ', ' . $this->first_name;
     }
 
     public function fullname2()
     {
-        return $this->first_name .' '. $this->last_name;
+        return $this->first_name . ' ' . $this->last_name;
     }
 
-    public function active_state(){
+    public function active_state()
+    {
         return $this->trashed() || $this->status == 2 ? "(inactive)" : '';
     }
 
-    public function reactivate(){
+    public function reactivate()
+    {
         $this->restore();
         $this->status = 1;
         return $this->save();
@@ -153,17 +169,16 @@ class User extends Authenticatable
 
     public function prettyBirthDate()
     {
-        if(isset($this->birth_date)){
+        if (isset($this->birth_date)) {
             $dt = Carbon::parse($this->birth_date);
             return $dt->toFormattedDateString();
-        }else{
+        } else {
             return "--";
         }
-        
     }
     public function prettydatehired()
     {
-        if(isset($this->hired_date)){
+        if (isset($this->hired_date)) {
             $dt = Carbon::parse($this->hired_date);
             return $dt->toFormattedDateString();
         } else {
@@ -172,7 +187,7 @@ class User extends Authenticatable
     }
     public function prettyproddate()
     {
-        if(isset($this->prod_date)){
+        if (isset($this->prod_date)) {
             $dt = Carbon::parse($this->prod_date);
             return $dt->toFormattedDateString();
         } else {
@@ -186,14 +201,14 @@ class User extends Authenticatable
             return $dt->format('m/d/Y');
         } else {
             return "";
-        } 
+        }
     }
     public function birthDate()
     {
         if (isset($this->birth_date)) {
             $dt = Carbon::parse($this->birth_date);
             return $dt->format('m/d/Y');
-        }else{
+        } else {
             return "";
         }
     }
@@ -206,71 +221,84 @@ class User extends Authenticatable
             return "";
         }
     }
-   
-    public function status(){
+
+    public function status()
+    {
         switch ($this->status) {
             case 1:
-                return "Active"; 
+                return "Active";
             case 2:
                 return "Inactive";
             default:
                 return "";
         }
     }
-    public function isActive(){
+    public function isActive()
+    {
         return $this->status == 1 && !$this->trashed();
     }
 
-    public function gender(){
+    public function gender()
+    {
         switch ($this->gender) {
             case 1:
-                return "Male"; 
+                return "Male";
             case 2:
-                return "Female"; 
+                return "Female";
             case 3:
-                return "Other"; 
+                return "Other";
             case 4:
-                return "Prefer not to say"; 
+                return "Prefer not to say";
 
             default:
                 return "--";
         }
     }
 
-    public function isRankAndFile(){
+    public function isRankAndFile()
+    {
         return $this->usertype == 1 || !$this->isBusinessLeader();
     }
-    
-    public function isSupervisor(){
+
+    public function isSupervisor()
+    {
         $this->usertype == 2;
     }
 
-    public function isManager(){
+    public function isManager()
+    {
         $this->usertype == 3;
     }
 
-    public function isBusinessLeader(){
-        return $this->usertype == 2 && $this->supervisor_name == $this->generalManager()->fullname();
-    } 
+    public function isBusinessLeader()
+    {
+        return $this->usertype == 2 && $this->supervisor_name == $this->generalManager();
+    }
 
-    public function isAdmin(){
+    public function isAdmin()
+    {
         return $this->is_admin == 1;
     }
-    public function isHR(){
+    public function isHR()
+    {
         return $this->is_hr == 1;
     }
-    public function isERP(){
+    public function isERP()
+    {
         return $this->is_erp == 1;
     }
-    public function isRA(){
+    public function isRA()
+    {
         return $this->is_ra == 1;
     }
 
-    public function isDeleted(){
+    public function isDeleted()
+    {
         return $this->status == 2 || $this->trashed();
     }
 
-    public function getLinkees(){
+    public function getLinkees()
+    {
         $main_names = DB::select("
         SELECT 
             id, first_name, last_name, email

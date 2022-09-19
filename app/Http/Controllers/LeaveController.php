@@ -47,7 +47,7 @@ class LeaveController extends Controller
 
         $todayDate = now();
         // ->whereYear('created_at', '=', $todayDate->year)
-        if (Auth::user()->isAdmin() && Auth::user()->id != 3246) {
+        if (Auth::user()->isAdmin() && Auth::user()->id != 3246 || Auth::user()->id == 3687) {
             return view('leave.index')->with('leave_requests', LeaveRequest::where('status', 1)->whereYear('created_at', '=', $todayDate->year)->where('approve_status_id', NULL)->orWhere('approve_status_id', 3)->orWhere('approve_status_id', 0)->get())->with(['req_obj' => $req_obj]);
         } else {
             if (Auth::user()) {
@@ -1235,7 +1235,7 @@ class LeaveController extends Controller
             0) AS loa,
     IFNULL((
             SELECT
-                credit
+                SUM(credit)
             FROM
                 leave_credits
             WHERE
@@ -1245,8 +1245,7 @@ class LeaveController extends Controller
                     AND
                 employee_id = e.id
                     AND
-                leave_credits.status = 1
-            ),
+                leave_credits.status = 1),
         0) AS monthly_accrual,
     IFNULL((SELECT 
                     SUM(credit)
